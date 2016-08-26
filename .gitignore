@@ -1,0 +1,20 @@
+# -*- mode: gitignore; -*-
+# emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# dependencies
+node_modules
+
+# production
+build
+
+# misc
+.DS_Store
+npm-debug.log
