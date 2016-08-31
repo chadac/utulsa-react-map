@@ -1,0 +1,20 @@
+.icon {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.infobox {
+  background: blue;
+  border: 1px solid black;
+}
+
+.infobox-active {
+  visibility: visible;
+  display: block;
+}
+
+.infobox-inactive {
+  visibility: hidden;
+  display: none;
+}

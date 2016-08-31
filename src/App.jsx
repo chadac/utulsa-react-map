@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
-
 import Map from './Map'
+import styles from './App.scss'
 
 class App extends Component {
   static defaultProps = {
