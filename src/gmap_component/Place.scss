@@ -1,20 +1,37 @@
+.Place {
+  width: 20px;
+  height: 20px;
+}
+
 .icon {
+  width: 100%;
+  height: 100%;
+  background-size: 100%;
   &:hover {
     cursor: pointer;
   }
+  &.icon--default {
+    background-image: url('http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png');
+  }
 }
+
 
 .infobox {
-  background: blue;
+  position: absolute;
+  top: -110px;
+  left: 40px;
+  z-index: 99;
+  background: white;
   border: 1px solid black;
+  &.infobox-active {
+    display: block;
+  }
+  &.infobox-inactive {
+    display: none;
+  }
 }
 
-.infobox-active {
-  visibility: visible;
-  display: block;
-}
-
-.infobox-inactive {
-  visibility: hidden;
-  display: none;
+.infobox h1 {
+  font-weight: bold;
+  font-size: 100%;
 }
