@@ -26,13 +26,14 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.3",
+    "classnames": "^2.2.5",
+    "flux-react": "^3.0.0",
+    "google-map-react": "^0.18.2",
     "node-sass": "^3.8.0",
-    "sass-loader": "^4.0.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-pure-render": "^1.0.2",
-    "classnames": "^2.2.5",
-    "google-map-react": "^0.18.2"
+    "sass-loader": "^4.0.0"
   },
   "scripts": {
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",

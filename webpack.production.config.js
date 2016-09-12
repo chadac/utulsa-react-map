@@ -56,7 +56,7 @@ module.exports = {
 			allChunks: true
 		}),
 		new HtmlWebpackPlugin({
-			template: './src/template.html',
+			template: './index.html',
 			title: 'Webpack App'
 		})
 	]

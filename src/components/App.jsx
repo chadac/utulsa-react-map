@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 import Map from './Map'
-import styles from './App.scss'
+import styles from '../stylesheets/App.scss'
 
 class App extends Component {
   static defaultProps = {
@@ -40,9 +40,8 @@ class App extends Component {
 
   render() {
     return (
-      <div style={{width:"750px", height:"750px"}}>
+      <div className={styles.App}>
         <Map
-          places={this.state.places}
         />
       </div>
     );

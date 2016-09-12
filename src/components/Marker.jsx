@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
-import styles from './Place.scss';
+import styles from '../stylesheets/Marker.scss';
 
-console.log(styles);
-
-class Place extends Component {
+class Marker extends Component {
   static defaultProps = {
     active: false,
   }
@@ -16,21 +14,22 @@ class Place extends Component {
     };
   }
 
-  handleKeyDown = (event) => {
-    console.log(event);
+  onComponentMount() {
+    this.marker = createMarker();
+    this.marker.addListener("click", this.onClick)
+    this.marker.addListener("moveover", this.onHover)
   }
 
-  _onMouseEnter = () => {
-    this.setState({iconHover: true});
-  }
-
-  _onMouseLeave = () => {
-    this.setState({iconHover: false});
+  createMarker() {
+    return new google.maps.Marker({
+      position: this.props.position,
+      map: this.props.map
+    });
   }
 
   render() {
     return(
-      <div className={classNames(styles['Place'])}>
+      <div className={classNames(styles.Marker)}>
         <div
             className={classNames(styles['infobox'],
                                   this.state.iconHover ? styles['infobox-active'] : styles['infobox-inactive'])}
@@ -47,4 +46,4 @@ class Place extends Component {
   }
 }
 
-export default Place;
+export default Marker;
