@@ -27,9 +27,12 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.3",
     "classnames": "^2.2.5",
+    "es6-promise": "^3.2.1",
     "flux-react": "^3.0.0",
     "google-map-react": "^0.18.2",
+    "keymirror": "^0.1.1",
     "node-sass": "^3.8.0",
+    "object-assign": "^4.1.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-pure-render": "^1.0.2",

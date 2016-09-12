@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
+import MarkerStore from '../stores/MarkerStore';
 import Marker from './Marker'
 import styles from '../stylesheets/Map.scss'
+
+function getMarkerState() {
+  return {
+    markers: MarkerStore.getAll()
+  }
+}
 
 class Map extends Component {
   static defaultProps = {
@@ -10,13 +17,12 @@ class Map extends Component {
     markers: []
   };
 
-  state = {
-    activePlace: null
-  }
+  state = getMarkerState()
 
-  shouldComponentUpdate = shouldPureComponentUpdate;
+  /* shouldComponentUpdate = shouldPureComponentUpdate;*/
 
   componentDidMount() {
+    MarkerStore.addChangeListener(this._onChange)
     this.map = this.createMap();
   }
 
@@ -30,20 +36,18 @@ class Map extends Component {
   }
 
   render() {
-    /* const places = this.props.markers
-     *                    .map((marker) => (
-     *                      <Marker
-     *                          key={marker.name}
-     *                          lat={marker.geo.latitude}
-     *                          lng={marker.geo.longitude}
-     *                          place={marker}
-     *                          active={this.state.activePlace == marker.name}
-     *                      />
-     *                    ));*/
+    const markers = this.state.markers.map((marker) => (
+      <Marker {...marker} />
+    ));
     return (
       <div ref="map" className={styles.Map}>
+        {markers}
       </div>
     );
+  }
+
+  _onChange() {
+    this.setState(getMarkerState());
   }
 }
 
