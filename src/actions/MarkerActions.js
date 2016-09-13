@@ -19,6 +19,27 @@ var MarkerActions = {
       id: id
     });
   },
+
+  click: function(id) {
+    AppDispatcher.handleViewAction({
+      actionType: MarkerConstants.MARKER_CLICK,
+      id: id
+    });
+  },
+
+  mouseEnter: function(id) {
+    AppDispatcher.handleViewAction({
+      actionType: MarkerConstants.MARKER_MOUSE_ENTER,
+      id: id
+    });
+  },
+
+  mouseLeave: function(id) {
+    AppDispatcher.handleViewAction({
+      actionType: MarkerConstants.MARKER_MOUSE_LEAVE,
+      id: id
+    });
+  }
 };
 
 module.exports = MarkerActions;

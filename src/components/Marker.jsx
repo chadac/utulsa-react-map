@@ -1,6 +1,17 @@
 import React, {Component} from 'react';
+import MarkerStore from '../stores/MarkerStore';
+import MarkerActions from '../actions/MarkerActions';
 import classNames from 'classnames';
 import styles from '../stylesheets/Marker.scss';
+
+// From http://stackoverflow.com/q/373157
+function partial(func /*, 0..n args */) {
+  var args = Array.prototype.slice.call(arguments).splice(1);
+  return function() {
+    var allArguments = args.concat(Array.prototype.slice.call(arguments));
+    return func.apply(this, allArguments);
+  };
+}
 
 const Marker = React.createClass({
   getInitialState() {
@@ -8,9 +19,19 @@ const Marker = React.createClass({
   },
 
   componentDidMount() {
+    MarkerStore.addClickListener(this.props.id, this._onClick)
+
+    var key = this.props.id;
     this.marker = this.createMarker();
-    this.marker.addListener("click", this._onClick)
-    this.marker.addListener("moveover", this._onHover)
+    this.marker.addListener("click", partial(MarkerActions.click, key));
+    this.marker.addListener("mouseover", partial(MarkerActions.mouseEnter, key));
+    this.marker.addListener("mouseout", partial(MarkerActions.mouseLeave, key));
+
+    this.info = this.createInfoWindow();
+  },
+
+  componentWillUnmount() {
+    this.marker.setMap(null);
   },
 
   latlng() {
@@ -28,15 +49,29 @@ const Marker = React.createClass({
     });
   },
 
+  createInfoWindow() {
+    var content = "<h6>" + this.props.name + "</h6>"
+                + "<p>" + this.props.address + "</p>"
+                + "<p>" + this.props.website + "</p>";
+    return new google.maps.InfoWindow({
+      content: content
+    });
+  },
+
   _onClick() {
   },
 
-  _onHover() {
-  },
-
   render() {
+    if(this.info != undefined) {
+      if(this.props.$hover) {
+        this.info.open(this.map, this.marker);
+      }
+      else {
+        this.info.close();
+      }
+    }
     return null;
-  }
+  },
 });
 
 export default Marker;

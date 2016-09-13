@@ -41,8 +41,8 @@ const Map = React.createClass({
   },
 
   render() {
-    const markers = this.state.markers.map((marker) => (
-      <Marker {...marker} map={this.map} />
+    const markers = Object.keys(this.state.markers).map((id) => (
+      <Marker {...this.state.markers[id]} map={this.map} />
     ));
     return (
       <div ref="map" className={styles.Map}>

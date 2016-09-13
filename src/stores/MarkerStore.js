@@ -10,17 +10,49 @@ var MarkerConstants = require('../constants/MarkerConstants');
 var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
+var CLICK_EVENT = 'click';
 
 // Collection of markers
-var _markers = [];
+var _markers = {};
+
+// ID of clicked marker
+var _clickedMarker = null;
 
 function create(data) {
-  var key = data.key
-  _markers.push(data);
+  var key = data.id
+  _markers[key] = data;
+  _markers[key].$clicked = false;
+  _markers[key].$hover = false;
 }
 
 function destroy(id) {
   delete _markers[id];
+}
+
+function click(id) {
+  if(_clickedMarker == id) {
+    _clickedMarker = null;
+    _markers[id].$clicked = false;
+  }
+  else {
+    if(_clickedMarker != null) {
+      _markers[_clickedMarker].$clicked = false
+    }
+    _clickedMarker = id;
+    _markers[id].$clicked = true;
+  }
+}
+
+function unClick() {
+  _clickedMarker = null;
+}
+
+function mouseEnter(id) {
+  _markers[id].$hover = true;
+}
+
+function mouseLeave(id) {
+  _markers[id].$hover = false;
 }
 
 var MarkerStore = assign({}, EventEmitter.prototype, {
@@ -29,6 +61,10 @@ var MarkerStore = assign({}, EventEmitter.prototype, {
    */
   getAll: function() {
     return _markers;
+  },
+
+  getClickedMarkerID: function() {
+    return _clickedMarker;
   },
 
   /**
@@ -43,6 +79,10 @@ var MarkerStore = assign({}, EventEmitter.prototype, {
    */
   addChangeListener: function(callback) {
     this.on(CHANGE_EVENT, callback);
+  },
+
+  addClickListener: function(id, callback) {
+    this.on([CLICK_EVENT, id], callback);
   },
 
   /**
@@ -62,11 +102,29 @@ var MarkerStore = assign({}, EventEmitter.prototype, {
         destroy(action.id);
         MarkerStore.emitChange();
         break;
+
+      case MarkerConstants.MARKER_CLICK:
+        click(action.id);
+        MarkerStore.emitChange();
+        break;
+
+      case MarkerConstants.MARKER_MOUSE_ENTER:
+        mouseEnter(action.id);
+        MarkerStore.emitChange();
+        break;
+
+      case MarkerConstants.MARKER_MOUSE_LEAVE:
+        mouseLeave(action.id);
+        MarkerStore.emitChange();
+        break;
     }
 
     return true;
   })
 
 });
+
+// Probably bad
+MarkerStore.setMaxListeners(1000);
 
 module.exports = MarkerStore

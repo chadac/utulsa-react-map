@@ -25,9 +25,10 @@ class App extends Component {
                              place.geo.longitude != null)
             .map((place) => { return {
               key: place.id,
+              id: place.id,
               name: place.name,
               position: { lat: place.geo.latitude, lng: place.geo.longitude },
-              street: place.street,
+              address: place.address,
               website: place.url,
               phone: place.phone,
               hours: place.hours
