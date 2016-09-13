@@ -2,48 +2,41 @@ import React, {Component} from 'react';
 import classNames from 'classnames';
 import styles from '../stylesheets/Marker.scss';
 
-class Marker extends Component {
-  static defaultProps = {
-    active: false,
-  }
+const Marker = React.createClass({
+  getInitialState() {
+    return {};
+  },
 
-  constructor() {
-    super()
-    this.state = {
-      iconHover: false
-    };
-  }
+  componentDidMount() {
+    this.marker = this.createMarker();
+    this.marker.addListener("click", this._onClick)
+    this.marker.addListener("moveover", this._onHover)
+  },
 
-  onComponentMount() {
-    this.marker = createMarker();
-    this.marker.addListener("click", this.onClick)
-    this.marker.addListener("moveover", this.onHover)
-  }
+  latlng() {
+    return new google.maps.LatLng(
+      this.props.position.lat,
+      this.props.position.lng
+    );
+  },
 
   createMarker() {
     return new google.maps.Marker({
-      position: this.props.position,
-      map: this.props.map
+      position: this.latlng(),
+      icon: "http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
+      map: this.props.map,
     });
-  }
+  },
+
+  _onClick() {
+  },
+
+  _onHover() {
+  },
 
   render() {
-    return(
-      <div className={classNames(styles.Marker)}>
-        <div
-            className={classNames(styles['infobox'],
-                                  this.state.iconHover ? styles['infobox-active'] : styles['infobox-inactive'])}
-        >
-          <h1>{this.props.place.name}</h1>
-          {this.props.place.address}
-        </div>
-        <div className={classNames(styles['icon'], styles['icon--default'])}
-             onMouseEnter={this._onMouseEnter}
-             onMouseLeave={this._onMouseLeave}
-        />
-      </div>
-    );
+    return null;
   }
-}
+});
 
 export default Marker;

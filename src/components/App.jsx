@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 import Map from './Map'
 import styles from '../stylesheets/App.scss'
+import MarkerActions from '../actions/MarkerActions'
 
 class App extends Component {
   static defaultProps = {
@@ -14,18 +15,27 @@ class App extends Component {
   }
 
   _fetchPlaces() {
-    var setPlaces = function(that) { return function(data) {
-      that.setState({places: data.places
-                    .map((place) => place.place) // Localist is ridiculous
-                    .filter((place) => place.geo.latitude != null &&
-                                     place.geo.longitude != null)
-        });
-    }};
     fetch('http://calendar.utulsa.edu/api/2/places?pp=100')
       .then( function(response) {
         return response.json();
       })
-      .then(setPlaces(this))
+      .then( function(data) {
+        data.places.map((place) => place.place)
+            .filter((place) => place.geo.latitude != null &&
+                             place.geo.longitude != null)
+            .map((place) => { return {
+              key: place.id,
+              name: place.name,
+              position: { lat: place.geo.latitude, lng: place.geo.longitude },
+              street: place.street,
+              website: place.url,
+              phone: place.phone,
+              hours: place.hours
+            }})
+            .forEach((place) => {
+              MarkerActions.create(place);
+            });
+      })
       .catch( function(err) {
         console.log(err);
         return null;

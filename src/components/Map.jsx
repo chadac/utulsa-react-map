@@ -10,21 +10,26 @@ function getMarkerState() {
   }
 }
 
-class Map extends Component {
-  static defaultProps = {
-    center: {lat: 36.15159935580428, lng: -95.94644401639404},
-    zoom: 16,
-    markers: []
-  };
+/* class Map extends Component {*/
+const Map = React.createClass({
+  getDefaultProps() {
+    return {
+      center: {lat: 36.15159935580428, lng: -95.94644401639404},
+      zoom: 16,
+      markers: []
+    }
+  },
 
-  state = getMarkerState()
+  getInitialState() {
+    return getMarkerState();
+  },
 
   /* shouldComponentUpdate = shouldPureComponentUpdate;*/
 
   componentDidMount() {
     MarkerStore.addChangeListener(this._onChange)
     this.map = this.createMap();
-  }
+  },
 
   createMap() {
     let mapOptions = {
@@ -33,22 +38,22 @@ class Map extends Component {
     }
 
     return new google.maps.Map(this.refs.map, mapOptions);
-  }
+  },
 
   render() {
     const markers = this.state.markers.map((marker) => (
-      <Marker {...marker} />
+      <Marker {...marker} map={this.map} />
     ));
     return (
       <div ref="map" className={styles.Map}>
         {markers}
       </div>
     );
-  }
+  },
 
   _onChange() {
     this.setState(getMarkerState());
-  }
-}
+  },
+});
 
 export default Map;

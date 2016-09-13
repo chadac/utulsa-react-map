@@ -16,13 +16,7 @@ var _markers = [];
 
 function create(data) {
   var key = data.key
-  _markers.push({
-    key: data.id,
-    position: data.position,
-    name: data.name,
-    location: data.location,
-    website: data.website
-  });
+  _markers.push(data);
 }
 
 function destroy(id) {
@@ -72,6 +66,7 @@ var MarkerStore = assign({}, EventEmitter.prototype, {
 
     return true;
   })
+
 });
 
 module.exports = MarkerStore
