@@ -34,6 +34,12 @@ loaders.push({
 	]
 });
 
+// local json files
+loaders.push({
+  test: /[\/\\]src[\/\\].*\.json/,
+  loaders: [ 'json' ]
+});
+
 module.exports = {
 	entry: [
 		`webpack-dev-server/client?http://${HOST}:${PORT}`,

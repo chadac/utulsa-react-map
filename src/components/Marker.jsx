@@ -19,8 +19,6 @@ const Marker = React.createClass({
   },
 
   componentDidMount() {
-    MarkerStore.addClickListener(this.props.id, this._onClick)
-
     var key = this.props.id;
     this.marker = this.createMarker();
     this.marker.addListener("click", partial(MarkerActions.click, key));
@@ -45,6 +43,9 @@ const Marker = React.createClass({
     return new google.maps.Marker({
       position: this.latlng(),
       icon: "http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
+      draggable: true,
+      labelContent: this.props.name,
+      labelStyle: {opacity: 0.75},
       map: this.props.map,
     });
   },
@@ -56,9 +57,6 @@ const Marker = React.createClass({
     return new google.maps.InfoWindow({
       content: content
     });
-  },
-
-  _onClick() {
   },
 
   render() {
