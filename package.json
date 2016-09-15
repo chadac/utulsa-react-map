@@ -5,7 +5,6 @@
   "author": "Jason Bennefield and Chad Crawford",
   "homepage": "https://utulsa.edu",
   "devDependencies": {
-    "@google/maps": "^0.1.0",
     "babel-core": "6.13.2",
     "babel-loader": "6.2.4",
     "babel-plugin-transform-class-properties": "^6.11.5",
