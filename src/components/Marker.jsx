@@ -51,7 +51,7 @@ const Marker = React.createClass({
   },
 
   createInfoWindow() {
-    var content = "<h6>" + this.props.name + "</h6>"
+    var content = "<h4>" + this.props.name + "</h4>"
                 + "<p>" + this.props.address + "</p>"
                 + "<p>" + this.props.website + "</p>";
     return new google.maps.InfoWindow({

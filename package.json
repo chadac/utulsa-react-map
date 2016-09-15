@@ -27,7 +27,6 @@
     "webpack-dev-server": "1.14.1"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0-alpha.3",
     "classnames": "^2.2.5",
     "es6-promise": "^3.2.1",
     "flux-react": "^3.0.0",
