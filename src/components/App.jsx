@@ -3,16 +3,16 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import Map from './Map'
 import styles from '../stylesheets/App.scss'
 import MarkerActions from '../actions/MarkerActions'
+import RouteActions from '../actions/RouteActions'
+var routes = require('../data/routes.json')
 
-class App extends Component {
-  static defaultProps = {
-    center: {lat: 36.15159935580428, lng: -95.94644401639404},
-    zoom: 16
-  };
-
-  state = {
-    props: []
-  }
+const App = React.createClass({
+  getDefaultProps() {
+    return {
+      center: {lat: 36.15159935580428, lng: -95.94644401639404},
+      zoom: 16
+    };
+  },
 
   _fetchPlaces() {
     fetch('http://calendar.utulsa.edu/api/2/places?pp=100')
@@ -41,13 +41,12 @@ class App extends Component {
         console.log(err);
         return null;
       });
-  }
+  },
 
   componentDidMount() {
     this._fetchPlaces();
-  }
-
-  shouldComponentUpdate = shouldPureComponentUpdate;
+    routes.forEach((route) => RouteActions.create(route));
+  },
 
   render() {
     return (
@@ -57,6 +56,6 @@ class App extends Component {
       </div>
     );
   }
-}
+});
 
 export default App;

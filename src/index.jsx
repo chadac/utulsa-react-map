@@ -4,6 +4,14 @@ import App from './components/App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './stylesheets/index.scss';
 
+function parseKMLCoords(msg) {
+  var msgSplit = msg.split(' ');
+  msgSplit.map((coordStr) => {
+    var coords = coordStr.split(',')
+    return { lng: coords[0], lat: coords[1] };
+  });
+}
+
 ReactDOM.render(
   <App />,
   document.querySelector('#app')

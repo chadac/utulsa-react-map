@@ -21,6 +21,7 @@ var _clickedMarker = null;
 function create(data) {
   var key = data.id
   _markers[key] = data;
+  _markers[key].$active = true;
   _markers[key].$clicked = false;
   _markers[key].$hover = false;
 }
