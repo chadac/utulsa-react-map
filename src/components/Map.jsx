@@ -1,20 +1,14 @@
 import React, {Component} from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
-import MarkerStore from '../stores/MarkerStore'
+import ItemStore from '../stores/ItemStore'
 import Marker from './Marker'
-import RouteStore from '../stores/RouteStore'
 import Route from './Route'
 import styles from '../stylesheets/Map.scss'
 
-function getMarkerState() {
+function getItemState() {
   return {
-    markers: MarkerStore.getAll()
-  }
-}
-
-function getRouteState() {
-  return {
-    routes: RouteStore.getAll()
+    markers: ItemStore.getMarkers(),
+    routes: ItemStore.getRoutes()
   }
 }
 
@@ -29,17 +23,13 @@ const Map = React.createClass({
   },
 
   getInitialState() {
-    return {
-      markers: MarkerStore.getAll(),
-      routes: RouteStore.getAll()
-    };
+    return getItemState();
   },
 
   /* shouldComponentUpdate = shouldPureComponentUpdate;*/
 
   componentDidMount() {
-    MarkerStore.addChangeListener(this._onChangeMarker)
-    RouteStore.addChangeListener(this._onChangeRoute)
+    ItemStore.addChangeListener(this._onChange)
     this.map = this.createMap();
   },
 
@@ -53,15 +43,16 @@ const Map = React.createClass({
   },
 
   render() {
-    const markers = Object.keys(this.state.markers).map((id) => (
-      <Marker {...this.state.markers[id]} map={this.map} />
-    ));
-    const routes = Object.keys(this.state.routes).map((id) => {
-      let route = this.state.routes[id];
-      return (
-        <Route {...route} map={this.map} />
-      );
-    });
+    const markers = this.state.markers
+                        .filter((marker) => marker.$active)
+                        .map((marker) => (
+                          <Marker key={marker.id} {...marker} map={this.map} />
+                        ));
+    const routes = this.state.routes
+                       .filter((route) => route.$active)
+                       .map((route) => (
+                         <Route key={route.id} {...route} map={this.map} />
+                       ));
     return (
       <div ref="map" className={styles.Map}>
         {markers}
@@ -70,12 +61,8 @@ const Map = React.createClass({
     );
   },
 
-  _onChangeMarker() {
-    this.setState(getMarkerState());
-  },
-
-  _onChangeRoute() {
-    this.setState(getRouteState());
+  _onChange() {
+    this.setState(getItemState());
   },
 });
 

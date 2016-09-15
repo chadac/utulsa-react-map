@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import MarkerStore from '../stores/MarkerStore';
-import MarkerActions from '../actions/MarkerActions';
 import classNames from 'classnames';
 import styles from '../stylesheets/Marker.scss';
 
@@ -15,16 +13,17 @@ function partial(func /*, 0..n args */) {
 
 const Marker = React.createClass({
   getInitialState() {
-    return {};
+    return {
+      $hover: false
+    };
   },
 
-  componentDidMount() {
+  componentWillMount() {
     var key = this.props.id;
     this.marker = this.createMarker();
-    this.marker.addListener("click", partial(MarkerActions.click, key));
-    this.marker.addListener("mouseover", partial(MarkerActions.mouseEnter, key));
-    this.marker.addListener("mouseout", partial(MarkerActions.mouseLeave, key));
-
+    this.marker.addListener("click", this._onClick);
+    this.marker.addListener("mouseover", this._onMouseOver);
+    this.marker.addListener("mouseout", this._onMouseOut);
     this.info = this.createInfoWindow();
   },
 
@@ -34,8 +33,8 @@ const Marker = React.createClass({
 
   latlng() {
     return new google.maps.LatLng(
-      this.props.position.lat,
-      this.props.position.lng
+      this.props.marker.lat,
+      this.props.marker.lng
     );
   },
 
@@ -44,8 +43,6 @@ const Marker = React.createClass({
       position: this.latlng(),
       icon: "http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
       draggable: true,
-      labelContent: this.props.name,
-      labelStyle: {opacity: 0.75},
       map: this.props.map,
     });
   },
@@ -60,15 +57,22 @@ const Marker = React.createClass({
   },
 
   render() {
-    if(this.info != undefined) {
-      if(this.props.$hover) {
-        this.info.open(this.map, this.marker);
-      }
-      else {
-        this.info.close();
-      }
+    if(this.props.$hover) {
+      this.info.open(this.map, this.marker);
+    }
+    else {
+      this.info.close();
     }
     return null;
+  },
+
+  _onClick() {
+  },
+
+  _onMouseOver() {
+  },
+
+  _onMouseOut() {
   },
 });
 
