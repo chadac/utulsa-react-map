@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
-import Map from './Map'
-import styles from '../stylesheets/App.scss'
+import Map from './Map';
+import Listing from './Listing';
+import styles from '../stylesheets/App.scss';
 
 const App = React.createClass({
   getDefaultProps() {
@@ -13,9 +14,11 @@ const App = React.createClass({
 
   render() {
     return (
-      <div className={styles.App}>
-        <Map
-        />
+      <div id="outer-container">
+        <Listing pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } />
+        <main id="page-wrap" className={styles.App}>
+          <Map />
+        </main>
       </div>
     );
   }

@@ -15,6 +15,7 @@ function getItemState() {
 
 /* class Map extends Component {*/
 const Map = React.createClass({
+
   getDefaultProps() {
     return {
       center: {lat: 36.15159935580428, lng: -95.94644401639404},
@@ -96,6 +97,7 @@ const Map = React.createClass({
     });
     this.updateActiveItems();
   },
+
 });
 
 export default Map;
