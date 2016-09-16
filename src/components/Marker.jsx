@@ -14,20 +14,21 @@ function partial(func /*, 0..n args */) {
 const Marker = React.createClass({
   getInitialState() {
     return {
-      $hover: false
+      $hover: false,
+      $infoWindowActive: false
     };
   },
 
   componentWillMount() {
-    var key = this.props.id;
+    this.info = this.createInfoWindow();
     this.marker = this.createMarker();
     this.marker.addListener("click", this._onClick);
     this.marker.addListener("mouseover", this._onMouseOver);
     this.marker.addListener("mouseout", this._onMouseOut);
-    this.info = this.createInfoWindow();
   },
 
   componentWillUnmount() {
+    this.info.close();
     this.marker.setMap(null);
   },
 
@@ -57,7 +58,7 @@ const Marker = React.createClass({
   },
 
   render() {
-    if(this.props.$hover) {
+    if(this.state.$hover) {
       this.info.open(this.map, this.marker);
     }
     else {
@@ -67,6 +68,7 @@ const Marker = React.createClass({
   },
 
   _onClick() {
+    this.info.open(this.map, this.marker);
   },
 
   _onMouseOver() {

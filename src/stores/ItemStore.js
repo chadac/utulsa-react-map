@@ -81,7 +81,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
    * Returns all markers.
    */
   getAll: function() {
-    return _items;
+    return Object.keys(_items).map((id) => _items[id]);
   },
 
   getMarkers: function() {

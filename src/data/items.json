@@ -1,17 +1,20 @@
 [
   {
-    "id": "blue_shuttle",
-    "name": "Blue Shuttle",
-    "type": "route",
-    "description": "<p>Needs description!</p>",
-    "hours": "M-F, 7 a.m. to 5:30 p.m.",
-    "photos": [],
-    "social": [],
-    "route": {
-      "path": "-95.94489,36.1537,0.0 -95.94488,36.15378,0.0 -95.94488,36.15409,0.0 -95.94488,36.15433,0.0 -95.94488,36.15467,0.0 -95.94548,36.15467,0.0 -95.94558,36.15467,0.0 -95.94569,36.15467,0.0 -95.94613,36.15467,0.0 -95.94677,36.15466,0.0 -95.94737,36.15466,0.0 -95.94758,36.15466,0.0 -95.94769,36.15466,0.0 -95.94781,36.15466,0.0 -95.94806,36.15466,0.0 -95.94851,36.15467,0.0 -95.94885,36.15466,0.0 -95.94896,36.15466,0.0 -95.94897,36.15466,0.0 -95.94922,36.15467,0.0 -95.94927,36.15478,0.0 -95.94927,36.15491,0.0 -95.94927,36.15552,0.0 -95.94927,36.15585,0.0 -95.94925,36.15608,0.0 -95.94924,36.15646,0.0 -95.94893,36.15642,0.0 -95.94845,36.15642,0.0 -95.94791,36.15642,0.0 -95.94757,36.15641,0.0 -95.94743,36.15639,0.0 -95.94738,36.15638,0.0 -95.94738,36.15606,0.0 -95.94737,36.1555,0.0 -95.94737,36.15466,0.0 -95.94737,36.15417,0.0 -95.94738,36.15401,0.0 -95.94738,36.15385,0.0 -95.94738,36.1537,0.0 -95.94702,36.1537,0.0 -95.94688,36.15369,0.0 -95.94679,36.15369,0.0 -95.94613,36.1537,0.0 -95.94601,36.1537,0.0 -95.94568,36.1537,0.0 -95.94548,36.1537,0.0 -95.94493,36.15369,0.0 -95.94491,36.15369,0.0 -95.9449,36.15369,0.0 -95.94489,36.1537,0.0 -95.94488,36.15378,0.0 -95.94488,36.15409,0.0 -95.94488,36.15433,0.0 -95.94488,36.15467,0.0 -95.94417,36.15467,0.0 -95.94318,36.15467,0.0 -95.94261,36.15467,0.0 -95.94208,36.15467,0.0 -95.94158,36.15466,0.0 -95.94156,36.15446,0.0 -95.94156,36.15437,0.0 -95.94154,36.15429,0.0 -95.94152,36.15419,0.0 -95.94147,36.15407,0.0 -95.94145,36.15397,0.0 -95.94143,36.15371,0.0 -95.94144,36.15331,0.0 -95.94143,36.15272,0.0 -95.94144,36.15254,0.0 -95.94144,36.1525,0.0 -95.94144,36.15247,0.0 -95.94143,36.15245,0.0 -95.94142,36.15241,0.0 -95.94138,36.15229,0.0 -95.94132,36.1522,0.0 -95.94123,36.15207,0.0 -95.94118,36.152,0.0 -95.94116,36.15196,0.0 -95.94115,36.15192,0.0 -95.94113,36.15188,0.0 -95.94113,36.15185,0.0 -95.94112,36.15181,0.0 -95.94112,36.15178,0.0 -95.94112,36.15175,0.0 -95.94112,36.15171,0.0 -95.94112,36.15167,0.0 -95.94113,36.15164,0.0 -95.94113,36.15161,0.0 -95.94115,36.15156,0.0 -95.94117,36.1515,0.0 -95.94119,36.15146,0.0 -95.94122,36.15142,0.0 -95.94132,36.1513,0.0 -95.94139,36.15118,0.0 -95.94142,36.1511,0.0 -95.94143,36.15107,0.0 -95.94143,36.15105,0.0 -95.94144,36.15099,0.0 -95.94145,36.15086,0.0 -95.94145,36.15079,0.0 -95.94147,36.15036,0.0 -95.94147,36.15032,0.0",
-      "strokeColor": "#FF0000",
-      "strokeOpacity": "1.0",
-      "strokeWeight": "2"
+    "id":"blue_shuttle",
+    "name":"Blue Shuttle",
+    "type":"route",
+    "description":"<p>Needs description!</p>",
+    "hours":"M-F, 7 a.m. to 5:30 p.m.",
+    "photos":[],
+    "social":[],
+    "route":{
+      "path":"-95.94489,36.1537,0.0 -95.94488,36.15378,0.0 -95.94488,36.15409,0.0 -95.94488,36.15433,0.0 -95.94488,36.15467,0.0 -95.94548,36.15467,0.0 -95.94558,36.15467,0.0 -95.94569,36.15467,0.0 -95.94613,36.15467,0.0 -95.94677,36.15466,0.0 -95.94737,36.15466,0.0 -95.94758,36.15466,0.0 -95.94769,36.15466,0.0 -95.94781,36.15466,0.0 -95.94806,36.15466,0.0 -95.94851,36.15467,0.0 -95.94885,36.15466,0.0 -95.94896,36.15466,0.0 -95.94897,36.15466,0.0 -95.94922,36.15467,0.0 -95.94927,36.15478,0.0 -95.94927,36.15491,0.0 -95.94927,36.15552,0.0 -95.94927,36.15585,0.0 -95.94925,36.15608,0.0 -95.94924,36.15646,0.0 -95.94893,36.15642,0.0 -95.94845,36.15642,0.0 -95.94791,36.15642,0.0 -95.94757,36.15641,0.0 -95.94743,36.15639,0.0 -95.94738,36.15638,0.0 -95.94738,36.15606,0.0 -95.94737,36.1555,0.0 -95.94737,36.15466,0.0 -95.94737,36.15417,0.0 -95.94738,36.15401,0.0 -95.94738,36.15385,0.0 -95.94738,36.1537,0.0 -95.94702,36.1537,0.0 -95.94688,36.15369,0.0 -95.94679,36.15369,0.0 -95.94613,36.1537,0.0 -95.94601,36.1537,0.0 -95.94568,36.1537,0.0 -95.94548,36.1537,0.0 -95.94493,36.15369,0.0 -95.94491,36.15369,0.0 -95.9449,36.15369,0.0 -95.94489,36.1537,0.0 -95.94488,36.15378,0.0 -95.94488,36.15409,0.0 -95.94488,36.15433,0.0 -95.94488,36.15467,0.0 -95.94417,36.15467,0.0 -95.94318,36.15467,0.0 -95.94261,36.15467,0.0 -95.94208,36.15467,0.0 -95.94158,36.15466,0.0 -95.94156,36.15446,0.0 -95.94156,36.15437,0.0 -95.94154,36.15429,0.0 -95.94152,36.15419,0.0 -95.94147,36.15407,0.0 -95.94145,36.15397,0.0 -95.94143,36.15371,0.0 -95.94144,36.15331,0.0 -95.94143,36.15272,0.0 -95.94144,36.15254,0.0 -95.94144,36.1525,0.0 -95.94144,36.15247,0.0 -95.94143,36.15245,0.0 -95.94142,36.15241,0.0 -95.94138,36.15229,0.0 -95.94132,36.1522,0.0 -95.94123,36.15207,0.0 -95.94118,36.152,0.0 -95.94116,36.15196,0.0 -95.94115,36.15192,0.0 -95.94113,36.15188,0.0 -95.94113,36.15185,0.0 -95.94112,36.15181,0.0 -95.94112,36.15178,0.0 -95.94112,36.15175,0.0 -95.94112,36.15171,0.0 -95.94112,36.15167,0.0 -95.94113,36.15164,0.0 -95.94113,36.15161,0.0 -95.94115,36.15156,0.0 -95.94117,36.1515,0.0 -95.94119,36.15146,0.0 -95.94122,36.15142,0.0 -95.94132,36.1513,0.0 -95.94139,36.15118,0.0 -95.94142,36.1511,0.0 -95.94143,36.15107,0.0 -95.94143,36.15105,0.0 -95.94144,36.15099,0.0 -95.94145,36.15086,0.0 -95.94145,36.15079,0.0 -95.94147,36.15036,0.0 -95.94147,36.15032,0.0",
+      "strokeColor":"#FF0000",
+      "strokeOpacity":"1.0",
+      "strokeWeight":"2"
+    },
+    "gmaps": {
+      "min_zoom":17
     }
   },
   {
@@ -32,8 +35,10 @@
     "marker":{
       "lat":"36.151096",
       "lng":"-95.942131",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -54,8 +59,10 @@
     "marker":{
       "lat":"36.153473",
       "lng":"-95.946304",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -76,8 +83,10 @@
     "marker":{
       "lat":"36.152973",
       "lng":"-95.946373",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -98,8 +107,10 @@
     "marker":{
       "lat":"36.150459",
       "lng":"-95.946419",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -120,8 +131,10 @@
     "marker":{
       "lat":"36.150955",
       "lng":"-95.946785",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -142,7 +155,9 @@
     "marker":{
       "lat":"36.211436",
       "lng":"-95.721602",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
       "min_zoom":14
     }
   },
@@ -164,8 +179,10 @@
     "marker":{
       "lat":"36.154934",
       "lng":"-95.944435",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -186,8 +203,10 @@
     "marker":{
       "lat":"36.154148",
       "lng":"-95.941299",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -208,8 +227,10 @@
     "marker":{
       "lat":"36.14954",
       "lng":"-95.943779",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -230,8 +251,10 @@
     "marker":{
       "lat":"36.150269",
       "lng":"-95.949699",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -252,8 +275,10 @@
     "marker":{
       "lat":"36.149349",
       "lng":"-95.946808",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -274,8 +299,10 @@
     "marker":{
       "lat":"36.153072",
       "lng":"-95.947731",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -296,8 +323,10 @@
     "marker":{
       "lat":"36.150772",
       "lng":"-95.947021",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -318,8 +347,10 @@
     "marker":{
       "lat":"36.154392",
       "lng":"-95.94397",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -340,8 +371,10 @@
     "marker":{
       "lat":"36.151211",
       "lng":"-95.950989",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -362,8 +395,10 @@
     "marker":{
       "lat":"36.153316",
       "lng":"-95.949585",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -384,8 +419,10 @@
     "marker":{
       "lat":"36.150051",
       "lng":"-95.946785",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":15
     }
   },
   {
@@ -406,8 +443,10 @@
     "marker":{
       "lat":"36.15229",
       "lng":"-95.947533",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":15
     }
   },
   {
@@ -428,8 +467,10 @@
     "marker":{
       "lat":"36.150471",
       "lng":"-95.947998",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":15
     }
   },
   {
@@ -450,8 +491,10 @@
     "marker":{
       "lat":"36.150021",
       "lng":"-95.947716",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -472,8 +515,10 @@
     "marker":{
       "lat":"36.150494",
       "lng":"-95.948807",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -494,8 +539,10 @@
     "marker":{
       "lat":"36.150955",
       "lng":"-95.943237",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":15
     }
   },
   {
@@ -516,8 +563,10 @@
     "marker":{
       "lat":"36.174487",
       "lng":"-96.020985",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":0
     }
   },
   {
@@ -538,8 +587,10 @@
     "marker":{
       "lat":"36.14922",
       "lng":"-95.94397",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":15
     }
   },
   {
@@ -560,8 +611,10 @@
     "marker":{
       "lat":"36.152988",
       "lng":"-95.944588",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -582,8 +635,10 @@
     "marker":{
       "lat":"36.152168",
       "lng":"-95.949722",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -604,8 +659,10 @@
     "marker":{
       "lat":"36.151642",
       "lng":"-95.943878",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -626,8 +683,10 @@
     "marker":{
       "lat":"36.151489",
       "lng":"-95.944786",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -648,8 +707,10 @@
     "marker":{
       "lat":"36.1732",
       "lng":"-96.021285",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -670,8 +731,10 @@
     "marker":{
       "lat":"36.153233",
       "lng":"-95.947166",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -692,8 +755,10 @@
     "marker":{
       "lat":"36.145798",
       "lng":"-95.940697",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -714,8 +779,10 @@
     "marker":{
       "lat":"36.155781",
       "lng":"-95.948418",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -736,8 +803,10 @@
     "marker":{
       "lat":"36.150089",
       "lng":"-95.943741",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -758,8 +827,10 @@
     "marker":{
       "lat":"36.151733",
       "lng":"-95.940773",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -780,8 +851,10 @@
     "marker":{
       "lat":"36.153",
       "lng":"-95.948807",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -802,8 +875,10 @@
     "marker":{
       "lat":"36.151882",
       "lng":"-95.945351",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -824,8 +899,10 @@
     "marker":{
       "lat":"36.153726",
       "lng":"-95.942098",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -846,8 +923,10 @@
     "marker":{
       "lat":"36.15052",
       "lng":"-95.942345",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -868,8 +947,10 @@
     "marker":{
       "lat":"36.153841",
       "lng":"-95.947565",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -890,8 +971,10 @@
     "marker":{
       "lat":"36.151356",
       "lng":"-95.947868",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -912,8 +995,10 @@
     "marker":{
       "lat":"36.151741",
       "lng":"-95.941391",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":15
     }
   },
   {
@@ -934,8 +1019,10 @@
     "marker":{
       "lat":"36.148911",
       "lng":"-95.945885",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -956,8 +1043,10 @@
     "marker":{
       "lat":"36.151203",
       "lng":"-95.948936",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -978,8 +1067,10 @@
     "marker":{
       "lat":"36.150024",
       "lng":"-95.944351",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -1000,8 +1091,10 @@
     "marker":{
       "lat":"36.153984",
       "lng":"-95.944321",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1022,8 +1115,10 @@
     "marker":{
       "lat":"36.153439",
       "lng":"-95.948296",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -1044,8 +1139,10 @@
     "marker":{
       "lat":"36.148708",
       "lng":"-95.948074",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1066,8 +1163,10 @@
     "marker":{
       "lat":"36.151218",
       "lng":"-95.94735",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1088,8 +1187,10 @@
     "marker":{
       "lat":"36.152298",
       "lng":"-95.94592",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":0
     }
   },
   {
@@ -1110,8 +1211,10 @@
     "marker":{
       "lat":"36.154537",
       "lng":"-95.945145",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1132,8 +1235,10 @@
     "marker":{
       "lat":"36.154156",
       "lng":"-95.945198",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1154,8 +1259,10 @@
     "marker":{
       "lat":"36.155411",
       "lng":"-95.948769",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1176,8 +1283,10 @@
     "marker":{
       "lat":"36.171436",
       "lng":"-95.955254",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":10
     }
   },
   {
@@ -1198,8 +1307,10 @@
     "marker":{
       "lat":"36.151062",
       "lng":"-95.945419",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -1220,8 +1331,10 @@
     "marker":{
       "lat":"36.144484",
       "lng":"-95.987854",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":0
     }
   },
   {
@@ -1242,8 +1355,10 @@
     "marker":{
       "lat":"36.152927",
       "lng":"-95.946487",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -1264,8 +1379,10 @@
     "marker":{
       "lat":"36.153141",
       "lng":"-95.942703",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -1286,8 +1403,10 @@
     "marker":{
       "lat":"36.149384",
       "lng":"-95.942062",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":15
     }
   },
   {
@@ -1308,8 +1427,10 @@
     "marker":{
       "lat":"36.153522",
       "lng":"-95.942497",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -1330,8 +1451,10 @@
     "marker":{
       "lat":"36.151537",
       "lng":"-95.946291",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1352,8 +1475,10 @@
     "marker":{
       "lat":"36.151878",
       "lng":"-95.946129",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -1374,8 +1499,10 @@
     "marker":{
       "lat":"36.14929",
       "lng":"-95.950385",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1396,8 +1523,10 @@
     "marker":{
       "lat":"36.152611",
       "lng":"-95.943207",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1418,8 +1547,10 @@
     "marker":{
       "lat":"36.153118",
       "lng":"-95.942085",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -1440,8 +1571,10 @@
     "marker":{
       "lat":"36.153487",
       "lng":"-95.943503",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":15
     }
   },
   {
@@ -1462,8 +1595,10 @@
     "marker":{
       "lat":"36.152577",
       "lng":"-95.943866",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1484,8 +1619,10 @@
     "marker":{
       "lat":"36.151527",
       "lng":"-95.946854",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   },
   {
@@ -1506,8 +1643,10 @@
     "marker":{
       "lat":"36.153934",
       "lng":"-95.946327",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1528,8 +1667,10 @@
     "marker":{
       "lat":"36.155285",
       "lng":"-95.946487",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1550,8 +1691,10 @@
     "marker":{
       "lat":"36.154152",
       "lng":"-95.948761",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1572,8 +1715,10 @@
     "marker":{
       "lat":"36.154198",
       "lng":"-95.946472",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1594,8 +1739,10 @@
     "marker":{
       "lat":"36.153885",
       "lng":"-95.945068",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1616,8 +1763,10 @@
     "marker":{
       "lat":"36.153206",
       "lng":"-95.956169",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1638,8 +1787,10 @@
     "marker":{
       "lat":"36.150475",
       "lng":"-95.946678",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":17
     }
   },
   {
@@ -1660,8 +1811,10 @@
     "marker":{
       "lat":"36.158813",
       "lng":"-95.991516",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":0
     }
   },
   {
@@ -1682,8 +1835,10 @@
     "marker":{
       "lat":"36.151012",
       "lng":"-95.944633",
-      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
-      "min_zoom":14
+      "icon":"http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+    },
+    "gmaps":{
+      "min_zoom":16
     }
   }
 ]
