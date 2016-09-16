@@ -1,6 +1,7 @@
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
-  ROUTE_CREATE: null,
-  ROUTE_DESTROY: null
+  ITEM_CREATE: null,
+  ITEM_DESTROY: null,
+  ITEMS_MARK_ACTIVE: null,
 });
