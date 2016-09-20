@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ItemStore from '../stores/ItemStore';
+import ItemActions from '../actions/ItemActions';
 import classnames from 'classnames';
 import BurgerMenu from 'react-burger-menu';
 import styles from '../stylesheets/Listing.scss';
@@ -62,20 +63,45 @@ const SearchBar = React.createClass({
 });
 
 const SearchItem = React.createClass({
+  componentWillMount() {
+  },
+
   render() {
+    const itemStyles = {};
+    itemStyles[styles.selected] = this.props.$selected;
+    
     return (
-      <a href="#" className={classnames(styles.searchItem)}>
+      <a href="#" className={classnames(styles.searchItem, itemStyles)}
+         onClick={this._onClick}>
         <span>{this.props.name}</span>
       </a>
     );
-  }
+  },
+
+  _onClick() {
+    ItemActions.select(this.props.id);
+  },
 });
 
+function getListingState() {
+  return {
+    items: ItemStore.getAll(),
+  };
+}
+
 const Listing = React.createClass({
+  getInitialState() {
+    return getListingState();
+  },
+
+  componentDidMount() {
+    ItemStore.addChangeListener(this._onChange);
+  },
+
   render() {
     const Menu = BurgerMenu['slide'];
-    const searchItems = ItemStore.getAll().map((item) => (
-      <SearchItem {...item} />
+    const searchItems = this.state.items.map((item) => (
+      <SearchItem key={item.id} {...item} />
     ));
     return (
       <MenuWrapper>
@@ -89,6 +115,10 @@ const Listing = React.createClass({
         </Menu>
       </MenuWrapper>
     );
+  },
+
+  _onChange() {
+    this.setState(getListingState());
   },
 });
 
