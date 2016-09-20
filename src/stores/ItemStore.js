@@ -10,7 +10,8 @@ var ItemConstants = require('../constants/ItemConstants');
 var assign = require('object-assign');
 var itemData = require('../data/items.json');
 
-var CHANGE_EVENT = 'change';
+const CHANGE_EVENT = 'change';
+const SELECT_EVENT = 'select';
 
 function parseKMLCoords(msg) {
   var msgSplit = msg.split(' ');
@@ -27,6 +28,7 @@ var _markers = [];
 var _routes = [];
 
 var _selectedItem = null;
+var _infoWindow = null;
 
 function isMarker(id) {
   return _items[id].type == 'marker';
@@ -41,6 +43,7 @@ function create(data, isActive) {
   _items[id] = data;
   _items[id].$active = isActive;
   _items[id].$selected = false;
+  _items[id].$infoWindow = false;
 
   if(isMarker(id)) {
     _markers.push(id);
@@ -56,24 +59,37 @@ function destroy(id) {
 }
 
 function select(id) {
+  var oldSelect = _selectedItem;
   if(_selectedItem != null) {
     _items[_selectedItem].$selected = false;
   }
   _selectedItem = id;
   _items[_selectedItem].$selected = true;
+  return oldSelect;
 }
 
-function deselect(id) {
-  if(_selectedItem == id) {
-    _item[id].$selected = false;
-    _selectedItem = null;
-  }
+function deselect() {
+  var oldSelectedItem = _selectedItem;
+  _item[_selectedItem].$selected = false;
+  _selectedItem = null;
+  return oldSelectedItem;
 }
 
 function marksActive(ids) {
   Object.keys(_items).forEach((id) => {
     _items[id].$active = (ids.indexOf(id) != -1);
   });
+}
+
+function openInfoWindow(id) {
+  if(_infoWindow != null) _items[_infoWindow].$infoWindow = false;
+  _items[id].$infoWindow = true;
+  _infoWindow = id;
+}
+
+function closeInfoWindow(id) {
+  if(_infoWindow != null) _items[_infoWindow].$infoWindow = false;
+  _infoWindow = null;
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {
@@ -100,10 +116,21 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   },
 
   /**
+   * Called when the item with `id` is selected.
+   */
+  emitSelect: function(id) {
+    this.emit([SELECT_EVENT, id]);
+  },
+
+  /**
    * Allows functions to listen on when changes are made.
    */
   addChangeListener: function(callback) {
     this.on(CHANGE_EVENT, callback);
+  },
+
+  addSelectListener: function(id, callback) {
+    this.on([SELECT_EVENT, id], callback);
   },
 
   /**
@@ -129,6 +156,31 @@ var ItemStore = assign({}, EventEmitter.prototype, {
         ItemStore.emitChange();
         break;
 
+      case ItemConstants.ITEM_SELECT:
+        var oldSelect = select(action.id);
+        if(oldSelect != null && oldSelect != action.id) {
+          ItemStore.emitSelect(oldSelect);
+        }
+        ItemStore.emitSelect(action.id);
+        ItemStore.emitChange();
+        break;
+
+      case ItemConstants.ITEM_DESELECT:
+        var oldSelectedItem = deselect();
+        ItemStore.emitSelect(oldSelectedItem);
+        ItemStore.emitChange();
+        break;
+
+      case ItemConstants.ITEM_OPEN_INFOWINDOW:
+        openInfoWindow(action.id);
+        ItemStore.emitChange();
+        break;
+
+      case ItemConstants.ITEM_CLOSE_INFOWINDOW:
+        closeInfoWindow();
+        ItemStore.emitChange();
+        break;
+
       default:
         return false;
     }
@@ -137,6 +189,9 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   })
 
 });
+
+// We may need to create hundreds to thousands of events
+ItemStore.setMaxListeners(0);
 
 // Import JSON data
 itemData.forEach((item) => create(item, true));

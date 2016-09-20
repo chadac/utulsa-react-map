@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import ItemStore from '../stores/ItemStore';
+import ItemActions from '../actions/ItemActions';
 import classNames from 'classnames';
 import styles from '../stylesheets/Marker.scss';
 
@@ -11,16 +13,23 @@ function partial(func /*, 0..n args */) {
   };
 }
 
+// From http://stackoverflow.com/a/12410385
+function isInfoWindowOpen(infoWindow) {
+  var map = infoWindow.getMap();
+  return (map !== null && typeof map !== "undefined");
+}
+
 const Marker = React.createClass({
   getInitialState() {
     return {
-      $hover: false,
-      $infoWindowActive: false
+      $infoWindowOpened: false
     };
   },
 
   componentWillMount() {
+    ItemStore.addSelectListener(this.props.id, this._onSelect);
     this.info = this.createInfoWindow();
+    this.info.addListener("closeclick", this._onCloseInfoWindow);
     this.marker = this.createMarker();
     this.marker.addListener("click", this._onClick);
     this.marker.addListener("mouseover", this._onMouseOver);
@@ -58,23 +67,33 @@ const Marker = React.createClass({
   },
 
   render() {
-    if(this.state.$hover) {
-      this.info.open(this.map, this.marker);
+    if(this.props.$infoWindow && !isInfoWindowOpen(this.info)) {
+      this.info.open(this.props.map, this.marker);
     }
-    else {
+    else if(!this.props.$infoWindow && isInfoWindowOpen(this.info)) {
       this.info.close();
     }
     return null;
   },
 
   _onClick() {
-    this.info.open(this.map, this.marker);
+    ItemActions.openInfoWindow(this.props.id);
   },
 
   _onMouseOver() {
   },
 
   _onMouseOut() {
+  },
+
+  _onCloseInfoWindow() {
+    ItemActions.closeInfoWindow();
+  },
+
+  _onSelect() {
+    ItemActions.openInfoWindow(this.props.id);
+    this.props.map.setCenter(this.latlng());
+    this.props.map.setZoom(this.props.gmaps.min_zoom);
   },
 });
 
