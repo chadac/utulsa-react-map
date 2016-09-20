@@ -24,7 +24,7 @@ loaders.push({
 
 // global json files
 loaders.push({
-  test: /[\/\\](node_modules|global)[\/\\].*\.json$/
+  test: /[\/\\](node_modules|global)[\/\\].*\.json$/,
   loaders: [ 'json' ]
 });
 
