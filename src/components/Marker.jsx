@@ -28,12 +28,18 @@ const Marker = React.createClass({
 
   componentWillMount() {
     ItemStore.addSelectListener(this.props.id, this._onSelect);
+
     this.info = this.createInfoWindow();
     this.info.addListener("closeclick", this._onCloseInfoWindow);
+
     this.marker = this.createMarker();
     this.marker.addListener("click", this._onClick);
     this.marker.addListener("mouseover", this._onMouseOver);
     this.marker.addListener("mouseout", this._onMouseOut);
+  },
+
+  componentDidMount() {
+    console.log(this.props.id);
   },
 
   componentWillUnmount() {
@@ -91,9 +97,11 @@ const Marker = React.createClass({
   },
 
   _onSelect() {
-    ItemActions.openInfoWindow(this.props.id);
-    this.props.map.setCenter(this.latlng());
-    this.props.map.setZoom(this.props.gmaps.min_zoom);
+    // This runs on a delay so that the map component can react to changes correctly.
+    setTimeout( () => {
+      this.props.map.setZoom(18);
+      this.props.map.setCenter(this.latlng());
+    }, 300);
   },
 });
 
