@@ -19,9 +19,9 @@ loaders.push({
 loaders.push({
 	test: /[\/\\]src[\/\\].*\.scss/,
 	loaders: [
-		'style?sourceMap',
-		'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
-		'sass'
+		'style?camelCase',
+		'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]&camelCase',
+    'sass?camelCase'
 	]
 });
 
@@ -30,7 +30,7 @@ loaders.push({
 	test: /[\/\\]src[\/\\].*\.css/,
 	loaders: [
 		'style?sourceMap',
-		'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]'
+		'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]&camelCase'
 	]
 });
 
