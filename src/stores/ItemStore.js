@@ -65,7 +65,7 @@ function select(id) {
   }
   _selectedItem = id;
   _items[_selectedItem].$selected = true;
-  _items[_selectedItem].$infoWindow = true;
+  openInfoWindow(_selectedItem);
   return oldSelect;
 }
 
