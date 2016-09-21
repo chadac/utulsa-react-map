@@ -71,7 +71,8 @@ function select(id) {
 
 function deselect() {
   var oldSelectedItem = _selectedItem;
-  _item[_selectedItem].$selected = false;
+  _items[_selectedItem].$selected = false;
+  closeInfoWindow(_selectedItem);
   _selectedItem = null;
   return oldSelectedItem;
 }
@@ -95,10 +96,26 @@ function closeInfoWindow(id) {
 
 var ItemStore = assign({}, EventEmitter.prototype, {
   /**
+   * Imports JSON data.
+   */
+  loadFromJSON: () => {
+    itemData.forEach((item) => create(item, true));
+    ItemStore.emitChange();
+  },
+
+  /**
    * Returns all markers.
    */
   getAll: function() {
     return Object.keys(_items).map((id) => _items[id]);
+  },
+
+  getItem: (id) => {
+    return _items[id];
+  },
+
+  hasItem: (id) => {
+    return _items[id] != undefined;
   },
 
   getMarkers: function() {
@@ -107,6 +124,14 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
   getRoutes: function() {
     return _routes.map((id) => _items[id]);
+  },
+
+  getInfoWindow: function() {
+    return _infoWindow;
+  },
+
+  getSelected: function() {
+    return _selectedItem;
   },
 
   /**
@@ -143,7 +168,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
     switch(action.actionType) {
       case ItemConstants.ITEM_CREATE:
-        create(action.data);
+        create(action.data, false);
         ItemStore.emitChange();
         break;
 
@@ -193,9 +218,5 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
 // We may need to create hundreds to thousands of events
 ItemStore.setMaxListeners(0);
-
-// Import JSON data
-itemData.forEach((item) => create(item, true));
-ItemStore.emitChange();
 
 module.exports = ItemStore
