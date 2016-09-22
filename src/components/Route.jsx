@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import styles from '../stylesheets/Route.scss';
+import gmaps from '../GMapsAPI';
 
 const Route = React.createClass({
   componentDidMount() {
@@ -14,12 +15,12 @@ const Route = React.createClass({
 
   createPathCoordinates() {
     return this.props.route.path.map((coords) => {
-      return new google.maps.LatLng(coords.lat, coords.lng);
+      return new gmaps.LatLng(coords.lat, coords.lng);
     })
   },
 
   createRoute() {
-    return new google.maps.Polyline({
+    return new gmaps.Polyline({
       path: this.createPathCoordinates(),
       geodesic: true,
       strokeColor: this.props.route.strokeColor,
