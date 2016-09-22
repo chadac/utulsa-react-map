@@ -3,6 +3,9 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import Map from './Map';
 import Listing from './Listing';
 import styles from '../stylesheets/App.scss';
+import ItemStore from '../stores/ItemStore';
+
+ItemStore.load();
 
 const App = React.createClass({
   getDefaultProps() {

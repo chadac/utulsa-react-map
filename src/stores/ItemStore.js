@@ -98,7 +98,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   /**
    * Imports JSON data.
    */
-  loadFromJSON: () => {
+  load: () => {
     itemData.forEach((item) => create(item, true));
     ItemStore.emitChange();
   },
