@@ -1,6 +1,5 @@
-
 var gmaps;
-if(google.maps == undefined) {
+if(google == undefined || google.maps == undefined) {
   gmaps = null;
 } else {
   gmaps = google.maps;
