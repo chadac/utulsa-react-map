@@ -1,0 +1,18 @@
+.["places"] |
+[.[] |
+
+  { id: .place.urlname,
+    name: .place.name,
+    type: "marker",
+    description: .place.description_text,
+    address: .place.address,
+    website: .place.website,
+    photos: [.place.photo_url],
+    marker: { lat: .place.geo.latitude,
+              lng: .place.geo.longitude,
+              icon: "http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png"
+            },
+    gmaps: { min_zoom: 16 }
+  }
+
+]
