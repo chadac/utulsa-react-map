@@ -3,6 +3,7 @@ import ItemStore from '../stores/ItemStore';
 import ItemActions from '../actions/ItemActions';
 import classNames from 'classnames';
 import styles from '../stylesheets/Marker.scss';
+import gmaps from '../GMapsAPI';
 
 // From http://stackoverflow.com/q/373157
 function partial(func /*, 0..n args */) {
@@ -20,6 +21,7 @@ function isInfoWindowOpen(infoWindow) {
 }
 
 const Marker = React.createClass({
+
   getInitialState() {
     return {
       $infoWindowOpened: false
@@ -39,7 +41,6 @@ const Marker = React.createClass({
   },
 
   componentDidMount() {
-    console.log(this.props.id);
   },
 
   componentWillUnmount() {
@@ -48,14 +49,14 @@ const Marker = React.createClass({
   },
 
   latlng() {
-    return new google.maps.LatLng(
+    return new gmaps.LatLng(
       this.props.marker.lat,
       this.props.marker.lng
     );
   },
 
   createMarker() {
-    return new google.maps.Marker({
+    return new gmaps.Marker({
       position: this.latlng(),
       icon: "http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
       draggable: true,
@@ -67,7 +68,7 @@ const Marker = React.createClass({
     var content = "<h4>" + this.props.name + "</h4>"
                 + "<p>" + this.props.address + "</p>"
                 + "<p>" + this.props.website + "</p>";
-    return new google.maps.InfoWindow({
+    return new gmaps.InfoWindow({
       content: content
     });
   },
@@ -103,6 +104,7 @@ const Marker = React.createClass({
       this.props.map.setCenter(this.latlng());
     }, 300);
   },
+
 });
 
 export default Marker;
