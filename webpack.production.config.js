@@ -22,6 +22,12 @@ loaders.push({
 	loader: ExtractTextPlugin.extract('style', 'css')
 });
 
+// global json files
+loaders.push({
+  test: /[\/\\](node_modules|global)[\/\\].*\.json$/,
+  loaders: [ 'json' ]
+});
+
 module.exports = {
 	entry: [
 		'./src/index.jsx'

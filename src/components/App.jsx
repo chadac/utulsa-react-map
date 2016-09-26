@@ -1,62 +1,48 @@
 import React, {Component} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
-import Map from './Map'
-import styles from '../stylesheets/App.scss'
-import MarkerActions from '../actions/MarkerActions'
+import Map from './Map';
+import Listing from './Listing';
+import styles from '../stylesheets/App.scss';
+import ItemStore from '../stores/ItemStore';
 
-class App extends Component {
-  static defaultProps = {
-    center: {lat: 36.15159935580428, lng: -95.94644401639404},
-    zoom: 16
+function getMapState() {
+  return {
+    markers: ItemStore.getMarkers(),
+    routes: ItemStore.getRoutes()
   };
+}
 
-  state = {
-    props: []
-  }
+const App = React.createClass({
+  getInitialState() {
+    return getMapState();
+  },
 
-  _fetchPlaces() {
-    fetch('http://calendar.utulsa.edu/api/2/places?pp=100')
-      .then( function(response) {
-        return response.json();
-      })
-      .then( function(data) {
-        data.places.map((place) => place.place)
-            .filter((place) => place.geo.latitude != null &&
-                             place.geo.longitude != null)
-            .map((place) => { return {
-              key: place.id,
-              id: place.id,
-              name: place.name,
-              position: { lat: place.geo.latitude, lng: place.geo.longitude },
-              address: place.address,
-              website: place.url,
-              phone: place.phone,
-              hours: place.hours
-            }})
-            .forEach((place) => {
-              MarkerActions.create(place);
-            });
-      })
-      .catch( function(err) {
-        console.log(err);
-        return null;
-      });
-  }
+  getDefaultProps() {
+    return {
+      initialCenter: {lat: 36.15159935580428, lng: -95.94644401639404},
+      initialZoom: 16
+    };
+  },
 
-  componentDidMount() {
-    this._fetchPlaces();
-  }
-
-  shouldComponentUpdate = shouldPureComponentUpdate;
+  componentWillMount() {
+    ItemStore.addChangeListener(this._onChange);
+  },
 
   render() {
     return (
-      <div className={styles.App}>
-        <Map
-        />
+      <div id="outer-container">
+        <Listing pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } />
+        <main id="page-wrap" className={styles.App}>
+          <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
+              markers={this.state.markers} routes={this.state.routes} />
+        </main>
       </div>
     );
-  }
-}
+  },
+
+  _onChange() {
+    this.setState(getMapState());
+  },
+});
 
 export default App;
