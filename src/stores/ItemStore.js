@@ -206,9 +206,6 @@ var ItemStore = assign({}, EventEmitter.prototype, {
         closeInfoWindow();
         ItemStore.emitChange();
         break;
-
-      default:
-        return false;
     }
 
     return true;
