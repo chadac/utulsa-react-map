@@ -14,8 +14,13 @@ loaders.push({
 // local scss modules
 loaders.push({
 	test: /[\/\\]src[\/\\].*\.scss/,
-	loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass')
+	loaders: [
+		'style?camelCase',
+		'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]&camelCase',
+    'sass?camelCase'
+	]
 });
+
 // global css files
 loaders.push({
 	test: /[\/\\](node_modules|global)[\/\\].*\.css$/,
@@ -24,7 +29,7 @@ loaders.push({
 
 // global json files
 loaders.push({
-  test: /[\/\\](node_modules|global)[\/\\].*\.json$/,
+  test: /[\/\\](node_modules|global|src)[\/\\].*\.json$/,
   loaders: [ 'json' ]
 });
 
