@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import ItemStore from '../stores/ItemStore'
 import ItemActions from '../actions/ItemActions'
@@ -15,26 +15,32 @@ function getItemState() {
 }
 
 const Map = React.createClass({
+  propTypes: {
+    center: PropTypes.object.isRequired,
+    zoom: PropTypes.number.isRequired,
+    markers: PropTypes.array.isRequired,
+    routes: PropTypes.array.isRequired,
+  },
 
   getDefaultProps() {
     return {
       center: {lat: 36.15159935580428, lng: -95.94644401639404},
       zoom: 16,
-      markers: []
     };
   },
 
   getInitialState() {
     return {
-      markers: [],
-      routes: [],
-      zoom: 0,
-      center: {lat: 0, lng: 0}
+      zoom: this.props.zoom,
+      center: this.props.center
     };
   },
 
+  componentWillMount() {
+    this.updateActiveItems();
+  },
+
   componentDidMount() {
-    ItemStore.addChangeListener(this._onChange);
     this.map = this.createMap();
     this.map.addListener("center_changed", this._onMapCenterChange);
     this.map.addListener("zoom_changed", this._onMapZoomChange);
@@ -61,18 +67,22 @@ const Map = React.createClass({
 
   render() {
     const map = this.map;
-    const markers = this
-      .state.markers
-      .filter((marker) => marker.$active)
-      .map((marker) => (
-        <Marker key={marker.id} {...marker} map={map} />
-      ));
-    const routes = this
-      .state.routes
-      .filter((route) => route.$active)
-      .map((route) => (
-        <Route key={route.id} {...route} map={map} />
-      ));
+    var markers;
+    var routes;
+    if(map !== undefined) {
+      markers = this
+        .props.markers
+        .filter((marker) => marker.$active)
+        .map((marker) => (
+          <Marker key={marker.id} {...marker} map={map} />
+        ));
+      routes = this
+        .props.routes
+        .filter((route) => route.$active)
+        .map((route) => (
+          <Route key={route.id} {...route} map={map} />
+        ));
+    }
     return (
       <div ref="map" className={styles.Map}>
         {markers}
