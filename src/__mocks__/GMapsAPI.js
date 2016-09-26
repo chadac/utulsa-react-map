@@ -18,12 +18,14 @@ class Map extends MockListener {
     super();
   }
 }
+gmaps.Map = Map;
 
 class Marker extends MockListener {
   constructor() {
     super();
   }
 }
+gmaps.Marker = Marker;
 
 class InfoWindow extends MockListener {
   constructor() {
@@ -31,6 +33,10 @@ class InfoWindow extends MockListener {
 
     this.__isOpen = false;
     this.__open = {map: null, marker: null};
+  }
+
+  getMap() {
+    return this.__open.map;
   }
 
   open(map, marker) {
@@ -43,13 +49,23 @@ class InfoWindow extends MockListener {
     this.__open = {map: null, marker: null};
   }
 }
+gmaps.InfoWindow = InfoWindow;
 
 class Route extends MockListener {
   constructor() {
     super();
   }
 }
+gmaps.Route = Route;
 
-gmaps.Map = Map;
+class LatLng {
+  constructor() {
+  }
+}
+gmaps.LatLng = LatLng;
+
+class Polyline {
+}
+gmaps.Polyline = Polyline;
 
 module.exports = gmaps;

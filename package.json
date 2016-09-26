@@ -61,7 +61,8 @@
     "moduleNameMapper": {
       "^.+\\.(scss|css|less)$": "<rootDir>/test/styleMock.js",
       "^.+\\.(gif|ttf|eot|svg)$": "<rootDir>/test/fileMock.js"
-    }
+    },
+    "testRegex": "/__tests__/.*\\.(test|spec)\\.(js|jsx)$"
   },
   "eslintConfig": {
     "extends": "./node_modules/react-scripts/config/eslint.js"
