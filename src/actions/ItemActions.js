@@ -20,13 +20,6 @@ var ItemActions = {
     });
   },
 
-  marksActive: function(ids) {
-    AppDispatcher.handleViewAction({
-      actionType: ItemConstants.ITEMS_MARK_ACTIVE,
-      ids: ids
-    });
-  },
-
   select: function(id) {
     AppDispatcher.handleViewAction({
       actionType: ItemConstants.ITEM_SELECT,

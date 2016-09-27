@@ -4,6 +4,7 @@ import App from './components/App';
 import styles from './stylesheets/index.scss';
 import ItemStore from './stores/ItemStore';
 
+console.log("Loading items...");
 ItemStore.load();
 
 ReactDOM.render(

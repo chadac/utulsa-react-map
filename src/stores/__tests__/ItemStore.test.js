@@ -23,15 +23,6 @@ describe('ItemStore', () => {
       },
     };
   };
-  var actionItemMarkActive = (ids) => {
-    return {
-      source: 'VIEW_ACTION',
-      action: {
-        actionType: ItemConstants.ITEMS_MARK_ACTIVE,
-        ids: ids
-      },
-    };
-  };
   var actionItemSelect = (id) => {
     return {
       source: 'VIEW_ACTION',
@@ -89,7 +80,6 @@ describe('ItemStore', () => {
       expect(ItemStore.hasItem('item1')).toBe(true);
 
       var item1 = ItemStore.getItem('item1');
-      expect(item1.$active).toBe(false);
       expect(item1.$selected).toBe(false);
       expect(item1.$infoWindow).toBe(false);
     });
@@ -98,16 +88,6 @@ describe('ItemStore', () => {
       callback(actionItemCreate('item1'));
       callback(actionItemDestroy('item1'));
       expect(ItemStore.hasItem('item1')).toBe(false);
-    });
-
-    it('marks an item active', () => {
-      callback(actionItemCreate('item1'));
-      callback(actionItemCreate('item2'));
-      callback(actionItemMarkActive(['item1']));
-      var item1 = ItemStore.getItem('item1');
-      var item2 = ItemStore.getItem('item2');
-      expect(item1.$active).toBe(true);
-      expect(item2.$active).toBe(false);
     });
 
     it('selects an item', () => {
@@ -188,11 +168,6 @@ describe('ItemStore', () => {
       callback(actionItemCreate('item1'));
       callback(actionItemDestroy('item1'));
       expect(mockCallback.mock.calls.length).toBe(2);
-    });
-
-    it("triggers on ITEMS_MARK_ACTIVE", () => {
-      callback(actionItemMarkActive([]));
-      expect(mockCallback.mock.calls.length).toBe(1);
     });
 
     it("triggers on ITEM_SELECT", () => {
