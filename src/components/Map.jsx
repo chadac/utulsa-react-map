@@ -7,54 +7,20 @@ import Route from './Route'
 import styles from '../stylesheets/Map.scss'
 import gmaps from '../GMapsAPI';
 
-function getItemState() {
-  return {
-    markers: ItemStore.getMarkers(),
-    routes: ItemStore.getRoutes()
-  }
-}
-
 const Map = React.createClass({
   propTypes: {
     center: PropTypes.object.isRequired,
     zoom: PropTypes.number.isRequired,
     markers: PropTypes.array.isRequired,
     routes: PropTypes.array.isRequired,
-  },
-
-  getDefaultProps() {
-    return {
-      center: {lat: 36.15159935580428, lng: -95.94644401639404},
-      zoom: 16,
-    };
-  },
-
-  getInitialState() {
-    return {
-      zoom: this.props.zoom,
-      center: this.props.center
-    };
-  },
-
-  componentWillMount() {
-    this.updateActiveItems();
+    _onZoom: PropTypes.func.isRequired,
+    _onCenter: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
     this.map = this.createMap();
-    this.map.addListener("center_changed", this._onMapCenterChange);
-    this.map.addListener("zoom_changed", this._onMapZoomChange);
-    this.setState(getItemState());
-  },
-
-  updateActiveItems() {
-    const ids = ItemStore
-      .getAll()
-      .filter((item) => {
-        return this.state.zoom >= item.gmaps.min_zoom
-      })
-      .map((item) => item.id);
-    ItemActions.marksActive(ids);
+    this.map.addListener("center_changed", this._onMapCenter);
+    this.map.addListener("zoom_changed", this._onMapZoom);
   },
 
   createMap() {
@@ -67,22 +33,18 @@ const Map = React.createClass({
 
   render() {
     const map = this.map;
-    var markers;
-    var routes;
-    if(map !== undefined) {
-      markers = this
-        .props.markers
-        .filter((marker) => marker.$active)
-        .map((marker) => (
-          <Marker key={marker.id} {...marker} map={map} />
-        ));
-      routes = this
-        .props.routes
-        .filter((route) => route.$active)
-        .map((route) => (
-          <Route key={route.id} {...route} map={map} />
-        ));
-    }
+    const markers = this
+      .props.markers
+      .filter((marker) => marker.$inZoom)
+      .map((marker) => (
+        <Marker key={marker.id} {...marker} map={map} />
+      ));
+    const routes = this
+      .props.routes
+      .filter((route) => route.$inZoom)
+      .map((route) => (
+        <Route key={route.id} {...route} map={map} />
+      ));
     return (
       <div ref="map" className={styles.Map}>
         {markers}
@@ -95,18 +57,15 @@ const Map = React.createClass({
     this.setState(getItemState());
   },
 
-  _onMapCenterChange() {
-    this.setState({
-      center: this.map.getCenter()
-    });
+  _onMapCenter() {
+    const center = this.map.getCenter();
+    this.props._onCenter(center.lat, center.lng);
   },
 
-  _onMapZoomChange() {
-    this.setState({
-      zoom: this.map.getZoom()
-    });
-    this.updateActiveItems();
-  },
+  _onMapZoom() {
+    const zoom = this.map.getZoom();
+    this.props._onZoom(zoom);
+  }
 
 });
 

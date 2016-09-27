@@ -45,8 +45,19 @@ Dispatcher.prototype = assign({}, Dispatcher.prototype, {
       });
     });
     _promises = [];
-  }
+  },
 
+  /**
+   * @param  {array} promiseIndexes
+   * @param  {function} callback
+   */
+  waitFor: function(promiseIndexes, callback) {
+    var selectedPromises = promiseIndexes.map(
+      function(index) {
+        return _promises[index];
+      });
+    return Promise.all(selectedPromises).then(callback);
+  }
 });
 
 module.exports = Dispatcher;

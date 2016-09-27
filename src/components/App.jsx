@@ -4,8 +4,10 @@ import Map from './Map';
 import Listing from './Listing';
 import styles from '../stylesheets/App.scss';
 import ItemStore from '../stores/ItemStore';
+import GMapsStore from '../stores/GMapsStore';
+import GMapsActions from '../actions/GMapsActions';
 
-function getMapState() {
+function getItemState() {
   return {
     markers: ItemStore.getMarkers(),
     routes: ItemStore.getRoutes()
@@ -14,13 +16,13 @@ function getMapState() {
 
 const App = React.createClass({
   getInitialState() {
-    return getMapState();
+    return getItemState();
   },
 
   getDefaultProps() {
     return {
-      initialCenter: {lat: 36.15159935580428, lng: -95.94644401639404},
-      initialZoom: 16
+      initialCenter: GMapsStore.getCenter(),
+      initialZoom: GMapsStore.getZoom(),
     };
   },
 
@@ -34,14 +36,16 @@ const App = React.createClass({
         <Listing pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } />
         <main id="page-wrap" className={styles.App}>
           <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
-              markers={this.state.markers} routes={this.state.routes} />
+               _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
+               markers={this.state.markers} routes={this.state.routes}
+          />
         </main>
       </div>
     );
   },
 
   _onChange() {
-    this.setState(getMapState());
+    this.setState(getItemState());
   },
 });
 

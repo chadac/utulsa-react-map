@@ -6,10 +6,10 @@ const assign = require('object-assign');
 const CENTER_EVENT = 'change';
 const ZOOM_EVENT = 'zoom';
 
-var _center = {lat: null, lng: null};
+var _center = {lat: 36.15159935580428, lng: -95.94644401639404};
 
 var _oldZoom = null;
-var _zoom = null;
+var _zoom = 16;
 
 function center(lat, lng) {
   _center = {lat: lat, lng: lng};
@@ -68,3 +68,5 @@ const GMapsStore = assign({}, EventEmitter.prototype, {
   }),
 
 });
+
+module.exports = GMapsStore;

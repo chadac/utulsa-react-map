@@ -4,9 +4,12 @@ import App from './components/App';
 import styles from './stylesheets/index.scss';
 import ItemStore from './stores/ItemStore';
 
-ItemStore.load();
-
 ReactDOM.render(
   <App />,
   document.querySelector('#app')
 );
+
+setTimeout(function() {
+  console.log("Loading items...");
+  ItemStore.load();
+}, 1000);
