@@ -4,6 +4,7 @@ import ItemActions from '../actions/ItemActions';
 import classNames from 'classnames';
 import styles from '../stylesheets/Marker.scss';
 import gmaps from '../GMapsAPI';
+import MapIcon from '../data/mapIcons.json';
 
 // From http://stackoverflow.com/q/373157
 function partial(func /*, 0..n args */) {
@@ -58,7 +59,7 @@ const Marker = React.createClass({
   createMarker() {
     return new gmaps.Marker({
       position: this.latlng(),
-      icon: "http://utulsa-assets.s3.amazonaws.com/web/static/v1/images/tu_map_icon.png",
+      icon: MapIcon[this.props.marker.icon],
       draggable: true,
       map: this.props.map,
     });
