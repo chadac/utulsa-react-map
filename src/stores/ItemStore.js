@@ -112,7 +112,14 @@ function closeInfoWindow(id) {
 
 function mapUpdateZoom() {
   const czoom = GMapsStore.getZoom(),
-        ozoom = GMapsStore.getOldZoom();
+        ozoom = GMapsStore.getOldZoom(),
+        inc = czoom > ozoom ? 1 : -1;
+  for(var i = ozoom; i != czoom; i += inc) {
+    _mapUpdateZoomLevel(i + inc, i);
+  }
+}
+
+function _mapUpdateZoomLevel(czoom, ozoom) {
   if(czoom > ozoom) {
     if(_zoomLevels.max[ozoom] != undefined) {
       _zoomLevels.max[ozoom]
