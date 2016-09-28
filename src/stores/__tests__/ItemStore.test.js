@@ -10,7 +10,7 @@ describe('ItemStore', () => {
       source: 'VIEW_ACTION',
       action: {
         actionType: ItemConstants.ITEM_CREATE,
-        data: {id: id}
+        data: {id: id, name: id, gmaps: {}}
       },
     };
   };
@@ -66,7 +66,7 @@ describe('ItemStore', () => {
     AppDispatcher = require('../../dispatcher/AppDispatcher');
     ItemStore = require('../ItemStore');
     // Grabs the ItemStore action processing method
-    callback = AppDispatcher.register.mock.calls[0][0];
+    callback = AppDispatcher.register.mock.calls[1][0];
   });
 
   describe("#register", () => {
@@ -80,14 +80,14 @@ describe('ItemStore', () => {
       expect(ItemStore.hasItem('item1')).toBe(true);
 
       var item1 = ItemStore.getItem('item1');
-      expect(item1.$selected).toBe(false);
-      expect(item1.$infoWindow).toBe(false);
+      expect(item1.$selected).toBeFalsy();
+      expect(item1.$infoWindow).toBeFalsy();
     });
 
     it('destroys an item', () => {
       callback(actionItemCreate('item1'));
       callback(actionItemDestroy('item1'));
-      expect(ItemStore.hasItem('item1')).toBe(false);
+      expect(ItemStore.hasItem('item1')).toBeFalsy();
     });
 
     it('selects an item', () => {

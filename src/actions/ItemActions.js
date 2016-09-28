@@ -45,6 +45,19 @@ var ItemActions = {
       actionType: ItemConstants.ITEM_CLOSE_INFOWINDOW,
     });
   },
+
+  search: function(word) {
+    AppDispatcher.handleViewAction({
+      actionType: ItemConstants.ITEM_SEARCH,
+      word: word
+    });
+  },
+
+  resetSearch: function() {
+    AppDispatcher.handleViewAction({
+      actionType: ItemConstants.ITEM_RESET_SEARCH,
+    });
+  },
 };
 
 module.exports = ItemActions;

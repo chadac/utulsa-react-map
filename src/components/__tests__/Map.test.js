@@ -8,6 +8,8 @@ describe('Map', () => {
 
   var Map;
   var map;
+  const zoomFn = jest.fn();
+  const centerFn = jest.fn();
 
   beforeEach(function() {
     // Won't work without `.default`
@@ -15,6 +17,8 @@ describe('Map', () => {
 
     map = TestUtils.renderIntoDocument(
       <Map
+        center={{lat: 0, lng: 0}} zoom={16}
+        _onZoom={zoomFn} _onCenter={centerFn}
         markers={Utilities.generateMarkers(10)}
         routes={Utilities.generateRoutes(10)}
       />

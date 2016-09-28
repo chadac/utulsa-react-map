@@ -11,6 +11,7 @@ const assign = require('object-assign');
 const itemData = require('../data/items.json');
 const GMapsStore = require('./GMapsStore');
 const GMapsConstants = require('../constants/GMapsConstants');
+const Trie = require('../util/Trie');
 
 const CHANGE_EVENT = 'change';
 const SELECT_EVENT = 'select';
@@ -25,6 +26,9 @@ function parseKMLCoords(msg) {
 
 // Collection of items
 var _items = {};
+
+var _itemTrie = new Trie();
+var _searchKey = null;
 
 // Marker IDs
 var _markers = [];
@@ -47,12 +51,16 @@ function isRoute(id) {
 }
 
 function _addZoom(id, min_zoom, max_zoom) {
-  if(_zoomLevels.max[max_zoom] == undefined)
-    _zoomLevels.max[max_zoom] = [];
-  _zoomLevels.max[max_zoom].push(id);
-  if(_zoomLevels.min[min_zoom] == undefined)
-    _zoomLevels.min[min_zoom] = [];
-  _zoomLevels.min[min_zoom].push(id);
+  if(max_zoom !== undefined) {
+    if(_zoomLevels.max[max_zoom] == undefined)
+      _zoomLevels.max[max_zoom] = [];
+    _zoomLevels.max[max_zoom].push(id);
+  }
+  if(min_zoom !== undefined) {
+    if(_zoomLevels.min[min_zoom] == undefined)
+      _zoomLevels.min[min_zoom] = [];
+    _zoomLevels.min[min_zoom].push(id);
+  }
 }
 
 function create(data) {
@@ -60,6 +68,8 @@ function create(data) {
   _items[id] = data;
   _items[id].$selected = false;
   _items[id].$infoWindow = false;
+  _items[id].$searchKey = null;
+  _itemTrie.add(data.name, data.id);
 
   const currentZoom = GMapsStore.getZoom();
   _items[id].$inZoom =
@@ -139,6 +149,21 @@ function _mapUpdateZoomLevel(czoom, ozoom) {
                  .forEach((id) => _items[id].$inZoom = false);
     }
   }
+}
+
+function search(w) {
+  if(w.length <= 0) {
+    _searchKey = null;
+    return;
+  }
+  _searchKey = Math.random();
+  for(key in _itemTrie.search(w)) {
+    _items[key]._searchKey = _searchKey;
+  }
+};
+
+function resetSearch() {
+  _searchKey = null;
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {
@@ -246,6 +271,16 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
       case ItemConstants.ITEM_CLOSE_INFOWINDOW:
         closeInfoWindow();
+        ItemStore.emitChange();
+        break;
+
+      case ItemConstants.ITEM_SEARCH:
+        search(action.word);
+        ItemStore.emitChange();
+        break;
+
+      case ItemConstants.ITEM_RESET_SEARCH:
+        resetSearch();
         ItemStore.emitChange();
         break;
 

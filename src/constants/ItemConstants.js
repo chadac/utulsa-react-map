@@ -7,4 +7,6 @@ module.exports = keyMirror({
   ITEM_DESELECT: null,
   ITEM_OPEN_INFOWINDOW: null,
   ITEM_CLOSE_INFOWINDOW: null,
+  ITEM_SEARCH: null,
+  ITEM_RESET_SEARCH: null,
 });
