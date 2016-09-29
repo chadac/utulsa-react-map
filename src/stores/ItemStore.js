@@ -157,9 +157,9 @@ function search(w) {
     return;
   }
   _searchKey = Math.random();
-  for(key in _itemTrie.search(w)) {
-    _items[key]._searchKey = _searchKey;
-  }
+  _itemTrie.search(w).forEach((key) => {
+    _items[key].$searchKey = _searchKey;
+  });
 };
 
 function resetSearch() {
@@ -204,6 +204,10 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
   getSelected() {
     return _selectedItem;
+  },
+
+  getSearchKey() {
+    return _searchKey;
   },
 
   /**

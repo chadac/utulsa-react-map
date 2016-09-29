@@ -57,6 +57,23 @@ describe('ItemStore', () => {
       },
     };
   };
+  var actionItemSearch = (query) => {
+    return {
+      source: 'VIEW_ACTION',
+      action: {
+        actionType: ItemConstants.ITEM_SEARCH,
+        word: query,
+      }
+    }
+  }
+  var actionItemResetSearch = (query) => {
+    return {
+      source: 'VIEW_ACTION',
+      action: {
+        actionType: ItemConstants.ITEM_RESET_SEARCH,
+      }
+    }
+  }
 
   var AppDispatcher;
   var ItemStore;
@@ -215,6 +232,46 @@ describe('ItemStore', () => {
       callback(actionItemDeselect());
 
       expect(mockCallback.mock.calls.length).toBe(2);
+    });
+  });
+
+  describe('#search', () => {
+    it('searches for items', () => {
+      callback(actionItemCreate('item1'));
+      callback(actionItemCreate('item2'));
+      callback(actionItemCreate('the third one'));
+      callback(actionItemSearch('item'));
+      const item1 = ItemStore.getItem('item1'),
+            item2 = ItemStore.getItem('item2'),
+            item3 = ItemStore.getItem('the third one'),
+            searchKey = ItemStore.getSearchKey();
+      expect(item1.$searchKey).toBe(searchKey);
+      expect(item2.$searchKey).toBe(searchKey);
+      expect(item3.$searchKey).toBe(null);
+    });
+
+    it('resets on new searches', () => {
+      callback(actionItemCreate('item1'));
+      callback(actionItemCreate('item2'));
+      callback(actionItemCreate('the third one'));
+      callback(actionItemSearch('item'));
+      const item1 = ItemStore.getItem('item1'),
+            item2 = ItemStore.getItem('item2'),
+            item3 = ItemStore.getItem('the third one'),
+            oldSearchKey = ItemStore.getSearchKey();
+      callback(actionItemSearch('the'));
+      const newSearchKey = ItemStore.getSearchKey();
+      expect(item1.$searchKey).toBe(oldSearchKey);
+      expect(item2.$searchKey).toBe(oldSearchKey);
+      expect(item3.$searchKey).toBe(newSearchKey);
+    });
+
+    it('resets searches', () => {
+      callback(actionItemCreate('item1'));
+      callback(actionItemSearch('item'));
+      callback(actionItemResetSearch());
+      const searchKey = ItemStore.getSearchKey();
+      expect(searchKey).toBe(null);
     });
   });
 });
