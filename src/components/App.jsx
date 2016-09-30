@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
-import Map from './Map';
-import Listing from './Listing';
+
 import styles from '../stylesheets/App.scss';
+
+import SearchBar from './menu/SearchBar';
+import SearchResults from './menu/SearchResults';
+import Map from './Map';
 
 import AppStateStore from '../stores/AppStateStore';
 import ItemStore from '../stores/ItemStore';
@@ -52,18 +55,14 @@ const App = React.createClass({
     });
 
     return (
-      <div id="outer-container">
-        <Listing pageWrapId={ "page-wrap" }
-                 outerContainerId={ "outer-container" }
-                 appState={this.state.appState} items={items}
-                 _onSearch={ItemActions.search}
+      <div id="outer-container" style={{height:"100%"}}>
+        <SearchBar
+            _search={ItemActions.search}
+            appState={this.state.appState} items={items} />
+        <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
+             _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
+             appState={this.state.appState} items={items}
         />
-        <main id="page-wrap" className={styles.App}>
-          <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
-               _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
-               appState={this.state.appState} items={items}
-          />
-        </main>
       </div>
     );
   },
