@@ -10,7 +10,7 @@ describe('ItemStore', () => {
       source: 'VIEW_ACTION',
       action: {
         actionType: ItemConstants.ITEM_CREATE,
-        data: {id: id}
+        data: {id: id, name: id, gmaps: {}}
       },
     };
   };
@@ -57,6 +57,23 @@ describe('ItemStore', () => {
       },
     };
   };
+  var actionItemSearch = (query) => {
+    return {
+      source: 'VIEW_ACTION',
+      action: {
+        actionType: ItemConstants.ITEM_SEARCH,
+        word: query,
+      }
+    }
+  }
+  var actionItemResetSearch = (query) => {
+    return {
+      source: 'VIEW_ACTION',
+      action: {
+        actionType: ItemConstants.ITEM_RESET_SEARCH,
+      }
+    }
+  }
 
   var AppDispatcher;
   var ItemStore;
@@ -66,7 +83,7 @@ describe('ItemStore', () => {
     AppDispatcher = require('../../dispatcher/AppDispatcher');
     ItemStore = require('../ItemStore');
     // Grabs the ItemStore action processing method
-    callback = AppDispatcher.register.mock.calls[0][0];
+    callback = AppDispatcher.register.mock.calls[1][0];
   });
 
   describe("#register", () => {
@@ -80,14 +97,14 @@ describe('ItemStore', () => {
       expect(ItemStore.hasItem('item1')).toBe(true);
 
       var item1 = ItemStore.getItem('item1');
-      expect(item1.$selected).toBe(false);
-      expect(item1.$infoWindow).toBe(false);
+      expect(item1.$selected).toBeFalsy();
+      expect(item1.$infoWindow).toBeFalsy();
     });
 
     it('destroys an item', () => {
       callback(actionItemCreate('item1'));
       callback(actionItemDestroy('item1'));
-      expect(ItemStore.hasItem('item1')).toBe(false);
+      expect(ItemStore.hasItem('item1')).toBeFalsy();
     });
 
     it('selects an item', () => {
@@ -215,6 +232,63 @@ describe('ItemStore', () => {
       callback(actionItemDeselect());
 
       expect(mockCallback.mock.calls.length).toBe(2);
+    });
+  });
+
+  describe('#search', () => {
+    it('searches for items', () => {
+      callback(actionItemCreate('item1'));
+      callback(actionItemCreate('item2'));
+      callback(actionItemCreate('the third one'));
+      callback(actionItemSearch('item'));
+      const item1 = ItemStore.getItem('item1'),
+            item2 = ItemStore.getItem('item2'),
+            item3 = ItemStore.getItem('the third one'),
+            searchKey = ItemStore.getSearchKey();
+      expect(item1.$searchKey).toBe(searchKey);
+      expect(item2.$searchKey).toBe(searchKey);
+      expect(item3.$searchKey).toBe(null);
+    });
+
+    it('resets on new searches', () => {
+      callback(actionItemCreate('item1'));
+      callback(actionItemCreate('item2'));
+      callback(actionItemCreate('the third one'));
+      callback(actionItemSearch('item'));
+      const item1 = ItemStore.getItem('item1'),
+            item2 = ItemStore.getItem('item2'),
+            item3 = ItemStore.getItem('the third one'),
+            oldSearchKey = ItemStore.getSearchKey();
+      callback(actionItemSearch('the'));
+      const newSearchKey = ItemStore.getSearchKey();
+      expect(item1.$searchKey).toBe(oldSearchKey);
+      expect(item2.$searchKey).toBe(oldSearchKey);
+      expect(item3.$searchKey).toBe(newSearchKey);
+    });
+
+    it('slices by space', () => {
+      callback(actionItemCreate('Hello World!'));
+      const item = ItemStore.getItem('Hello World!');
+
+      callback(actionItemSearch('He'));
+      const searchKey1 = ItemStore.getSearchKey();
+      expect(item.$searchKey).toBe(searchKey1);
+
+      callback(actionItemSearch('Wo'));
+      const searchKey2 = ItemStore.getSearchKey();
+      expect(item.$searchKey).toBe(searchKey2);
+
+      callback(actionItemSearch('ojkk'));
+      const searchKey3 = ItemStore.getSearchKey();
+      expect(item.$searchKey).not.toBe(searchKey3);
+    });
+
+    it('resets searches', () => {
+      callback(actionItemCreate('item1'));
+      callback(actionItemSearch('item'));
+      callback(actionItemResetSearch());
+      const searchKey = ItemStore.getSearchKey();
+      expect(searchKey).toBe(null);
     });
   });
 });

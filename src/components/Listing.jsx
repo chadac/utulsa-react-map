@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import ItemStore from '../stores/ItemStore';
 import ItemActions from '../actions/ItemActions';
 import classnames from 'classnames';
@@ -55,21 +55,33 @@ const MenuWrapper = React.createClass({
 });
 
 const SearchBar = React.createClass({
+  getDefaultProps() {
+    return {
+      _search: PropTypes.func.isRequired,
+    };
+  },
+
   render() {
     return (
-      <input className={classnames(styles.searchBar)} type="text" />
+      <input className={classnames(styles.searchBar)} type="text"
+             onChange={this._onChange}
+      />
     );
-  }
+  },
+
+  _onChange(event) {
+    this.props._onSearch(event.target.value);
+  },
 });
 
-const SearchItem = React.createClass({
+const ListingItem = React.createClass({
   componentWillMount() {
   },
 
   render() {
     const itemStyles = {};
     itemStyles[styles.selected] = this.props.$selected;
-    
+
     return (
       <a href="#" className={classnames(styles.searchItem, itemStyles)}
          onClick={this._onClick}>
@@ -83,25 +95,11 @@ const SearchItem = React.createClass({
   },
 });
 
-function getListingState() {
-  return {
-    items: ItemStore.getAll(),
-  };
-}
-
 const Listing = React.createClass({
-  getInitialState() {
-    return getListingState();
-  },
-
-  componentDidMount() {
-    ItemStore.addChangeListener(this._onChange);
-  },
-
   render() {
     const Menu = BurgerMenu['slide'];
-    const searchItems = this.state.items.map((item) => (
-      <SearchItem key={item.id} {...item} />
+    const searchItems = this.props.items.map((item) => (
+      <ListingItem key={item.id} {...item} />
     ));
     return (
       <MenuWrapper>
@@ -110,15 +108,11 @@ const Listing = React.createClass({
               styles={BurgerStyles}
               wait={20}
               right noOverlay>
-          <SearchBar />
+          <SearchBar _onSearch={this.props._onSearch} />
           {searchItems}
         </Menu>
       </MenuWrapper>
     );
-  },
-
-  _onChange() {
-    this.setState(getListingState());
   },
 });
 
