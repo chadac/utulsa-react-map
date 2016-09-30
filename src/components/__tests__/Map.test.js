@@ -19,8 +19,9 @@ describe('Map', () => {
       <Map
         center={{lat: 0, lng: 0}} zoom={16}
         _onZoom={zoomFn} _onCenter={centerFn}
-        markers={Utilities.generateMarkers(10)}
-        routes={Utilities.generateRoutes(10)}
+        appState="NORMAL"
+        items={Utilities.generateMarkers(10)
+                        .concat(Utilities.generateRoutes(10)) }
       />
     );
   });

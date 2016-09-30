@@ -63,13 +63,22 @@ function _addZoom(id, min_zoom, max_zoom) {
   }
 }
 
+function _addSearchTerm(name, id) {
+  _itemTrie.add(name, id);
+  for(var i = 1; i < name.length; i++) {
+    if(name[i] == ' ') {
+      _itemTrie.add(name.slice(i+1), id);
+    }
+  }
+}
+
 function create(data) {
   var id = data.id
   _items[id] = data;
   _items[id].$selected = false;
   _items[id].$infoWindow = false;
   _items[id].$searchKey = null;
-  _itemTrie.add(data.name, data.id);
+  _addSearchTerm(data.name, data.id);
 
   const currentZoom = GMapsStore.getZoom();
   _items[id].$inZoom =

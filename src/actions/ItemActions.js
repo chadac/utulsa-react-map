@@ -47,10 +47,15 @@ var ItemActions = {
   },
 
   search: function(word) {
-    AppDispatcher.handleViewAction({
-      actionType: ItemConstants.ITEM_SEARCH,
-      word: word
-    });
+    if(word.length <= 0) {
+      ItemActions.resetSearch();
+    }
+    else {
+      AppDispatcher.handleViewAction({
+        actionType: ItemConstants.ITEM_SEARCH,
+        word: word
+      });
+    }
   },
 
   resetSearch: function() {

@@ -10,7 +10,7 @@ describe('Trie', () => {
       let trie = new Trie();
       trie.add('web', 1);
       expect(trie._tree).toEqual(
-        { w: { e: { b: { _item: 1 } } } },
+        { w: { e: { b: { _item: [1] } } } },
       );
     });
     it('adds multiple items', () => {
@@ -20,9 +20,9 @@ describe('Trie', () => {
       trie.add('all', 3);
       expect(trie._tree).toEqual(
         {
-          w: { e: { b: { _item: 1 },
-                    t: { _item: 2 } } },
-          a: { l: { l: { _item: 3 } } }
+          w: { e: { b: { _item: [1] },
+                    t: { _item: [2] } } },
+          a: { l: { l: { _item: [3] } } }
         }
       );
     });
@@ -53,6 +53,13 @@ describe('Trie', () => {
       let trie = new Trie();
       trie.add("HeLlO wOrLd!", 1);
       expect(trie.search("hello WORLD!")).toEqual([1]);
+    });
+
+    it('handles duplicates', () => {
+      let trie = new Trie();
+      trie.add("Hello", 1);
+      trie.add("Hello", 2);
+      expect(trie.search("Hello")).toEqual([1,2]);
     });
   });
 });

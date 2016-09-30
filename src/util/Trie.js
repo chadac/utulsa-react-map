@@ -14,8 +14,12 @@ class Trie {
   _put(tree, w, item) {
     const a = w[0];
     if(tree[a] === undefined) tree[a] = {};
-    if(w.length <= 1)
-      tree[a]._item = item;
+    if(w.length <= 1) {
+      if(tree[a]._item === undefined)
+        tree[a]._item = [item];
+      else
+        tree[a]._item.push(item);
+    }
     else
       this._put(tree[a], w.slice(1), item);
   }
@@ -36,7 +40,7 @@ class Trie {
     let items = [];
     Object.keys(tree).forEach((key) => {
       if(key == '_item') {
-        items.push(tree._item);
+        items = items.concat(tree._item);
       } else {
         items = items.concat(this._traverse(tree[key]));
       }

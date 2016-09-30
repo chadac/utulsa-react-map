@@ -266,6 +266,23 @@ describe('ItemStore', () => {
       expect(item3.$searchKey).toBe(newSearchKey);
     });
 
+    it('slices by space', () => {
+      callback(actionItemCreate('Hello World!'));
+      const item = ItemStore.getItem('Hello World!');
+
+      callback(actionItemSearch('He'));
+      const searchKey1 = ItemStore.getSearchKey();
+      expect(item.$searchKey).toBe(searchKey1);
+
+      callback(actionItemSearch('Wo'));
+      const searchKey2 = ItemStore.getSearchKey();
+      expect(item.$searchKey).toBe(searchKey2);
+
+      callback(actionItemSearch('ojkk'));
+      const searchKey3 = ItemStore.getSearchKey();
+      expect(item.$searchKey).not.toBe(searchKey3);
+    });
+
     it('resets searches', () => {
       callback(actionItemCreate('item1'));
       callback(actionItemSearch('item'));

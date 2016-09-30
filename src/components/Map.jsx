@@ -1,10 +1,11 @@
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom';
-import shouldPureComponentUpdate from 'react-pure-render/function'
-import ItemStore from '../stores/ItemStore'
-import ItemActions from '../actions/ItemActions'
+
+import AppState from '../constants/AppState';
+
 import Marker from './Marker'
 import Route from './Route'
+
 import styles from '../stylesheets/Map.scss'
 import gmaps from '../GMapsAPI';
 
@@ -72,8 +73,8 @@ const Map = React.createClass({
   propTypes: {
     center: PropTypes.object.isRequired,
     zoom: PropTypes.number.isRequired,
-    markers: PropTypes.array.isRequired,
-    routes: PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired,
+    appState: PropTypes.string.isRequired,
     _onZoom: PropTypes.func.isRequired,
     _onCenter: PropTypes.func.isRequired,
   },
@@ -102,22 +103,33 @@ const Map = React.createClass({
   render() {
     if(this.state.rendered) {
       const map = this.map;
-      const markers = this
-        .props.markers
-        .filter((marker) => marker.$inZoom)
-        .map((marker) => (
-          <Marker key={marker.id} {...marker} map={map} />
-        ));
-      const routes = this
-        .props.routes
-        .filter((route) => route.$inZoom)
-        .map((route) => (
-          <Route key={route.id} {...route} map={map} />
-        ));
+      const items = this
+        .props.items
+        .filter((item) => {
+          switch(this.props.appState) {
+            case AppState.NORMAL:
+              return item.$inZoom;
+            case AppState.SEARCH:
+              return true;
+          }
+          return true;
+        })
+        .map((item) => {
+          switch(item.type) {
+            case "marker":
+              return (
+                <Marker key={item.id} map={map} {...item} />
+              );
+            case "route":
+              return (
+                <Route key={item.id} map={map} {...item} />
+              );
+          }
+          return null;
+        });
       return (
         <div ref="map" className={styles.Map}>
-          {markers}
-          {routes}
+          {items}
         </div>
       );
     } else {
