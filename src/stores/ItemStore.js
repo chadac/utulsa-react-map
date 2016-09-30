@@ -8,10 +8,14 @@ const AppDispatcher = require('../dispatcher/AppDispatcher');
 const EventEmitter = require('events').EventEmitter;
 const ItemConstants = require('../constants/ItemConstants');
 const assign = require('object-assign');
-const itemData = require('../data/items.json');
+
 const GMapsStore = require('./GMapsStore');
 const GMapsConstants = require('../constants/GMapsConstants');
+
 const Trie = require('../util/Trie');
+
+const placeData = require('../data/places.json');
+const routeData = require('../data/routes.json');
 
 const CHANGE_EVENT = 'change';
 const SELECT_EVENT = 'select';
@@ -180,7 +184,8 @@ var ItemStore = assign({}, EventEmitter.prototype, {
    * Imports JSON data.
    */
   load() {
-    itemData.forEach((item) => create(item));
+    placeData.forEach((item) => create(item));
+    routeData.forEach((item) => create(item));
     this.emitChange();
   },
 

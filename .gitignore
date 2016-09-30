@@ -9,6 +9,9 @@ auto-save-list
 tramp
 .\#*
 
+# libreoffice
+.~*#
+
 # dependencies
 node_modules
 
