@@ -41,6 +41,10 @@ const SearchItem = React.createClass({
       </div>
     );
   },
+
+  _onClick() {
+    this.props.select(this.props.id);
+  },
 });
 
 const SearchResults = React.createClass({
@@ -51,14 +55,10 @@ const SearchResults = React.createClass({
   },
 
   render() {
-    /* const searchItems = this
-     *   .props.items.map((item) => (
-     *     <SearchItem key={item.id} {...item} />
-     *   ));*/
     const groups = groupBy(this.props.items, "category");
     const searchCats = Object.keys(groups).map((name) => {
       const groupItems = groups[name].map((item) =>
-        <SearchItem key={item.id} {...item} />
+        <SearchItem select={this.props.select} key={item.id} {...item} />
       );
       return (
         <SearchCategory key={name} name={name}>

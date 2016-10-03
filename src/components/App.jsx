@@ -60,7 +60,7 @@ const App = React.createClass({
             _search={ItemActions.search}
             appState={this.state.appState} />
         { this.state.appState == AppState.SEARCH ?
-          (<SearchResults items={items} />)
+          (<SearchResults items={items} select={ItemActions.select} />)
           : null
         }
 
