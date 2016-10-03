@@ -19,9 +19,6 @@ const SearchBar = React.createClass({
                  placeholder="Search ..."
                  onChange={this._onChange} />
         </div>
-        {this.props.appState == "SEARCH" ?
-         (<SearchResults items={this.props.items} />)
-         : null }
       </div>
     );
   },

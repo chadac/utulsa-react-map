@@ -58,7 +58,12 @@ const App = React.createClass({
       <div id="outer-container" style={{height:"100%"}}>
         <SearchBar
             _search={ItemActions.search}
-            appState={this.state.appState} items={items} />
+            appState={this.state.appState} />
+        { this.state.appState == AppState.SEARCH ?
+          (<SearchResults items={items} />)
+          : null
+        }
+
         <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
              _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
              appState={this.state.appState} items={items}

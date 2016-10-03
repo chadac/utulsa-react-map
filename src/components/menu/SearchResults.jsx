@@ -2,13 +2,43 @@ import React, {Component, PropTypes} from 'react';
 import classnames from 'classnames';
 import styles from '../../stylesheets/SearchResults.scss';
 
+console.log(styles);
+
+/**
+ * Custom groupby function.
+ **/
+function groupBy(items, key) {
+  // get categories
+  var c = {};
+  items.forEach((item) => {
+    if(c[item[key]] == undefined)
+      c[item[key]] = [item]
+    else
+      c[item[key]].push(item);
+  });
+  return c;
+}
+
+const SearchCategory = React.createClass({
+  render() {
+    return (
+      <div>
+        <div className={classnames(styles.searchItem, styles.header)}>
+          <span>{this.props.name}</span>
+        </div>
+        {this.props.children}
+      </div>
+    );
+  },
+});
+
 const SearchItem = React.createClass({
   render() {
     return (
-      <a href="#" className={classnames(styles.searchItem)}
+      <div className={classnames(styles.searchItem, styles.item)}
          onClick={this._onClick}>
         <span>{this.props.name}</span>
-      </a>
+      </div>
     );
   },
 });
@@ -21,13 +51,24 @@ const SearchResults = React.createClass({
   },
 
   render() {
-    const searchItems = this
-      .props.items.map((item) => (
+    /* const searchItems = this
+     *   .props.items.map((item) => (
+     *     <SearchItem key={item.id} {...item} />
+     *   ));*/
+    const groups = groupBy(this.props.items, "category");
+    const searchCats = Object.keys(groups).map((name) => {
+      const groupItems = groups[name].map((item) =>
         <SearchItem key={item.id} {...item} />
-      ));
+      );
+      return (
+        <SearchCategory key={name} name={name}>
+          {groupItems}
+        </SearchCategory>
+      );
+    });
     return (
       <div className={classnames(styles.searchResults)}>
-        {searchItems}
+        {searchCats}
       </div>
     );
   },

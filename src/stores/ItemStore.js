@@ -86,8 +86,8 @@ function create(data) {
 
   const currentZoom = GMapsStore.getZoom();
   _items[id].$inZoom =
-    (data.gmaps.min_zoom == undefined || currentZoom >= data.gmaps.min_zoom)
-    && (data.gmaps.max_zoom == undefined || currentZoom <= data.gmaps.max_zoom);
+    (data.gmaps.min_zoom === undefined || currentZoom >= data.gmaps.min_zoom)
+    && (data.gmaps.max_zoom === undefined || currentZoom <= data.gmaps.max_zoom);
   _addZoom(data.id, data.gmaps.min_zoom, data.gmaps.max_zoom);
 
   if(isMarker(id)) {
