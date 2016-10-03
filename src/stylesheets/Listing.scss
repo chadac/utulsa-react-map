@@ -7,16 +7,18 @@
   appearance: none;
   box-shadow: none;
   border-radius: none;
+  background-color: white;
 }
 
 .search-item {
   display: block;
   width: 100%;
+  background-color: white;
   text-decoration: none;
   & span {
     display: block;
     padding: 10px 0;
     font-size: 18px;
-    color: white;
+    color: black;
   }
 }

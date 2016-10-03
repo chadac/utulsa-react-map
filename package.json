@@ -41,14 +41,13 @@
     "keymirror": "^0.1.1",
     "object-assign": "^4.1.0",
     "react": "^15.3.1",
-    "react-burger-menu": "^1.10.4",
     "react-dom": "^15.3.1",
     "react-pure-render": "^1.0.2"
   },
   "scripts": {
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
     "start": "webpack-dev-server --progress --profile --colors",
-    "test": "jest",
+    "test": "jest --watch",
     "lint": "eslint --ext js --ext jsx src || exit 0",
     "create-csv": "./scripts/get_places_json_from_localist/index.sh && ./scripts/localist_json_to_custom_json/index.sh && ./scripts/custom_json_to_csv/index.sh",
     "create-prod-json-from-csv": "./scripts/csv_to_prod_json/index.sh",

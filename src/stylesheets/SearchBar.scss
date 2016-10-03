@@ -1,0 +1,23 @@
+.container {
+    height: 8%;
+}
+
+.search-bar {
+    width: 100%;
+    height: 100%;
+    box-shadow: 10px 10px 10px 10px rbga(0,0,0,0.5);
+    background: #004B8D;
+    text-align:center;
+}
+
+.search-box {
+    border: 0px;
+    height:100%;
+    width:50%;
+    font-size: 30px;
+    color: #FFFFFF;
+    background: #004B8D;
+    &:focus {
+        outline: none
+    }
+}

@@ -43,6 +43,14 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         reset();
         AppStateStore.emitChange();
         break;
+      case ItemConstants.ITEM_SELECT:
+        setState(AppState.SELECT);
+        AppStateStore.emitChange();
+        break;
+      case ItemConstants.ITEM_DESELECT:
+        setState(AppState.NORMAL);
+        AppStateStore.emitChange();
+        break;
       case ItemConstants.ITEM_SEARCH:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,

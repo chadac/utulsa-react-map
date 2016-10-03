@@ -1,0 +1,31 @@
+.search-results {
+    z-index: 1;
+    overflow-y: scroll;
+    position: absolute;
+    height: 95%;
+    width: 100%;
+    background: rgba(255,255,255,0.5);
+    transition: height 2s;
+}
+
+.search-item {
+    padding: 10px 0 10px 10%;
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    & span {
+        display: block;
+        color: black;
+    }
+    &.header {
+        font-size: 18px;
+    }
+    &.item {
+        padding-left: 11%;
+        font-size: 14px;
+        &:hover {
+            cursor: pointer;
+            background: rgba(255,255,255,0.8);
+        }
+    }
+}
