@@ -38,7 +38,6 @@ TextLabel.prototype.onAdd = function() {
   div.className = this.cls_;
   div.innerHTML = '<span>' + this.txt_ + '</span>';
   div.style.width = "100px";
-  console.log(div);
 
   this.div_ = div;
   var overlayProjection = this.getProjection();
