@@ -95,7 +95,13 @@ const Map = React.createClass({
   createMap() {
     let mapOptions = {
       zoom: this.props.zoom,
-      center: this.props.center
+      center: this.props.center,
+      styles: [
+        {
+          featureType: 'poi',
+          stylers: [{visibility: "off"}],
+        },
+      ],
     }
     return new gmaps.Map(this.refs.map, mapOptions);
   },

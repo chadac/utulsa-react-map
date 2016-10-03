@@ -21,6 +21,45 @@ function isInfoWindowOpen(infoWindow) {
   return (map !== null && typeof map !== "undefined");
 }
 
+/* http://stackoverflow.com/a/3955258 */
+function TextLabel(pos, txt, cls, map) {
+  this.pos = pos;
+  this.txt_ = txt;
+  this.cls_ = cls;
+  this.map_ = map;
+
+  this.div_ = null;
+
+  this.setMap(map);
+}
+TextLabel.prototype = new gmaps.OverlayView();
+TextLabel.prototype.onAdd = function() {
+  var div = document.createElement('div');
+  div.className = this.cls_;
+  div.innerHTML = '<span>' + this.txt_ + '</span>';
+  div.style.width = "100px";
+
+  this.div_ = div;
+  var overlayProjection = this.getProjection();
+  var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+
+  var panes = this.getPanes();
+  panes.floatPane.appendChild(div);
+};
+TextLabel.prototype.draw = function() {
+  var overlayProjection = this.getProjection();
+
+  var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+
+  var div = this.div_;
+  div.style.left = (position.x-50) + 'px';
+  div.style.top = (position.y) + 'px';
+};
+TextLabel.prototype.onRemove = function() {
+  this.div_.parentNode.removeChild(this.div_);
+  this.div_ = null;
+};
+
 const Marker = React.createClass({
 
   getInitialState() {
@@ -39,6 +78,8 @@ const Marker = React.createClass({
     this.marker.addListener("click", this._onClick);
     this.marker.addListener("mouseover", this._onMouseOver);
     this.marker.addListener("mouseout", this._onMouseOut);
+
+    this.label = this.createLabel();
   },
 
   componentDidMount() {
@@ -47,6 +88,7 @@ const Marker = React.createClass({
   componentWillUnmount() {
     this.info.close();
     this.marker.setMap(null);
+    this.label.setMap(null);
   },
 
   latlng() {
@@ -60,9 +102,13 @@ const Marker = React.createClass({
     return new gmaps.Marker({
       position: this.latlng(),
       icon: MapIcon[this.props.marker.icon],
-      draggable: true,
+      draggable: false,
       map: this.props.map,
     });
+  },
+
+  createLabel() {
+    return new TextLabel(this.latlng(), this.props.name, styles.markerLabel, this.props.map);
   },
 
   createInfoWindow() {
@@ -76,6 +122,12 @@ const Marker = React.createClass({
 
   render() {
     if(this.props.$infoWindow && !isInfoWindowOpen(this.info)) {
+      // Keeping this just in case I need to see lat/lng again
+      /* console.log(this.marker.position.lng());
+       * this.info.setContent(
+       *   "<table><tr><td>" + this.marker.position.lat() + "</td><td>"
+       *   + this.marker.position.lng() + "</td></tr></table>"
+       * );*/
       this.info.open(this.props.map, this.marker);
     }
     else if(!this.props.$infoWindow && isInfoWindowOpen(this.info)) {

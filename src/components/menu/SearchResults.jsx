@@ -2,8 +2,6 @@ import React, {Component, PropTypes} from 'react';
 import classnames from 'classnames';
 import styles from '../../stylesheets/SearchResults.scss';
 
-console.log(styles);
-
 /**
  * Custom groupby function.
  **/
