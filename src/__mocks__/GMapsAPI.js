@@ -3,6 +3,7 @@ var gmaps = jest.fn();
 class MockListener {
   constructor() {
     this.__mockListeners = {};
+    this.__map = null;
   }
 
   addListener(event, callback) {
@@ -10,6 +11,10 @@ class MockListener {
       this.__mockListeners[event] = [];
     }
     this.__mockListeners[event].push(callback);
+  }
+
+  setMap(map) {
+    this.__map = map;
   }
 }
 
@@ -52,20 +57,19 @@ class InfoWindow extends MockListener {
 gmaps.InfoWindow = InfoWindow;
 
 class Route extends MockListener {
-  constructor() {
-    super();
-  }
 }
 gmaps.Route = Route;
 
-class LatLng {
-  constructor() {
-  }
+class LatLng extends MockListener {
 }
 gmaps.LatLng = LatLng;
 
-class Polyline {
+class Polyline extends MockListener{
 }
 gmaps.Polyline = Polyline;
+
+class OverlayView extends MockListener {
+}
+gmaps.OverlayView = OverlayView;
 
 module.exports = gmaps;
