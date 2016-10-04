@@ -3,7 +3,8 @@
     text-align: center;
     & span {
         font-size:10px;
-        font-weight:bold;
-        text-shadow:-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+        font-weight: bold;
+        font-smooth: always;
+        text-shadow: 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     }
 }
