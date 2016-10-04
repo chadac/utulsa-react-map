@@ -51,6 +51,12 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         setState(AppState.NORMAL);
         AppStateStore.emitChange();
         break;
+      case ItemConstants.ITEM_CLOSE_INFOWINDOW:
+        if(_currentState == AppState.SELECT) {
+          setState(AppState.NORMAL);
+          AppStateStore.emitChange();
+        }
+        break;
       case ItemConstants.ITEM_SEARCH:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,

@@ -115,6 +115,8 @@ const Map = React.createClass({
           switch(this.props.appState) {
             case AppState.NORMAL:
               return item.$inZoom;
+            case AppState.SELECT:
+              return item.$selected || item.$inZoom;
             case AppState.SEARCH:
               return true;
           }
