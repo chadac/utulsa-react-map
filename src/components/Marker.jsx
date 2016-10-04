@@ -44,7 +44,7 @@ TextLabel.prototype.onAdd = function() {
   var position = overlayProjection.fromLatLngToDivPixel(this.pos);
 
   var panes = this.getPanes();
-  panes.floatPane.appendChild(div);
+  panes.overlayLayer.appendChild(div);
 };
 TextLabel.prototype.draw = function() {
   var overlayProjection = this.getProjection();
