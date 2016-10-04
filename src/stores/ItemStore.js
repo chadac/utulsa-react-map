@@ -55,12 +55,12 @@ function isRoute(id) {
 }
 
 function _addZoom(id, min_zoom, max_zoom) {
-  if(max_zoom !== undefined) {
+  if(max_zoom !== "") {
     if(_zoomLevels.max[max_zoom] == undefined)
       _zoomLevels.max[max_zoom] = [];
     _zoomLevels.max[max_zoom].push(id);
   }
-  if(min_zoom !== undefined) {
+  if(min_zoom !== "") {
     if(_zoomLevels.min[min_zoom] == undefined)
       _zoomLevels.min[min_zoom] = [];
     _zoomLevels.min[min_zoom].push(id);
@@ -86,8 +86,8 @@ function create(data) {
 
   const currentZoom = GMapsStore.getZoom();
   _items[id].$inZoom =
-    (data.gmaps.min_zoom === undefined || currentZoom >= data.gmaps.min_zoom)
-    && (data.gmaps.max_zoom === undefined || currentZoom <= data.gmaps.max_zoom);
+    (data.gmaps.min_zoom == "" || currentZoom >= data.gmaps.min_zoom)
+    && (data.gmaps.max_zoom == "" || currentZoom <= data.gmaps.max_zoom);
   _addZoom(data.id, data.gmaps.min_zoom, data.gmaps.max_zoom);
 
   if(isMarker(id)) {
