@@ -1,4 +1,6 @@
 import React, {Component, PropTypes} from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import AppState from '../../constants/AppState';
 import classnames from 'classnames';
 import styles from '../../stylesheets/SearchResults.scss';
 
@@ -34,7 +36,7 @@ const SearchItem = React.createClass({
   render() {
     return (
       <div className={classnames(styles.searchItem, styles.item)}
-         onClick={this._onClick}>
+           onClick={this._onClick}>
         <span>{this.props.name}</span>
       </div>
     );
@@ -45,7 +47,7 @@ const SearchItem = React.createClass({
   },
 });
 
-const SearchResults = React.createClass({
+const SearchResultsComponent = React.createClass({
   getDefaultProps() {
     return {
       items: PropTypes.array.isRequired,
@@ -65,9 +67,38 @@ const SearchResults = React.createClass({
       );
     });
     return (
-      <div className={classnames(styles.searchResults)}>
-        {searchCats}
+      <div key="main" className={classnames(styles.searchResults)}>
+          {searchCats}
       </div>
+    );
+  },
+});
+
+const SearchResults = React.createClass({
+  getDefaultProps() {
+    return {
+      items: PropTypes.array.isRequired,
+    };
+  },
+
+  render() {
+    const results =
+      this.props.appState == AppState.SEARCH ?
+      ( <SearchResultsComponent
+            items={this.props.items} select={this.props.select} /> )
+      : null;
+    return (
+      <ReactCSSTransitionGroup
+          transitionName={{
+            enter: styles.searchResultsEnter,
+            enterActive: styles.searchResultsEnterActive,
+            leave: styles.searchResultsLeave,
+            leaveActive: styles.searchResultsLeaveActive,
+          }}
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={300}>
+        {results}
+      </ReactCSSTransitionGroup>
     );
   },
 });

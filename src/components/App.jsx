@@ -59,11 +59,8 @@ const App = React.createClass({
         <SearchBar
             _search={ItemActions.search}
             appState={this.state.appState} />
-        { this.state.appState == AppState.SEARCH ?
-          (<SearchResults items={items} select={ItemActions.select} />)
-          : null
-        }
-
+        <SearchResults items={items} select={ItemActions.select}
+                       appState={this.state.appState} />
         <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
              _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
              appState={this.state.appState} items={items}
