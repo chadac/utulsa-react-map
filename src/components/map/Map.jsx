@@ -137,6 +137,7 @@ const Map = React.createClass({
           }
           return (
             <MapItem key={item.id} map={map} {...item}
+                     appState={this.props.appState}
                      _openInfoWindow={this.props._openInfoWindow}
                      _closeInfoWindow={this.props._closeInfoWindow} />
           );
@@ -159,7 +160,7 @@ const Map = React.createClass({
 
   _onMapCenter() {
     const center = this.map.getCenter();
-    this.props._onCenter(center.lat, center.lng);
+    if(center != null) this.props._onCenter(center.lat(), center.lng());
   },
 
   _onMapZoom() {

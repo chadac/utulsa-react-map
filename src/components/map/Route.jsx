@@ -1,17 +1,18 @@
 import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames';
 
-import ItemActions from '../../actions/ItemActions';
+import ItemStore from '../../stores/ItemStore';
+import AppState from '../../constants/AppState';
 
 import gmaps from '../../GMapsAPI';
 import InfoWindow from './InfoWindow';
 
 import styles from '../../stylesheets/Route.scss';
 
-
 const Route = React.createClass({
   propTypes: {
     route: PropTypes.object.isRequired,
+    appState: PropTypes.string.isRequired,
 
     _openInfoWindow: PropTypes.func.isRequired,
     _closeInfoWindow: PropTypes.func.isRequired,
@@ -19,12 +20,19 @@ const Route = React.createClass({
 
   getInitialState() {
     return {
+      position: null,
       click: new gmaps.LatLng(0,0),
     };
   },
 
+  componentWillMount() {
+    var pos = this.props.route.path[this.props.route.path.length / 2];
+    this.setState({position: new gmaps.LatLng(pos.lat, pos.lng)});
+  },
+
   componentDidMount() {
-    var key = this.props.id;
+    ItemStore.addSelectListener(this.props.id, this._onSelect);
+
     this.route = this.createRoute();
     this.route.addListener('click', this._onClick);
   },
@@ -60,10 +68,21 @@ const Route = React.createClass({
   },
 
   render() {
+    let position;
+    switch(this.props.appState) {
+      case AppState.NORMAL:
+      case AppState.SEARCH:
+        position = this.state.click;
+        break;
+      case AppState.SELECT:
+        position = this.state.position;
+        break;
+    }
     return (
       <InfoWindow $infoWindow={this.props.$infoWindow}
-                  map={this.props.map} position={this.state.click}
-                  _closeInfoWindow={ItemActions.closeInfoWindow}>
+                  map={this.props.map}
+                  position={position}
+                  _closeInfoWindow={this.props._closeInfoWindow}>
         <h4>{this.props.name}</h4>
         <p>{this.props.hours}</p>
       </InfoWindow>
@@ -73,6 +92,13 @@ const Route = React.createClass({
   _onClick(e) {
     this.setState({click: e.latLng});
     this.props._openInfoWindow(this.props.id);
+  },
+
+  _onSelect() {
+    setTimeout( () => {
+      this.props.map.setZoom(17);
+      this.props.map.setCenter(this.state.position);
+    }, 300);
   },
 });
 
