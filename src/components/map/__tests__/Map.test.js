@@ -1,4 +1,4 @@
-jest.mock('../../GMapsAPI');
+jest.mock('../../../GMapsAPI');
 
 describe('Map', () => {
   var React = require('react');

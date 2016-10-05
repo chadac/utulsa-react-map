@@ -1,13 +1,13 @@
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom';
 
-import AppState from '../constants/AppState';
+import AppState from '../../constants/AppState';
 
 import Marker from './Marker'
 import Route from './Route'
 
-import styles from '../stylesheets/Map.scss'
-import gmaps from '../GMapsAPI';
+import styles from '../../stylesheets/Map.scss'
+import gmaps from '../../GMapsAPI';
 
 const Control = React.createClass({
   propTypes: {
@@ -16,6 +16,9 @@ const Control = React.createClass({
     _onClick: PropTypes.func,
     controlUIStyle: PropTypes.object,
     controlTextStyle: PropTypes.object,
+
+    _openInfoWindow: PropTypes.func.isRequired,
+    _closeInfoWindow: PropTypes.func.isRequired,
   },
 
   getDefaultProps() {
@@ -123,17 +126,21 @@ const Map = React.createClass({
           return true;
         })
         .map((item) => {
+          var MapItem;
           switch(item.type) {
             case "marker":
-              return (
-                <Marker key={item.id} map={map} {...item} />
-              );
+              MapItem = Marker;
+              break;
             case "route":
-              return (
-                <Route key={item.id} map={map} {...item} />
-              );
+              MapItem = Route;
+              break;
           }
-          return null;
+          return (
+            <MapItem key={item.id} map={map} {...item}
+                     appState={this.props.appState}
+                     _openInfoWindow={this.props._openInfoWindow}
+                     _closeInfoWindow={this.props._closeInfoWindow} />
+          );
         });
       return (
         <div ref="map" className={styles.Map}>
@@ -153,7 +160,7 @@ const Map = React.createClass({
 
   _onMapCenter() {
     const center = this.map.getCenter();
-    this.props._onCenter(center.lat, center.lng);
+    if(center != null) this.props._onCenter(center.lat(), center.lng());
   },
 
   _onMapZoom() {
