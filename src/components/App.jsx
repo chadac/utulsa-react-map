@@ -5,7 +5,7 @@ import styles from '../stylesheets/App.scss';
 
 import SearchBar from './menu/SearchBar';
 import SearchResults from './menu/SearchResults';
-import Map from './Map';
+import Map from './map/Map';
 
 import AppStateStore from '../stores/AppStateStore';
 import ItemStore from '../stores/ItemStore';
@@ -64,6 +64,8 @@ const App = React.createClass({
         <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
              _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
              appState={this.state.appState} items={items}
+             _openInfoWindow={ItemActions.openInfoWindow}
+             _closeInfoWindow={ItemActions.closeInfoWindow}
         />
       </div>
     );
