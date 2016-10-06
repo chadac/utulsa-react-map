@@ -1,0 +1,23 @@
+/* from https://css-tricks.com/approaches-media-queries-sass/ */
+@import 'node_modules/include-media/dist/include-media';
+
+$breakpoints: (
+    phone: 640px,
+    tablet: 768px,
+    desktop: 1024px
+) !default;
+
+$font-large: 30px;
+$font-normal: 18px;
+$font-small: 12px;
+$search-bar-height: 100px;
+$dropdown-height: 45%;
+
+$phone-font-large: 14px;
+$phone-font-normal: 12px;
+$phone-font-small: 6px;
+$phone-search-bar-height: 50px;
+
+$tablet-search-bar-height: 80px;
+
+$desktop-search-bar-height: 90px;

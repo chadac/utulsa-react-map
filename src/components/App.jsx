@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
-import styles from '../stylesheets/App.scss';
-
 import SearchBar from './menu/SearchBar';
 import SearchResults from './menu/SearchResults';
 import Map from './map/Map';
@@ -15,6 +13,8 @@ import ItemActions from '../actions/ItemActions';
 import GMapsActions from '../actions/GMapsActions';
 
 import AppState from '../constants/AppState';
+
+import styles from '../stylesheets/App.scss';
 
 const extend = require('util')._extend;
 
@@ -55,7 +55,7 @@ const App = React.createClass({
     });
 
     return (
-      <div id="outer-container" style={{height:"100%"}}>
+      <div id="outer-container" style={{height:"100%"}} className={styles.outerContainer}>
         <SearchBar
             _search={ItemActions.search}
             appState={this.state.appState} />

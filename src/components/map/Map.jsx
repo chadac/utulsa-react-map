@@ -143,13 +143,17 @@ const Map = React.createClass({
           );
         });
       return (
-        <div ref="map" className={styles.Map}>
-          {items}
+        <div className={styles.mapContainer}>
+          <div ref="map" className={styles.Map}>
+            {items}
+          </div>
         </div>
       );
     } else {
       return (
-        <div ref="map" className={styles.Map}></div>
+        <div className={styles.mapContainer}>
+          <div ref="map" className={styles.Map}></div>
+        </div>
       );
     }
   },
