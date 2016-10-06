@@ -41,9 +41,9 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: '[chunkhash].js'
   },
-  externals: {
-    "react": "React"
-  },
+  // externals: {
+  //   "react": "React"
+  // },
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
