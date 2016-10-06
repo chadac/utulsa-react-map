@@ -10,6 +10,8 @@ const CHANGE_EVENT = "change";
 
 var _currentState = AppState.NORMAL;
 
+var _filterByMenu = false;
+
 function setState(state) {
   _currentState = state;
 }
@@ -18,9 +20,21 @@ function reset() {
   _currentState = AppState.NORMAL;
 }
 
+function openFilterByMenu() {
+  _filterByMenu = true;
+}
+
+function closeFilterByMenu() {
+  _filterByMenu = false;
+}
+
 var AppStateStore = assign({}, EventEmitter.prototype, {
   getState() {
     return _currentState;
+  },
+
+  isFilterByMenuOpen() {
+    return _filterByMenu;
   },
 
   emitChange() {
@@ -41,6 +55,14 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         break;
       case AppStateConstants.APP_STATE_RESET:
         reset();
+        AppStateStore.emitChange();
+        break;
+      case AppStateConstants.FILTER_BY_OPEN:
+        openFilterByMenu();
+        AppStateStore.emitChange();
+        break;
+      case AppStateConstants.FILTER_BY_CLOSE:
+        closeFilterByMenu();
         AppStateStore.emitChange();
         break;
       case ItemConstants.ITEM_SELECT:
@@ -65,6 +87,13 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         AppStateStore.emitChange();
         break;
       case ItemConstants.ITEM_RESET_SEARCH:
+        AppDispatcher.waitFor([
+          ItemStore.dispatcherIndex,
+        ]);
+        reset();
+        AppStateStore.emitChange();
+        break;
+      case ItemConstants.RESET_CATEGORIES:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);

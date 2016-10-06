@@ -21,13 +21,60 @@
     height: 100%;
     box-shadow: 10px 10px 10px 10px rbga(0,0,0,0.5);
     background: $search-bar-background-color;
-    text-align:center;
+    vertical-align: middle;
 }
 
+.filter-by {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px;
+    float: left;
+    width: 70px;
+    height: 100%;
+    text-align: center;
+    vertical-align: center;
+    @include media("<=phone") {
+        font-size: $phone-font-large;
+    }
+    @include media(">phone") {
+        font-size: $font-large;
+    }
+    color: mix($search-bar-color, #000, 80%);
+
+    &:hover {
+        cursor: pointer;
+        background-color: mix($search-bar-background-color, white, 80%);
+    }
+}
+
+.filter-icon {
+    display: block;
+    background-color: white;
+    height: 5px;
+    margin: 0 auto;
+    &.top-bar {
+        width: 30px;
+        margin-bottom: 5px;
+    }
+    &.mid-bar {
+        width: 17px;
+        margin-bottom: 5px;
+    }
+    &.low-bar {
+        width: 7px;
+    }
+}
+
+
 .search-box {
+    display: block;
+    margin: auto;
     border: 0px;
     height:98%;
-    width:50%;
+    width: 50%;
     @include media("<=phone") {
         font-size: $phone-font-large;
     }

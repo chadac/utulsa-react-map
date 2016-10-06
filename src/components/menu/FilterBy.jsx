@@ -6,17 +6,18 @@ import styles from '../../stylesheets/FilterBy.scss';
 
 const FilterBy = React.createClass({
   render() {
+    const checkboxes = this.props.categories.map((category) => (
+      <div key={category} className={styles.checkbox}>
+        <span>{category}</span>
+        <input type="checkbox" value={category} />
+      </div>
+    ));
     return (
-      <ReactCSSTransitionGroup
-          transitionName={{
-            enter: styles.filterByEnter,
-            enterActive: styles.filterByEnterActive,
-            leave: styles.filterByLeave,
-            leaveActive: styles.filterByLeaveActive
-          }}
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}>
-      </ReactCSSTransitionGroup>
+      <div className={styles.FilterBy}>
+        {checkboxes}
+      </div>
     );
   },
 });
+
+module.exports = FilterBy;

@@ -1,0 +1,10 @@
+@import 'sizes';
+@import 'colors';
+
+.FilterBy {
+    height: $dropdown-height;
+    width: 100%;
+    background-color: rgba($search-bar-background-color, 0.9);
+    overflow-y: scroll;
+    position: absolute;
+}

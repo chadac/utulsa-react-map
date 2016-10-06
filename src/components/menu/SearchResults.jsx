@@ -47,7 +47,7 @@ const SearchItem = React.createClass({
   },
 });
 
-const SearchResultsComponent = React.createClass({
+const SearchResults = React.createClass({
   getDefaultProps() {
     return {
       items: PropTypes.array.isRequired,
@@ -70,35 +70,6 @@ const SearchResultsComponent = React.createClass({
       <div key="main" className={classnames(styles.searchResults)}>
           {searchCats}
       </div>
-    );
-  },
-});
-
-const SearchResults = React.createClass({
-  getDefaultProps() {
-    return {
-      items: PropTypes.array.isRequired,
-    };
-  },
-
-  render() {
-    const results =
-      this.props.appState == AppState.SEARCH ?
-      ( <SearchResultsComponent
-            items={this.props.items} select={this.props.select} /> )
-      : null;
-    return (
-      <ReactCSSTransitionGroup
-          transitionName={{
-            enter: styles.searchResultsEnter,
-            enterActive: styles.searchResultsEnterActive,
-            leave: styles.searchResultsLeave,
-            leaveActive: styles.searchResultsLeaveActive,
-          }}
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}>
-        {results}
-      </ReactCSSTransitionGroup>
     );
   },
 });

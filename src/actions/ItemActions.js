@@ -63,6 +63,26 @@ var ItemActions = {
       actionType: ItemConstants.ITEM_RESET_SEARCH,
     });
   },
+
+  addCategory: function(category) {
+    AppDispatcher.handleViewAction({
+      actionType: ItemConstants.ADD_CATEGORY,
+      category: category
+    });
+  },
+
+  remCategory: function(category) {
+    AppDispatcher.handleViewAction({
+      actionType: ItemConstants.REM_CATEGORY,
+      category: category
+    });
+  },
+
+  resetCategories: function() {
+    AppDispatcher.handleViewAction({
+      actionType: ItemConstants.RESET_CATEGORIES,
+    });
+  }
 };
 
 module.exports = ItemActions;
