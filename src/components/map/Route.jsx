@@ -26,7 +26,7 @@ const Route = React.createClass({
   },
 
   componentWillMount() {
-    var pos = this.props.route.path[this.props.route.path.length / 2];
+    const pos = this.props.route.path[Math.ceil(this.props.route.path.length / 2)];
     this.setState({position: new gmaps.LatLng(pos.lat, pos.lng)});
   },
 
