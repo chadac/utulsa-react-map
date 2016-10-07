@@ -53,6 +53,8 @@ const App = React.createClass({
           return true;
         case AppState.SEARCH:
           return item.$searchKey == ItemStore.getSearchKey();
+        case AppState.FILTER:
+          return ItemStore.getActiveCategories().indexOf(item.category) >= 0;
       }
       return true;
     });
@@ -61,7 +63,8 @@ const App = React.createClass({
       <div id="outer-container" style={{height:"100%"}} className={styles.outerContainer}>
         <SearchBar
             _search={ItemActions.search}
-            filterBy={this.state.filterBy}
+            appState={this.state.appState}
+            _resetCategories={ItemActions.resetCategories}
             _openFilterBy={AppStateActions.openFilterBy}
             _closeFilterBy={AppStateActions.closeFilterBy}
             appState={this.state.appState} />
@@ -69,9 +72,12 @@ const App = React.createClass({
           { this.state.appState == AppState.SEARCH ?
             ( <SearchResults items={items} select={ItemActions.select} /> )
             : null }
-          { this.state.filterBy ?
+          { this.state.appState == AppState.FILTER ?
             ( <FilterBy categories={ItemStore.getCategories()}
-                        _addCategory={null} _remCategory={null} _reset={null} /> )
+                        activeCategories={ItemStore.getActiveCategories()}
+                        _addCategory={ItemActions.addCategory}
+                        _remCategory={ItemActions.remCategory}
+                        _reset={ItemActions.resetCategories} /> )
             : null }
         </AnimatedMenu>
         <Map center={this.props.initialCenter} zoom={this.props.initialZoom}

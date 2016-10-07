@@ -59,10 +59,12 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         break;
       case AppStateConstants.FILTER_BY_OPEN:
         openFilterByMenu();
+        setState(AppState.FILTER);
         AppStateStore.emitChange();
         break;
       case AppStateConstants.FILTER_BY_CLOSE:
         closeFilterByMenu();
+        reset();
         AppStateStore.emitChange();
         break;
       case ItemConstants.ITEM_SELECT:
@@ -87,13 +89,6 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         AppStateStore.emitChange();
         break;
       case ItemConstants.ITEM_RESET_SEARCH:
-        AppDispatcher.waitFor([
-          ItemStore.dispatcherIndex,
-        ]);
-        reset();
-        AppStateStore.emitChange();
-        break;
-      case ItemConstants.RESET_CATEGORIES:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);

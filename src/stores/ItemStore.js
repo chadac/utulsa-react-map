@@ -40,7 +40,7 @@ var _markers = [];
 var _routes = [];
 
 var _categories = {};
-var _activeCategories = {};
+var _activeCategories = {'TU MAIN CAMPUS': 'TU MAIN CAMPUS'};
 
 // Current selected item
 var _selectedItem = null;
@@ -196,7 +196,7 @@ function remCategory(category) {
 }
 
 function resetCategories() {
-  _activeCategories = [];
+  _activeCategories = {'TU MAIN CAMPUS': 'TU MAIN CAMPUS'};
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {

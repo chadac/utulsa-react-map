@@ -1,8 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import classnames from 'classnames';
-import styles from '../../stylesheets/SearchBar.scss';
+
+import AppState from '../../constants/AppState';
 
 import SearchResults from './SearchResults';
+
+import styles from '../../stylesheets/SearchBar.scss';
 
 const SearchBar = React.createClass({
   getDefaultProps() {
@@ -36,8 +39,10 @@ const SearchBar = React.createClass({
   },
 
   _toggleFilter() {
-    if(this.props.filterBy) {
+    console.log('eh');
+    if(this.props.appState == AppState.FILTER) {
       this.props._closeFilterBy();
+      this.props._resetCategories();
     } else {
       this.props._openFilterBy();
     }
