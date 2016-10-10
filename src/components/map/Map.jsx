@@ -5,6 +5,7 @@ import AppState from '../../constants/AppState';
 
 import Marker from './Marker'
 import Route from './Route'
+import ParkingLot from './ParkingLot'
 
 import styles from '../../stylesheets/Map.scss'
 import gmaps from '../../GMapsAPI';
@@ -133,6 +134,9 @@ const Map = React.createClass({
               break;
             case "route":
               MapItem = Route;
+              break;
+            case "parking_lot":
+              MapItem = ParkingLot;
               break;
           }
           return (

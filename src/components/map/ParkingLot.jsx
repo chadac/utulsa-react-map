@@ -20,15 +20,12 @@ const ParkingLot = React.createClass({
   },
 
   _createPolygons() {
-    const numLayers = this.props.parking_lot.outer_layers.length;
+    const numLayers = this.props.parking_lot.layer.length;
     var polys = []
     for(var i = 0; i < numLayers; i++) {
-      var polyStyles = polyStyles();
-      polyStyles.paths = [this.props.parking_lot.outer_layers[i]];
-      this.props.parking_lot.inner_layers.forEach((layer) => {
-        if(layer != "") polyStyles.paths.push(layer);
-      });
-      var poly = new gmaps.Polygon(polyStyles);
+      var polyData = polyStyles();
+      polyData.paths = this.props.parking_lot.layer[i];
+      var poly = new gmaps.Polygon(polyData);
       poly.setMap(this.props.map);
       polys.push(poly);
     }
