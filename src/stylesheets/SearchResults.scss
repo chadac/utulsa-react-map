@@ -32,8 +32,7 @@
     padding: 10px 0 10px 10%;
     display: block;
     text-decoration: none;
-    & span {
-        display: block;
+    & .name {
         color: #F0F0F0;
     }
     &.header {
@@ -57,5 +56,15 @@
             $hover-color: mix($search-bar-background-color, white, 75%);
             background: rgba($hover-color, 0.8);
         }
+    }
+    & .terms {
+        padding-left: 10px;
+        @include media("<=phone") {
+            font-size: $phone-font-small;
+        }
+        @include media(">phone") {
+            font-size: $font-small;
+        }
+        color: #AAAAAA;
     }
 }

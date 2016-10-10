@@ -24,7 +24,7 @@ const SearchCategory = React.createClass({
     return (
       <div>
         <div className={classnames(styles.searchItem, styles.header)}>
-          <span>{this.props.name}</span>
+          <span className={classnames(styles.name)}>{this.props.name}</span>
         </div>
         {this.props.children}
       </div>
@@ -37,7 +37,12 @@ const SearchItem = React.createClass({
     return (
       <div className={classnames(styles.searchItem, styles.item)}
            onClick={this._onClick}>
-        <span>{this.props.name}</span>
+        <span className={classnames(styles.name)}>{this.props.name}</span>
+        {this.props.$searchTerms.length > 0 ? (
+           <span className={classnames(styles.terms)}>
+             ({this.props.$searchTerms.join(", ")})
+           </span>
+         ) : null}
       </div>
     );
   },
