@@ -1,7 +1,11 @@
 html,
 body,
 .Map {
-  height: 92%;
-  width: 100%;
-  position: absolute;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.map-container {
+    flex: 1 0 auto;
 }

@@ -39,6 +39,9 @@ var _markers = [];
 // Route IDs
 var _routes = [];
 
+var _categories = {};
+var _activeCategories = {'TU MAIN CAMPUS': 'TU MAIN CAMPUS'};
+
 // Current selected item
 var _selectedItem = null;
 // Current item with active InfoWindow
@@ -83,6 +86,11 @@ function create(data) {
   _items[id].$infoWindow = false;
   _items[id].$searchKey = null;
   _addSearchTerm(data.name, data.id);
+
+  if(_categories[data.category] == undefined) {
+    _categories[data.category] = [];
+  }
+  _categories[data.category].push(_items[id]);
 
   const currentZoom = GMapsStore.getZoom();
   _items[id].$inZoom =
@@ -179,6 +187,18 @@ function resetSearch() {
   _searchKey = null;
 }
 
+function addCategory(category) {
+  _activeCategories[category] = category;
+}
+
+function remCategory(category) {
+  delete _activeCategories[category];
+}
+
+function resetCategories() {
+  _activeCategories = {'TU MAIN CAMPUS': 'TU MAIN CAMPUS'};
+}
+
 var ItemStore = assign({}, EventEmitter.prototype, {
   /**
    * Imports JSON data.
@@ -222,6 +242,14 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
   getSearchKey() {
     return _searchKey;
+  },
+
+  getCategories() {
+    return Object.keys(_categories);
+  },
+
+  getActiveCategories() {
+    return Object.keys(_activeCategories);
   },
 
   /**
@@ -300,6 +328,20 @@ var ItemStore = assign({}, EventEmitter.prototype, {
       case ItemConstants.ITEM_RESET_SEARCH:
         resetSearch();
         ItemStore.emitChange();
+        break;
+
+      case ItemConstants.ADD_CATEGORY:
+        addCategory(action.category);
+        ItemStore.emitChange();
+        break;
+
+      case ItemConstants.REM_CATEGORY:
+        remCategory(action.category);
+        ItemStore.emitChange();
+        break;
+
+      case ItemConstants.RESET_CATEGORIES:
+        resetCategories();
         break;
 
       case GMapsConstants.MAP_ZOOM:

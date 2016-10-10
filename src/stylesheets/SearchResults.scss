@@ -1,28 +1,31 @@
+@import 'sizes';
+@import 'colors';
+
 .search-results-enter {
     height: 0% !important;
 }
 
 .search-results-enter-active {
-    height: 45% !important;
+    height: $dropdown-height !important;
     transition: height 300ms ease-in;
 }
 
 .search-results-leave {
-    height: 45%;
+    height: $dropdown-height;
 }
 
 .search-results-leave-active {
-    height: 0% !important;
+     height: 0% !important;
     transition: height 300ms ease-out;
 }
 
 .search-results {
     z-index: 1;
-    height: 45%;
+    height: $dropdown-height;
     overflow-y: scroll;
     position: absolute;
     width: 100%;
-    background: rgba(#2B2B2B,0.9);
+    background: rgba($search-bar-background-color, 0.9);
 }
 
 .search-item {
@@ -34,14 +37,25 @@
         color: #F0F0F0;
     }
     &.header {
-        font-size: 18px;
+        @include media("<=phone") {
+            font-size: $phone-font-large;
+        }
+        @include media(">phone") {
+            font-size: $font-large;
+        }
     }
     &.item {
         padding-left: 11%;
-        font-size: 14px;
+        @include media("<=phone") {
+            font-size: $phone-font-normal;
+        }
+        @include media(">phone") {
+            font-size: $font-normal;
+        }
         &:hover {
             cursor: pointer;
-            background: rgba(#5B5B5B,0.9);
+            $hover-color: mix($search-bar-background-color, white, 75%);
+            background: rgba($hover-color, 0.8);
         }
     }
 }

@@ -9,4 +9,7 @@ module.exports = keyMirror({
   ITEM_CLOSE_INFOWINDOW: null,
   ITEM_SEARCH: null,
   ITEM_RESET_SEARCH: null,
+  ADD_CATEGORY: null,
+  REM_CATEGORY: null,
+  RESET_CATEGORIES: null,
 });

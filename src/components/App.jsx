@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
-import styles from '../stylesheets/App.scss';
-
 import SearchBar from './menu/SearchBar';
+import AnimatedMenu from './menu/AnimatedMenu';
 import SearchResults from './menu/SearchResults';
+import FilterBy from './menu/FilterBy';
 import Map from './map/Map';
 
 import AppStateStore from '../stores/AppStateStore';
@@ -13,8 +13,11 @@ import GMapsStore from '../stores/GMapsStore';
 
 import ItemActions from '../actions/ItemActions';
 import GMapsActions from '../actions/GMapsActions';
+import AppStateActions from '../actions/AppStateActions';
 
 import AppState from '../constants/AppState';
+
+import styles from '../stylesheets/App.scss';
 
 const extend = require('util')._extend;
 
@@ -23,7 +26,7 @@ function getItemState() {
 }
 
 function getAppState() {
-  return { appState: AppStateStore.getState() };
+  return { appState: AppStateStore.getState(), filterBy: AppStateStore.isFilterByMenuOpen() };
 }
 
 const App = React.createClass({
@@ -50,17 +53,33 @@ const App = React.createClass({
           return true;
         case AppState.SEARCH:
           return item.$searchKey == ItemStore.getSearchKey();
+        case AppState.FILTER:
+          return ItemStore.getActiveCategories().indexOf(item.category) >= 0;
       }
       return true;
     });
 
     return (
-      <div id="outer-container" style={{height:"100%"}}>
+      <div id="outer-container" style={{height:"100%"}} className={styles.outerContainer}>
         <SearchBar
             _search={ItemActions.search}
+            appState={this.state.appState}
+            _resetCategories={ItemActions.resetCategories}
+            _openFilterBy={AppStateActions.openFilterBy}
+            _closeFilterBy={AppStateActions.closeFilterBy}
             appState={this.state.appState} />
-        <SearchResults items={items} select={ItemActions.select}
-                       appState={this.state.appState} />
+        <AnimatedMenu>
+          { this.state.appState == AppState.SEARCH ?
+            ( <SearchResults items={items} select={ItemActions.select} /> )
+            : null }
+          { this.state.appState == AppState.FILTER ?
+            ( <FilterBy categories={ItemStore.getCategories()}
+                        activeCategories={ItemStore.getActiveCategories()}
+                        _addCategory={ItemActions.addCategory}
+                        _remCategory={ItemActions.remCategory}
+                        _reset={ItemActions.resetCategories} /> )
+            : null }
+        </AnimatedMenu>
         <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
              _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
              appState={this.state.appState} items={items}

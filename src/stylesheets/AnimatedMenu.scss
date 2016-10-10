@@ -1,0 +1,19 @@
+@import 'sizes';
+
+.enter {
+    height: 0% !important;
+}
+
+.enter-active {
+    height: $dropdown-height !important;
+    transition: height 300ms ease-in;
+}
+
+.leave {
+    height: $dropdown-height;
+}
+
+.leave-active {
+    height: 0% !important;
+    transition: height 300ms ease-out;
+}
