@@ -85,7 +85,15 @@ function create(data) {
   _items[id].$selected = false;
   _items[id].$infoWindow = false;
   _items[id].$searchKey = null;
+
+  //Search terms
   _addSearchTerm(data.name, data.id);
+  console.log(data.id, data.search_keys);
+  if(data.search_keys !== undefined) {
+    data.search_keys.forEach((key) => {
+      _addSearchTerm(key, data.id);
+    });
+  }
 
   if(_categories[data.category] == undefined) {
     _categories[data.category] = [];
