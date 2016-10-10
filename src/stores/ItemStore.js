@@ -85,7 +85,15 @@ function create(data) {
   _items[id].$selected = false;
   _items[id].$infoWindow = false;
   _items[id].$searchKey = null;
+  _items[id].$searchTerms = null;
+
+  //Search terms
   _addSearchTerm(data.name, data.id);
+  if(data.search_terms !== undefined) {
+    data.search_terms.forEach((term) => {
+      _addSearchTerm(term, [data.id, term]);
+    });
+  }
 
   if(_categories[data.category] == undefined) {
     _categories[data.category] = [];
@@ -178,8 +186,21 @@ function search(w) {
     return;
   }
   _searchKey = Math.random();
-  _itemTrie.search(w).forEach((key) => {
-    _items[key].$searchKey = _searchKey;
+  _itemTrie.search(w).forEach((item) => {
+    var key, term;
+    if(item instanceof Array) {
+      key = item[0];
+      term = item[1];
+    } else {
+      key = item;
+      term = null;
+    }
+    if(_items[key].$searchKey != _searchKey) {
+      _items[key].$searchKey = _searchKey;
+      _items[key].$searchTerms = [];
+    }
+    if(term && _items[key].$searchTerms.indexOf(term) <= 0)
+      _items[key].$searchTerms.push(term);
   });
 };
 
