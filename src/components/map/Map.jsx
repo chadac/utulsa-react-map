@@ -149,8 +149,8 @@ const Map = React.createClass({
       return (
         <div className={styles.mapContainer}>
           <div ref="map" className={styles.Map}>
-            {items}
           </div>
+          {items}
         </div>
       );
     } else {
