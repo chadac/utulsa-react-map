@@ -46,6 +46,8 @@ var _activeCategories = {'TU MAIN CAMPUS': 'TU MAIN CAMPUS'};
 var _selectedItem = null;
 // Current item with active InfoWindow
 var _infoWindow = null;
+// Current item in focus
+var _focusedItem = null;
 
 var _zoomLevels = {max: {}, min: {}}
 
@@ -220,6 +222,15 @@ function resetCategories() {
   _activeCategories = {'TU MAIN CAMPUS': 'TU MAIN CAMPUS'};
 }
 
+function focus(id) {
+  _selectedItem = id;
+  _focusedItem = id;
+}
+
+function unfocus() {
+  _focusedItem = null;
+}
+
 var ItemStore = assign({}, EventEmitter.prototype, {
   /**
    * Imports JSON data.
@@ -259,6 +270,10 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
   getSelected() {
     return _selectedItem;
+  },
+
+  getFocused() {
+    return _items[_focusedItem];
   },
 
   getSearchKey() {
@@ -331,6 +346,16 @@ var ItemStore = assign({}, EventEmitter.prototype, {
         ItemStore.emitChange();
         break;
 
+      case ItemConstants.ITEM_FOCUS:
+        focus(action.id);
+        ItemStore.emitChange();
+        break;
+
+      case ItemConstants.ITEM_UNFOCUS:
+        unfocus();
+        ItemStore.emitChange();
+        break;
+
       case ItemConstants.ITEM_OPEN_INFOWINDOW:
         openInfoWindow(action.id);
         ItemStore.emitChange();
@@ -376,7 +401,6 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
     return true;
   })
-
 });
 
 // We may need to create hundreds to thousands of events

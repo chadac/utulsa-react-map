@@ -12,6 +12,8 @@ var _currentState = AppState.NORMAL;
 
 var _filterByMenu = false;
 
+var _inFocus = false;
+
 function setState(state) {
   _currentState = state;
 }
@@ -28,6 +30,14 @@ function closeFilterByMenu() {
   _filterByMenu = false;
 }
 
+function focus() {
+  _inFocus = true;
+}
+
+function unfocus() {
+  _inFocus = false;
+}
+
 var AppStateStore = assign({}, EventEmitter.prototype, {
   getState() {
     return _currentState;
@@ -35,6 +45,10 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
 
   isFilterByMenuOpen() {
     return _filterByMenu;
+  },
+
+  isInFocus() {
+    return _inFocus;
   },
 
   emitChange() {
@@ -53,34 +67,57 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         setState(action.state);
         AppStateStore.emitChange();
         break;
+
       case AppStateConstants.APP_STATE_RESET:
         reset();
         AppStateStore.emitChange();
         break;
+
       case AppStateConstants.FILTER_BY_OPEN:
         openFilterByMenu();
         setState(AppState.FILTER);
         AppStateStore.emitChange();
         break;
+
       case AppStateConstants.FILTER_BY_CLOSE:
         closeFilterByMenu();
         reset();
         AppStateStore.emitChange();
         break;
+
       case ItemConstants.ITEM_SELECT:
         setState(AppState.SELECT);
         AppStateStore.emitChange();
         break;
+
       case ItemConstants.ITEM_DESELECT:
         setState(AppState.NORMAL);
         AppStateStore.emitChange();
         break;
+
+      case ItemConstants.ITEM_FOCUS:
+        AppDispatcher.waitFor([
+          ItemStore.dispatcherIndex,
+        ]);
+        focus();
+        AppStateStore.emitChange();
+        break;
+
+      case ItemConstants.ITEM_UNFOCUS:
+        AppDispatcher.waitFor([
+          ItemStore.dispatcherIndex,
+        ]);
+        unfocus();
+        AppStateStore.emitChange();
+        break;
+
       case ItemConstants.ITEM_CLOSE_INFOWINDOW:
         if(_currentState == AppState.SELECT) {
           setState(AppState.NORMAL);
           AppStateStore.emitChange();
         }
         break;
+
       case ItemConstants.ITEM_SEARCH:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
@@ -88,6 +125,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         setState(AppState.SEARCH);
         AppStateStore.emitChange();
         break;
+
       case ItemConstants.ITEM_RESET_SEARCH:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,

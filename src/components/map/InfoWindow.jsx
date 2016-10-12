@@ -10,6 +10,7 @@ const InfoWindow = React.createClass({
     position: PropTypes.object.isRequired,
 
     _closeInfoWindow: PropTypes.func.isRequired,
+    _focus: PropTypes.func,
   },
 
   componentWillMount() {

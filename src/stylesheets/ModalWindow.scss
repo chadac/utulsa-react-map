@@ -1,0 +1,73 @@
+@import 'sizes';
+
+.enter {
+    opacity: 0.0;
+}
+
+.enter-active {
+    opacity: 1.0;
+    transition: opacity 300ms ease-in-out;
+}
+
+.leave {
+    opacity: 1.0;
+}
+
+.leave-active {
+    opacity: 0.0;
+    transition: opacity 300ms ease-in-out;
+}
+
+.background {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(black, 0.5); */
+}
+
+.modal-window {
+    z-index: 2;
+    border-radius: 2px;
+    position: absolute;
+    box-shadow: 0px 0px 60px 5px;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background-color: rgba(white, 0.95);
+    padding: 20px;
+}
+
+.description {
+    font-size: $font-small;
+}
+
+.photo-gallery {
+    width: 800px;
+    display: flex;
+    flex-flow: row nowrap;
+    overflow: hidden;
+    margin: auto;
+    float: center;
+    & .photo {
+        flex: 0 0 400px;
+        width: 400px;
+        height: 300px;
+        overflow: hidden;
+    }
+}
+
+.x {
+    float: none;
+    position: absolute;
+    top:10px;
+    right:10px;
+    display: block;
+    border-radius: 2px;
+    background-color: grey;
+    padding: 8px 16px;
+    &:hover {
+        cursor: pointer;
+    }
+}

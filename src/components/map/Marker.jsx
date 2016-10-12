@@ -65,10 +65,12 @@ const Marker = React.createClass({
     return (
       <InfoWindow $infoWindow={this.props.$infoWindow} map={this.props.map}
                   position={this.marker}
-                  _closeInfoWindow={this.props._closeInfoWindow}>
+                  _closeInfoWindow={this.props._closeInfoWindow}
+                  _focus={this.props._focus}>
         <h4>{this.props.name}</h4>
         <p>{this.props.address}</p>
         <p><a href={this.props.website}>{this.props.website}</a></p>
+        <p><a href="#" onClick={this._onMoreInformation}>More information...</a></p>
       </InfoWindow>
     );
   },
@@ -90,6 +92,10 @@ const Marker = React.createClass({
       this.props.map.setCenter(this.latlng());
     }, 300);
   },
+
+  _onMoreInformation() {
+    this.props._focus(this.props.id);
+  }
 
 });
 
