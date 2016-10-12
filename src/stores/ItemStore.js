@@ -112,18 +112,8 @@ function create(data) {
   }
   else if(isRoute(id)) {
     _routes.push(id);
-    let offset;
-    switch(_routes.length) {
-      case 1:
-        offset = 0.00003;
-        break;
-      case 2:
-        offset = -0.00003;
-        break;
-      default:
-        offset = 0;
-    }
-    _items[id].route.path = parseKMLCoords(_items[id].route.path, offset);
+    _items[id].route.path = parseKMLCoords(_items[id].route.path,
+                                           _items[id].route.offset);
   }
 }
 
