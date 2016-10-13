@@ -20,11 +20,12 @@ const routeData = require('../data/routes.json');
 const CHANGE_EVENT = 'change';
 const SELECT_EVENT = 'select';
 
-function parseKMLCoords(msg) {
+function parseKMLCoords(msg, offset) {
+  if(offset == null) offset = 0;
   var msgSplit = msg.split(' ');
   return msgSplit.map((coordStr) => {
     var coords = coordStr.split(',')
-    return { lng: coords[0], lat: coords[1] };
+    return { lng: Number(coords[0])+offset, lat: Number(coords[1])+offset };
   });
 }
 
@@ -117,7 +118,8 @@ function create(data) {
   }
   else if(isRoute(id)) {
     _routes.push(id);
-    _items[id].route.path = parseKMLCoords(_items[id].route.path);
+    _items[id].route.path = parseKMLCoords(_items[id].route.path,
+                                           _items[id].route.offset);
   }
 }
 
