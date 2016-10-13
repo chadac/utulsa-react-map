@@ -49,50 +49,60 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
     var action = payload.action;
 
     switch(action.actionType) {
+
       case AppStateConstants.APP_STATE_SET:
         setState(action.state);
         AppStateStore.emitChange();
         break;
+
       case AppStateConstants.APP_STATE_RESET:
         reset();
         AppStateStore.emitChange();
         break;
+
       case AppStateConstants.FILTER_BY_OPEN:
+        reset();
         openFilterByMenu();
-        setState(AppState.FILTER);
         AppStateStore.emitChange();
         break;
+
       case AppStateConstants.FILTER_BY_CLOSE:
         closeFilterByMenu();
-        reset();
         AppStateStore.emitChange();
         break;
+
       case ItemConstants.ITEM_SELECT:
         setState(AppState.SELECT);
         AppStateStore.emitChange();
         break;
+
       case ItemConstants.ITEM_DESELECT:
         setState(AppState.NORMAL);
         AppStateStore.emitChange();
         break;
+
       case ItemConstants.ITEM_CLOSE_INFOWINDOW:
         if(_currentState == AppState.SELECT) {
           setState(AppState.NORMAL);
           AppStateStore.emitChange();
         }
         break;
+
       case ItemConstants.ITEM_SEARCH:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
+        closeFilterByMenu();
         setState(AppState.SEARCH);
         AppStateStore.emitChange();
         break;
+
       case ItemConstants.ITEM_RESET_SEARCH:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
         reset();
+        closeFilterByMenu();
         AppStateStore.emitChange();
         break;
     }

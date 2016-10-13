@@ -29,6 +29,7 @@
 }
 
 .search-item {
+    $hover-color: mix($search-bar-background-color, white, 75%);
     padding: 10px 0 10px 10%;
     display: block;
     text-decoration: none;
@@ -36,6 +37,10 @@
         color: #F0F0F0;
     }
     &.header {
+        &:hover {
+            background-color: rgba($hover-color, 0.8);
+            cursor: pointer;
+        }
         @include media("<=phone") {
             font-size: $phone-font-large;
         }
@@ -53,7 +58,6 @@
         }
         &:hover {
             cursor: pointer;
-            $hover-color: mix($search-bar-background-color, white, 75%);
             background: rgba($hover-color, 0.8);
         }
     }

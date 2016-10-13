@@ -47,32 +47,39 @@ const App = React.createClass({
   },
 
   render() {
-    const items = this.state.items.filter((item) => {
-      switch(this.state.appState) {
-        case AppState.NORMAL:
-          return true;
-        case AppState.SEARCH:
-          return item.$searchKey == ItemStore.getSearchKey();
-        case AppState.FILTER:
-          return ItemStore.getActiveCategories().indexOf(item.category) >= 0;
-      }
-      return true;
-    });
+    const items = this
+      .state.items
+      .filter((item) => {
+        switch(this.state.appState) {
+          case AppState.SEARCH:
+            return item.$searchKey == ItemStore.getSearchKey();
+          default:
+            return true;
+        }
+      });
+
+    const filteredItems = items
+      .filter((item) =>
+        ItemStore.getActiveCategories().indexOf(item.category) >= 0);
 
     return (
       <div id="outer-container" style={{height:"100%"}} className={styles.outerContainer}>
         <SearchBar
             _search={ItemActions.search}
             appState={this.state.appState}
+            filterBy={this.state.filterBy}
             _resetCategories={ItemActions.resetCategories}
             _openFilterBy={AppStateActions.openFilterBy}
             _closeFilterBy={AppStateActions.closeFilterBy}
             appState={this.state.appState} />
         <AnimatedMenu>
           { this.state.appState == AppState.SEARCH ?
-            ( <SearchResults items={items} select={ItemActions.select} /> )
+            ( <SearchResults items={items} select={ItemActions.select}
+                             activeCategories={ItemStore.getActiveCategories()}
+                             _addCategory={ItemActions.addCategory}
+                             _remCategory={ItemActions.remCategory} /> )
             : null }
-          { this.state.appState == AppState.FILTER ?
+          { this.state.filterBy ?
             ( <FilterBy categories={ItemStore.getCategories()}
                         activeCategories={ItemStore.getActiveCategories()}
                         _addCategory={ItemActions.addCategory}
@@ -82,7 +89,7 @@ const App = React.createClass({
         </AnimatedMenu>
         <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
              _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
-             appState={this.state.appState} items={items}
+             appState={this.state.appState} items={filteredItems}
              _openInfoWindow={ItemActions.openInfoWindow}
              _closeInfoWindow={ItemActions.closeInfoWindow}
         />
