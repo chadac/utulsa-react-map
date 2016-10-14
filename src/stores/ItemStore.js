@@ -201,8 +201,9 @@ function search(w) {
       _items[key].$searchKey = _searchKey;
       _items[key].$searchTerms = [];
     }
-    if(term && _items[key].$searchTerms.indexOf(term) <= 0)
+    if(term && _items[key].$searchTerms.indexOf(term) < 0) {
       _items[key].$searchTerms.push(term);
+    }
   });
 };
 
