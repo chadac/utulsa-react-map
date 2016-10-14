@@ -5,6 +5,7 @@ import SearchBar from './menu/SearchBar';
 import AnimatedMenu from './menu/AnimatedMenu';
 import SearchResults from './menu/SearchResults';
 import FilterBy from './menu/FilterBy';
+import ModalWindow from './ModalWindow';
 import Map from './map/Map';
 
 import AppStateStore from '../stores/AppStateStore';
@@ -26,7 +27,11 @@ function getItemState() {
 }
 
 function getAppState() {
-  return { appState: AppStateStore.getState(), filterBy: AppStateStore.isFilterByMenuOpen() };
+  return {
+    appState: AppStateStore.getState(),
+    filterBy: AppStateStore.isFilterByMenuOpen(),
+    inFocus: AppStateStore.isInFocus(),
+  };
 }
 
 const App = React.createClass({
@@ -59,8 +64,14 @@ const App = React.createClass({
       return true;
     });
 
+    let focusedItem = null;
+    if(this.state.inFocus) {
+      focusedItem = ItemStore.getFocused();
+    }
+
     return (
       <div id="outer-container" style={{height:"100%"}} className={styles.outerContainer}>
+        <ModalWindow item={focusedItem} _unfocus={ItemActions.unfocus} />
         <SearchBar
             _search={ItemActions.search}
             appState={this.state.appState}
@@ -85,6 +96,7 @@ const App = React.createClass({
              appState={this.state.appState} items={items}
              _openInfoWindow={ItemActions.openInfoWindow}
              _closeInfoWindow={ItemActions.closeInfoWindow}
+             _focus={ItemActions.focus}
         />
       </div>
     );
