@@ -5,7 +5,8 @@ import SearchBar from './menu/SearchBar';
 import AnimatedMenu from './menu/AnimatedMenu';
 import SearchResults from './menu/SearchResults';
 import FilterBy from './menu/FilterBy';
-import ModalWindow from './ModalWindow';
+import ModalWindow from './modal/ModalWindow';
+import ItemInfoBlock from './modal/ItemInfoBlock';
 import Map from './map/Map';
 
 import AppStateStore from '../stores/AppStateStore';
@@ -51,6 +52,16 @@ const App = React.createClass({
     AppStateStore.addChangeListener(this._onAppStateChange);
   },
 
+  _getModalWindow() {
+    if(this.state.inFocus) {
+      var focusedItem = ItemStore.getFocused();
+      return (
+        <ItemInfoBlock {...focusedItem} _unfocus={ItemActions.unfocus} />
+      );
+    }
+    return null;
+  },
+
   render() {
     const items = this.state.items.filter((item) => {
       switch(this.state.appState) {
@@ -64,14 +75,13 @@ const App = React.createClass({
       return true;
     });
 
-    let focusedItem = null;
-    if(this.state.inFocus) {
-      focusedItem = ItemStore.getFocused();
-    }
+    let modalWindow = this._getModalWindow();
 
     return (
       <div id="outer-container" style={{height:"100%"}} className={styles.outerContainer}>
-        <ModalWindow item={focusedItem} _unfocus={ItemActions.unfocus} />
+        <ModalWindow _unfocus={ItemActions.unfocus}>
+          {modalWindow}
+        </ModalWindow>
         <SearchBar
             _search={ItemActions.search}
             appState={this.state.appState}

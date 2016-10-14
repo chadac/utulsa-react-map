@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import styles from '../stylesheets/ModalWindow.scss';
-
 const PhotoGallery = React.createClass({
   render() {
     const photos = this.props.photos.map((url) => (
@@ -16,7 +14,7 @@ const PhotoGallery = React.createClass({
   },
 });
 
-const ItemModalWindow = React.createClass({
+const ItemInfoBlock = React.createClass({
   render() {
     return (
       <div className={styles.background} onClick={this._unfocus}>
@@ -43,27 +41,4 @@ const ItemModalWindow = React.createClass({
   }
 });
 
-const ModalWindow = React.createClass({
-  render() {
-    let item = null;
-    if(this.props.item != null) {
-      item = (<ItemModalWindow key={this.props.item.id} _unfocus={this.props._unfocus} {...this.props.item} />);
-    }
-    return (
-      <ReactCSSTransitionGroup
-          transitionName={{
-            enter: styles.enter,
-            enterActive: styles.enterActive,
-            leave: styles.leave,
-            leaveActive: styles.leaveActive,
-          }}
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-      >
-        {item}
-      </ReactCSSTransitionGroup>
-    );
-  },
-});
-
-module.exports = ModalWindow;
+module.exports = ItemInfoBlock;
