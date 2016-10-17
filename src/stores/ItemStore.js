@@ -41,7 +41,7 @@ var _markers = [];
 var _routes = [];
 
 var _categories = {};
-var _activeCategories = {'TU MAIN CAMPUS': 'TU MAIN CAMPUS'};
+var _activeCategories = {};
 
 // Current selected item
 var _selectedItem = null;
@@ -82,8 +82,16 @@ function _addSearchTerm(name, id) {
   }
 }
 
+function _addCategory(category, id) {
+  if(_categories[category] == undefined) {
+    _categories[category] = [];
+    _activeCategories[category] = category;
+  }
+  _categories[category].push(_items[id]);
+}
+
 function create(data) {
-  var id = data.id
+  var id = data.id;
   _items[id] = data;
   _items[id].$selected = false;
   _items[id].$infoWindow = false;
@@ -98,10 +106,8 @@ function create(data) {
     });
   }
 
-  if(_categories[data.category] == undefined) {
-    _categories[data.category] = [];
-  }
-  _categories[data.category].push(_items[id]);
+  // Add category
+  _addCategory(data.category, data.id);
 
   const currentZoom = GMapsStore.getZoom();
   _items[id].$inZoom =

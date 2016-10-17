@@ -22,10 +22,8 @@ const FilterByButton = React.createClass({
   },
 
   _toggleFilter() {
-    console.log('eh');
-    if(this.props.appState == AppState.FILTER) {
+    if(this.props.selected) {
       this.props._closeFilterBy();
-      this.props._resetCategories();
     } else {
       this.props._openFilterBy();
     }
@@ -50,6 +48,7 @@ const SearchBar = React.createClass({
   getDefaultProps() {
     return {
       _search: PropTypes.func.isRequired,
+      filterBy: PropTypes.bool.isRequired,
     };
   },
 

@@ -63,6 +63,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
     var action = payload.action;
 
     switch(action.actionType) {
+
       case AppStateConstants.APP_STATE_SET:
         setState(action.state);
         AppStateStore.emitChange();
@@ -74,14 +75,13 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         break;
 
       case AppStateConstants.FILTER_BY_OPEN:
+        reset();
         openFilterByMenu();
-        setState(AppState.FILTER);
         AppStateStore.emitChange();
         break;
 
       case AppStateConstants.FILTER_BY_CLOSE:
         closeFilterByMenu();
-        reset();
         AppStateStore.emitChange();
         break;
 
@@ -122,6 +122,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
+        closeFilterByMenu();
         setState(AppState.SEARCH);
         AppStateStore.emitChange();
         break;
@@ -131,6 +132,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
           ItemStore.dispatcherIndex,
         ]);
         reset();
+        closeFilterByMenu();
         AppStateStore.emitChange();
         break;
     }

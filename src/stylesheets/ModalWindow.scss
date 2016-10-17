@@ -50,5 +50,7 @@
     padding: 8px 16px;
     &:hover {
         cursor: pointer;
+        background-color: mix(grey, white, 80%);
+        transition: color 100ms;
     }
 }
