@@ -287,6 +287,10 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     return Object.keys(_categories);
   },
 
+  getItemsByCategory() {
+    return _categories;
+  },
+
   getActiveCategories() {
     return Object.keys(_activeCategories);
   },

@@ -68,6 +68,27 @@
     }
 }
 
+.index {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    float: left;
+    width: 50px;
+    height: 100%;
+    padding: 0 10px;
+    &:hover {
+        cursor: pointer;
+        background-color: mix($search-bar-background-color, white, 80%);
+    }
+}
+
+.index-icon {
+    display: block;
+    background-color: white;
+    height: 5px;
+    margin: 0 auto;
+    width: 5px;
+}
 
 .search-box {
     display: block;

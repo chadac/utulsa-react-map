@@ -4,6 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import styles from '../../stylesheets/ModalWindow.scss';
 
 const ModalWindow = React.createClass({
+
   render() {
     let child = null;
     if(this.props.children !== null) {
@@ -43,6 +44,7 @@ const ModalWindow = React.createClass({
   _keyPress(e) {
     if(e.keyCode == 27) this.props._unfocus();
   }
+
 });
 
 module.exports = ModalWindow;
