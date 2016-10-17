@@ -18,7 +18,7 @@
     transition: opacity 300ms ease-in-out;
 }
 
-.background {
+.modal-window {
     z-index: 1;
     position: absolute;
     width: 100%;
@@ -26,7 +26,7 @@
     /* background-color: rgba(black, 0.5); */
 }
 
-.modal-window {
+.content {
     z-index: 2;
     border-radius: 2px;
     position: absolute;
@@ -37,25 +37,6 @@
     right: 10px;
     background-color: rgba(white, 0.95);
     padding: 20px;
-}
-
-.description {
-    font-size: $font-small;
-}
-
-.photo-gallery {
-    width: 800px;
-    display: flex;
-    flex-flow: row nowrap;
-    overflow: hidden;
-    margin: auto;
-    float: center;
-    & .photo {
-        flex: 0 0 400px;
-        width: 400px;
-        height: 300px;
-        overflow: hidden;
-    }
 }
 
 .x {

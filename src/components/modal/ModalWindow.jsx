@@ -6,10 +6,13 @@ import styles from '../../stylesheets/ModalWindow.scss';
 const ModalWindow = React.createClass({
   render() {
     let child = null;
-    if(this.props.children !== undefined && this.props.children.length == 1) {
+    if(this.props.children !== null) {
       child = (
-        <div className={styles.background} onClick={this._unfocus}>
-          {this.props.children}
+        <div tabIndex="1" className={styles.modalWindow} onClick={this._unfocus} onKeyDown={this._keyPress}>
+          <div className={styles.content} onClick={this._childClick}>
+            <div className={styles.x} onClick={this._unfocus}>x</div>
+            {this.props.children}
+          </div>
         </div>
       );
     }
@@ -24,10 +27,22 @@ const ModalWindow = React.createClass({
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}
       >
-          {child}
+        {child}
       </ReactCSSTransitionGroup>
     );
   },
+
+  _unfocus() {
+    this.props._unfocus();
+  },
+
+  _childClick(e) {
+    e.stopPropagation();
+  },
+
+  _keyPress(e) {
+    if(e.keyCode == 27) this.props._unfocus();
+  }
 });
 
 module.exports = ModalWindow;
