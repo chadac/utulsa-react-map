@@ -11,6 +11,7 @@ const assign = require('object-assign');
 
 const GMapsStore = require('./GMapsStore');
 const GMapsConstants = require('../constants/GMapsConstants');
+const AppStateConstants = require('../constants/AppStateConstants');
 
 const Trie = require('../util/Trie');
 
@@ -364,6 +365,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
         ItemStore.emitChange();
         break;
 
+      case AppStateConstants.CLOSE_MODAL:
       case ItemConstants.ITEM_UNFOCUS:
         unfocus();
         ItemStore.emitChange();

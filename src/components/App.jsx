@@ -7,6 +7,7 @@ import SearchResults from './menu/SearchResults';
 import FilterBy from './menu/FilterBy';
 import ModalWindow from './modal/ModalWindow';
 import ItemInfoBlock from './modal/ItemInfoBlock';
+import IndexBlock from './modal/IndexBlock';
 import Map from './map/Map';
 
 import AppStateStore from '../stores/AppStateStore';
@@ -31,7 +32,8 @@ function getAppState() {
   return {
     appState: AppStateStore.getState(),
     filterBy: AppStateStore.isFilterByMenuOpen(),
-    inFocus: AppStateStore.isInFocus(),
+    inFocusModal: AppStateStore.isInFocus(),
+    inIndexModal: AppStateStore.isInIndex(),
   };
 }
 
@@ -53,10 +55,15 @@ const App = React.createClass({
   },
 
   _getModalWindow() {
-    if(this.state.inFocus) {
+    if(this.state.inFocusModal) {
       var focusedItem = ItemStore.getFocused();
       return (
-        <ItemInfoBlock {...focusedItem} _unfocus={ItemActions.unfocus} />
+        <ItemInfoBlock key="item_window" {...focusedItem} />
+      );
+    }
+    else if(this.state.inIndexModal) {
+      return (
+        <IndexBlock key="index" items={ItemStore.getItemsByCategory()} />
       );
     }
     return null;
@@ -82,17 +89,18 @@ const App = React.createClass({
 
     return (
       <div id="outer-container" style={{height:"100%"}} className={styles.outerContainer}>
-        <ModalWindow _unfocus={ItemActions.unfocus}>
+        <ModalWindow _closeModal={AppStateActions.closeModal}>
           {modalWindow}
         </ModalWindow>
         <SearchBar
             _search={ItemActions.search}
             appState={this.state.appState}
             filterBy={this.state.filterBy}
+            inIndexModal={this.state.inIndexModal}
             _resetCategories={ItemActions.resetCategories}
             _openFilterBy={AppStateActions.openFilterBy}
             _closeFilterBy={AppStateActions.closeFilterBy}
-            appState={this.state.appState} />
+            _openIndex={AppStateActions.openIndex} />
         <AnimatedMenu>
           { this.state.appState == AppState.SEARCH ?
             ( <SearchResults items={items} select={ItemActions.select}

@@ -16,6 +16,18 @@ var AppStateActions = {
       actionType: AppStateConstants.FILTER_BY_CLOSE,
     });
   },
+
+  openIndex: () => {
+    AppDispatcher.handleViewAction({
+      actionType: AppStateConstants.OPEN_INDEX_MODAL,
+    });
+  },
+
+  closeModal: () => {
+    AppDispatcher.handleViewAction({
+      actionType: AppStateConstants.CLOSE_MODAL,
+    });
+  },
 };
 
 module.exports = AppStateActions;

@@ -34,7 +34,7 @@ const ModalWindow = React.createClass({
   },
 
   _unfocus() {
-    this.props._unfocus();
+    this.props._closeModal();
   },
 
   _childClick(e) {
@@ -42,7 +42,7 @@ const ModalWindow = React.createClass({
   },
 
   _keyPress(e) {
-    if(e.keyCode == 27) this.props._unfocus();
+    if(e.keyCode == 27) this.props._closeModal();
   }
 
 });

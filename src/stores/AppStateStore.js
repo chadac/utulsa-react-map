@@ -12,7 +12,9 @@ var _currentState = AppState.NORMAL;
 
 var _filterByMenu = false;
 
-var _inFocus = false;
+const MODAL_FOCUS = "focus";
+const MODAL_INDEX = "index";
+var _modalWindow = null;
 
 function setState(state) {
   _currentState = state;
@@ -30,12 +32,16 @@ function closeFilterByMenu() {
   _filterByMenu = false;
 }
 
-function focus() {
-  _inFocus = true;
+function openFocusModal() {
+  _modalWindow = MODAL_FOCUS;
 }
 
-function unfocus() {
-  _inFocus = false;
+function openIndexModal() {
+  _modalWindow = MODAL_INDEX;
+}
+
+function closeModal() {
+  _modalWindow = null;
 }
 
 var AppStateStore = assign({}, EventEmitter.prototype, {
@@ -48,7 +54,11 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
   },
 
   isInFocus() {
-    return _inFocus;
+    return _modalWindow == MODAL_FOCUS;
+  },
+
+  isInIndex() {
+    return _modalWindow == MODAL_INDEX;
   },
 
   emitChange() {
@@ -85,6 +95,19 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         AppStateStore.emitChange();
         break;
 
+      case AppStateConstants.OPEN_INDEX_MODAL:
+        openIndexModal();
+        AppStateStore.emitChange();
+        break;
+
+      case AppStateConstants.CLOSE_MODAL:
+        AppDispatcher.waitFor([
+          ItemStore.dispatcherIndex,
+        ]);
+        closeModal();
+        AppStateStore.emitChange();
+        break;
+
       case ItemConstants.ITEM_SELECT:
         setState(AppState.SELECT);
         AppStateStore.emitChange();
@@ -99,7 +122,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
-        focus();
+        openFocusModal();
         AppStateStore.emitChange();
         break;
 
@@ -107,7 +130,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
-        unfocus();
+        closeModal();
         AppStateStore.emitChange();
         break;
 
@@ -135,8 +158,8 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         closeFilterByMenu();
         AppStateStore.emitChange();
         break;
-    }
 
+    }
     return true;
   }),
 });

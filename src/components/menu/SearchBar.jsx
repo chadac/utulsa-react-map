@@ -33,9 +33,10 @@ const FilterByButton = React.createClass({
 const IndexButton = React.createClass({
   render() {
     var style = {};
-    style[styles.selected] = this.props.indexActive;
+    style[styles.selected] = this.props.selected;
     return(
-      <div className={classnames(styles.index, style)}>
+      <div className={classnames(styles.index, style)}
+           onClick={this.props._openIndex}>
         <div className={classnames(styles.indexIcon)} />
         <div className={classnames(styles.indexIcon)} />
         <div className={classnames(styles.indexIcon)} />
@@ -60,7 +61,8 @@ const SearchBar = React.createClass({
                           _closeFilterBy={this.props._closeFilterBy}
                           _resetCategories={this.props._resetCategories}
                           _openFilterBy={this.props._openFilterBy} />
-          <IndexButton selected={false} />
+          <IndexButton selected={this.props.inIndexModal}
+                       _openIndex={this.props._openIndex} />
           <input className={classnames(styles.searchBox)} type="text"
                  placeholder="Search ..."
                  onChange={this._onChange} />

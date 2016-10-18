@@ -6,7 +6,7 @@
 
 .enter-active {
     max-height: 1000px;
-    transition: max-height 300ms ease-in;
+    transition: max-height 600ms ease-in;
 }
 
 .leave {
@@ -15,5 +15,5 @@
 
 .leave-active {
     max-height: 0px;
-    transition: max-height 300ms ease-out;
+    transition: max-height 600ms ease-out;
 }

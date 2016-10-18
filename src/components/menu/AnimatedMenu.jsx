@@ -24,8 +24,8 @@ const AnimatedMenu = React.createClass({
             leave: styles.leave,
             leaveActive: styles.leaveActive
           }}
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}>
+          transitionEnterTimeout={600}
+          transitionLeaveTimeout={600}>
         {this.state.rendered ? this.props.children : null}
       </ReactCSSTransitionGroup>
     );
