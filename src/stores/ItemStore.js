@@ -16,6 +16,7 @@ const Trie = require('../util/Trie');
 
 const placeData = require('../data/places.json');
 const routeData = require('../data/routes.json');
+const markerData = require('../data/markers.json');
 
 const CHANGE_EVENT = 'change';
 const SELECT_EVENT = 'select';
@@ -89,17 +90,20 @@ function create(data) {
   _items[id].$searchTerms = null;
 
   //Search terms
-  _addSearchTerm(data.name, data.id);
+  if(data.name !== undefined)
+    _addSearchTerm(data.name, data.id);
   if(data.search_terms !== undefined) {
     data.search_terms.forEach((term) => {
       _addSearchTerm(term, [data.id, term]);
     });
   }
 
-  if(_categories[data.category] == undefined) {
-    _categories[data.category] = [];
+  if(data.category !== undefined) {
+    if(_categories[data.category] == undefined) {
+      _categories[data.category] = [];
+    }
+    _categories[data.category].push(_items[id]);
   }
-  _categories[data.category].push(_items[id]);
 
   const currentZoom = GMapsStore.getZoom();
   _items[id].$inZoom =
@@ -230,6 +234,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   load() {
     placeData.forEach((item) => create(item));
     routeData.forEach((item) => create(item));
+    markerData.forEach((item) => create(item));
     this.emitChange();
   },
 

@@ -38,7 +38,8 @@ const Marker = React.createClass({
 
   componentWillUnmount() {
     this.marker.setMap(null);
-    this.label.setMap(null);
+    if(this.label)
+      this.label.setMap(null);
   },
 
   latlng() {
@@ -58,7 +59,12 @@ const Marker = React.createClass({
   },
 
   createLabel() {
-    return new TextLabel(this.latlng(), this.props.name, styles.markerLabel, this.props.map);
+    if(this.props.name !== undefined) {
+      return new TextLabel(this.latlng(), this.props.name, styles.markerLabel, this.props.map);
+    }
+    else {
+      return null;
+    }
   },
 
   render() {
@@ -66,11 +72,13 @@ const Marker = React.createClass({
                 this.props.directions :
                 [this.props.marker.lat, this.props.marker.lng].join(',');
     const directionsUrl = "https://www.google.com/maps/dir//'"+loc+"'/@"+loc+",17z"
+    const name = this.props.name !== undefined ? this.props.name
+               : this.props.label + " " + this.props.id;
     return (
       <InfoWindow $infoWindow={this.props.$infoWindow} map={this.props.map}
                   position={this.marker}
                   _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{this.props.name}</h4>
+        <h4>{name}</h4>
         <p>{this.props.address}</p>
         <p><a href={this.props.website}>{this.props.website}</a></p>
         <p><a target="_blank" href={directionsUrl}>Get directions</a></p>
