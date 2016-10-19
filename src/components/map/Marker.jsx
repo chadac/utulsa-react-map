@@ -83,6 +83,7 @@ const Marker = React.createClass({
         <p>{this.props.address}</p>
         <p><a href={this.props.website}>{this.props.website}</a></p>
         <p><a target="_blank" href={directionsUrl}>Get directions</a></p>
+        <p><a href="#" onClick={this._onMoreInformation}>More information...</a></p>
       </InfoWindow>
     );
   },
@@ -104,6 +105,10 @@ const Marker = React.createClass({
       this.props.map.setCenter(this.latlng());
     }, 300);
   },
+
+  _onMoreInformation() {
+    this.props._focus(this.props.id);
+  }
 
 });
 
