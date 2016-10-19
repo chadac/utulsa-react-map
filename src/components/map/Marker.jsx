@@ -73,7 +73,8 @@ const Marker = React.createClass({
                 [this.props.marker.lat, this.props.marker.lng].join(',');
     const directionsUrl = "https://www.google.com/maps/dir//'"+loc+"'/@"+loc+",17z"
     const name = this.props.name !== undefined ? this.props.name
-               : this.props.label + " " + this.props.id;
+               : this.props.label !== undefined ? this.props.label
+                : null;
     return (
       <InfoWindow $infoWindow={this.props.$infoWindow} map={this.props.map}
                   position={this.marker}
