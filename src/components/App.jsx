@@ -100,7 +100,8 @@ const App = React.createClass({
             _resetCategories={ItemActions.resetCategories}
             _openFilterBy={AppStateActions.openFilterBy}
             _closeFilterBy={AppStateActions.closeFilterBy}
-            _openIndex={AppStateActions.openIndex} />
+            _openIndex={AppStateActions.openIndex}
+            _center={GMapsActions.setCenter} _zoom={GMapsActions.setZoom} />
         <AnimatedMenu>
           { this.state.appState == AppState.SEARCH ?
             ( <SearchResults items={items} select={ItemActions.select}

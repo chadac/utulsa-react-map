@@ -90,6 +90,24 @@
     width: 5px;
 }
 
+.center {
+    float: left;
+    width: 70px;
+    height: 100%;
+    margin: auto;
+    text-align: center;
+    & span {
+        display: inline-block;
+        color: white;
+        font-size: 52px;
+        vertical-align: middle;
+    }
+    &:hover {
+        cursor: pointer;
+        background-color: mix($search-bar-background-color, white, 80%);
+    }
+}
+
 .search-box {
     display: block;
     margin: auto;

@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom';
 
+import GMapsStore from '../../stores/GMapsStore';
+
 import AppState from '../../constants/AppState';
 
 import Marker from './Marker'
@@ -94,6 +96,8 @@ const Map = React.createClass({
     this.map.addListener("center_changed", this._onMapCenter);
     this.map.addListener("zoom_changed", this._onMapZoom);
     this.setState({rendered: true});
+    GMapsStore.addCenterListener(this._centerChanged);
+    GMapsStore.addZoomListener(this._zoomChanged);
   },
 
   createMap() {
@@ -175,8 +179,15 @@ const Map = React.createClass({
   _onMapZoom() {
     const zoom = this.map.getZoom();
     this.props._onZoom(zoom);
-  }
+  },
 
+  _centerChanged(lat, lng) {
+    this.map.setCenter(new gmaps.LatLng(lat, lng));
+  },
+
+  _zoomChanged(zoomLevel) {
+    this.map.setZoom(zoomLevel);
+  }
 });
 
 export default Map;
