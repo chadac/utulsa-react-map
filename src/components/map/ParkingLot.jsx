@@ -3,14 +3,26 @@ import classNames from 'classnames';
 
 import gmaps from '../../GMapsAPI';
 
+import AppState from '../../constants/AppState';
+
 import InfoWindow from './InfoWindow';
 
 function polyStyles() {
-  return {};
+  return {
+    strokeColor: "#AAAAAA",
+    fillColor: "#FF0000",
+    fillOpacity: 0.35,
+  };
 }
 
 const ParkingLot = React.createClass({
   propTypes: {
+  },
+
+  getInitialState() {
+    return {
+      clickPos: new gmaps.LatLng(0,0),
+    };
   },
 
   componentWillMount() {
@@ -20,16 +32,24 @@ const ParkingLot = React.createClass({
   },
 
   _createPolygons() {
-    const numLayers = this.props.parking_lot.outer_layers.length;
+    const numLayers = this.props.parking_lot.layer.length;
     var polys = []
     for(var i = 0; i < numLayers; i++) {
-      var polyStyles = polyStyles();
-      polyStyles.paths = [this.props.parking_lot.outer_layers[i]];
-      this.props.parking_lot.inner_layers.forEach((layer) => {
-        if(layer != "") polyStyles.paths.push(layer);
+      var polyData = polyStyles();
+      var layer = this.props.parking_lot.layer[i];
+      polyData.paths = layer.map((sublayer, index) => {
+        if(sublayer instanceof Array) {
+          var newLayer = sublayer
+            .map((item) => new gmaps.LatLng(item.lat, item.lng))
+          if(index == 0) return newLayer;
+          else return newLayer.reverse();
+        } else {
+          return new gmaps.LatLng(sublayer.lat, sublayer.lng);
+        }
       });
-      var poly = new gmaps.Polygon(polyStyles);
+      var poly = new gmaps.Polygon(polyData);
       poly.setMap(this.props.map);
+      poly.addListener('click', this._onClick);
       polys.push(poly);
     }
     return polys;
@@ -40,16 +60,35 @@ const ParkingLot = React.createClass({
   },
 
   render() {
+    let position;
+    switch(this.props.appState) {
+      case AppState.NORMAL:
+      case AppState.SEARCH:
+      case AppState.FILTER:
+        position = this.state.clickPos;
+        break;
+      case AppState.SELECT:
+        position = this.center;
+        break;
+    }
+
     return (
       <InfoWindow
           $infoWindow={this.props.$infoWindow}
           map={this.props.map}
-          position={this.center}>
+          position={position}
+          _closeInfoWindow={this.props._closeInfoWindow}>
         <h4>{this.props.name}</h4>
         <p>{this.props.hours}</p>
       </InfoWindow>
     );
   },
+
+  _onClick(e) {
+    this.setState({clickPos: e.latLng});
+    this.props._openInfoWindow(this.props.id);
+  },
+
 });
 
 module.exports = ParkingLot;

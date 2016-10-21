@@ -17,6 +17,7 @@ const Trie = require('../util/Trie');
 
 const placeData = require('../data/places.json');
 const routeData = require('../data/routes.json');
+const parkingData = require('../data/parking_lots.json');
 const markerData = require('../data/markers.json');
 
 const CHANGE_EVENT = 'change';
@@ -41,6 +42,8 @@ var _searchKey = null;
 var _markers = [];
 // Route IDs
 var _routes = [];
+// Parking Lot IDs
+var _parking_lots = [];
 
 var _categories = {};
 var _activeCategories = {};
@@ -60,6 +63,10 @@ function isMarker(id) {
 
 function isRoute(id) {
   return _items[id].type == 'route';
+}
+
+function isParkingLot(id) {
+  return _items[id].type == 'parking_lot';
 }
 
 function _addZoom(id, min_zoom, max_zoom) {
@@ -131,6 +138,22 @@ function create(data) {
     _routes.push(id);
     _items[id].route.path = parseKMLCoords(_items[id].route.path,
                                            _items[id].route.offset);
+  }
+  else if(isParkingLot(id)) {
+    _parking_lots.push(id);
+    _items[id].parking_lot.layer = data
+      .parking_lot.layer
+      .filter((data) => data != "")
+      .map((data) => {
+        data = data.replace(/[\u201C\u201D]/g, '"');
+        if(data[0] == '[') {
+          var layer = JSON.parse(data);
+          return layer.map((poly) => parseKMLCoords(poly));
+        }
+        else {
+          return parseKMLCoords(data);
+        }
+      });
   }
 }
 
@@ -256,6 +279,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   load() {
     placeData.forEach((item) => create(item));
     routeData.forEach((item) => create(item));
+    parkingData.forEach((item) => create(item));
     markerData.forEach((item) => create(item));
     this.emitChange();
   },
