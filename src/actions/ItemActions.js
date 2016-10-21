@@ -33,6 +33,19 @@ var ItemActions = {
     });
   },
 
+  focus: function(id) {
+    AppDispatcher.handleViewAction({
+      actionType: ItemConstants.ITEM_FOCUS,
+      id: id,
+    });
+  },
+
+  unfocus: function() {
+    AppDispatcher.handleViewAction({
+      actionType: ItemConstants.ITEM_UNFOCUS,
+    });
+  },
+
   openInfoWindow: function(id) {
     AppDispatcher.handleViewAction({
       actionType: ItemConstants.ITEM_OPEN_INFOWINDOW,

@@ -12,6 +12,10 @@ var _currentState = AppState.NORMAL;
 
 var _filterByMenu = false;
 
+const MODAL_FOCUS = "focus";
+const MODAL_INDEX = "index";
+var _modalWindow = null;
+
 function setState(state) {
   _currentState = state;
 }
@@ -28,6 +32,18 @@ function closeFilterByMenu() {
   _filterByMenu = false;
 }
 
+function openFocusModal() {
+  _modalWindow = MODAL_FOCUS;
+}
+
+function openIndexModal() {
+  _modalWindow = MODAL_INDEX;
+}
+
+function closeModal() {
+  _modalWindow = null;
+}
+
 var AppStateStore = assign({}, EventEmitter.prototype, {
   getState() {
     return _currentState;
@@ -35,6 +51,14 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
 
   isFilterByMenuOpen() {
     return _filterByMenu;
+  },
+
+  isInFocus() {
+    return _modalWindow == MODAL_FOCUS;
+  },
+
+  isInIndex() {
+    return _modalWindow == MODAL_INDEX;
   },
 
   emitChange() {
@@ -49,54 +73,93 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
     var action = payload.action;
 
     switch(action.actionType) {
+
       case AppStateConstants.APP_STATE_SET:
         setState(action.state);
         AppStateStore.emitChange();
         break;
+
       case AppStateConstants.APP_STATE_RESET:
         reset();
         AppStateStore.emitChange();
         break;
+
       case AppStateConstants.FILTER_BY_OPEN:
+        reset();
         openFilterByMenu();
-        setState(AppState.FILTER);
         AppStateStore.emitChange();
         break;
+
       case AppStateConstants.FILTER_BY_CLOSE:
         closeFilterByMenu();
-        reset();
         AppStateStore.emitChange();
         break;
+
+      case AppStateConstants.OPEN_INDEX_MODAL:
+        openIndexModal();
+        AppStateStore.emitChange();
+        break;
+
+      case AppStateConstants.CLOSE_MODAL:
+        AppDispatcher.waitFor([
+          ItemStore.dispatcherIndex,
+        ]);
+        closeModal();
+        AppStateStore.emitChange();
+        break;
+
       case ItemConstants.ITEM_SELECT:
         setState(AppState.SELECT);
         AppStateStore.emitChange();
         break;
+
       case ItemConstants.ITEM_DESELECT:
         setState(AppState.NORMAL);
         AppStateStore.emitChange();
         break;
+
+      case ItemConstants.ITEM_FOCUS:
+        AppDispatcher.waitFor([
+          ItemStore.dispatcherIndex,
+        ]);
+        openFocusModal();
+        AppStateStore.emitChange();
+        break;
+
+      case ItemConstants.ITEM_UNFOCUS:
+        AppDispatcher.waitFor([
+          ItemStore.dispatcherIndex,
+        ]);
+        closeModal();
+        AppStateStore.emitChange();
+        break;
+
       case ItemConstants.ITEM_CLOSE_INFOWINDOW:
         if(_currentState == AppState.SELECT) {
           setState(AppState.NORMAL);
           AppStateStore.emitChange();
         }
         break;
+
       case ItemConstants.ITEM_SEARCH:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
+        closeFilterByMenu();
         setState(AppState.SEARCH);
         AppStateStore.emitChange();
         break;
+
       case ItemConstants.ITEM_RESET_SEARCH:
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
         reset();
+        closeFilterByMenu();
         AppStateStore.emitChange();
         break;
-    }
 
+    }
     return true;
   }),
 });

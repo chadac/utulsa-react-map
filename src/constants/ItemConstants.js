@@ -5,6 +5,8 @@ module.exports = keyMirror({
   ITEM_DESTROY: null,
   ITEM_SELECT: null,
   ITEM_DESELECT: null,
+  ITEM_FOCUS: null,
+  ITEM_UNFOCUS: null,
   ITEM_OPEN_INFOWINDOW: null,
   ITEM_CLOSE_INFOWINDOW: null,
   ITEM_SEARCH: null,

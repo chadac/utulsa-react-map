@@ -143,7 +143,8 @@ const Map = React.createClass({
             <MapItem key={item.id} map={map} {...item}
                      appState={this.props.appState}
                      _openInfoWindow={this.props._openInfoWindow}
-                     _closeInfoWindow={this.props._closeInfoWindow} />
+                     _closeInfoWindow={this.props._closeInfoWindow}
+                     _focus={this.props._focus} />
           );
         });
       return (

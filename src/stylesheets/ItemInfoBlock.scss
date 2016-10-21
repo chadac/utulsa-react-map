@@ -1,0 +1,33 @@
+@import 'sizes';
+
+.description {
+    font-size: $font-small;
+}
+
+.photo-gallery {
+    width: 800px;
+    display: flex;
+    flex-flow: row nowrap;
+    overflow: hidden;
+    margin: auto;
+    float: center;
+    & .photo {
+        flex: 0 0 400px;
+        width: 400px;
+        height: 300px;
+        overflow: hidden;
+    }
+}
+
+.background {
+    z-index: 2;
+    border-radius: 2px;
+    position: absolute;
+    box-shadow: 0px 0px 60px 5px;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background-color: rgba(white, 0.95);
+    padding: 20px;
+}
