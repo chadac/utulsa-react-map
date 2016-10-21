@@ -119,10 +119,6 @@ function create(data) {
   if(data.category !== undefined) {
     // Add category
     _addCategory(data.category, data.id);
-    if(_categories[data.category] == undefined) {
-      _categories[data.category] = [];
-    }
-    _categories[data.category].push(_items[id]);
   }
 
   const currentZoom = GMapsStore.getZoom();

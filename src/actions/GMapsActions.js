@@ -18,6 +18,21 @@ const GMapsActions = {
     });
   },
 
+  setZoom: (zoomLevel) => {
+    AppDispatcher.handleViewAction({
+      actionType: GMapsConstants.MAP_SET_ZOOM,
+      zoom: zoomLevel,
+    });
+  },
+
+  setCenter: (lat, lng) => {
+    AppDispatcher.handleViewAction({
+      actionType: GMapsConstants.MAP_SET_CENTER,
+      lat: lat,
+      lng: lng
+    });
+  },
+
 };
 
 module.exports = GMapsActions;
