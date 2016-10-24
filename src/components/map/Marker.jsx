@@ -68,7 +68,7 @@ const Marker = React.createClass({
   },
 
   render() {
-    const loc = this.props.directions != "" ?
+    const loc = this.props.directions != undefined ?
                 this.props.directions :
                 [this.props.marker.lat, this.props.marker.lng].join(',');
     const directionsUrl = "https://www.google.com/maps/dir//'"+loc+"'/@"+loc+",17z"
