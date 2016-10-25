@@ -105,6 +105,7 @@ const App = React.createClass({
         <AnimatedMenu>
           { this.state.appState == AppState.SEARCH ?
             ( <SearchResults items={items} select={ItemActions.select}
+                             categories={ItemStore.getCategories()}
                              activeCategories={ItemStore.getActiveCategories()}
                              _addCategory={ItemActions.addCategory}
                              _remCategory={ItemActions.remCategory} /> )

@@ -19,6 +19,7 @@ const placeData = require('../data/places.json');
 const routeData = require('../data/routes.json');
 const parkingData = require('../data/parking_lots.json');
 const markerData = require('../data/markers.json');
+const categoryData = require('../data/categories.json');
 
 const CHANGE_EVENT = 'change';
 const SELECT_EVENT = 'select';
@@ -92,11 +93,16 @@ function _addSearchTerm(name, id) {
 }
 
 function _addCategory(category, id) {
-  if(_categories[category] == undefined) {
-    _categories[category] = [];
-    _activeCategories[category] = category;
-  }
+  console.log(category,id);
   _categories[category].push(_items[id]);
+}
+
+function loadCategories(data) {
+  data.forEach((category) => {
+    _categories[category.name] = [];
+    if(category.active == '1')
+      _activeCategories[category.name] = category.name;
+  });
 }
 
 function create(data) {
@@ -274,6 +280,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
    * Imports JSON data.
    */
   load() {
+    loadCategories(categoryData);
     placeData.forEach((item) => create(item));
     routeData.forEach((item) => create(item));
     parkingData.forEach((item) => create(item));

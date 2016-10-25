@@ -3,21 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import AppState from '../../constants/AppState';
 import classnames from 'classnames';
 import styles from '../../stylesheets/SearchResults.scss';
-
-/**
- * Custom groupby function.
- **/
-function groupBy(items, key) {
-  // get categories
-  var c = {};
-  items.forEach((item) => {
-    if(c[item[key]] == undefined)
-      c[item[key]] = [item]
-    else
-      c[item[key]].push(item);
-  });
-  return c;
-}
+import ItemHelpers from '../../helpers/ItemHelpers';
 
 const SearchCategory = React.createClass({
   render() {
@@ -71,9 +57,10 @@ const SearchResults = React.createClass({
   },
 
   render() {
-    const groups = groupBy(this.props.items, "category");
-    const searchCats = Object
-      .keys(groups)
+    const groups = ItemHelpers.groupBy(this.props.items, "category");
+    const searchCats = this
+      .props.categories
+      .filter((name) => groups[name] !== undefined)
       .map((name) => {
       const groupItems = groups[name].map((item) =>
         <SearchItem select={this.props.select} key={item.id} {...item} />
