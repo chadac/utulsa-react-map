@@ -33,6 +33,15 @@ const GMapsActions = {
     });
   },
 
+  setUserPosition: (lat, lng) => {
+    AppDispatcher.handleViewAction({
+      actionType: GMapsConstants.SET_USER_POSITION,
+      lat: lat,
+      lng: lng,
+    });
+    GMapsActions.setCenter(lat, lng);
+    GMapsActions.setZoom(19);
+  },
 };
 
 module.exports = GMapsActions;

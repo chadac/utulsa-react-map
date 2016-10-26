@@ -59,7 +59,7 @@ var _focusedItem = null;
 var _zoomLevels = {max: {}, min: {}}
 
 function isMarker(id) {
-  return _items[id].type == 'marker';
+  return _items[id].type == 'place' || _items[id].type == 'simple_marker';
 }
 
 function isRoute(id) {
@@ -93,7 +93,6 @@ function _addSearchTerm(name, id) {
 }
 
 function _addCategory(category, id) {
-  console.log(category,id);
   _categories[category].push(_items[id]);
 }
 

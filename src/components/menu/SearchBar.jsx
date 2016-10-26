@@ -60,8 +60,7 @@ const CenterButton = React.createClass({
       navigator.geolocation.getCurrentPosition((pos) => {
         const lat = pos.coords.latitude,
               lng = pos.coords.longitude;
-        this.props._zoom(17);
-        this.props._center(lat, lng);
+        this.props._setUserPosition(lat, lng);
       });
     }
   },
@@ -85,7 +84,8 @@ const SearchBar = React.createClass({
                           _openFilterBy={this.props._openFilterBy} />
           <IndexButton selected={this.props.inIndexModal}
                        _openIndex={this.props._openIndex} />
-          <CenterButton _center={this.props._center} _zoom={this.props._zoom} />
+          <CenterButton _center={this.props._center} _zoom={this.props._zoom}
+                        _setUserPosition={this.props._setUserPosition}/>
           <input className={classnames(styles.searchBox)} type="text"
                  placeholder="Search ..."
                  onChange={this._onChange} />

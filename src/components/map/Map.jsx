@@ -5,9 +5,11 @@ import GMapsStore from '../../stores/GMapsStore';
 
 import AppState from '../../constants/AppState';
 
-import Marker from './Marker'
-import Route from './Route'
-import ParkingLot from './ParkingLot'
+import Place from './Place';
+import SimpleMarker from './SimpleMarker';
+import Marker from './Marker';
+import Route from './Route';
+import ParkingLot from './ParkingLot';
 
 import styles from '../../stylesheets/Map.scss'
 import gmaps from '../../GMapsAPI';
@@ -16,10 +18,10 @@ const Control = React.createClass({
   propTypes: {
     id: PropTypes.string.isRequired,
     position: PropTypes.number.isRequired,
-    _onClick: PropTypes.func,
     controlUIStyle: PropTypes.object,
     controlTextStyle: PropTypes.object,
 
+    _onClick: PropTypes.func,
     _openInfoWindow: PropTypes.func.isRequired,
     _closeInfoWindow: PropTypes.func.isRequired,
   },
@@ -45,9 +47,6 @@ const Control = React.createClass({
         paddingRight: '5px'
       },
     };
-  },
-
-  componentDidMount() {
   },
 
   render() {
@@ -98,6 +97,7 @@ const Map = React.createClass({
     this.setState({rendered: true});
     GMapsStore.addCenterListener(this._centerChanged);
     GMapsStore.addZoomListener(this._zoomChanged);
+    GMapsStore.addUserPositionListener(this._userPositionSet);
   },
 
   createMap() {
@@ -133,8 +133,11 @@ const Map = React.createClass({
         .map((item) => {
           var MapItem;
           switch(item.type) {
-            case "marker":
-              MapItem = Marker;
+            case "place":
+              MapItem = Place;
+              break;
+            case "simple_marker":
+              MapItem = SimpleMarker;
               break;
             case "route":
               MapItem = Route;
@@ -151,6 +154,11 @@ const Map = React.createClass({
                      _focus={this.props._focus} />
           );
         });
+      if(this.state.user) {
+        items.push((
+          <Marker map={map} key="user_position" id="user_position" latLng={this.state.user} />
+        ));
+      }
       return (
         <div className={styles.mapContainer}>
           <div ref="map" className={styles.Map}>
@@ -187,7 +195,11 @@ const Map = React.createClass({
 
   _zoomChanged(zoomLevel) {
     this.map.setZoom(zoomLevel);
-  }
+  },
+
+  _userPositionSet(lat, lng) {
+    this.setState({user: new gmaps.LatLng(lat, lng)});
+  },
 });
 
 export default Map;
