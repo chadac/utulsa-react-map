@@ -98,6 +98,7 @@ const App = React.createClass({
             filterBy={this.state.filterBy}
             inIndexModal={this.state.inIndexModal}
             _resetCategories={ItemActions.resetCategories}
+            _setUserPosition={GMapsActions.setUserPosition}
             _openFilterBy={AppStateActions.openFilterBy}
             _closeFilterBy={AppStateActions.closeFilterBy}
             _openIndex={AppStateActions.openIndex}
