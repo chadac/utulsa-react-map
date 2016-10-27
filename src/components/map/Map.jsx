@@ -10,69 +10,10 @@ import SimpleMarker from './SimpleMarker';
 import Marker from './Marker';
 import Route from './Route';
 import ParkingLot from './ParkingLot';
+import FilterMenu from './FilterMenu';
 
 import styles from '../../stylesheets/Map.scss'
 import gmaps from '../../GMapsAPI';
-
-const Control = React.createClass({
-  propTypes: {
-    id: PropTypes.string.isRequired,
-    position: PropTypes.number.isRequired,
-    controlUIStyle: PropTypes.object,
-    controlTextStyle: PropTypes.object,
-
-    _onClick: PropTypes.func,
-    _openInfoWindow: PropTypes.func.isRequired,
-    _closeInfoWindow: PropTypes.func.isRequired,
-  },
-
-  getDefaultProps() {
-    // TODO: Move these div styles over to the SASS file
-    return {
-      controlUIStyle: {
-        backgroundColor: '#fff',
-        border: '2px solid #fff',
-        borderRadius: '3px',
-        boxShadow: '0 2px 6px rgba(0,0,0,.3)',
-        cursor: 'pointer',
-        marginBottom: '22px',
-        textAlign: 'center'
-      },
-      controlTextStyle: {
-        color: 'rgb(25,25,25)',
-        fontFamily: 'Roboto,Arial,sans-serif',
-        fontSize: '16px',
-        lineHeight: '38px',
-        paddingLeft: '5px',
-        paddingRight: '5px'
-      },
-    };
-  },
-
-  render() {
-    return (
-      <div ref={this.props.id} style={this.props.controlUIStyle}
-           title ={this.props.title}>
-        <div style={this.props.controlTextStyle}>
-          {this.props.text}
-        </div>
-      </div>
-    );
-  },
-});
-
-var _control_id = 1;
-/**
- * Adds a map control. This is the simplest and most React-y way to implement
- * the controls, since React does not like when I move the React component into
- * the DOM.
- **/
-function addControl(map, component) {
-  let div = document.createElement('div');
-  div.ref = "mapControl_" + (++_control_id);
-  map.controls[component.props.position].push(div);
-  ReactDOM.render(component, div);
-}
 
 const Map = React.createClass({
   propTypes: {
@@ -163,6 +104,11 @@ const Map = React.createClass({
         <div className={styles.mapContainer}>
           <div ref="map" className={styles.Map}>
           </div>
+          <FilterMenu map={map}
+                      categories={this.props.categories}
+                      activeCategories={this.props.activeCategories}
+                      _addCategory={this.props._addCategory}
+                      _remCategory={this.props._remCategory} />
           {items}
         </div>
       );

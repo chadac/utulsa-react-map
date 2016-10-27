@@ -10,8 +10,6 @@ const CHANGE_EVENT = "change";
 
 var _currentState = AppState.NORMAL;
 
-var _filterByMenu = false;
-
 const MODAL_FOCUS = "focus";
 const MODAL_INDEX = "index";
 var _modalWindow = null;
@@ -22,14 +20,6 @@ function setState(state) {
 
 function reset() {
   _currentState = AppState.NORMAL;
-}
-
-function openFilterByMenu() {
-  _filterByMenu = true;
-}
-
-function closeFilterByMenu() {
-  _filterByMenu = false;
 }
 
 function openFocusModal() {
@@ -47,10 +37,6 @@ function closeModal() {
 var AppStateStore = assign({}, EventEmitter.prototype, {
   getState() {
     return _currentState;
-  },
-
-  isFilterByMenuOpen() {
-    return _filterByMenu;
   },
 
   isInFocus() {
@@ -81,17 +67,6 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
 
       case AppStateConstants.APP_STATE_RESET:
         reset();
-        AppStateStore.emitChange();
-        break;
-
-      case AppStateConstants.FILTER_BY_OPEN:
-        reset();
-        openFilterByMenu();
-        AppStateStore.emitChange();
-        break;
-
-      case AppStateConstants.FILTER_BY_CLOSE:
-        closeFilterByMenu();
         AppStateStore.emitChange();
         break;
 
@@ -145,7 +120,6 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
-        closeFilterByMenu();
         setState(AppState.SEARCH);
         AppStateStore.emitChange();
         break;
@@ -155,10 +129,8 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
           ItemStore.dispatcherIndex,
         ]);
         reset();
-        closeFilterByMenu();
         AppStateStore.emitChange();
         break;
-
     }
     return true;
   }),

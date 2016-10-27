@@ -1,0 +1,101 @@
+/** Taken from Google Maps styling **/
+.control-container {
+    margin: 10px;
+    z-index: 0;
+    position: absolute;
+    cursor: pointer;
+    left: 0px;
+    top: 0px;
+}
+
+.control-mtc {
+    float: left;
+}
+
+.control-title {
+    direction: ltr;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    color: rgb(0, 0, 0);
+    font-family: Roboto, Arial, sans-serif;
+    -webkit-user-select: none;
+    font-size: 11px;
+    background-color: rgb(255, 255, 255);
+    padding: 8px;
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    min-width:  50x;
+}
+
+.control-options {
+    background-color: white;
+    z-index: -1;
+    padding: 2px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    position: absolute;
+    left: 0px;
+    top: 31px;
+    text-align: left;
+    display: none;
+}
+
+.control-option {
+    color: rgb(0, 0, 0);
+    font-family: Roboto, Arial, sans-serif;
+    -webkit-user-select: none;
+    font-size: 11px;
+    background-color: rgb(255, 255, 255);
+    padding: 6px 8px 6px 6px;
+    direction: ltr;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.control-checkbox {
+    box-sizing: border-box;
+    position: relative;
+    line-height: 0;
+    font-size: 0px;
+    margin: 0px 5px 0px 0px;
+    display: inline-block;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(198, 198, 198);
+    border-radius: 1px;
+    width: 13px;
+    height: 13px;
+    vertical-align: middle;
+}
+
+.control-checkbox-div {
+    position: absolute;
+    left: 1px;
+    top: -2px;
+    width: 13px;
+    height: 11px;
+    overflow: hidden;
+}
+
+.control-checkbox-img {
+    position: absolute;
+    left: -52px;
+    top: -44px;
+    -webkit-user-select: none;
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    max-width: none;
+    width: 68px;
+    height: 67px;
+}
+
+.control-option-label {
+    vertical-align: middle;
+    cursor: pointer;
+}

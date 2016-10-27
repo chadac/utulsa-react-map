@@ -7,29 +7,6 @@ import SearchResults from './SearchResults';
 
 import styles from '../../stylesheets/SearchBar.scss';
 
-const FilterByButton = React.createClass({
-  render() {
-    var filterStyles = {};
-    filterStyles[styles.selected] = this.props.selected;
-    return (
-      <div className={classnames(styles.filterBy, filterStyles)}
-           onClick={this._toggleFilter}>
-        <div className={classnames(styles.filterIcon, styles.topBar)} />
-        <div className={classnames(styles.filterIcon, styles.midBar)} />
-        <div className={classnames(styles.filterIcon, styles.lowBar)} />
-      </div>
-    );
-  },
-
-  _toggleFilter() {
-    if(this.props.selected) {
-      this.props._closeFilterBy();
-    } else {
-      this.props._openFilterBy();
-    }
-  }
-});
-
 const IndexButton = React.createClass({
   render() {
     var style = {};
@@ -78,10 +55,6 @@ const SearchBar = React.createClass({
     return (
       <div className={classnames(styles.container)}>
         <div className={classnames(styles.searchBar)}>
-          <FilterByButton selected={this.props.filterBy}
-                          _closeFilterBy={this.props._closeFilterBy}
-                          _resetCategories={this.props._resetCategories}
-                          _openFilterBy={this.props._openFilterBy} />
           <IndexButton selected={this.props.inIndexModal}
                        _openIndex={this.props._openIndex} />
           <CenterButton _center={this.props._center} _zoom={this.props._zoom}
