@@ -4,7 +4,6 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import SearchBar from './menu/SearchBar';
 import AnimatedMenu from './menu/AnimatedMenu';
 import SearchResults from './menu/SearchResults';
-import FilterBy from './menu/FilterBy';
 import ModalWindow from './modal/ModalWindow';
 import ItemInfoBlock from './modal/ItemInfoBlock';
 import IndexBlock from './modal/IndexBlock';
@@ -31,7 +30,6 @@ function getItemState() {
 function getAppState() {
   return {
     appState: AppStateStore.getState(),
-    filterBy: AppStateStore.isFilterByMenuOpen(),
     inFocusModal: AppStateStore.isInFocus(),
     inIndexModal: AppStateStore.isInIndex(),
   };
@@ -95,12 +93,9 @@ const App = React.createClass({
         <SearchBar
             _search={ItemActions.search}
             appState={this.state.appState}
-            filterBy={this.state.filterBy}
             inIndexModal={this.state.inIndexModal}
             _resetCategories={ItemActions.resetCategories}
             _setUserPosition={GMapsActions.setUserPosition}
-            _openFilterBy={AppStateActions.openFilterBy}
-            _closeFilterBy={AppStateActions.closeFilterBy}
             _openIndex={AppStateActions.openIndex}
             _center={GMapsActions.setCenter} _zoom={GMapsActions.setZoom} />
         <AnimatedMenu>
@@ -111,13 +106,6 @@ const App = React.createClass({
                              _addCategory={ItemActions.addCategory}
                              _remCategory={ItemActions.remCategory} /> )
             : null }
-          { this.state.filterBy ?
-            ( <FilterBy categories={ItemStore.getCategories()}
-                        activeCategories={ItemStore.getActiveCategories()}
-                        _addCategory={ItemActions.addCategory}
-                        _remCategory={ItemActions.remCategory}
-                        _reset={ItemActions.resetCategories} /> )
-            : null }
         </AnimatedMenu>
         <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
              _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
@@ -125,6 +113,10 @@ const App = React.createClass({
              _openInfoWindow={ItemActions.openInfoWindow}
              _closeInfoWindow={ItemActions.closeInfoWindow}
              _focus={ItemActions.focus}
+             categories={ItemStore.getCategories()}
+             activeCategories={ItemStore.getActiveCategories()}
+             _addCategory={ItemActions.addCategory}
+             _remCategory={ItemActions.remCategory}
         />
       </div>
     );
