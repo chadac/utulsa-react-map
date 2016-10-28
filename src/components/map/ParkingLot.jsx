@@ -37,16 +37,8 @@ const ParkingLot = React.createClass({
     for(var i = 0; i < numLayers; i++) {
       var polyData = polyStyles();
       var layer = this.props.parking_lot.layer[i];
-      polyData.paths = layer.map((sublayer, index) => {
-        if(sublayer instanceof Array) {
-          var newLayer = sublayer
-            .map((item) => new gmaps.LatLng(item.lat, item.lng))
-          if(index == 0) return newLayer;
-          else return newLayer.reverse();
-        } else {
-          return new gmaps.LatLng(sublayer.lat, sublayer.lng);
-        }
-      });
+      polyData.paths = layer
+        .map((coord) => new gmaps.LatLng(coord.lat, coord.lng));
       var poly = new gmaps.Polygon(polyData);
       poly.setMap(this.props.map);
       poly.addListener('click', this._onClick);
