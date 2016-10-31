@@ -55,6 +55,10 @@ const Marker = React.createClass({
     }
   },
 
+  componentDidUpdate() {
+    this.marker.setPosition(this.props.latLng);
+  },
+
   _onClick() {
     if(this.props._openInfoWindow)
       this.props._openInfoWindow(this.props.id);

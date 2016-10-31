@@ -117,6 +117,7 @@ const App = React.createClass({
              activeCategories={ItemStore.getActiveCategories()}
              _addCategory={ItemActions.addCategory}
              _remCategory={ItemActions.remCategory}
+             _setUserPosition={GMapsActions.setUserPosition}
         />
       </div>
     );
