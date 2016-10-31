@@ -18,6 +18,7 @@ const Trie = require('../util/Trie');
 const placeData = require('../data/places.json');
 const routeData = require('../data/routes.json');
 const parkingData = require('../data/parking_lots.json');
+const parkingPolyData = require('../data/parking_polygons.json');
 const markerData = require('../data/markers.json');
 const categoryData = require('../data/categories.json');
 
@@ -143,19 +144,22 @@ function create(data) {
   }
   else if(isParkingLot(id)) {
     _parking_lots.push(id);
-    _items[id].parking_lot.layer = data
-      .parking_lot.layer
-      .filter((data) => data != undefined)
-      .map((data) => {
-        data = data.replace(/[\u201C\u201D]/g, '"');
-        if(data[0] == '[') {
-          var layer = JSON.parse(data);
-          return layer.map((poly) => parseKMLCoords(poly));
-        }
-        else {
-          return parseKMLCoords(data);
-        }
-      });
+    console.log(id);
+    console.log(parkingPolyData);
+    _items[id].parking_lot.layer = parkingPolyData[id];
+    /* _items[id].parking_lot.layer = data
+     *   .parking_lot.layer
+     *   .filter((data) => data != undefined)
+     *   .map((data) => {
+     *     data = data.replace(/[\u201C\u201D]/g, '"');
+     *     if(data[0] == '[') {
+     *       var layer = JSON.parse(data);
+     *       return layer.map((poly) => parseKMLCoords(poly));
+     *     }
+     *     else {
+     *       return parseKMLCoords(data);
+     *     }
+     *   });*/
   }
 }
 

@@ -53,7 +53,8 @@
     "lint": "eslint --ext js --ext jsx src || exit 0",
     "create-csv": "./scripts/get_places_json_from_localist/index.sh && ./scripts/localist_json_to_custom_json/index.sh && ./scripts/custom_json_to_csv/index.sh",
     "create-prod-json-from-csv": "./scripts/csv_to_prod_json/index.sh",
-    "watch-csv": "node scripts/watch_csv/index.js"
+    "watch-csv": "node scripts/watch_csv/index.js",
+    "smooth-region": "node scripts/smooth-region.js"
   },
   "jest": {
     "moduleFileExtensions": [
