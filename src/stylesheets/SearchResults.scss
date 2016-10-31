@@ -36,7 +36,6 @@
     & .name {
         color: #F0F0F0;
         &.active:before {
-            width: 200px;
             content: "\25BC";
         }
         &.inactive:before {
