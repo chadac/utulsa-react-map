@@ -35,6 +35,13 @@
     text-decoration: none;
     & .name {
         color: #F0F0F0;
+        &.active:before {
+            width: 200px;
+            content: "\25BC";
+        }
+        &.inactive:before {
+            content: "\25B2";
+        }
     }
     &.header {
         &:hover {
