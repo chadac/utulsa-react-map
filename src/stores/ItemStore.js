@@ -144,8 +144,6 @@ function create(data) {
   }
   else if(isParkingLot(id)) {
     _parking_lots.push(id);
-    console.log(id);
-    console.log(parkingPolyData);
     _items[id].parking_lot.layer = parkingPolyData[id];
     /* _items[id].parking_lot.layer = data
      *   .parking_lot.layer
