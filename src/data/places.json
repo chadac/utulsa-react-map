@@ -16,7 +16,11 @@
     },
     "gmaps": {
       "min_zoom": 19
-    }
+    },
+    "departments": [
+      "Counseling and Psychological Services",
+      "Health Clinic"
+    ]
   },
   {
     "id": "alexandre_hogue_gallery",
@@ -78,9 +82,6 @@
   {
     "id": "chapman_commons",
     "name": "Chapman Commons (“The U”)",
-    "search_terms": [
-      "The U"
-    ],
     "type": "place",
     "description": "TU's south entrance, facing 11th Street along historic Route 66, provides a dramatic welcome to TU's residential campus. Components of the entrance project include the 5-acre Chapman Commons, the Genave King Rogers Fountain and Tucker Drive, Chapman Commons provides a picturesque campus entrance and facilitates outdoor gatherings both small and large. On football game days, Chapman Commons is the primary site for TU tailgate parties.",
     "address": "800 South Tucker Drive, Tulsa, Oklahoma 74104-9700",
@@ -95,21 +96,14 @@
     },
     "gmaps": {
       "min_zoom": 16
-    }
+    },
+    "alternate_names": [
+      "The U"
+    ]
   },
   {
     "id": "chapman_hall",
     "name": "Chapman Hall",
-    "search_terms": [
-      "Henry Kendall College of Arts and Sciences",
-      "Department of Economics",
-      "Department of Educational Studies",
-      "Department of History",
-      "Department of Philosophy & Religion",
-      "Department of Political Science",
-      "School of Urban Education",
-      "Department of Sociology"
-    ],
     "type": "place",
     "description": "Chapman Hall, originally built in 1971 to house the College of Nursing, was the most modern nursing training center in the nation at the time. Currently, Chapman Hall is the home of the Henry Kendall College of Arts and Sciences.",
     "address": "2830 East 5th Street, Tulsa, Oklahoma 74104-9700",
@@ -124,7 +118,21 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Henry Kendall College of Arts and Sciences",
+      "Department of Economics",
+      "Department of Educational Studies",
+      "Department of History",
+      "Department of Philosophy & Religion",
+      "Department of Political Science",
+      "School of Urban Education",
+      "Department of Sociology",
+      "Dean’s Office and Advising"
+    ],
+    "rooms": [
+      "Writing Lab"
+    ]
   },
   {
     "id": "chapman_theatre_201",
@@ -162,7 +170,17 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Comparative & International Law Center",
+      "Computing Resources",
+      "Law Admission",
+      "Law Registrar",
+      "Native American Law Center",
+      "Price/Turpen Court Room",
+      "Professional Development",
+      "SERL"
+    ]
   },
   {
     "id": "collins_fitness_center",
@@ -181,7 +199,11 @@
     },
     "gmaps": {
       "min_zoom": 16
-    }
+    },
+    "departments": [
+      "Campus Recreation",
+      "Cafe"
+    ]
   },
   {
     "id": "collins_hall",
@@ -200,14 +222,26 @@
     },
     "gmaps": {
       "min_zoom": 16
-    }
+    },
+    "alternate_names": [
+      "Shaw Alumni Center",
+      "Whitney Hall"
+    ],
+    "departments": [
+      "Academic Affairs",
+      "Admission (Undergraduate)",
+      "Alumni Relations",
+      "Enrollment and Student Services",
+      "Executive Vice President’s Office",
+      "Law Alumni Association",
+      "President’s Office",
+      "Provost’s Office",
+      "Financial Aid"
+    ]
   },
   {
     "id": "dietler_commons_formerly_the_u",
     "name": "Dietler Commons (formerly \"the U\")",
-    "search_terms": [
-      "The Old U"
-    ],
     "type": "place",
     "description": "The Dietler Commons is the large grassy area in front of McFarlin Library, and was the traditional entrance to the university. The open lawn with winding sidewalks and an iconic raised garden with seasonal flowers that spell out \"TU� is the site for many outdoor gatherings and the annual Homecoming bonfire and festivities.",
     "address": "South Delaware Avenue, Tulsa, Oklahoma 74104-9700",
@@ -222,14 +256,14 @@
     },
     "gmaps": {
       "min_zoom": 16
-    }
+    },
+    "alternate_names": [
+      "The Old U"
+    ]
   },
   {
     "id": "fisher_hall_east_pat_case_dining_center",
     "name": "Fisher Hall East / Pat Case Dining Center",
-    "search_terms": [
-      "The Caf"
-    ],
     "type": "place",
     "description": "Completely remodeled in 2010, this facility houses the Pat Case Dining Center as well as several offices for student and employee services. The exterior features a pavilion for dining al fresco, while the interior reflects a contemporary design with dark and light woods with bright and modern finishes.",
     "address": "2821 East 8th Street, Tulsa, Oklahoma 74104-9700",
@@ -244,7 +278,19 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "alternate_names": [
+      "The Caf"
+    ],
+    "departments": [
+      "Assessment Office",
+      "Environment Health and Safety",
+      "Housing and Dining Services",
+      "Human Resources",
+      "IT Web Services",
+      "Parking and Card Services",
+      "Tulsa Global Alliance"
+    ]
   },
   {
     "id": "gilcrease_museum",
@@ -268,9 +314,6 @@
   {
     "id": "harwell_hall",
     "name": "Harwell Hall",
-    "search_terms": [
-      "Department of Anthropology"
-    ],
     "type": "place",
     "description": "Harwell Gymnasium was completed in 1920 after Tulsa oilman E.P. Harwell donated $100,000 for its construction. It was renovated in 1966-67 and renamed Harwell Alumni Library. Currently, it houses the Department of Anthropology.",
     "address": "615 South Florence Avenue, Tulsa, Oklahoma 74104-9700",
@@ -285,7 +328,10 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Department of Anthropology"
+    ]
   },
   {
     "id": "helmerich_center_for_american_research",
@@ -309,12 +355,6 @@
   {
     "id": "helmerich_hall",
     "name": "Helmerich Hall",
-    "search_terms": [
-      "School of Energy Economics, Policy and Commerce",
-      "School of Finance, Operations Management and International Business",
-      "Department of Management and Marketing",
-      "School of Accounting & Management Information Systems"
-    ],
     "type": "place",
     "description": "Helmerich Hall is the home of the Collins College of Business. Renovations were completed in 2008. A front arch offers a grand entrance to welcome students and visitors and beautifully connects Helmerich Hall with the campus. A tower entrance was added on the north side the building, which has Gothic architectural elements that blend with the rest of campus. The college also renovated its interior spaces, adding comfortable public spaces for students to meet and study.",
     "address": "The University of Tulsa, 3102-3128 East 5th Street, Tulsa, OK 74104, USA",
@@ -329,7 +369,23 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "School of Energy Economics, Policy and Commerce",
+      "School of Finance, Operations Management and International Business",
+      "Department of Management and Marketing",
+      "School of Accounting & Management Information Systems",
+      "Collins College of Business – Dean’s Office",
+      "Business Advising: Undergraduate & Graduate",
+      "Business Career Center",
+      "Center for Executive & Professional Development",
+      "Energy Management Center",
+      "Family-Owned Business Institute",
+      "Genave Rogers Business Law Center",
+      "Graduate Business Programs",
+      "Undergraduate Business Programs",
+      "Williams Student Services Center"
+    ]
   },
   {
     "id": "henneke_building",
@@ -372,9 +428,6 @@
   {
     "id": "kendall_hall",
     "name": "Kendall Hall",
-    "search_terms": [
-      "Department of Theatre and Musical Theatre"
-    ],
     "type": "place",
     "description": "Kendall Hall features two fully equipped theaters, a scene shop, costume shop and computer design lab. Chapman Theatre has a proscenium thrust stage and seats 375. It is equipped with a computerized lighting board and sound system.",
     "address": "601 South College Avenue, Tulsa, Oklahoma 74104-9700",
@@ -389,18 +442,21 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Department of Theatre and Musical Theatre",
+      "KWGS",
+      "Theatre II",
+      "TUTV",
+      "Video Production"
+    ],
+    "rooms": [
+      "Box Office"
+    ]
   },
   {
     "id": "keplinger_hall",
     "name": "Keplinger Hall",
-    "search_terms": [
-      "Russell School of Chemical Engineering",
-      "Department of Chemistry and Biochemistry",
-      "Department of Mathematics",
-      "Department of Geosciences",
-      "Department of Physics and Engineering Physics"
-    ],
     "type": "place",
     "description": "Keplinger Hall is home to the College of Engineering and Natural Sciences. It is equipped with labs, lecture rooms, faculty offices and study areas. Renovations are set to begin in 2015.",
     "address": "430 South Gary Place, Tulsa, Oklahoma 74104-9700",
@@ -415,7 +471,15 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Russell School of Chemical Engineering",
+      "Department of Chemistry and Biochemistry",
+      "Department of Mathematics",
+      "Department of Geosciences",
+      "Department of Physics and Engineering Physics",
+      "College of Engineering and Natural Sciences"
+    ]
   },
   {
     "id": "little_blue_house_833",
@@ -439,9 +503,6 @@
   {
     "id": "lorton_hall",
     "name": "Lorton Hall",
-    "search_terms": [
-      "Department of Psychology"
-    ],
     "type": "place",
     "description": "The Department of Psychology is located in the recently renovated Lorton Hall, which contains offices, classrooms, research labs, study areas, and clinical training space.",
     "address": "2820 East 6th Street, Tulsa, Oklahoma 74104-9700",
@@ -456,16 +517,17 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Department of Psychology",
+      "Center for Student Academic Support",
+      "Disability Assistance",
+      "Graduate School"
+    ]
   },
   {
     "id": "lorton_performance_center",
     "name": "Lorton Performance Center",
-    "search_terms": [
-      "Gussman Concert Hall",
-      "Department of Film Studies",
-      "School of Music"
-    ],
     "type": "place",
     "description": "The Roxana Rozsa and Robert Eugene Lorton Performance Center was completed in 2011. The facility includes the Herbert and Roseline Gussman Concert Hall with seating for 635 on two floors, as well as a full performance stage with ballet floor, scenery fly and trap room, a hydraulic orchestra pit, theatrical lighting and acoustical control booths. Guests enter through Ann and Jack Graves Grand Hall, an elegant and spacious lobby that serves as an art gallery and pre-function space for receptions and similar gatherings.\\n\\nLorton Performance Center web site",
     "address": "550 South Gary Place, Tulsa, Oklahoma 74104-9700",
@@ -480,7 +542,17 @@
     },
     "gmaps": {
       "min_zoom": 16
-    }
+    },
+    "tags": [
+      "Facilities for Campus Events"
+    ],
+    "departments": [
+      "Department of Film Studies",
+      "School of Music"
+    ],
+    "rooms": [
+      "Gussman Concert Hall"
+    ]
   },
   {
     "id": "mabee_legal_information_center",
@@ -499,14 +571,17 @@
     },
     "gmaps": {
       "min_zoom": 18
-    }
+    },
+    "departments": [
+      "Law Library",
+      "Petroleum Abstracts",
+      "Student Journal Offices",
+      "Writing Program Suite"
+    ]
   },
   {
     "id": "mary_k_chapman_center",
     "name": "Mary K. Chapman Center",
-    "search_terms": [
-      "Department of Communication Sciences & Disorders"
-    ],
     "type": "place",
     "description": "The Mary K. Chapman Center for Communicative Disorders provides professional audiology and speech-language pathology services to individuals of all ages. The center is located in a well-equipped building that is accessible to all persons with disabilities.",
     "address": "2820 East 5th Street, Tulsa, Oklahoma 74104-9700",
@@ -521,7 +596,12 @@
     },
     "gmaps": {
       "min_zoom": 18
-    }
+    },
+    "departments": [
+      "Department of Communication Sciences & Disorders",
+      "Deaf Education",
+      "Department of Speech-Language Pathology"
+    ]
   },
   {
     "id": "mcclure_hall",
@@ -540,7 +620,15 @@
     },
     "gmaps": {
       "min_zoom": 18
-    }
+    },
+    "departments": [
+      "Accounts Payable",
+      "Business Office",
+      "Controller’s Office",
+      "Institutional Research",
+      "Registration and Records",
+      "Office of Research and Sponsored Programs"
+    ]
   },
   {
     "id": "mcfarlin_library",
@@ -559,7 +647,30 @@
     },
     "gmaps": {
       "min_zoom": 16
-    }
+    },
+    "departments": [
+      "Academic Computing",
+      "Acquisitions",
+      "Circulation/Reserves",
+      "Faculty Resource Center",
+      "Government Documents",
+      "Honors Program",
+      "Interlibrary Loan",
+      "Library Administration",
+      "Media Services",
+      "National Scholarships",
+      "Petroleum Abstracts Document Delivery Service",
+      "Reference/Serials",
+      "Satin Rare Book Room",
+      "TU Copy",
+      "Writing Center",
+      "Special Collections"
+    ],
+    "rooms": [
+      "Computer Laboratories",
+      "Dietler Cafe",
+      "Graves Faculty Study"
+    ]
   },
   {
     "id": "north_campus_615",
@@ -578,16 +689,32 @@
     },
     "gmaps": {
       "min_zoom": 12
-    }
+    },
+    "tags": [
+      "TUCFP",
+      "TUDCP"
+    ],
+    "departments": [
+      "Apline Building",
+      "ARCO Building",
+      "Drill Building",
+      "Drill Lab",
+      "Gas Lift Valve Test Facility",
+      "Machine Shop",
+      "M.E. Hybrid/Electric Cars",
+      "Process Building",
+      "Special Projects Building",
+      "Test Well",
+      "Cold Flow Projects",
+      "Dynamic Test Facility",
+      "Erosion/Corrosion Research Center",
+      "Hydrate Remediation Projects",
+      "Saudi Aramco Research Center"
+    ]
   },
   {
     "id": "oliphant_hall",
     "name": "Oliphant Hall",
-    "search_terms": [
-      "Department of Communication",
-      "Department of Languages",
-      "Department of Biological Science"
-    ],
     "type": "place",
     "description": "Home to the Department of Languages, as well as the Department of Biological Science, Oliphant Hall includes a language lab, science classrooms, an auditorium, a rooftop greenhouse and a small inner courtyard garden.",
     "address": "3015 East 7th Street, Tulsa, Oklahoma 74104-9700",
@@ -602,15 +729,16 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Department of Communication",
+      "Department of Languages",
+      "Department of Biological Science"
+    ]
   },
   {
     "id": "college_of_health_sciences_851",
     "name": "Oxley Health Sciences Facilities",
-    "search_terms": [
-      "Department of Kinesiology and Rehabilitative Sciences",
-      "School of Nursing"
-    ],
     "type": "place",
     "address": "1215 S. Boulder Ave., Tulsa, OK, 74119",
     "photos": [
@@ -624,14 +752,15 @@
     },
     "gmaps": {
       "min_zoom": 12
-    }
+    },
+    "departments": [
+      "Department of Kinesiology and Rehabilitative Sciences",
+      "School of Nursing"
+    ]
   },
   {
     "id": "phillips_hall_166",
     "name": "Phillips Hall",
-    "search_terms": [
-      "School of Art"
-    ],
     "type": "place",
     "description": "Phillips Hall houses the School of Art and the Alexandre Hogue Gallery. Classrooms and studio space provide students with a diverse variety of learning opportunities. Phillips Hall, which originally housed the program of petroleum engineering, is one of the oldest buildings on campus.",
     "address": "2930 East 5th Street, Tulsa, Oklahoma 74104-9700",
@@ -646,15 +775,14 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "School of Art"
+    ]
   },
   {
     "id": "rayzor_hall",
     "name": "Rayzor Hall",
-    "search_terms": [
-      "Tandy School of Computer Science",
-      "Department of Electrical and Computer Engineering"
-    ],
     "type": "place",
     "description": "J. Newton Rayzor Hall houses the Tandy School of Computer Science and Department of Electrical and Computer Engineering. Located east of the Student Union, Rayzor Hall includes 24 integrated classrooms and teaching/research laboratories, 33 faculty and graduate student offices, two conference rooms, and five student commons areas with a student organizations office.",
     "address": "East 5th Place, Tulsa, Oklahoma 74104-9700",
@@ -669,7 +797,12 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Tandy School of Computer Science",
+      "Department of Electrical and Computer Engineering",
+      "Erosion/Corrosion Research Center"
+    ]
   },
   {
     "id": "samson_plaza",
@@ -712,10 +845,6 @@
   {
     "id": "stephenson_hall",
     "name": "Stephenson Hall",
-    "search_terms": [
-      "Department of Mechanical Engineering",
-      "McDougall School of Petroleum Engineering"
-    ],
     "type": "place",
     "description": "Stephenson Hall houses the McDougall School of Petroleum Engineering and Department of Mechanical Engineering. Located on the corner of Gary and 5th Places, it features 16 integrated classrooms and teaching/research laboratories, 34 faculty and graduate student offices, four student commons areas, a conference room and a student organizations office.",
     "address": "3205 East 5th Place, Tulsa, Oklahoma 74104-9700",
@@ -730,16 +859,15 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Department of Mechanical Engineering",
+      "McDougall School of Petroleum Engineering"
+    ]
   },
   {
     "id": "student_union",
     "name": "Student Union",
-    "search_terms": [
-      "Allen Chapman Activity Center",
-      "The ACAC",
-      "Allen Chapman Student Union"
-    ],
     "type": "place",
     "description": "Allen Chapman Student Union is a 78,000-square-foot, two-story building with a center atrium that is home to nine food venues. The Union is one of the primary sites that accommodates the event-related needs of the university and, on a more limited basis, those of community friends. Renovations completed in 2014 feature a food court and redesigned entrances. Lecture rooms received facelifts and outdoor patio space around the building was completed in 2015.",
     "address": "3135 East 5th Place, Tulsa, OK  74104",
@@ -754,7 +882,32 @@
     },
     "gmaps": {
       "min_zoom": 16
-    }
+    },
+    "alternate_names": [
+      "Allen Chapman Activity Center",
+      "The ACAC",
+      "Allen Chapman Student Union"
+    ],
+    "departments": [
+      "ATM",
+      "C-Store",
+      "Dining Services Administration",
+      "Faculty Club Lounge",
+      "Food Court",
+      "Hurricane Hut Sports Bar & Grill",
+      "International Student Services",
+      "Mail Services",
+      "Mail Boxes",
+      "Student Association",
+      "Summer Conference Services",
+      "Volunteer Student Center"
+    ],
+    "rooms": [
+      "Administrative Conference Room",
+      "Chouteau Room",
+      "Gallery Hall",
+      "Great Hall"
+    ]
   },
   {
     "id": "university_of_tulsa",
@@ -809,7 +962,13 @@
     },
     "gmaps": {
       "min_zoom": 18
-    }
+    },
+    "departments": [
+      "Oklahoma Center for the Humanities"
+    ],
+    "rooms": [
+      "Ellen G. Adelson Auditorium"
+    ]
   },
   {
     "id": "university_school",
@@ -847,7 +1006,13 @@
     },
     "gmaps": {
       "min_zoom": 18
-    }
+    },
+    "departments": [
+      "Development",
+      "Donor Services",
+      "Golden Hurricane Club",
+      "University Relations"
+    ]
   },
   {
     "id": "zarrow_center_for_art_education",
@@ -871,9 +1036,6 @@
   {
     "id": "zink_hall",
     "name": "Zink Hall",
-    "search_terms": [
-      "Department of English"
-    ],
     "type": "place",
     "description": "This building is home to several departments including English, Continuing Education and Information Technology.",
     "address": "3101 East 7th Street, Tulsa, Oklahoma 74104-9700",
@@ -888,7 +1050,19 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Department of English",
+      "Administrative Computing",
+      "Continuing Education",
+      "Data Networking & Communication Services",
+      "Information Technology Administration",
+      "IT Client Services",
+      "IT Security",
+      "IT System Ops and Services",
+      "Legal Assistant Program",
+      "NIMROD Journal"
+    ]
   },
   {
     "id": "7th_street_house",
@@ -1381,7 +1555,11 @@
     },
     "gmaps": {
       "min_zoom": 18
-    }
+    },
+    "departments": [
+      "Academic Support for Athletes",
+      "Football"
+    ]
   },
   {
     "id": "case_tennis_center",
@@ -1438,7 +1616,13 @@
     },
     "gmaps": {
       "min_zoom": 16
-    }
+    },
+    "tags": [
+      "Football"
+    ],
+    "departments": [
+      "ONEOK Club"
+    ]
   },
   {
     "id": "hardesty_sports_complex_588",
@@ -1495,7 +1679,15 @@
     },
     "gmaps": {
       "min_zoom": 18
-    }
+    },
+    "departments": [
+      "Campus Security",
+      "Equipment Room",
+      "Exercise Science Lab",
+      "Soccer",
+      "Softball",
+      "Track and Cross Country"
+    ]
   },
   {
     "id": "mabee_gym",
@@ -1514,7 +1706,19 @@
     },
     "gmaps": {
       "min_zoom": 17
-    }
+    },
+    "departments": [
+      "Athletic Administration",
+      "Athletic Marketing/Media Relations",
+      "Jack Zink Indoor Rowing Center",
+      "Mabee Gym",
+      "Men’s Golf",
+      "Recquetball/Squash courts",
+      "Locker rooms",
+      "Rowing",
+      "Volleyball Practice Facility",
+      "Women’s Golf"
+    ]
   },
   {
     "id": "reynolds_centerathletic_training_facility",
@@ -1533,7 +1737,20 @@
     },
     "gmaps": {
       "min_zoom": 16
-    }
+    },
+    "tags": [
+      "Basketball",
+      "Softball"
+    ],
+    "departments": [
+      "Athletic Ticket Office",
+      "Athletic Training Center",
+      "Athletic Video Services",
+      "Men’s Basketball",
+      "Strength and Conditioning",
+      "Volleyball",
+      "Women’s Basketball"
+    ]
   },
   {
     "id": "soccer_practice_field_10",
@@ -1646,7 +1863,13 @@
     },
     "gmaps": {
       "min_zoom": 18
-    }
+    },
+    "departments": [
+      "Chaplain’s Office"
+    ],
+    "rooms": [
+      "Buford Atrium"
+    ]
   },
   {
     "id": "united_campus_ministry",
@@ -1790,10 +2013,7 @@
   },
   {
     "id": "memorial_tree_7",
-    "name": "J. Paschal Twyman &amp",
-    "search_terms": [
-      "Michael W. Davis"
-    ],
+    "name": "J. Paschal Twyman & Michael W. Davis",
     "type": "place",
     "category": "MEMORIAL TREES",
     "marker": {
@@ -1891,10 +2111,7 @@
   },
   {
     "id": "memorial_tree_14",
-    "name": "Juan Andres Jaua Marturet &amp",
-    "search_terms": [
-      "Francisco Fernando Escorihuela Urbina"
-    ],
+    "name": "Juan Andres Jaua Marturet &  Francisco Fernando Escorihuela Urbina",
     "type": "place",
     "category": "MEMORIAL TREES",
     "marker": {

@@ -117,10 +117,17 @@ function create(data) {
   if(data.name !== undefined) {
     _addSearchTerm(data.name, data.id);
   }
-  if(data.search_terms !== undefined) {
-    data.search_terms.forEach((term) => {
-      _addSearchTerm(term, [data.id, term]);
-    });
+  if(data.tags !== undefined) {
+    data.tags.forEach((term) => _addSearchTerm(term, data.id));
+  }
+  if(data.alternate_names !== undefined) {
+    data.alternate_names.forEach((term) => _addSearchTerm(term, [data.id, term]));
+  }
+  if(data.departments !== undefined) {
+    data.departments.forEach((term) => _addSearchTerm(term, [data.id, term]));
+  }
+  if(data.rooms !== undefined) {
+    data.rooms.forEach((term) => _addSearchTerm(term, [data.id, term]));
   }
 
   if(data.category !== undefined) {
@@ -144,8 +151,6 @@ function create(data) {
   }
   else if(isParkingLot(id)) {
     _parking_lots.push(id);
-    console.log(id);
-    console.log(parkingPolyData);
     _items[id].parking_lot.layer = parkingPolyData[id];
     /* _items[id].parking_lot.layer = data
      *   .parking_lot.layer

@@ -10,6 +10,7 @@ import SimpleMarker from './SimpleMarker';
 import Marker from './Marker';
 import Route from './Route';
 import ParkingLot from './ParkingLot';
+import CenterControl from './CenterControl';
 import FilterMenu from './FilterMenu';
 
 import styles from '../../stylesheets/Map.scss'
@@ -109,6 +110,8 @@ const Map = React.createClass({
                       activeCategories={this.props.activeCategories}
                       _addCategory={this.props._addCategory}
                       _remCategory={this.props._remCategory} />
+          <CenterControl map={map}
+                         _setUserPosition={this.props._setUserPosition} />
           {items}
         </div>
       );

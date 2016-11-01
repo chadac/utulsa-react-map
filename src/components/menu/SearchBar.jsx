@@ -57,8 +57,6 @@ const SearchBar = React.createClass({
         <div className={classnames(styles.searchBar)}>
           <IndexButton selected={this.props.inIndexModal}
                        _openIndex={this.props._openIndex} />
-          <CenterButton _center={this.props._center} _zoom={this.props._zoom}
-                        _setUserPosition={this.props._setUserPosition}/>
           <input className={classnames(styles.searchBox)} type="text"
                  placeholder="Search ..."
                  onChange={this._onChange} />
