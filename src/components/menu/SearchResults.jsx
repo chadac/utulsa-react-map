@@ -7,13 +7,15 @@ import ItemHelpers from '../../helpers/ItemHelpers';
 
 const SearchCategory = React.createClass({
   render() {
+    let checkboxClass = {};
+    checkboxClass[styles.active] = this.props.selected;
+    checkboxClass[styles.inactive] = !this.props.selected;
+    const arrowChar = this.props.selected ? "&#9660;" : "&#9650;";
     return (
       <div>
         <div className={classnames(styles.searchItem, styles.header)}
              onClick={this._onCheck}>
-          <input type="checkbox" onChange={this._onCheck}
-                 checked={this.props.selected} />
-          <span className={classnames(styles.name)}>{this.props.name}</span>
+          <span className={classnames(styles.name, checkboxClass)}>{this.props.name}</span>
         </div>
         {this.props.selected ? this.props.children : null}
       </div>
