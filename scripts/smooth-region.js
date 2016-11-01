@@ -6,7 +6,7 @@ const data = require('../src/data/kml_parking');
 const fs = require('fs');
 
 // Minimum error between items
-EPSILON = 0.00005;
+EPSILON = 0.00004;
 
 class Grouping {
   constructor(key) {

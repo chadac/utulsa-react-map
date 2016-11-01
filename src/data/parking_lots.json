@@ -142,5 +142,165 @@
         "lng": 1
       }
     }
+  },
+  {
+    "id": "lot_premium_case_tennis_center",
+    "name": "Case Tennis Center Premium Non-Resident Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
+  },
+  {
+    "id": "lot_premium_lorton_hall",
+    "name": "Lorton Hall Premium Non-Resident Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
+  },
+  {
+    "id": "lot_visitor_westby_hall",
+    "name": "Westby Hall Visitor/Guest Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
+  },
+  {
+    "id": "lot_dual_lorton_village",
+    "name": "Lorton Village Dual Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
+  },
+  {
+    "id": "lot_nonres_mabee_west",
+    "name": "Mabee West Non-Residential Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
+  },
+  {
+    "id": "lot_shuttle_reynolds_center",
+    "name": "Reynolds Center Shuttle & Visitor/Guest Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
+  },
+  {
+    "id": "lot_shuttle_harvard",
+    "name": "Harvard Shuttle & Visitor/Guest Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
+  },
+  {
+    "id": "lot_dual_mabee_east",
+    "name": "Mabee East Dual Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
+  },
+  {
+    "id": "lot_dual_lpc",
+    "name": "Lorton Performance Center Dual Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
+  },
+  {
+    "id": "lot_nonres_lpc",
+    "name": "Lorton Performance Center Non-Residential Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      }
+    }
   }
 ]

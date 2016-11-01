@@ -8,3 +8,13 @@ lot_resident_brown,Brown Village Residential Parking,parking_lot,9 AM – 5 PM,U
 lot_resident_mayo,Mayo Village Residential parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
 lot_resident_lafortune,LaFortune Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
 lot_visitor_1,Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_premium_case_tennis_center,Case Tennis Center Premium Non-Resident Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_premium_lorton_hall,Lorton Hall Premium Non-Resident Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_visitor_westby_hall,Westby Hall Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_dual_lorton_village,Lorton Village Dual Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_nonres_mabee_west,Mabee West Non-Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_shuttle_reynolds_center,Reynolds Center Shuttle & Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_shuttle_harvard,Harvard Shuttle & Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_dual_mabee_east,Mabee East Dual Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_dual_lpc,Lorton Performance Center Dual Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+lot_nonres_lpc,Lorton Performance Center Non-Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
