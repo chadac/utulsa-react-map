@@ -7,12 +7,19 @@ import AppState from '../../constants/AppState';
 
 import InfoWindow from './InfoWindow';
 
-function polyStyles() {
-  return {
+function polyStyles(data) {
+  const defaults = {
     strokeColor: "#AAAAAA",
+    strokeOpacity: 0.4,
+    strokeWeight: 5,
     fillColor: "#FF0000",
-    fillOpacity: 0.35,
+    fillOpacity: 0.5,
   };
+  let style = {};
+  for(let key of Object.keys(defaults)) {
+    style[key] = data[key] === undefined ? defaults[key] : data[key];
+  }
+  return style;
 }
 
 const ParkingLot = React.createClass({
@@ -35,7 +42,7 @@ const ParkingLot = React.createClass({
     const numLayers = this.props.parking_lot.layer.length;
     var polys = []
     for(var i = 0; i < numLayers; i++) {
-      var polyData = polyStyles();
+      var polyData = polyStyles(this.props.parking_lot);
       var layer = this.props.parking_lot.layer[i];
       polyData.paths = layer
         .map((coord) => new gmaps.LatLng(coord.lat, coord.lng));

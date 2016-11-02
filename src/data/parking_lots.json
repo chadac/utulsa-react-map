@@ -12,7 +12,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#8eabc1"
     }
   },
   {
@@ -28,7 +29,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#8eabc1"
     }
   },
   {
@@ -44,7 +46,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#8eabc1"
     }
   },
   {
@@ -60,7 +63,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#8eabc1"
     }
   },
   {
@@ -76,7 +80,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#8eabc1"
     }
   },
   {
@@ -92,7 +97,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#8eabc1"
     }
   },
   {
@@ -108,7 +114,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#8eabc1"
     }
   },
   {
@@ -124,7 +131,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#8eabc1"
     }
   },
   {
@@ -140,7 +148,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#ded9b4"
     }
   },
   {
@@ -156,7 +165,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#faae5d"
     }
   },
   {
@@ -172,7 +182,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#faae5d"
     }
   },
   {
@@ -188,7 +199,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#ded9b4"
     }
   },
   {
@@ -204,7 +216,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#c0b8d3"
     }
   },
   {
@@ -220,7 +233,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#ffdf74"
     }
   },
   {
@@ -236,7 +250,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#a8d7ae"
     }
   },
   {
@@ -252,7 +267,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#a8d7ae"
     }
   },
   {
@@ -268,7 +284,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#c0b8d3"
     }
   },
   {
@@ -284,7 +301,8 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#c0b8d3"
     }
   },
   {
@@ -300,7 +318,178 @@
       "center": {
         "lat": 1,
         "lng": 1
-      }
+      },
+      "fillColor": "#ffdf74"
+    }
+  },
+  {
+    "id": "lot_shuttle_4th_harvard",
+    "name": "4th & Harvard Shuttle & Visitor/Guest Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#a8d7ae"
+    }
+  },
+  {
+    "id": "lot_shuttle_keplinger",
+    "name": "Keplinger/Law School Shuttle & Visitor/Guest Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#a8d7ae"
+    }
+  },
+  {
+    "id": "lot_nonres_keplinger",
+    "name": "Keplinger/Law School Nonresidential Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#ffdf74"
+    }
+  },
+  {
+    "id": "lot_nonres_4th_college_north",
+    "name": "4th & College North Nonresidential Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#ffdf74"
+    }
+  },
+  {
+    "id": "lot_nonres_4th_college_south",
+    "name": "4th & College South Nonresidential Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#ffdf74"
+    }
+  },
+  {
+    "id": "lot_nonres_umc",
+    "name": "United Methodist Church Nonresidential Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#ffdf74"
+    }
+  },
+  {
+    "id": "lot_premium_phillips_hall",
+    "name": "Phillips Hall Premium Nonresidential Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#faae5d"
+    }
+  },
+  {
+    "id": "lot_dual_mcfarlin",
+    "name": "McFarlin Library Dual Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#c0b8d3"
+    }
+  },
+  {
+    "id": "lot_visitor_north_residential",
+    "name": "US West Visitor/Guest Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#ded9b4"
+    }
+  },
+  {
+    "id": "lot_visitor_legal_clinic",
+    "name": "Mabee Legal Clinic Visitor/Guest Parking",
+    "type": "parking_lot",
+    "hours": "9 AM – 5 PM",
+    "category": "UNIVERSITY PARKING",
+    "gmaps": {
+      "min_zoom": 17
+    },
+    "parking_lot": {
+      "center": {
+        "lat": 1,
+        "lng": 1
+      },
+      "fillColor": "#ded9b4"
     }
   }
 ]
