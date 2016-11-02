@@ -4,6 +4,20 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import classnames from 'classnames';
 import styles from '../../stylesheets/IndexBlock.scss';
 
+const ItemLink = React.createClass({
+  render() {
+    return (
+      <div className={classnames(styles.entry, styles.item)}>
+        <a href="#" onClick={this._onClick}>{this.props.name}</a>
+      </div>
+    );
+  },
+
+  _onClick() {
+    this.props._select(this.props.id);
+  },
+});
+
 const IndexBlock = React.createClass({
   render() {
     const categories = Object.keys(this.props.items);
@@ -14,7 +28,7 @@ const IndexBlock = React.createClass({
         var subItems = items[category]
           .filter((item) => item.name !== undefined)
           .map((item) => (
-            <div className={classnames(styles.entry, styles.item)}>{item.name}</div>
+            <ItemLink name={item.name} id={item.id} _select={this.props._select} />
           ));
         if(subItems.length > 0) {
           subItems.unshift(

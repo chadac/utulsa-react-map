@@ -61,7 +61,8 @@ const App = React.createClass({
     }
     else if(this.state.inIndexModal) {
       return (
-        <IndexBlock key="index" items={ItemStore.getItemsByCategory()} />
+        <IndexBlock key="index" items={ItemStore.getItemsByCategory()}
+                    _select={ItemActions.select} />
       );
     }
     return null;
