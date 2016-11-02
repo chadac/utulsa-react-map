@@ -1,10 +1,30 @@
-id,name,type,hours,category,gmaps.min_zoom,gmaps.max_zoom,parking_lot.center.lat,parking_lot.center.lng
-lot_resident_north_1,US West Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
-lot_resident_north_2,US South Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
-lot_resident_north_3,Norman Village Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
-lot_resident_west_1,West Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
-lot_resident_west_2,West Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
-lot_resident_brown,Brown Village Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
-lot_resident_mayo,Mayo Village Residential parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
-lot_resident_lafortune,LaFortune Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
-lot_visitor_1,Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1
+id,name,type,hours,category,gmaps.min_zoom,gmaps.max_zoom,parking_lot.center.lat,parking_lot.center.lng,parking_lot.fillColor
+lot_resident_north_1,US West Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#8eabc1
+lot_resident_north_2,US South Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#8eabc1
+lot_resident_north_3,Norman Village Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#8eabc1
+lot_resident_west_1,West Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#8eabc1
+lot_resident_west_2,West Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#8eabc1
+lot_resident_brown,Brown Village Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#8eabc1
+lot_resident_mayo,Mayo Village Residential parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#8eabc1
+lot_resident_lafortune,LaFortune Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#8eabc1
+lot_visitor_1,Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ded9b4
+lot_premium_case_tennis_center,Case Tennis Center Premium Non-Resident Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#faae5d
+lot_premium_lorton_hall,Lorton Hall Premium Non-Resident Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#faae5d
+lot_visitor_westby_hall,Westby Hall Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ded9b4
+lot_dual_lorton_village,Lorton Village Dual Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#c0b8d3
+lot_nonres_mabee_west,Mabee West Non-Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ffdf74
+lot_shuttle_reynolds_center,Reynolds Center Shuttle & Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#a8d7ae
+lot_shuttle_harvard,Harvard Shuttle & Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#a8d7ae
+lot_dual_mabee_east,Mabee East Dual Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#c0b8d3
+lot_dual_lpc,Lorton Performance Center Dual Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#c0b8d3
+lot_nonres_lpc,Lorton Performance Center Non-Residential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ffdf74
+lot_shuttle_4th_harvard,4th & Harvard Shuttle & Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#a8d7ae
+lot_shuttle_keplinger,Keplinger/Law School Shuttle & Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#a8d7ae
+lot_nonres_keplinger,Keplinger/Law School Nonresidential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ffdf74
+lot_nonres_4th_college_north,4th & College North Nonresidential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ffdf74
+lot_nonres_4th_college_south,4th & College South Nonresidential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ffdf74
+lot_nonres_umc,United Methodist Church Nonresidential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ffdf74
+lot_premium_phillips_hall,Phillips Hall Premium Nonresidential Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#faae5d
+lot_dual_mcfarlin,McFarlin Library Dual Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#c0b8d3
+lot_visitor_north_residential,US West Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ded9b4
+lot_visitor_legal_clinic,Mabee Legal Clinic Visitor/Guest Parking,parking_lot,9 AM – 5 PM,UNIVERSITY PARKING,17,,1,1,#ded9b4
