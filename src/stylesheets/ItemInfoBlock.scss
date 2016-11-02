@@ -1,7 +1,39 @@
 @import 'sizes';
 
-.description {
+.header {
+    font-size: 24px;
+    color: #B09858;
+    word-wrap: break-word;
+    font-family: 'sans-serif';
+    font-weight: 400;
+}
+
+.content {
     font-size: $font-small;
+    line-height: 23px;
+    font-weight: 400;
+}
+
+.address {
+    font-size: $font-small;
+    font-weight: 100;
+}
+
+.alternate-names {
+    font-size: 12px;
+    & h4, ul, li {
+        display: inline;
+    }
+    & li + li:before {
+        content: ", ";
+    }
+}
+
+.departments, .rooms {
+    display: inline-block;
+    float: top;
+    padding-right: 20px;
+    vertical-align: text-top;
 }
 
 .photo-gallery {
