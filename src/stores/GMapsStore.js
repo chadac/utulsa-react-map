@@ -1,6 +1,7 @@
 const AppDispatcher = require('../dispatcher/AppDispatcher');
 const EventEmitter = require('events').EventEmitter;
 const GMapsConstants = require('../constants/GMapsConstants');
+const ItemConstants = require('../constants/ItemConstants');
 const assign = require('object-assign');
 
 const CENTER_EVENT = 'center';

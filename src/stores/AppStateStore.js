@@ -85,6 +85,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
 
       case ItemConstants.ITEM_SELECT:
         setState(AppState.SELECT);
+        closeModal();
         AppStateStore.emitChange();
         break;
 
