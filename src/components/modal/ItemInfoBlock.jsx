@@ -20,7 +20,7 @@ const ItemInfoBlock = React.createClass({
   listingBlock(key, name, className) {
     let block;
     if(this.props[key] !== undefined) {
-      const items = this.props[key].map((item) => (<li>{item}</li>));
+      const items = this.props[key].map((item) => (<li key={item}>{item}</li>));
       block = (
         <div className={className}>
           <h4>{name}</h4>

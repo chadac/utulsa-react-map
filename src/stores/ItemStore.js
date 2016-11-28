@@ -375,10 +375,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   /**
    * This is the tool that handles receiving actions.
    */
-  dispatcherIndex: AppDispatcher.register((payload) => {
-    var action = payload.action;
-    var data;
-
+  dispatcherIndex: AppDispatcher.register((action) => {
     switch(action.actionType) {
       case ItemConstants.ITEM_CREATE:
         create(action.data, false);
@@ -452,7 +449,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
       case GMapsConstants.MAP_ZOOM:
         AppDispatcher.waitFor([
-          GMapsStore.dispatchToken,
+          GMapsStore.dispatcherIndex,
         ]);
         mapUpdateZoom();
         ItemStore.emitChange();

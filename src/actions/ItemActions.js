@@ -7,54 +7,54 @@ var ItemConstants = require('../constants/ItemConstants');
 var ItemActions = {
 
   create: function(data) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_CREATE,
       data: data
     });
   },
 
   destroy: function(id) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_DESTROY,
       id: id
     });
   },
 
   select: function(id) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_SELECT,
       id: id
     });
   },
 
   deselect: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_DESELECT
     });
   },
 
   focus: function(id) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_FOCUS,
       id: id,
     });
   },
 
   unfocus: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_UNFOCUS,
     });
   },
 
   openInfoWindow: function(id) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_OPEN_INFOWINDOW,
       id: id,
     });
   },
 
   closeInfoWindow: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_CLOSE_INFOWINDOW,
     });
   },
@@ -64,7 +64,7 @@ var ItemActions = {
       ItemActions.resetSearch();
     }
     else {
-      AppDispatcher.handleViewAction({
+      AppDispatcher.dispatch({
         actionType: ItemConstants.ITEM_SEARCH,
         word: word
       });
@@ -72,27 +72,27 @@ var ItemActions = {
   },
 
   resetSearch: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_RESET_SEARCH,
     });
   },
 
   addCategory: function(category) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ADD_CATEGORY,
       category: category
     });
   },
 
   remCategory: function(category) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.REM_CATEGORY,
       category: category
     });
   },
 
   resetCategories: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.RESET_CATEGORIES,
     });
   }

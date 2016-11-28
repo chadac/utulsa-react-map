@@ -6,13 +6,13 @@ var AppStateConstants = require('../constants/AppStateConstants');
 
 var AppStateActions = {
   openIndex: () => {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: AppStateConstants.OPEN_INDEX_MODAL,
     });
   },
 
   closeModal: () => {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: AppStateConstants.CLOSE_MODAL,
     });
   },
