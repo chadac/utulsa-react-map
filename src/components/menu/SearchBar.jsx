@@ -3,13 +3,9 @@ import classnames from 'classnames';
 
 import FluxComponent from '../../hoc/FluxComponent';
 
-import AppState from '../../constants/AppState';
-
-import SearchResults from './SearchResults';
-
 import styles from '../../stylesheets/SearchBar.scss';
 
-const IndexButton = React.createClass({
+class IndexButton extends Component {
   render() {
     var style = {};
     style[styles.selected] = this.props.selected;
@@ -21,35 +17,14 @@ const IndexButton = React.createClass({
         <div className={classnames(styles.indexIcon)} />
       </div>
     );
-  },
-});
+  }
+}
 
-const CenterButton = React.createClass({
-  render() {
-    return (
-      <div className={classnames(styles.center)}
-           onClick={this._onClick}>
-        <span>◎</span>
-      </div>
-    );
-  },
-
-  _onClick() {
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const lat = pos.coords.latitude,
-              lng = pos.coords.longitude;
-        this.props._setUserPosition(lat, lng);
-      });
-    }
-  },
-});
+IndexButton.propTypes = {
+  selected: PropTypes.bool.isRequired,
+};
 
 class SearchBar extends Component {
-  static propTypes = {
-    inIndexModal: PropTypes.bool.isRequired,
-  }
-
   render() {
     return (
       <div className={classnames(styles.container)}>
@@ -68,5 +43,9 @@ class SearchBar extends Component {
     this.actions().item.search(event.target.value);
   }
 }
+
+SearchBar.propTypes = {
+  inIndexModal: PropTypes.bool.isRequired,
+};
 
 module.exports = FluxComponent(SearchBar);

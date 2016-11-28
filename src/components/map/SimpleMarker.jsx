@@ -1,23 +1,15 @@
 import React, {Component, PropTypes} from 'react';
-import classNames from 'classnames';
 
-import ItemStore from '../../stores/ItemStore';
 import gmaps from '../../GMapsAPI';
-
 import Marker from './Marker';
-import TextLabel from './TextLabel';
-import InfoWindow from './InfoWindow';
 
-import MapIcon from '../../data/mapIcons.json';
-import styles from '../../stylesheets/Marker.scss';
-
-const SimpleMarker = React.createClass({
+class SimpleMarker extends Component {
   latLng() {
     return new gmaps.LatLng(
       this.props.marker.lat,
       this.props.marker.lng
     );
-  },
+  }
 
   render() {
     return (
@@ -29,7 +21,19 @@ const SimpleMarker = React.createClass({
         <h4>{this.props.label}</h4>
       </Marker>
     );
-  },
-});
+  }
+}
+
+SimpleMarker.propTypes = {
+  map: PropTypes.object.isRequired,
+
+  _openInfoWindow: PropTypes.func.isRequired,
+  _closeInfoWindow: PropTypes.func.isRequired,
+
+  $infoWindow: PropTypes.bool.isRequired,
+  id: PropTypes.string,
+  label: PropTypes.string,
+  marker: PropTypes.object,
+}
 
 module.exports = SimpleMarker;

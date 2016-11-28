@@ -1,34 +1,18 @@
 import React, {Component, PropTypes} from 'react';
-import classNames from 'classnames';
 
-import ItemStore from '../../stores/ItemStore';
 import gmaps from '../../GMapsAPI';
-
-import TextLabel from './TextLabel';
 import InfoWindow from './InfoWindow';
-
 import MapIcon from '../../data/mapIcons.json';
-import styles from '../../stylesheets/Marker.scss';
 
-const Marker = React.createClass({
-  propTypes: {
-    map: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired,
-    icon: PropTypes.string,
-    latLng: PropTypes.object.isRequired,
-    $infoWindow: PropTypes.bool,
-    _openInfoWindow: PropTypes.func,
-    _closeInfoWindow: PropTypes.func,
-  },
-
+class Marker extends Component {
   componentWillMount() {
     this.marker = this.createMarker();
     this.marker.addListener("click", this._onClick);
-  },
+  }
 
   componentWillUnmount() {
     this.marker.setMap(null);
-  },
+  }
 
   createMarker() {
     return new gmaps.Marker({
@@ -37,7 +21,7 @@ const Marker = React.createClass({
       draggable: false,
       map: this.props.map,
     });
-  },
+  }
 
   render() {
     if(this.props.children) {
@@ -53,16 +37,28 @@ const Marker = React.createClass({
     else {
       return null;
     }
-  },
+  }
 
   componentDidUpdate() {
     this.marker.setPosition(this.props.latLng);
-  },
+  }
 
   _onClick() {
     if(this.props._openInfoWindow)
       this.props._openInfoWindow(this.props.id);
-  },
-});
+  }
+}
+
+Marker.propTypes = {
+  map: PropTypes.object.isRequired,
+
+  _openInfoWindow: PropTypes.func.isRequired,
+  _closeInfoWindow: PropTypes.func.isRequired,
+
+  $infoWindow: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+  latLng: PropTypes.object.isRequired,
+};
 
 export default Marker;

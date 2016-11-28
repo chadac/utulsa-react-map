@@ -1,18 +1,18 @@
 import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
 
 import MapControl from './MapControl';
-
 import gmaps from '../../GMapsAPI';
-
 import controlStyles from '../../stylesheets/MapControl.scss';
 
-const CategoryBox = React.createClass({
-  getInitialState() {
-    return {
+
+class CategoryBox extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       hover: false,
     };
-  },
+  }
 
   render() {
     const optionStyles = {
@@ -37,10 +37,10 @@ const CategoryBox = React.createClass({
         </label>
       </div>
     );
-  },
+  }
 
   _onCheck() {
-    if(this.props.category == "SELECT ALL") {
+    if(this.props.category === "SELECT ALL") {
       if(!this.props.selected) {
         this.props.categories.forEach((category) => {
           this.props._addCategory(category);
@@ -59,34 +59,46 @@ const CategoryBox = React.createClass({
         this.props._remCategory(this.props.category);
       }
     }
-  },
+  }
 
   _onMouseEnter() {
     this.setState({hover: true});
-  },
+  }
 
   _onMouseLeave() {
     this.setState({hover: false});
   }
-});
+}
 
-const FilterMenu = React.createClass({
-  getInitialState() {
-    return {
+CategoryBox.propTypes = {
+  selected: PropTypes.bool.isRequired,
+  category: PropTypes.string.isRequired,
+  categories: PropTypes.arrray.isRequired,
+
+  _addCategory: PropTypes.func.isRequired,
+  _remCategory: PropTypes.func.isRequired,
+};
+
+
+class FilterMenu extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       hover: false,
       hoverDelay: false,
       titleHover: false,
     };
-  },
+  }
 
   render() {
     let checkboxes = this.props.categories.map((category) => (
       <CategoryBox key={category} category={category}
-                   selected={this.props.activeCategories.indexOf(category)>=0}
+                   selected={this.props.activeCategories.indexOf(category) >= 0}
                    _addCategory={this.props._addCategory}
                    _remCategory={this.props._remCategory} />
     ));
-    const selectAllSelected = this.props.activeCategories.length == this.props.categories.length;
+    const selectAllSelected = this.props.activeCategories.length === this.props.categories.length;
     const selectAllCheckbox = (
       <CategoryBox key="SELECT ALL" category="SELECT ALL"
                    categories={this.props.categories}
@@ -117,11 +129,11 @@ const FilterMenu = React.createClass({
         </div>
       </MapControl>
     );
-  },
-  
+  }
+
   _onMouseEnter() {
     this.setState({hover: true, hoverDelay: true});
-  },
+  }
 
   _onMouseLeave() {
     this.setState({hover: false})
@@ -129,15 +141,24 @@ const FilterMenu = React.createClass({
       if(!this.state.hover)
         this.setState({hoverDelay: false})
     }, 1000);
-  },
+  }
 
   _onMouseEnterTitle() {
     this.setState({titleHover: true});
-  },
+  }
 
   _onMouseLeaveTitle() {
     this.setState({titleHover: false});
-  },
-});
+  }
+}
+
+FilterMenu.propTypes = {
+  map: PropTypes.object.isRequired,
+  categories: PropTypes.array.isRequired,
+  activeCategories: PropTypes.array.isRequired,
+
+  _addCategory: PropTypes.func.isRequired,
+  _remCategory: PropTypes.func.isRequired,
+};
 
 module.exports = FilterMenu;

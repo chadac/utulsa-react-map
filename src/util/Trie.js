@@ -13,9 +13,9 @@ class Trie {
 
   _put(tree, w, item) {
     const a = w[0];
-    if(tree[a] === undefined) tree[a] = {};
+    if(typeof tree[a] === "undefined") tree[a] = {};
     if(w.length <= 1) {
-      if(tree[a]._item === undefined)
+      if(typeof tree[a]._item === "undefined")
         tree[a]._item = [item];
       else
         tree[a]._item.push(item);
@@ -28,7 +28,7 @@ class Trie {
     w = w.toLowerCase();
     let tree = this._tree;
     for(var i = 0; i < w.length; i++) {
-      if(tree[w[i]] === undefined)
+      if(typeof tree[w[i]] === "undefined")
         return [];
       else
         tree = tree[w[i]];
@@ -39,7 +39,7 @@ class Trie {
   _traverse(tree) {
     let items = [];
     Object.keys(tree).forEach((key) => {
-      if(key == '_item') {
+      if(key === '_item') {
         items = items.concat(tree._item);
       } else {
         items = items.concat(this._traverse(tree[key]));

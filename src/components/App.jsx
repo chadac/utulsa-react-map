@@ -19,8 +19,6 @@ const extend = require('util')._extend;
 
 
 class App extends Component {
-  static propTypes = {};
-
   getItemState() {
     return { items: this.stores().item.getAll() };
   }
@@ -118,5 +116,7 @@ class App extends Component {
     this.setState(this.getAppState());
   }
 }
+
+App.propTypes = {};
 
 export default FluxComponent(App);

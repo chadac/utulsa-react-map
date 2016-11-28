@@ -1,49 +1,46 @@
 import React, {Component, PropTypes} from 'react';
-import classNames from 'classnames';
 
 import ItemStore from '../../stores/ItemStore';
 import gmaps from '../../GMapsAPI';
 
 import Marker from './Marker';
 import TextLabel from './TextLabel';
-import InfoWindow from './InfoWindow';
 
-import MapIcon from '../../data/mapIcons.json';
 import styles from '../../stylesheets/Marker.scss';
 
-const Place = React.createClass({
+class Place extends Component {
 
   componentWillMount() {
     ItemStore.addSelectListener(this.props.id, this._onSelect);
     this.label = this.createLabel();
-  },
+  }
 
   componentWillUnmount() {
     if(this.label)
       this.label.setMap(null);
-  },
+  }
 
   createLabel() {
-    if(this.props.name !== undefined) {
+    if(typeof this.props.name !== "undefined") {
       return new TextLabel(this.latLng(), this.props.name, styles.markerLabel, this.props.map);
     }
     else {
       return null;
     }
-  },
+  }
 
   latLng() {
     return new gmaps.LatLng(
       this.props.marker.lat,
       this.props.marker.lng
     );
-  },
+  }
 
   render() {
-    const loc = this.props.directions != undefined ?
+    const loc = typeof this.props.directions !== "undefined" ?
                 this.props.directions :
                 [this.props.marker.lat, this.props.marker.lng].join(',');
-    const directionsUrl = "https://www.google.com/maps/dir//'"+loc+"'/@"+loc+",17z"
+    const directionsUrl = "https://www.google.com/maps/dir//'" + loc + "'/@" + loc + ",17z";
     return (
       <Marker map={this.props.map} id={this.props.id}
               latLng ={this.latLng()} icon={this.props.marker.icon}
@@ -57,7 +54,7 @@ const Place = React.createClass({
         <p><a href="#" onClick={this._onMoreInformation}>More information...</a></p>
       </Marker>
     );
-  },
+  }
 
   _onSelect() {
     // This runs on a delay so that the map component can react to changes correctly.
@@ -65,12 +62,27 @@ const Place = React.createClass({
       this.props.map.setZoom(18);
       this.props.map.setCenter(this.latLng());
     }, 300);
-  },
+  }
 
   _onMoreInformation() {
     this.props._focus(this.props.id);
-  },
+  }
+}
 
-});
+Place.propTypes = {
+  map: PropTypes.object.isRequired,
+
+  _openInfoWindow: PropTypes.func.isRequired,
+  _closeInfoWindow: PropTypes.func.isRequired,
+  _focus: PropTypes.func.isRequired,
+
+  $infoWindow: PropTypes.bool.isRequired,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  address: PropTypes.string,
+  website: PropTypes.string,
+  marker: PropTypes.object.isRequired,
+  directions: PropTypes.object.isRequired,
+};
 
 module.exports = Place;

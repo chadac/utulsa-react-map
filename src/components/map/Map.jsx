@@ -16,13 +16,6 @@ import styles from '../../stylesheets/Map.scss'
 import gmaps from '../../GMapsAPI';
 
 class Map extends Component {
-  static propTypes = {
-    initialCenter: PropTypes.object.isRequired,
-    initialZoom: PropTypes.number.isRequired,
-    items: PropTypes.array.isRequired,
-    appState: PropTypes.string.isRequired,
-  }
-
   constructor(props) {
     super(props);
 
@@ -72,7 +65,7 @@ class Map extends Component {
           return true;
         })
         .map((item) => {
-          var MapItem;
+          var MapItem = null;
           switch(item.type) {
             case "place":
               MapItem = Place;
@@ -123,13 +116,9 @@ class Map extends Component {
     }
   }
 
-  _onChange() {
-    this.setState(getItemState());
-  }
-
   _onMapCenter() {
     const center = this.map.getCenter();
-    if(center != null) this.actions().gmaps.center(center.lat(), center.lng());
+    if(center !== null) this.actions().gmaps.center(center.lat(), center.lng());
   }
 
   _onMapZoom() {
@@ -149,5 +138,15 @@ class Map extends Component {
     this.setState({user: new gmaps.LatLng(lat, lng)});
   }
 }
+
+Map.propTypes = {
+  initialCenter: PropTypes.object.isRequired,
+  initialZoom: PropTypes.number.isRequired,
+  appState: PropTypes.string.isRequired,
+
+  items: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
+  activeCategories: PropTypes.array.isRequired,
+};
 
 export default FluxComponent(Map);

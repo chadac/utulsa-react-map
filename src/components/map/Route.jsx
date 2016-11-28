@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import classNames from 'classnames';
 
 import ItemStore from '../../stores/ItemStore';
 import AppState from '../../constants/AppState';
@@ -7,45 +6,40 @@ import AppState from '../../constants/AppState';
 import gmaps from '../../GMapsAPI';
 import InfoWindow from './InfoWindow';
 
-import styles from '../../stylesheets/Route.scss';
+// import styles from '../../stylesheets/Route.scss';
 
-const Route = React.createClass({
-  propTypes: {
-    route: PropTypes.object.isRequired,
-    appState: PropTypes.string.isRequired,
+class Route extends Component {
 
-    _openInfoWindow: PropTypes.func.isRequired,
-    _closeInfoWindow: PropTypes.func.isRequired,
-  },
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       position: null,
-      click: new gmaps.LatLng(0,0),
+      click: new gmaps.LatLng(0, 0),
     };
-  },
+  }
 
   componentWillMount() {
     const pos = this.props.route.path[Math.ceil(this.props.route.path.length / 2)];
     this.setState({position: new gmaps.LatLng(pos.lat, pos.lng)});
-  },
+  }
 
   componentDidMount() {
     ItemStore.addSelectListener(this.props.id, this._onSelect);
 
     this.route = this.createRoute();
     this.route.addListener('click', this._onClick);
-  },
+  }
 
   componentWillUnmount() {
     this.route.setMap(null);
-  },
+  }
 
   createPathCoordinates() {
     return this.props.route.path.map((coords) => {
       return new gmaps.LatLng(coords.lat, coords.lng);
     })
-  },
+  }
 
   createInfoWindow() {
     var content = "<h4>" + this.props.name + "</h4>"
@@ -54,7 +48,7 @@ const Route = React.createClass({
     return new gmaps.InfoWindow({
       content: content
     });
-  },
+  }
 
   createRoute() {
     return new gmaps.Polyline({
@@ -65,10 +59,10 @@ const Route = React.createClass({
       strokeWeight: this.props.route.strokeWeight,
       map: this.props.map
     });
-  },
+  }
 
   render() {
-    let position;
+    let position = null;
     switch(this.props.appState) {
       case AppState.NORMAL:
       case AppState.SEARCH:
@@ -87,19 +81,35 @@ const Route = React.createClass({
         <p>{this.props.hours}</p>
       </InfoWindow>
     );
-  },
+  }
 
   _onClick(e) {
     this.setState({click: e.latLng});
     this.props._openInfoWindow(this.props.id);
-  },
+  }
 
   _onSelect() {
     setTimeout( () => {
       this.props.map.setZoom(17);
       this.props.map.setCenter(this.state.position);
     }, 300);
-  },
-});
+  }
+}
+
+Route.propTypes = {
+  map: PropTypes.object.isRequired,
+  appState: PropTypes.string.isRequired,
+
+  _openInfoWindow: PropTypes.func.isRequired,
+  _closeInfoWindow: PropTypes.func.isRequired,
+
+  $infoWindow: PropTypes.bool.isRequired,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  address: PropTypes.string,
+  website: PropTypes.string,
+  hours: PropTypes.string,
+  route: PropTypes.object,
+};
 
 export default Route;
