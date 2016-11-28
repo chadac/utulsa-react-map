@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
+
+import FluxComponent from '../hoc/FluxComponent';
 
 import SearchBar from './menu/SearchBar';
 import AnimatedMenu from './menu/AnimatedMenu';
@@ -9,64 +11,60 @@ import ItemInfoBlock from './modal/ItemInfoBlock';
 import IndexBlock from './modal/IndexBlock';
 import Map from './map/Map';
 
-import AppStateStore from '../stores/AppStateStore';
-import ItemStore from '../stores/ItemStore';
-import GMapsStore from '../stores/GMapsStore';
-
-import ItemActions from '../actions/ItemActions';
-import GMapsActions from '../actions/GMapsActions';
-import AppStateActions from '../actions/AppStateActions';
-
 import AppState from '../constants/AppState';
 
 import styles from '../stylesheets/App.scss';
 
 const extend = require('util')._extend;
 
-function getItemState() {
-  return { items: ItemStore.getAll() };
-}
 
-function getAppState() {
-  return {
-    appState: AppStateStore.getState(),
-    inFocusModal: AppStateStore.isInFocus(),
-    inIndexModal: AppStateStore.isInIndex(),
-  };
-}
+class App extends Component {
+  static propTypes = {};
 
-const App = React.createClass({
-  getInitialState() {
-    return extend(getItemState(), getAppState());
-  },
+  getItemState() {
+    return { items: this.stores().item.getAll() };
+  }
 
-  getDefaultProps() {
+  getAppState() {
     return {
-      initialCenter: GMapsStore.getCenter(),
-      initialZoom: GMapsStore.getZoom(),
+      appState: this.stores().appState.getState(),
+      inFocusModal: this.stores().appState.isInFocus(),
+      inIndexModal: this.stores().appState.isInIndex(),
     };
-  },
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: this.stores().item.getAll(),
+      appState: this.stores().appState.getState(),
+      inFocusModal: this.stores().appState.isInFocus(),
+      inIndexModal: this.stores().appState.isInIndex(),
+      initialCenter: this.props.initialCenter || this.stores().gmaps.getCenter(),
+      initialZoom: this.props.initialZoom || this.stores().gmaps.getZoom(),
+    };
+  }
 
   componentWillMount() {
-    ItemStore.addChangeListener(this._onItemChange);
-    AppStateStore.addChangeListener(this._onAppStateChange);
-  },
+    this.props.stores.item.addChangeListener(this._onItemChange.bind(this));
+    this.props.stores.appState.addChangeListener(this._onAppStateChange.bind(this));
+  }
 
   _getModalWindow() {
     if(this.state.inFocusModal) {
-      var focusedItem = ItemStore.getFocused();
+      var focusedItem = this.stores().item.getFocused();
       return (
         <ItemInfoBlock key="item_window" {...focusedItem} />
       );
     }
     else if(this.state.inIndexModal) {
       return (
-        <IndexBlock key="index" items={ItemStore.getItemsByCategory()}
-                    _select={ItemActions.select} />
+        <IndexBlock key="index" items={this.stores().item.getItemsByCategory()}
+                    _select={this.actions().item.select} />
       );
     }
     return null;
-  },
+  }
 
   render() {
     const items = this
@@ -74,7 +72,7 @@ const App = React.createClass({
       .filter((item) => {
         switch(this.state.appState) {
           case AppState.SEARCH:
-            return item.$searchKey == ItemStore.getSearchKey();
+            return item.$searchKey == this.stores().item.getSearchKey();
           default:
             return true;
         }
@@ -82,55 +80,43 @@ const App = React.createClass({
 
     const filteredItems = items
       .filter((item) =>
-        ItemStore.getActiveCategories().indexOf(item.category) >= 0);
+        this.stores().item.getActiveCategories().indexOf(item.category) >= 0);
 
     let modalWindow = this._getModalWindow();
 
     return (
       <div id="outer-container" style={{height:"100%"}} className={styles.outerContainer}>
-        <ModalWindow _closeModal={AppStateActions.closeModal}>
+        <ModalWindow {...this.flux()}>
           {modalWindow}
         </ModalWindow>
         <SearchBar
-            _search={ItemActions.search}
             appState={this.state.appState}
             inIndexModal={this.state.inIndexModal}
-            _resetCategories={ItemActions.resetCategories}
-            _setUserPosition={GMapsActions.setUserPosition}
-            _openIndex={AppStateActions.openIndex}
-            _center={GMapsActions.setCenter} _zoom={GMapsActions.setZoom} />
+            {...this.flux()} />
         <AnimatedMenu>
           { this.state.appState == AppState.SEARCH ?
-            ( <SearchResults items={items} select={ItemActions.select}
-                             categories={ItemStore.getCategories()}
-                             activeCategories={ItemStore.getActiveCategories()}
-                             _addCategory={ItemActions.addCategory}
-                             _remCategory={ItemActions.remCategory} /> )
+            ( <SearchResults items={items} select={this.actions().item.select}
+                             categories={this.stores().item.getCategories()}
+                             activeCategories={this.stores().item.getActiveCategories()}
+                             {...this.flux()} /> )
             : null }
         </AnimatedMenu>
-        <Map center={this.props.initialCenter} zoom={this.props.initialZoom}
-             _onZoom={GMapsActions.zoom} _onCenter={GMapsActions.center}
+        <Map initialCenter={this.state.initialCenter} initialZoom={this.state.initialZoom}
              appState={this.state.appState} items={filteredItems}
-             _openInfoWindow={ItemActions.openInfoWindow}
-             _closeInfoWindow={ItemActions.closeInfoWindow}
-             _focus={ItemActions.focus}
-             categories={ItemStore.getCategories()}
-             activeCategories={ItemStore.getActiveCategories()}
-             _addCategory={ItemActions.addCategory}
-             _remCategory={ItemActions.remCategory}
-             _setUserPosition={GMapsActions.setUserPosition}
-        />
+             categories={this.stores().item.getCategories()}
+             activeCategories={this.stores().item.getActiveCategories()}
+             {...this.flux()} />
       </div>
     );
-  },
+  }
 
   _onItemChange() {
-    this.setState(getItemState());
-  },
+    this.setState(this.getItemState());
+  }
 
   _onAppStateChange() {
-    this.setState(getAppState());
+    this.setState(this.getAppState());
   }
-});
+}
 
-export default App;
+export default FluxComponent(App);

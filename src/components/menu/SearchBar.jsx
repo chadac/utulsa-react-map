@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import classnames from 'classnames';
 
+import FluxComponent from '../../hoc/FluxComponent';
+
 import AppState from '../../constants/AppState';
 
 import SearchResults from './SearchResults';
@@ -43,31 +45,28 @@ const CenterButton = React.createClass({
   },
 });
 
-const SearchBar = React.createClass({
-  getDefaultProps() {
-    return {
-      _search: PropTypes.func.isRequired,
-      filterBy: PropTypes.bool.isRequired,
-    };
-  },
+class SearchBar extends Component {
+  static propTypes = {
+    inIndexModal: PropTypes.bool.isRequired,
+  }
 
   render() {
     return (
       <div className={classnames(styles.container)}>
         <div className={classnames(styles.searchBar)}>
           <IndexButton selected={this.props.inIndexModal}
-                       _openIndex={this.props._openIndex} />
+                       {...this.flux()} />
           <input className={classnames(styles.searchBox)} type="text"
                  placeholder="Search ..."
-                 onChange={this._onChange} />
+                 onChange={this._onChange.bind(this)} />
         </div>
       </div>
     );
-  },
+  }
 
   _onChange(event) {
-    this.props._search(event.target.value);
-  },
-});
+    this.actions().item.search(event.target.value);
+  }
+}
 
-module.exports = SearchBar;
+module.exports = FluxComponent(SearchBar);

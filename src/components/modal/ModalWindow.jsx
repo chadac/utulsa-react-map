@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+import FluxComponent from '../../hoc/FluxComponent';
+
 import styles from '../../stylesheets/ModalWindow.scss';
 
-const ModalWindow = React.createClass({
-
+class ModalWindow extends Component {
   render() {
     let child = null;
     if(this.props.children !== null) {
       child = (
-        <div tabIndex="1" className={styles.modalWindow} onClick={this._unfocus} onKeyDown={this._keyPress}>
-          <div className={styles.content} onClick={this._childClick}>
-            <div className={styles.x} onClick={this._unfocus}>x</div>
+        <div tabIndex="1" className={styles.modalWindow}
+             onClick={this._closeModal.bind(this)} onKeyDown={this._keyPress.bind(this)}>
+          <div className={styles.content} onClick={this._childClick.bind(this)}>
+            <div className={styles.x} onClick={this._closeModal.bind(this)}>x</div>
             {this.props.children}
           </div>
         </div>
@@ -31,20 +33,19 @@ const ModalWindow = React.createClass({
         {child}
       </ReactCSSTransitionGroup>
     );
-  },
+  }
 
-  _unfocus() {
-    this.props._closeModal();
-  },
+  _closeModal() {
+    this.actions().appState.closeModal();
+  }
 
   _childClick(e) {
     e.stopPropagation();
-  },
-
-  _keyPress(e) {
-    if(e.keyCode == 27) this.props._closeModal();
   }
 
-});
+  _keyPress(e) {
+    if(e.keyCode == 27) this._closeModal();
+  }
+}
 
-module.exports = ModalWindow;
+export default FluxComponent(ModalWindow);

@@ -55,9 +55,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
     this.on(CHANGE_EVENT, callback);
   },
 
-  dispatcherIndex: AppDispatcher.register((payload) => {
-    var action = payload.action;
-
+  dispatcherIndex: AppDispatcher.register((action) => {
     switch(action.actionType) {
 
       case AppStateConstants.APP_STATE_SET:
