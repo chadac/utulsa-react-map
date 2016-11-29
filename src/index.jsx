@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-import styles from './stylesheets/index.scss';
 
 import AppDispatcher from './dispatcher/AppDispatcher';
 import ItemStore from './stores/ItemStore';
@@ -10,6 +9,8 @@ import AppStateStore from './stores/AppStateStore';
 import ItemActions from './actions/ItemActions';
 import GMapsActions from './actions/GMapsActions';
 import AppStateActions from './actions/AppStateActions';
+
+import './stylesheets/index.scss';
 
 console.log("Loading items...");
 ItemStore.load();

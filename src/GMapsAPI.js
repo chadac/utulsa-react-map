@@ -2,7 +2,7 @@
 var gmaps = null;
 
 if(typeof google === "undefined" || typeof google.maps === "undefined") {
-  throw "Google Maps was not loaded.";
+  throw "ReferenceError: Google Maps has not been loaded.";
 } else {
   gmaps = google.maps;
 }

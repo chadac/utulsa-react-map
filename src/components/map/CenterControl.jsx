@@ -22,7 +22,7 @@ class CenterControl extends Component {
     };
 
     return (
-      <MapControl id="filter_by" map={this.props.map}
+      <MapControl id="center" title="Center" map={this.props.map}
                   position={gmaps.ControlPosition.TOP_LEFT}>
         <div onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave}>
           <div className={controlStyles.controlTitle} style={titleStyles}

@@ -31,7 +31,7 @@ TextLabel.prototype.draw = function() {
   var position = overlayProjection.fromLatLngToDivPixel(this.pos);
 
   var div = this.div_;
-  div.style.left = (position.x-50) + 'px';
+  div.style.left = (position.x - 50) + 'px';
   div.style.top = (position.y) + 'px';
 };
 TextLabel.prototype.onRemove = function() {

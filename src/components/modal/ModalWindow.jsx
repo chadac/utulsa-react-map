@@ -44,8 +44,10 @@ class ModalWindow extends Component {
   }
 
   _keyPress(e) {
-    if(e.keyCode == 27) this._closeModal();
+    if(e.keyCode === 27) this._closeModal();
   }
 }
+
+ModalWindow.propTypes = {};
 
 export default FluxComponent(ModalWindow);

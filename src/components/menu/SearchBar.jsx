@@ -1,37 +1,38 @@
 import React, {Component, PropTypes} from 'react';
-import classnames from 'classnames';
 
 import FluxComponent from '../../hoc/FluxComponent';
 
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/SearchBar.scss';
+const cx = classnames.bind(styles);
 
 class IndexButton extends Component {
   render() {
-    var style = {};
-    style[styles.selected] = this.props.selected;
     return(
-      <div className={classnames(styles.index, style)}
+      <div className={cx("index", {"selected": this.props.selected})}
            onClick={this.props._openIndex}>
-        <div className={classnames(styles.indexIcon)} />
-        <div className={classnames(styles.indexIcon)} />
-        <div className={classnames(styles.indexIcon)} />
+        <div className={cx("index-icon")} />
+        <div className={cx("index-icon")} />
+        <div className={cx("index-icon")} />
       </div>
     );
   }
 }
 
 IndexButton.propTypes = {
+  _openIndex: PropTypes.func.isRequired,
+
   selected: PropTypes.bool.isRequired,
 };
 
 class SearchBar extends Component {
   render() {
     return (
-      <div className={classnames(styles.container)}>
-        <div className={classnames(styles.searchBar)}>
+      <div className={cx("container")}>
+        <div className={cx("search-bar")}>
           <IndexButton selected={this.props.inIndexModal}
-                       {...this.flux()} />
-          <input className={classnames(styles.searchBox)} type="text"
+                       _openIndex={this.actions().appState.openIndex} />
+          <input className={cx("search-box")} type="text"
                  placeholder="Search ..."
                  onChange={this._onChange.bind(this)} />
         </div>

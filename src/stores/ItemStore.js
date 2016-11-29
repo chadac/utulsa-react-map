@@ -26,11 +26,11 @@ const CHANGE_EVENT = 'change';
 const SELECT_EVENT = 'select';
 
 function parseKMLCoords(msg, offset) {
-  if(offset == null) offset = 0;
+  if(offset === null) offset = 0;
   var msgSplit = msg.split(' ');
   return msgSplit.map((coordStr) => {
-    var coords = coordStr.split(',')
-    return { lng: Number(coords[0])+offset, lat: Number(coords[1])+offset };
+    var coords = coordStr.split(',');
+    return { lng: Number(coords[0]) + offset, lat: Number(coords[1]) + offset };
   });
 }
 
@@ -60,25 +60,25 @@ var _focusedItem = null;
 var _zoomLevels = {max: {}, min: {}}
 
 function isMarker(id) {
-  return _items[id].type == 'place' || _items[id].type == 'simple_marker';
+  return _items[id].type === 'place' || _items[id].type === 'simple_marker';
 }
 
 function isRoute(id) {
-  return _items[id].type == 'route';
+  return _items[id].type === 'route';
 }
 
 function isParkingLot(id) {
-  return _items[id].type == 'parking_lot';
+  return _items[id].type === 'parking_lot';
 }
 
 function _addZoom(id, min_zoom, max_zoom) {
-  if(max_zoom !== undefined) {
-    if(_zoomLevels.max[max_zoom] == undefined)
+  if(typeof max_zoom !== "undefined") {
+    if(typeof _zoomLevels.max[max_zoom] === "undefined")
       _zoomLevels.max[max_zoom] = [];
     _zoomLevels.max[max_zoom].push(id);
   }
-  if(min_zoom !== undefined) {
-    if(_zoomLevels.min[min_zoom] == undefined)
+  if(typeof min_zoom !== "undefined") {
+    if(typeof _zoomLevels.min[min_zoom] === "undefined")
       _zoomLevels.min[min_zoom] = [];
     _zoomLevels.min[min_zoom].push(id);
   }
@@ -87,20 +87,21 @@ function _addZoom(id, min_zoom, max_zoom) {
 function _addSearchTerm(name, id) {
   _itemTrie.add(name, id);
   for(var i = 1; i < name.length; i++) {
-    if(name[i] == ' ') {
-      _itemTrie.add(name.slice(i+1), id);
+    if(name[i] === ' ') {
+      _itemTrie.add(name.slice(i + 1), id);
     }
   }
 }
 
 function _addCategory(category, id) {
   _categories[category].push(_items[id]);
+  _activeCategories[category] = category;
 }
 
 function loadCategories(data) {
   data.forEach((category) => {
     _categories[category.name] = [];
-    if(category.active == '1')
+    if(category.active === '1')
       _activeCategories[category.name] = category.name;
   });
 }
@@ -114,31 +115,31 @@ function create(data) {
   _items[id].$searchTerms = null;
 
   //Search terms
-  if(data.name !== undefined) {
+  if(typeof data.name !== "undefined") {
     _addSearchTerm(data.name, data.id);
   }
-  if(data.tags !== undefined) {
+  if(typeof data.tags !== "undefined") {
     data.tags.forEach((term) => _addSearchTerm(term, data.id));
   }
-  if(data.alternate_names !== undefined) {
+  if(typeof data.alternate_names !== "undefined") {
     data.alternate_names.forEach((term) => _addSearchTerm(term, [data.id, term]));
   }
-  if(data.departments !== undefined) {
+  if(typeof data.departments !== "undefined") {
     data.departments.forEach((term) => _addSearchTerm(term, [data.id, term]));
   }
-  if(data.rooms !== undefined) {
+  if(typeof data.rooms !== "undefined") {
     data.rooms.forEach((term) => _addSearchTerm(term, [data.id, term]));
   }
 
-  if(data.category !== undefined) {
+  if(typeof data.category !== "undefined") {
     // Add category
     _addCategory(data.category, data.id);
   }
 
   const currentZoom = GMapsStore.getZoom();
   _items[id].$inZoom =
-    (data.gmaps.min_zoom == undefined || currentZoom >= data.gmaps.min_zoom)
-    && (data.gmaps.max_zoom == undefined || currentZoom <= data.gmaps.max_zoom);
+    (typeof data.gmaps.min_zoom === "undefined" || currentZoom >= data.gmaps.min_zoom)
+    && (typeof data.gmaps.max_zoom === "undefined" || currentZoom <= data.gmaps.max_zoom);
   _addZoom(data.id, data.gmaps.min_zoom, data.gmaps.max_zoom);
 
   if(isMarker(id)) {
@@ -172,9 +173,20 @@ function destroy(id) {
   delete _items[id];
 }
 
+function openInfoWindow(id) {
+  if(_infoWindow !== null) _items[_infoWindow].$infoWindow = false;
+  _items[id].$infoWindow = true;
+  _infoWindow = id;
+}
+
+function closeInfoWindow() {
+  if(_infoWindow !== null) _items[_infoWindow].$infoWindow = false;
+  _infoWindow = null;
+}
+
 function select(id) {
   var oldSelect = _selectedItem;
-  if(_selectedItem != null) {
+  if(_selectedItem !== null) {
     _items[_selectedItem].$selected = false;
   }
   _selectedItem = id;
@@ -191,45 +203,34 @@ function deselect() {
   return oldSelectedItem;
 }
 
-function openInfoWindow(id) {
-  if(_infoWindow != null) _items[_infoWindow].$infoWindow = false;
-  _items[id].$infoWindow = true;
-  _infoWindow = id;
-}
-
-function closeInfoWindow(id) {
-  if(_infoWindow != null) _items[_infoWindow].$infoWindow = false;
-  _infoWindow = null;
+function _mapUpdateZoomLevel(czoom, ozoom) {
+  if(czoom > ozoom) {
+    if(typeof _zoomLevels.max[ozoom] !== "undefined") {
+      _zoomLevels.max[ozoom]
+                 .forEach((id) => _items[id].$inZoom = false);
+    }
+    if(typeof _zoomLevels.min[czoom] !== "undefined") {
+      _zoomLevels.min[czoom]
+                 .forEach((id) => _items[id].$inZoom = true);
+    }
+  } else {
+    if(typeof _zoomLevels.max[czoom] !== "undefined") {
+      _zoomLevels.max[czoom]
+                 .forEach((id) => _items[id].$inZoom = true);
+    }
+    if(typeof _zoomLevels.min[ozoom] !== "undefined") {
+      _zoomLevels.min[ozoom]
+                 .forEach((id) => _items[id].$inZoom = false);
+    }
+  }
 }
 
 function mapUpdateZoom() {
   const czoom = GMapsStore.getZoom(),
         ozoom = GMapsStore.getOldZoom(),
         inc = czoom > ozoom ? 1 : -1;
-  for(var i = ozoom; i != czoom; i += inc) {
+  for(var i = ozoom; i !== czoom; i += inc) {
     _mapUpdateZoomLevel(i + inc, i);
-  }
-}
-
-function _mapUpdateZoomLevel(czoom, ozoom) {
-  if(czoom > ozoom) {
-    if(_zoomLevels.max[ozoom] != undefined) {
-      _zoomLevels.max[ozoom]
-                 .forEach((id) => _items[id].$inZoom = false);
-    }
-    if(_zoomLevels.min[czoom] != undefined) {
-      _zoomLevels.min[czoom]
-                 .forEach((id) => _items[id].$inZoom = true);
-    }
-  } else {
-    if(_zoomLevels.max[czoom] != undefined) {
-      _zoomLevels.max[czoom]
-                 .forEach((id) => _items[id].$inZoom = true);
-    }
-    if(_zoomLevels.min[ozoom] != undefined) {
-      _zoomLevels.min[ozoom]
-                 .forEach((id) => _items[id].$inZoom = false);
-    }
   }
 }
 
@@ -240,7 +241,7 @@ function search(w) {
   }
   _searchKey = Math.random();
   _itemTrie.search(w).forEach((item) => {
-    var key, term;
+    var key = null, term = null;
     if(item instanceof Array) {
       key = item[0];
       term = item[1];
@@ -248,7 +249,7 @@ function search(w) {
       key = item;
       term = null;
     }
-    if(_items[key].$searchKey != _searchKey) {
+    if(_items[key].$searchKey !== _searchKey) {
       _items[key].$searchKey = _searchKey;
       _items[key].$searchTerms = [];
     }
@@ -256,7 +257,7 @@ function search(w) {
       _items[key].$searchTerms.push(term);
     }
   });
-};
+}
 
 function resetSearch() {
   _searchKey = null;
@@ -284,9 +285,6 @@ function unfocus() {
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {
-  /**
-   * Imports JSON data.
-   */
   load() {
     loadCategories(categoryData);
     placeData.forEach((item) => create(item));
@@ -296,9 +294,6 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     this.emitChange();
   },
 
-  /**
-   * Returns all markers.
-   */
   getAll() {
     return Object.keys(_items).map((id) => _items[id]);
   },
@@ -308,7 +303,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   },
 
   hasItem(id) {
-    return _items[id] != undefined;
+    return typeof _items[id] !== "undefined";
   },
 
   getMarkers() {
@@ -347,23 +342,14 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     return Object.keys(_activeCategories);
   },
 
-  /**
-   * Called when anything about this object is changed.
-   */
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
 
-  /**
-   * Called when the item with `id` is selected.
-   */
   emitSelect(id) {
     this.emit([SELECT_EVENT, id]);
   },
 
-  /**
-   * Allows functions to listen on when changes are made.
-   */
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   },
@@ -372,9 +358,6 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     this.on([SELECT_EVENT, id], callback);
   },
 
-  /**
-   * This is the tool that handles receiving actions.
-   */
   dispatcherIndex: AppDispatcher.register((action) => {
     switch(action.actionType) {
       case ItemConstants.ITEM_CREATE:
@@ -389,7 +372,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
       case ItemConstants.ITEM_SELECT:
         var oldSelect = select(action.id);
-        if(oldSelect != null && oldSelect != action.id) {
+        if(oldSelect !== null && oldSelect !== action.id) {
           ItemStore.emitSelect(oldSelect);
         }
         ItemStore.emitSelect(action.id);

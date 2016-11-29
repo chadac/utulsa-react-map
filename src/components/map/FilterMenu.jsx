@@ -25,7 +25,7 @@ class CategoryBox extends Component {
     return (
       <div className={controlStyles.controlOption} style={optionStyles}
            onClick={this._onCheck}
-           onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave}>
+           onMouseEnter={this._onMouseEnter.bind(this)} onMouseLeave={this._onMouseLeave.bind(this)}>
         <span role="checkbox" className={controlStyles.controlCheckbox}>
           <div className={controlStyles.controlCheckboxDiv} style={checkboxStyles}>
             <img className={controlStyles.controlCheckboxImg}
@@ -73,7 +73,7 @@ class CategoryBox extends Component {
 CategoryBox.propTypes = {
   selected: PropTypes.bool.isRequired,
   category: PropTypes.string.isRequired,
-  categories: PropTypes.arrray.isRequired,
+  categories: PropTypes.array,
 
   _addCategory: PropTypes.func.isRequired,
   _remCategory: PropTypes.func.isRequired,
@@ -115,9 +115,9 @@ class FilterMenu extends Component {
       display: this.state.hoverDelay ? "block" : "none",
     };
     return (
-      <MapControl id="filter_by" map={this.props.map}
+      <MapControl id="filter_by" title="Filter By" map={this.props.map}
                   position={gmaps.ControlPosition.LEFT_TOP}>
-        <div onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave}>
+        <div onMouseEnter={this._onMouseEnter.bind(this)} onMouseLeave={this._onMouseLeave.bind(this)}>
           <div className={controlStyles.controlTitle} style={titleStyles}
                onClick={this._onClick}
                onMouseEnter={this._onMouseEnterTitle} onMouseLeave={this._onMouseLeaveTitle}>
@@ -161,4 +161,5 @@ FilterMenu.propTypes = {
   _remCategory: PropTypes.func.isRequired,
 };
 
-module.exports = FilterMenu;
+
+export default FilterMenu;

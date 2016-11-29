@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-import classnames from 'classnames';
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/MapControl.scss';
 const cx = classnames.bind(styles);
 
@@ -63,4 +63,4 @@ MapControl.propTypes = {
   _onClick: PropTypes.func,
 };
 
-module.exports = MapControl;
+export default MapControl;

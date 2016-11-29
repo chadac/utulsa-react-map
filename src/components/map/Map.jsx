@@ -12,7 +12,10 @@ import ParkingLot from './ParkingLot';
 import CenterControl from './CenterControl';
 import FilterMenu from './FilterMenu';
 
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/Map.scss'
+const cx = classnames.bind(styles);
+
 import gmaps from '../../GMapsAPI';
 
 class Map extends Component {
@@ -94,8 +97,8 @@ class Map extends Component {
         ));
       }
       return (
-        <div className={styles.mapContainer}>
-          <div ref="map" className={styles.Map}>
+        <div className={cx("map-container")}>
+          <div ref="map" className={cx("Map")}>
           </div>
           <FilterMenu map={map}
                       categories={this.props.categories}
@@ -109,8 +112,8 @@ class Map extends Component {
       );
     } else {
       return (
-        <div className={styles.mapContainer}>
-          <div ref="map" className={styles.Map}></div>
+        <div className={cx("map-container")}>
+          <div ref="map" className={cx("Map")}></div>
         </div>
       );
     }

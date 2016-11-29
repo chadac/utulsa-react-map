@@ -1,19 +1,20 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import classnames from 'classnames';
 
 import styles from '../../stylesheets/AnimatedMenu.scss';
 
-const AnimatedMenu = React.createClass({
-  getInitialState() {
-    return {
+class AnimatedMenu extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       rendered: false
     };
-  },
+  }
 
   componentDidMount() {
     this.setState({rendered: true});
-  },
+  }
 
   render() {
     return (
@@ -29,7 +30,7 @@ const AnimatedMenu = React.createClass({
         {this.state.rendered ? this.props.children : null}
       </ReactCSSTransitionGroup>
     );
-  },
-});
+  }
+}
 
-module.exports = AnimatedMenu;
+export default AnimatedMenu;

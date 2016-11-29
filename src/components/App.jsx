@@ -1,8 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-import shouldPureComponentUpdate from 'react-pure-render/function';
+// import shouldPureComponentUpdate from 'react-pure-render/function';
 
 import FluxComponent from '../hoc/FluxComponent';
-
 import SearchBar from './menu/SearchBar';
 import AnimatedMenu from './menu/AnimatedMenu';
 import SearchResults from './menu/SearchResults';
@@ -13,9 +12,9 @@ import Map from './map/Map';
 
 import AppState from '../constants/AppState';
 
+import classnames from 'classnames/bind';
 import styles from '../stylesheets/App.scss';
-
-const extend = require('util')._extend;
+const cx = classnames.bind(styles);
 
 
 class App extends Component {
@@ -33,6 +32,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       items: this.stores().item.getAll(),
       appState: this.stores().appState.getState(),
@@ -44,8 +44,8 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.props.stores.item.addChangeListener(this._onItemChange.bind(this));
-    this.props.stores.appState.addChangeListener(this._onAppStateChange.bind(this));
+    this.stores().item.addChangeListener(this._onItemChange.bind(this));
+    this.stores().appState.addChangeListener(this._onAppStateChange.bind(this));
   }
 
   _getModalWindow() {
@@ -70,7 +70,7 @@ class App extends Component {
       .filter((item) => {
         switch(this.state.appState) {
           case AppState.SEARCH:
-            return item.$searchKey == this.stores().item.getSearchKey();
+            return item.$searchKey === this.stores().item.getSearchKey();
           default:
             return true;
         }
@@ -83,7 +83,7 @@ class App extends Component {
     let modalWindow = this._getModalWindow();
 
     return (
-      <div id="outer-container" style={{height:"100%"}} className={styles.outerContainer}>
+      <div className={cx("outer-container")}>
         <ModalWindow {...this.flux()}>
           {modalWindow}
         </ModalWindow>
@@ -92,7 +92,7 @@ class App extends Component {
             inIndexModal={this.state.inIndexModal}
             {...this.flux()} />
         <AnimatedMenu>
-          { this.state.appState == AppState.SEARCH ?
+          { this.state.appState === AppState.SEARCH ?
             ( <SearchResults items={items} select={this.actions().item.select}
                              categories={this.stores().item.getCategories()}
                              activeCategories={this.stores().item.getActiveCategories()}
@@ -117,6 +117,9 @@ class App extends Component {
   }
 }
 
-App.propTypes = {};
+App.propTypes = {
+  initialCenter: PropTypes.object,
+  initialZoom: PropTypes.object,
+};
 
 export default FluxComponent(App);

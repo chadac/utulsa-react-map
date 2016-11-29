@@ -1,14 +1,11 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 const EventEmitter = require('events').EventEmitter;
 const GMapsConstants = require('../constants/GMapsConstants');
-const ItemConstants = require('../constants/ItemConstants');
 const assign = require('object-assign');
 
 const CENTER_EVENT = 'center';
 const ZOOM_EVENT = 'zoom';
 const USER_POSITION_EVENT = 'user';
-
-console.log(AppDispatcher);
 
 var _center = {lat: 36.15159935580428, lng: -95.94644401639404};
 
@@ -18,9 +15,9 @@ var _zoom = 16;
 /* Position of user */
 var _userPosition = null;
 
-function setCurrentPosition(lat, lng) {
-  _currentPosition = {lat: lat, lng: lng};
-}
+/* function setCurrentPosition(lat, lng) {
+ *   _currentPosition = {lat: lat, lng: lng};
+ * }*/
 
 function setUserPosition(lat, lng) {
   _userPosition = {lat: lat, lng: lng};
@@ -30,9 +27,9 @@ function center(lat, lng) {
   _center = {lat: lat, lng: lng};
 }
 
-function zoom(zoom) {
+function zoom(newZoom) {
   _oldZoom = _zoom;
-  _zoom = zoom;
+  _zoom = newZoom;
 }
 
 const GMapsStore = assign({}, EventEmitter.prototype, {
@@ -99,7 +96,7 @@ const GMapsStore = assign({}, EventEmitter.prototype, {
         setUserPosition(action.lat, action.lng);
         GMapsStore.emitUserPosition(action.lat, action.lng);
         break;
-    };
+    }
 
     return true;
   }),
