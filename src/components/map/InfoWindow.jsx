@@ -5,7 +5,7 @@ import gmaps from '../../GMapsAPI';
 class InfoWindow extends Component {
   componentWillMount() {
     this.info = new gmaps.InfoWindow();
-    this.info.addListener("closeclick", this._onCloseInfoWindow);
+    this.info.addListener("closeclick", this._onCloseInfoWindow.bind(this));
   }
 
   componentWillUnmount() {

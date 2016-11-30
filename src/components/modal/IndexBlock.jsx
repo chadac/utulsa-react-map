@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-import classnames from 'classnames';
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/IndexBlock.scss';
 const cx = classnames.bind(styles);
 
@@ -59,7 +59,7 @@ class IndexBlock extends Component {
 }
 
 IndexBlock.propTypes = {
-  items: PropTypes.array.isRequired,
+  items: PropTypes.object.isRequired,
 
   _select: PropTypes.func.isRequired,
 };

@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
+import FluxComponent from '../../hoc/FluxComponent';
 import ItemHelpers from '../../helpers/ItemHelpers';
 
 import classnames from 'classnames/bind';
@@ -47,7 +48,7 @@ class SearchItem extends Component {
   render() {
     return (
       <div className={cx("search-item", "item")}
-           onClick={this._onClick}>
+           onClick={this._onClick.bind(this)}>
         <span className={cx("name")}>{this.props.name}</span>
         {this.props.$searchTerms.length > 0 ? (
            <span className={cx("terms")}>
@@ -106,4 +107,4 @@ SearchResults.propTypes = {
 };
 
 
-export default SearchResults;
+export default FluxComponent(SearchResults);

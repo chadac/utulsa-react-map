@@ -24,9 +24,10 @@ class CenterControl extends Component {
     return (
       <MapControl id="center" title="Center" map={this.props.map}
                   position={gmaps.ControlPosition.TOP_LEFT}>
-        <div onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave}>
+        <div onMouseEnter={this._onMouseEnter.bind(this)}
+             onMouseLeave={this._onMouseLeave.bind(this)}>
           <div className={controlStyles.controlTitle} style={titleStyles}
-               onClick={this._onClick}>
+               onClick={this._onClick.bind(this)}>
             &#8982;
           </div>
         </div>

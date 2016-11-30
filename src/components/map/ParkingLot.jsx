@@ -44,7 +44,7 @@ class ParkingLot extends Component {
         .map((coord) => new gmaps.LatLng(coord.lat, coord.lng));
       var poly = new gmaps.Polygon(polyData);
       poly.setMap(this.props.map);
-      poly.addListener('click', this._onClick);
+      poly.addListener('click', this._onClick.bind(this));
       polys.push(poly);
     }
     return polys;

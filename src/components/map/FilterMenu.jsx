@@ -24,7 +24,7 @@ class CategoryBox extends Component {
     };
     return (
       <div className={controlStyles.controlOption} style={optionStyles}
-           onClick={this._onCheck}
+           onClick={this._onCheck.bind(this)}
            onMouseEnter={this._onMouseEnter.bind(this)} onMouseLeave={this._onMouseLeave.bind(this)}>
         <span role="checkbox" className={controlStyles.controlCheckbox}>
           <div className={controlStyles.controlCheckboxDiv} style={checkboxStyles}>
@@ -117,10 +117,12 @@ class FilterMenu extends Component {
     return (
       <MapControl id="filter_by" title="Filter By" map={this.props.map}
                   position={gmaps.ControlPosition.LEFT_TOP}>
-        <div onMouseEnter={this._onMouseEnter.bind(this)} onMouseLeave={this._onMouseLeave.bind(this)}>
+        <div onMouseEnter={this._onMouseEnter.bind(this)}
+             onMouseLeave={this._onMouseLeave.bind(this)}>
           <div className={controlStyles.controlTitle} style={titleStyles}
                onClick={this._onClick}
-               onMouseEnter={this._onMouseEnterTitle} onMouseLeave={this._onMouseLeaveTitle}>
+               onMouseEnter={this._onMouseEnterTitle.bind(this)}
+               onMouseLeave={this._onMouseLeaveTitle.bind(this)}>
             Filter by...
           </div>
           <div className={controlStyles.controlOptions} style={optionStyles}>

@@ -7,7 +7,7 @@ import MapIcon from '../../data/mapIcons.json';
 class Marker extends Component {
   componentWillMount() {
     this.marker = this.createMarker();
-    this.marker.addListener("click", this._onClick);
+    this.marker.addListener("click", this._onClick.bind(this));
   }
 
   componentWillUnmount() {

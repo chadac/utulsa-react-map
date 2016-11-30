@@ -11,7 +11,7 @@ import styles from '../../stylesheets/Marker.scss';
 class Place extends Component {
 
   componentWillMount() {
-    ItemStore.addSelectListener(this.props.id, this._onSelect);
+    ItemStore.addSelectListener(this.props.id, this._onSelect.bind(this));
     this.label = this.createLabel();
   }
 
@@ -51,7 +51,7 @@ class Place extends Component {
         <p>{this.props.address}</p>
         <p><a href={this.props.website}>{this.props.website}</a></p>
         <p><a target="_blank" href={directionsUrl}>Get directions</a></p>
-        <p><a href="#" onClick={this._onMoreInformation}>More information...</a></p>
+        <p><a href="#" onClick={this._onMoreInformation.bind(this)}>More information...</a></p>
       </Marker>
     );
   }
@@ -82,7 +82,7 @@ Place.propTypes = {
   address: PropTypes.string,
   website: PropTypes.string,
   marker: PropTypes.object.isRequired,
-  directions: PropTypes.object.isRequired,
+  directions: PropTypes.string,
 };
 
-module.exports = Place;
+export default Place;
