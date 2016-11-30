@@ -6,6 +6,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
+var autoprefixer = require('autoprefixer');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
 
@@ -129,17 +130,20 @@ module.exports = {
         // Webpack 1.x uses Uglify plugin as a signal to minify *all* the assets
         // including CSS. This is confusing and will be removed in Webpack 2:
         // https://github.com/webpack/webpack/issues/283
-        loader: 'style!css?importLoaders=1!postcss'
+        loader: 'style!css?importLoaders=1!postcss-loader',
         // loader: ExtractTextPlugin.extract('style', 'css?importLoaders=1&-autoprefixer!postcss')
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+        postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ]
       },
       {
         test: /\.scss$/,
         loaders: [
           'style',
           'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]&camelCase',
-          'sass?camelCase'
+          'sass?camelCase',
+          'postcss-loader'
         ],
+        postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ]
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.

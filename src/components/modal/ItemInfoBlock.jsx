@@ -4,6 +4,7 @@ import styles from '../../stylesheets/ItemInfoBlock.scss';
 
 class PhotoGallery extends Component {
   render() {
+    if( typeof this.props.photos === "undefined" ) return null;
     const photos = this.props.photos.map((url) => (
       <img key={url} src={url} className={styles.photo} />
     ));
@@ -16,7 +17,7 @@ class PhotoGallery extends Component {
 }
 
 PhotoGallery.propTypes = {
-  photos: PropTypes.array.isRequired,
+  photos: PropTypes.array,
 };
 
 class ItemInfoBlock extends Component {
