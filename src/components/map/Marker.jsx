@@ -15,9 +15,13 @@ class Marker extends Component {
   }
 
   createMarker() {
+    const icon = {
+      url: MapIcon[this.props.icon],
+      scaledSize: new gmaps.Size(32, 32),
+    };
     return new gmaps.Marker({
       position: this.props.latLng,
-      icon: MapIcon[this.props.icon],
+      icon: icon,
       draggable: false,
       map: this.props.map,
     });

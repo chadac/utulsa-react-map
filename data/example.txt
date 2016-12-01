@@ -1,4 +1,0 @@
-custom.json
-localist.json
-places.csv
-prod.json
