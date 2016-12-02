@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import React, {Component, PropTypes} from 'react';
 
 import styles from '../../stylesheets/ItemInfoBlock.scss';
 
-const PhotoGallery = React.createClass({
+class PhotoGallery extends Component {
   render() {
+    if( typeof this.props.photos === "undefined" ) return null;
     const photos = this.props.photos.map((url) => (
       <img key={url} src={url} className={styles.photo} />
     ));
@@ -13,14 +13,18 @@ const PhotoGallery = React.createClass({
         {photos}
       </div>
     );
-  },
-});
+  }
+}
 
-const ItemInfoBlock = React.createClass({
+PhotoGallery.propTypes = {
+  photos: PropTypes.array,
+};
+
+class ItemInfoBlock extends Component {
   listingBlock(key, name, className) {
-    let block;
-    if(this.props[key] !== undefined) {
-      const items = this.props[key].map((item) => (<li>{item}</li>));
+    let block = null;
+    if(typeof this.props[key] !== "undefined") {
+      const items = this.props[key].map((item) => (<li key={item}>{item}</li>));
       block = (
         <div className={className}>
           <h4>{name}</h4>
@@ -31,7 +35,7 @@ const ItemInfoBlock = React.createClass({
       );
     }
     return block;
-  },
+  }
 
   render() {
     const alternateNames = this.listingBlock("alternate_names", "Also Called:", styles.alternateNames);
@@ -48,7 +52,14 @@ const ItemInfoBlock = React.createClass({
         {rooms}
       </div>
     );
-  },
-});
+  }
+}
 
-module.exports = ItemInfoBlock;
+ItemInfoBlock.propTypes = {
+  name: PropTypes.string.isRequired,
+  address: PropTypes.string,
+  description: PropTypes.string,
+  photos: PropTypes.array,
+};
+
+export default ItemInfoBlock;

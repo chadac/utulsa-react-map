@@ -19,8 +19,8 @@ TextLabel.prototype.onAdd = function() {
   div.style.width = "100px";
 
   this.div_ = div;
-  var overlayProjection = this.getProjection();
-  var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+  // var overlayProjection = this.getProjection();
+  // var position = overlayProjection.fromLatLngToDivPixel(this.pos);
 
   var panes = this.getPanes();
   panes.overlayLayer.appendChild(div);
@@ -31,7 +31,7 @@ TextLabel.prototype.draw = function() {
   var position = overlayProjection.fromLatLngToDivPixel(this.pos);
 
   var div = this.div_;
-  div.style.left = (position.x-50) + 'px';
+  div.style.left = (position.x - 50) + 'px';
   div.style.top = (position.y) + 'px';
 };
 TextLabel.prototype.onRemove = function() {

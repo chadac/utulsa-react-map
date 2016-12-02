@@ -1,73 +1,52 @@
 import React, {Component, PropTypes} from 'react';
-import classnames from 'classnames';
 
-import AppState from '../../constants/AppState';
+import FluxComponent from '../../hoc/FluxComponent';
 
-import SearchResults from './SearchResults';
-
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/SearchBar.scss';
+const cx = classnames.bind(styles);
 
-const IndexButton = React.createClass({
+class IndexButton extends Component {
   render() {
-    var style = {};
-    style[styles.selected] = this.props.selected;
     return(
-      <div className={classnames(styles.index, style)}
+      <div className={cx("index", {"selected": this.props.selected})}
            onClick={this.props._openIndex}>
-        <div className={classnames(styles.indexIcon)} />
-        <div className={classnames(styles.indexIcon)} />
-        <div className={classnames(styles.indexIcon)} />
+        <div className={cx("index-icon")} />
+        <div className={cx("index-icon")} />
+        <div className={cx("index-icon")} />
       </div>
     );
-  },
-});
+  }
+}
 
-const CenterButton = React.createClass({
+IndexButton.propTypes = {
+  _openIndex: PropTypes.func.isRequired,
+
+  selected: PropTypes.bool.isRequired,
+};
+
+class SearchBar extends Component {
   render() {
     return (
-      <div className={classnames(styles.center)}
-           onClick={this._onClick}>
-        <span>◎</span>
-      </div>
-    );
-  },
-
-  _onClick() {
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const lat = pos.coords.latitude,
-              lng = pos.coords.longitude;
-        this.props._setUserPosition(lat, lng);
-      });
-    }
-  },
-});
-
-const SearchBar = React.createClass({
-  getDefaultProps() {
-    return {
-      _search: PropTypes.func.isRequired,
-      filterBy: PropTypes.bool.isRequired,
-    };
-  },
-
-  render() {
-    return (
-      <div className={classnames(styles.container)}>
-        <div className={classnames(styles.searchBar)}>
+      <div className={cx("container")}>
+        <div className={cx("search-bar")}>
           <IndexButton selected={this.props.inIndexModal}
-                       _openIndex={this.props._openIndex} />
-          <input className={classnames(styles.searchBox)} type="text"
+                       _openIndex={this.actions().appState.openIndex} />
+          <input className={cx("search-box")} type="text"
                  placeholder="Search ..."
-                 onChange={this._onChange} />
+                 onChange={this._onChange.bind(this)} />
         </div>
       </div>
     );
-  },
+  }
 
   _onChange(event) {
-    this.props._search(event.target.value);
-  },
-});
+    this.actions().item.search(event.target.value);
+  }
+}
 
-module.exports = SearchBar;
+SearchBar.propTypes = {
+  inIndexModal: PropTypes.bool.isRequired,
+};
+
+module.exports = FluxComponent(SearchBar);

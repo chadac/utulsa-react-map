@@ -1,38 +1,45 @@
-import React, {Component} from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import React, {Component, PropTypes} from 'react';
 
-import classnames from 'classnames';
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/IndexBlock.scss';
+const cx = classnames.bind(styles);
 
-const ItemLink = React.createClass({
+class ItemLink extends Component {
   render() {
     return (
       <div className={classnames(styles.entry, styles.item)}>
-        <a href="#" onClick={this._onClick}>{this.props.name}</a>
+        <a href="#" onClick={this._onClick.bind(this)}>{this.props.name}</a>
       </div>
     );
-  },
+  }
 
   _onClick() {
     this.props._select(this.props.id);
-  },
-});
+  }
+}
 
-const IndexBlock = React.createClass({
+ItemLink.propTypes = {
+  _select: PropTypes.func.isRequired,
+
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+class IndexBlock extends Component {
   render() {
     const categories = Object.keys(this.props.items);
     const items = this.props.items;
     const renderedItems = categories
-      .filter((category) => items[category] !== undefined || items[category].length > 0)
+      .filter((category) => typeof items[category] !== "undefined" || items[category].length > 0)
       .map((category) => {
         var subItems = items[category]
-          .filter((item) => item.name !== undefined)
+          .filter((item) => typeof item.name !== "undefined")
           .map((item) => (
             <ItemLink name={item.name} id={item.id} _select={this.props._select} />
           ));
         if(subItems.length > 0) {
           subItems.unshift(
-            (<div className={classnames(styles.entry, styles.header)}>{category}</div>)
+            (<div className={cx("entry", "header")}>{category}</div>)
           );
           return subItems;
         }
@@ -48,7 +55,13 @@ const IndexBlock = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+IndexBlock.propTypes = {
+  items: PropTypes.object.isRequired,
+
+  _select: PropTypes.func.isRequired,
+};
 
 module.exports = IndexBlock;

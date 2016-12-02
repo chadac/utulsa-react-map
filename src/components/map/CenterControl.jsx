@@ -1,19 +1,18 @@
 import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
 
 import MapControl from './MapControl';
-
 import gmaps from '../../GMapsAPI';
-
 import controlStyles from '../../stylesheets/MapControl.scss';
 
-const CenterControl = React.createClass({
+class CenterControl extends Component {
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       hover: false,
-    };
-  },
+    }
+  }
 
   render() {
     const titleStyles = {
@@ -23,25 +22,26 @@ const CenterControl = React.createClass({
     };
 
     return (
-      <MapControl id="filter_by" map={this.props.map}
+      <MapControl id="center" title="Center" map={this.props.map}
                   position={gmaps.ControlPosition.TOP_LEFT}>
-        <div onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave}>
+        <div onMouseEnter={this._onMouseEnter.bind(this)}
+             onMouseLeave={this._onMouseLeave.bind(this)}>
           <div className={controlStyles.controlTitle} style={titleStyles}
-               onClick={this._onClick}>
+               onClick={this._onClick.bind(this)}>
             &#8982;
           </div>
         </div>
       </MapControl>
     );
-  },
+  }
 
   _onMouseEnter() {
     this.setState({hover: true});
-  },
+  }
 
   _onMouseLeave() {
     this.setState({hover: false});
-  },
+  }
 
   _onClick() {
     if(navigator.geolocation) {
@@ -51,7 +51,13 @@ const CenterControl = React.createClass({
         this.props._setUserPosition(lat, lng);
       });
     }
-  },
-});
+  }
+}
+
+CenterControl.propTypes = {
+  map: PropTypes.object.isRequired,
+
+  _setUserPosition: PropTypes.func.isRequired,
+};
 
 module.exports = CenterControl;

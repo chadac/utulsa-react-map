@@ -1,26 +1,29 @@
 import React, {Component, PropTypes} from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import AppState from '../../constants/AppState';
-import classnames from 'classnames';
-import styles from '../../stylesheets/SearchResults.scss';
+
+import FluxComponent from '../../hoc/FluxComponent';
 import ItemHelpers from '../../helpers/ItemHelpers';
 
-const SearchCategory = React.createClass({
+import classnames from 'classnames/bind';
+import styles from '../../stylesheets/SearchResults.scss';
+const cx = classnames.bind(styles);
+
+
+class SearchCategory extends Component{
   render() {
-    let checkboxClass = {};
-    checkboxClass[styles.active] = this.props.selected;
-    checkboxClass[styles.inactive] = !this.props.selected;
-    const arrowChar = this.props.selected ? "&#9660;" : "&#9650;";
+    // const arrowChar = this.props.selected ? "&#9660;" : "&#9650;";
     return (
       <div>
-        <div className={classnames(styles.searchItem, styles.header)}
-             onClick={this._onCheck}>
-          <span className={classnames(styles.name, checkboxClass)}>{this.props.name}</span>
+        <div className={cx("search-item", "header")}
+             onClick={this._onCheck.bind(this)}>
+          <span className={cx("name", {"active": this.props.selected,
+                                       "inactive": !this.props.selected})}>
+            {this.props.name}
+          </span>
         </div>
         {this.props.selected ? this.props.children : null}
       </div>
     );
-  },
+  }
 
   _onCheck() {
     if(!this.props.selected) {
@@ -28,60 +31,80 @@ const SearchCategory = React.createClass({
     } else {
       this.props._remCategory(this.props.name);
     }
-  },
-});
+  }
+}
 
-const SearchItem = React.createClass({
+SearchCategory.propTypes = {
+  selected: PropTypes.bool.isRequired,
+
+  _addCategory: PropTypes.func.isRequired,
+  _remCategory: PropTypes.func.isRequired,
+
+  name: PropTypes.string.isRequired,
+};
+
+
+class SearchItem extends Component {
   render() {
     return (
-      <div className={classnames(styles.searchItem, styles.item)}
-           onClick={this._onClick}>
-        <span className={classnames(styles.name)}>{this.props.name}</span>
+      <div className={cx("search-item", "item")}
+           onClick={this._onClick.bind(this)}>
+        <span className={cx("name")}>{this.props.name}</span>
         {this.props.$searchTerms.length > 0 ? (
-           <span className={classnames(styles.terms)}>
+           <span className={cx("terms")}>
              ({this.props.$searchTerms.join(", ")})
            </span>
          ) : null}
       </div>
     );
-  },
+  }
 
   _onClick() {
-    this.props.select(this.props.id);
-  },
-});
+    this.props._select(this.props.id);
+  }
+}
 
-const SearchResults = React.createClass({
-  getDefaultProps() {
-    return {
-      items: PropTypes.array.isRequired,
-    };
-  },
+SearchItem.propTypes = {
+  _select: PropTypes.func.isRequired,
 
+  $searchTerms: PropTypes.array.isRequired,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+
+class SearchResults extends Component {
   render() {
     const groups = ItemHelpers.groupBy(this.props.items, "category");
     const searchCats = this
       .props.categories
-      .filter((name) => groups[name] !== undefined)
+      .filter((name) => typeof groups[name] !== "undefined")
       .map((name) => {
       const groupItems = groups[name].map((item) =>
-        <SearchItem select={this.props.select} key={item.id} {...item} />
+        <SearchItem _select={this.actions().item.select} key={item.id} {...item} />
       );
       return (
         <SearchCategory key={name} name={name}
-                        selected={this.props.activeCategories.indexOf(name)>=0}
-                        _addCategory={this.props._addCategory}
-                        _remCategory={this.props._remCategory}>
+                        selected={this.props.activeCategories.indexOf(name) >= 0}
+                        _addCategory={this.actions().item.addCategory}
+                        _remCategory={this.actions().item.remCategory}>
           {groupItems}
         </SearchCategory>
       );
     });
     return (
-      <div key="main" className={classnames(styles.searchResults)}>
+      <div key="main" className={cx("search-results")}>
           {searchCats}
       </div>
     );
-  },
-});
+  }
+}
 
-module.exports = SearchResults;
+SearchResults.propTypes = {
+  items: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
+  activeCategories: PropTypes.array.isRequired,
+};
+
+
+export default FluxComponent(SearchResults);

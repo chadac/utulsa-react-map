@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom';
 
-import GMapsStore from '../../stores/GMapsStore';
+import FluxComponent from '../../hoc/FluxComponent';
 
 import AppState from '../../constants/AppState';
 
@@ -13,39 +12,35 @@ import ParkingLot from './ParkingLot';
 import CenterControl from './CenterControl';
 import FilterMenu from './FilterMenu';
 
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/Map.scss'
+const cx = classnames.bind(styles);
+
 import gmaps from '../../GMapsAPI';
 
-const Map = React.createClass({
-  propTypes: {
-    center: PropTypes.object.isRequired,
-    zoom: PropTypes.number.isRequired,
-    items: PropTypes.array.isRequired,
-    appState: PropTypes.string.isRequired,
-    _onZoom: PropTypes.func.isRequired,
-    _onCenter: PropTypes.func.isRequired,
-  },
+class Map extends Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       rendered: false,
     };
-  },
+  }
 
   componentDidMount() {
     this.map = this.createMap();
-    this.map.addListener("center_changed", this._onMapCenter);
-    this.map.addListener("zoom_changed", this._onMapZoom);
+    this.map.addListener("center_changed", this._onMapCenter.bind(this));
+    this.map.addListener("zoom_changed", this._onMapZoom.bind(this));
     this.setState({rendered: true});
-    GMapsStore.addCenterListener(this._centerChanged);
-    GMapsStore.addZoomListener(this._zoomChanged);
-    GMapsStore.addUserPositionListener(this._userPositionSet);
-  },
+    this.stores().gmaps.addCenterListener(this._centerChanged.bind(this));
+    this.stores().gmaps.addZoomListener(this._zoomChanged.bind(this));
+    this.stores().gmaps.addUserPositionListener(this._userPositionSet.bind(this));
+  }
 
   createMap() {
     let mapOptions = {
-      zoom: this.props.zoom,
-      center: this.props.center,
+      zoom: this.props.initialZoom,
+      center: this.props.initialCenter,
       styles: [
         {
           featureType: 'poi',
@@ -54,7 +49,7 @@ const Map = React.createClass({
       ],
     }
     return new gmaps.Map(this.refs.map, mapOptions);
-  },
+  }
 
   render() {
     if(this.state.rendered) {
@@ -73,7 +68,7 @@ const Map = React.createClass({
           return true;
         })
         .map((item) => {
-          var MapItem;
+          var MapItem = null;
           switch(item.type) {
             case "place":
               MapItem = Place;
@@ -91,9 +86,9 @@ const Map = React.createClass({
           return (
             <MapItem key={item.id} map={map} {...item}
                      appState={this.props.appState}
-                     _openInfoWindow={this.props._openInfoWindow}
-                     _closeInfoWindow={this.props._closeInfoWindow}
-                     _focus={this.props._focus} />
+                     _openInfoWindow={this.actions().item.openInfoWindow}
+                     _closeInfoWindow={this.actions().item.closeInfoWindow}
+                     _focus={this.actions().item.focus} />
           );
         });
       if(this.state.user) {
@@ -102,53 +97,59 @@ const Map = React.createClass({
         ));
       }
       return (
-        <div className={styles.mapContainer}>
-          <div ref="map" className={styles.Map}>
+        <div className={cx("map-container")}>
+          <div ref="map" className={cx("Map")}>
           </div>
           <FilterMenu map={map}
                       categories={this.props.categories}
                       activeCategories={this.props.activeCategories}
-                      _addCategory={this.props._addCategory}
-                      _remCategory={this.props._remCategory} />
+                      _addCategory={this.actions().item.addCategory}
+                      _remCategory={this.actions().item.remCategory} />
           <CenterControl map={map}
-                         _setUserPosition={this.props._setUserPosition} />
+                         _setUserPosition={this.actions().gmaps.setUserPosition} />
           {items}
         </div>
       );
     } else {
       return (
-        <div className={styles.mapContainer}>
-          <div ref="map" className={styles.Map}></div>
+        <div className={cx("map-container")}>
+          <div ref="map" className={cx("Map")}></div>
         </div>
       );
     }
-  },
-
-  _onChange() {
-    this.setState(getItemState());
-  },
+  }
 
   _onMapCenter() {
     const center = this.map.getCenter();
-    if(center != null) this.props._onCenter(center.lat(), center.lng());
-  },
+    if(center !== null) this.actions().gmaps.center(center.lat(), center.lng());
+  }
 
   _onMapZoom() {
     const zoom = this.map.getZoom();
-    this.props._onZoom(zoom);
-  },
+    this.actions().gmaps.zoom(zoom);
+  }
 
   _centerChanged(lat, lng) {
     this.map.setCenter(new gmaps.LatLng(lat, lng));
-  },
+  }
 
   _zoomChanged(zoomLevel) {
     this.map.setZoom(zoomLevel);
-  },
+  }
 
   _userPositionSet(lat, lng) {
     this.setState({user: new gmaps.LatLng(lat, lng)});
-  },
-});
+  }
+}
 
-export default Map;
+Map.propTypes = {
+  initialCenter: PropTypes.object.isRequired,
+  initialZoom: PropTypes.number.isRequired,
+  appState: PropTypes.string.isRequired,
+
+  items: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
+  activeCategories: PropTypes.array.isRequired,
+};
+
+export default FluxComponent(Map);

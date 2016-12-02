@@ -1,10 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import classNames from 'classnames';
-
 import gmaps from '../../GMapsAPI';
-
 import AppState from '../../constants/AppState';
-
 import InfoWindow from './InfoWindow';
 
 function polyStyles(data) {
@@ -17,26 +13,26 @@ function polyStyles(data) {
   };
   let style = {};
   for(let key of Object.keys(defaults)) {
-    style[key] = data[key] === undefined ? defaults[key] : data[key];
+    style[key] = (typeof data[key] === "undefined") ? defaults[key] : data[key];
   }
   return style;
 }
 
-const ParkingLot = React.createClass({
-  propTypes: {
-  },
+class ParkingLot extends Component {
 
-  getInitialState() {
-    return {
-      clickPos: new gmaps.LatLng(0,0),
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      clickPos: new gmaps.LatLng(0, 0),
     };
-  },
+  }
 
   componentWillMount() {
     this.polys = this._createPolygons();
     const center = this.props.parking_lot.center;
     this.center = new gmaps.LatLng(center.lat, center.lng);
-  },
+  }
 
   _createPolygons() {
     const numLayers = this.props.parking_lot.layer.length;
@@ -48,18 +44,18 @@ const ParkingLot = React.createClass({
         .map((coord) => new gmaps.LatLng(coord.lat, coord.lng));
       var poly = new gmaps.Polygon(polyData);
       poly.setMap(this.props.map);
-      poly.addListener('click', this._onClick);
+      poly.addListener('click', this._onClick.bind(this));
       polys.push(poly);
     }
     return polys;
-  },
+  }
 
   componentWillUnmount() {
     this.polys.forEach((poly) => poly.setMap(null));
-  },
+  }
 
   render() {
-    let position;
+    let position = null;
     switch(this.props.appState) {
       case AppState.NORMAL:
       case AppState.SEARCH:
@@ -81,13 +77,27 @@ const ParkingLot = React.createClass({
         <p>{this.props.hours}</p>
       </InfoWindow>
     );
-  },
+  }
 
   _onClick(e) {
     this.setState({clickPos: e.latLng});
     this.props._openInfoWindow(this.props.id);
-  },
+  }
 
-});
+}
+
+ParkingLot.propTypes = {
+  map: PropTypes.object.isRequired,
+  appState: PropTypes.string.isRequired,
+
+  _openInfoWindow: PropTypes.func.isRequired,
+  _closeInfoWindow: PropTypes.func.isRequired,
+
+  $infoWindow: PropTypes.bool,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  hours: PropTypes.string,
+  parking_lot: PropTypes.object,
+};
 
 module.exports = ParkingLot;

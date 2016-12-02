@@ -40,11 +40,11 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
   },
 
   isInFocus() {
-    return _modalWindow == MODAL_FOCUS;
+    return _modalWindow === MODAL_FOCUS;
   },
 
   isInIndex() {
-    return _modalWindow == MODAL_INDEX;
+    return _modalWindow === MODAL_INDEX;
   },
 
   emitChange() {
@@ -55,9 +55,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
     this.on(CHANGE_EVENT, callback);
   },
 
-  dispatcherIndex: AppDispatcher.register((payload) => {
-    var action = payload.action;
-
+  dispatcherIndex: AppDispatcher.register((action) => {
     switch(action.actionType) {
 
       case AppStateConstants.APP_STATE_SET:
@@ -111,7 +109,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
         break;
 
       case ItemConstants.ITEM_CLOSE_INFOWINDOW:
-        if(_currentState == AppState.SELECT) {
+        if(_currentState === AppState.SELECT) {
           setState(AppState.NORMAL);
           AppStateStore.emitChange();
         }
