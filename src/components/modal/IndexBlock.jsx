@@ -8,7 +8,7 @@ class ItemLink extends Component {
   render() {
     return (
       <div className={classnames(styles.entry, styles.item)}>
-        <a href="#" onClick={this._onClick}>{this.props.name}</a>
+        <a href="#" onClick={this._onClick.bind(this)}>{this.props.name}</a>
       </div>
     );
   }

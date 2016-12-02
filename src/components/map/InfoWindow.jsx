@@ -46,8 +46,7 @@ InfoWindow.propTypes = {
   map: PropTypes.object.isRequired,
   position: PropTypes.object.isRequired,
 
-  _closeInfoWindow: PropTypes.func.isRequired,
-  _focus: PropTypes.func,
+  _closeInfoWindow: PropTypes.func,
 };
 
 module.exports = InfoWindow;

@@ -15,10 +15,13 @@ class Marker extends Component {
   }
 
   createMarker() {
-    const icon = {
-      url: MapIcon[this.props.icon],
-      scaledSize: new gmaps.Size(32, 32),
-    };
+    let icon = null;
+    if(this.props.icon) {
+      icon = {
+        url: MapIcon[this.props.icon],
+        scaledSize: new gmaps.Size(32, 32),
+      };
+    }
     return new gmaps.Marker({
       position: this.props.latLng,
       icon: icon,
@@ -56,10 +59,10 @@ class Marker extends Component {
 Marker.propTypes = {
   map: PropTypes.object.isRequired,
 
-  _openInfoWindow: PropTypes.func.isRequired,
-  _closeInfoWindow: PropTypes.func.isRequired,
+  _openInfoWindow: PropTypes.func,
+  _closeInfoWindow: PropTypes.func,
 
-  $infoWindow: PropTypes.bool.isRequired,
+  $infoWindow: PropTypes.bool,
   id: PropTypes.string.isRequired,
   icon: PropTypes.string,
   latLng: PropTypes.object.isRequired,
