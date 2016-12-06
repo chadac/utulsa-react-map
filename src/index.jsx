@@ -5,10 +5,11 @@ import App from './components/App';
 import AppDispatcher from './dispatcher/AppDispatcher';
 import ItemStore from './stores/ItemStore';
 import GMapsStore from './stores/GMapsStore';
-import AppStateStore from './stores/AppStateStore';
+import AppStore from './stores/AppStore';
+
 import ItemActions from './actions/ItemActions';
 import GMapsActions from './actions/GMapsActions';
-import AppStateActions from './actions/AppStateActions';
+import AppActions from './actions/AppActions';
 
 import './stylesheets/index.scss';
 
@@ -21,12 +22,12 @@ ReactDOM.render(
       stores={{
         item: ItemStore,
         gmaps: GMapsStore,
-        appState: AppStateStore,
+        app: AppStore,
       }}
       actions={{
         item: ItemActions,
         gmaps: GMapsActions,
-        appState: AppStateActions,
+        app: AppActions,
       }}
   />,
   document.querySelector('#app')

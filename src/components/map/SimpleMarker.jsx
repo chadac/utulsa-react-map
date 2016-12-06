@@ -6,19 +6,18 @@ import Marker from './Marker';
 class SimpleMarker extends Component {
   latLng() {
     return new gmaps.LatLng(
-      this.props.marker.lat,
-      this.props.marker.lng
+      this.props.data.marker.lat,
+      this.props.data.marker.lng
     );
   }
 
   render() {
     return (
-      <Marker map={this.props.map} id={this.props.id}
-              latLng ={this.latLng()} icon={this.props.marker.icon}
-              $infoWindow={this.props.$infoWindow}
+      <Marker map={this.props.map} id={this.props.data.id}
+              latLng ={this.latLng()} icon={this.props.data.marker.icon}
               _openInfoWindow={this.props._openInfoWindow}
               _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{this.props.label}</h4>
+        <h4>{this.props.data.label}</h4>
       </Marker>
     );
   }
@@ -30,10 +29,7 @@ SimpleMarker.propTypes = {
   _openInfoWindow: PropTypes.func.isRequired,
   _closeInfoWindow: PropTypes.func.isRequired,
 
-  $infoWindow: PropTypes.bool.isRequired,
-  id: PropTypes.string,
-  label: PropTypes.string,
-  marker: PropTypes.object,
+  data: PropTypes.object.isRequired,
 }
 
 module.exports = SimpleMarker;

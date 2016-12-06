@@ -3,7 +3,9 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import FluxComponent from '../../hoc/FluxComponent';
 
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/ModalWindow.scss';
+const cx = classnames.bind(styles);
 
 class ModalWindow extends Component {
   render() {
@@ -22,13 +24,13 @@ class ModalWindow extends Component {
     return (
       <ReactCSSTransitionGroup
           transitionName={{
-            enter: styles.enter,
-            enterActive: styles.enterActive,
-            leave: styles.leave,
-            leaveActive: styles.leaveActive,
+            enter: cx('enter'),
+            enterActive: cx('enter-active'),
+            leave: cx('leave'),
+            leaveActive: cx('leave-active'),
           }}
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
       >
         {child}
       </ReactCSSTransitionGroup>

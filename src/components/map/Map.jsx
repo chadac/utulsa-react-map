@@ -2,15 +2,13 @@ import React, {Component, PropTypes} from 'react'
 
 import FluxComponent from '../../hoc/FluxComponent';
 
-import AppState from '../../constants/AppState';
-
 import Place from './Place';
 import SimpleMarker from './SimpleMarker';
 import Marker from './Marker';
 import Route from './Route';
 import ParkingLot from './ParkingLot';
-import CenterControl from './CenterControl';
-import FilterMenu from './FilterMenu';
+//import CenterControl from './CenterControl';
+//import FilterMenu from './FilterMenu';
 
 import classnames from 'classnames/bind';
 import styles from '../../stylesheets/Map.scss'
@@ -39,8 +37,8 @@ class Map extends Component {
 
   createMap() {
     let mapOptions = {
-      zoom: this.props.initialZoom,
-      center: this.props.initialCenter,
+      center: this.props.center,
+      zoom: this.props.zoom,
       styles: [
         {
           featureType: 'poi',
@@ -54,19 +52,8 @@ class Map extends Component {
   render() {
     if(this.state.rendered) {
       const map = this.map;
-      const items = this
+      const mapItems = this
         .props.items
-        .filter((item) => {
-          switch(this.props.appState) {
-            case AppState.NORMAL:
-              return item.$inZoom;
-            case AppState.SELECT:
-              return item.$selected || item.$inZoom;
-            case AppState.SEARCH:
-              return true;
-          }
-          return true;
-        })
         .map((item) => {
           var MapItem = null;
           switch(item.type) {
@@ -84,15 +71,16 @@ class Map extends Component {
               break;
           }
           return (
-            <MapItem key={item.id} map={map} {...item}
-                     appState={this.props.appState}
+            <MapItem key={item.id} map={map} id={item.id}
+                     data={item} appState={this.props.appState}
+                     _register={this.stores().item.addStateChangeListener.bind(this.stores().item)}
+                     _getItemState={this.stores().item.getItemState.bind(this.stores().item)}
                      _openInfoWindow={this.actions().item.openInfoWindow}
-                     _closeInfoWindow={this.actions().item.closeInfoWindow}
-                     _focus={this.actions().item.focus} />
+                     _closeInfoWindow={this.actions().item.closeInfoWindow} />
           );
         });
       if(this.state.user) {
-        items.push((
+        mapItems.push((
           <Marker map={map} key="user_position" id="user_position" latLng={this.state.user} />
         ));
       }
@@ -100,14 +88,7 @@ class Map extends Component {
         <div className={cx("map-container")}>
           <div ref="map" className={cx("Map")}>
           </div>
-          <FilterMenu map={map}
-                      categories={this.props.categories}
-                      activeCategories={this.props.activeCategories}
-                      _addCategory={this.actions().item.addCategory}
-                      _remCategory={this.actions().item.remCategory} />
-          <CenterControl map={map}
-                         _setUserPosition={this.actions().gmaps.setUserPosition} />
-          {items}
+          {mapItems}
         </div>
       );
     } else {
@@ -143,13 +124,11 @@ class Map extends Component {
 }
 
 Map.propTypes = {
-  initialCenter: PropTypes.object.isRequired,
-  initialZoom: PropTypes.number.isRequired,
+  center: PropTypes.object.isRequired,
+  zoom: PropTypes.number.isRequired,
   appState: PropTypes.string.isRequired,
 
   items: PropTypes.array.isRequired,
-  categories: PropTypes.array.isRequired,
-  activeCategories: PropTypes.array.isRequired,
 };
 
 export default FluxComponent(Map);

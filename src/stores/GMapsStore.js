@@ -15,10 +15,6 @@ var _zoom = 16;
 /* Position of user */
 var _userPosition = null;
 
-/* function setCurrentPosition(lat, lng) {
- *   _currentPosition = {lat: lat, lng: lng};
- * }*/
-
 function setUserPosition(lat, lng) {
   _userPosition = {lat: lat, lng: lng};
 }

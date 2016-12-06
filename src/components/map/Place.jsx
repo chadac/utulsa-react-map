@@ -1,17 +1,21 @@
 import React, {Component, PropTypes} from 'react';
+import ItemStateHOC from '../../hoc/ItemStateHOC';
 
+import AppState from '../../constants/AppState';
 import ItemStore from '../../stores/ItemStore';
 import gmaps from '../../GMapsAPI';
 
 import Marker from './Marker';
 import TextLabel from './TextLabel';
 
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/Marker.scss';
+const cx = classnames.bind(styles);
 
 class Place extends Component {
 
   componentWillMount() {
-    ItemStore.addSelectListener(this.props.id, this._onSelect.bind(this));
+    ItemStore.addSelectListener(this.props.data.id, this._onSelect.bind(this));
     this.label = this.createLabel();
   }
 
@@ -21,8 +25,11 @@ class Place extends Component {
   }
 
   createLabel() {
-    if(typeof this.props.name !== "undefined") {
-      return new TextLabel(this.latLng(), this.props.name, styles.markerLabel, this.props.map);
+    if(typeof this.props.data.name !== "undefined") {
+      let label = new TextLabel(this.latLng(), this.props.data.name, cx('marker-label'), this.props.map);
+      /* console.log(label);
+       * label.setZIndex(gmaps.Marker.MAX_ZINDEX + 1);*/
+      return label;
     }
     else {
       return null;
@@ -31,29 +38,43 @@ class Place extends Component {
 
   latLng() {
     return new gmaps.LatLng(
-      this.props.marker.lat,
-      this.props.marker.lng
+      this.props.data.marker.lat,
+      this.props.data.marker.lng
     );
   }
 
   render() {
-    const loc = typeof this.props.directions !== "undefined" ?
-                this.props.directions :
-                [this.props.marker.lat, this.props.marker.lng].join(',');
+    this.updatePlace();
+
+    const loc = typeof this.props.data.directions !== "undefined" ?
+                this.props.data.directions :
+                [this.props.data.marker.lat, this.props.data.marker.lng].join(',');
     const directionsUrl = "https://www.google.com/maps/dir//'" + loc + "'/@" + loc + ",17z";
     return (
-      <Marker map={this.props.map} id={this.props.id}
-              latLng ={this.latLng()} icon={this.props.marker.icon}
-              $infoWindow={this.props.$infoWindow}
+      <Marker map={this.props.map} id={this.props.data.id} item={this.props.item}
+              appState={this.props.appState}
+              latLng ={this.latLng()} icon={this.props.data.marker.icon}
               _openInfoWindow={this.props._openInfoWindow}
-              _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{this.props.name}</h4>
-        <p>{this.props.address}</p>
-        <p><a href={this.props.website}>{this.props.website}</a></p>
+              _closeInfoWindow={this.props._closeInfoWindow} >
+        <h4>{this.props.data.name}</h4>
+        <p>{this.props.data.address}</p>
+        <p><a href={this.props.data.website}>{this.props.data.website}</a></p>
         <p><a target="_blank" href={directionsUrl}>Get directions</a></p>
-        <p><a href="#" onClick={this._onMoreInformation.bind(this)}>More information...</a></p>
       </Marker>
     );
+  }
+
+  updatePlace() {
+    const state = this.props.item;
+    switch(this.props.appState) {
+      case AppState.NORMAL:
+        if(state.$inZoom) {
+          this.label.setMap(this.props.map);
+        } else {
+          this.label.setMap(null);
+        }
+        break;
+    }
   }
 
   _onSelect() {
@@ -63,10 +84,6 @@ class Place extends Component {
       this.props.map.setCenter(this.latLng());
     }, 300);
   }
-
-  _onMoreInformation() {
-    this.props._focus(this.props.id);
-  }
 }
 
 Place.propTypes = {
@@ -74,15 +91,10 @@ Place.propTypes = {
 
   _openInfoWindow: PropTypes.func.isRequired,
   _closeInfoWindow: PropTypes.func.isRequired,
-  _focus: PropTypes.func.isRequired,
 
-  $infoWindow: PropTypes.bool.isRequired,
-  id: PropTypes.string,
-  name: PropTypes.string,
-  address: PropTypes.string,
-  website: PropTypes.string,
-  marker: PropTypes.object.isRequired,
-  directions: PropTypes.string,
+  appState: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
-export default Place;
+export default new ItemStateHOC(Place);

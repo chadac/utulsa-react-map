@@ -37,7 +37,6 @@ const FluxComponent = ComposedComponent => {
   });
 
   return NewComponent;
-}
-
+};
 
 export default FluxComponent;
