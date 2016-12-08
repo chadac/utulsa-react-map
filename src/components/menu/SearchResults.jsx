@@ -48,17 +48,17 @@ class SearchResults extends Component {
 
     this.state = {
       numResults: this.stores().item.getNumSearchItems(),
+      searchItems: this.createSearchItems(),
     };
   }
 
   render() {
-    const searchItems = this.createSearchItems();
     return (
       <div key="main"
            style={{height: this.props.height,
                    display: this.props.display ? "" : "none"}}
            className={cx("search-results")}>
-        {searchItems}
+        {this.state.searchItems}
       </div>
     );
   }
@@ -72,6 +72,12 @@ class SearchResults extends Component {
                />;
       });
     return searchItems;
+  }
+
+  _updateSearchItems() {
+    this.setState({
+      searchItems: this.createSearchItems(),
+    });
   }
 
   _stateChanged() {
