@@ -17,14 +17,11 @@ TextLabel.prototype.onAdd = function() {
   div.className = this.cls_;
   div.innerHTML = '<span>' + this.txt_ + '</span>';
   div.style.width = "100px";
-  div.style.zIndex = 10;
 
   this.div_ = div;
-  // var overlayProjection = this.getProjection();
-  // var position = overlayProjection.fromLatLngToDivPixel(this.pos);
 
   var panes = this.getPanes();
-  panes.overlayLayer.appendChild(div);
+  panes.markerLayer.appendChild(div);
 };
 TextLabel.prototype.draw = function() {
   var overlayProjection = this.getProjection();

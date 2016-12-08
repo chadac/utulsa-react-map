@@ -27,13 +27,21 @@ class Place extends Component {
   createLabel() {
     if(typeof this.props.data.name !== "undefined") {
       let label = new TextLabel(this.latLng(), this.props.data.name, cx('marker-label'), this.props.map);
-      /* console.log(label);
-       * label.setZIndex(gmaps.Marker.MAX_ZINDEX + 1);*/
       return label;
     }
     else {
       return null;
     }
+  }
+
+  showLabel() {
+    if(this.label.getMap() !== this.props.map)
+      this.label.setMap(this.props.map);
+  }
+
+  hideLabel() {
+    if(this.label.getMap() !== null)
+      this.label.setMap(null);
   }
 
   latLng() {
@@ -68,10 +76,18 @@ class Place extends Component {
     const state = this.props.item;
     switch(this.props.appState) {
       case AppState.NORMAL:
-        if(state.$inZoom) {
-          this.label.setMap(this.props.map);
+        if(state.$zoom === 0  || state.$selected || state.$infoWindow) {
+          this.showLabel();
         } else {
-          this.label.setMap(null);
+          this.hideLabel();
+        }
+        break;
+      case AppState.SEARCH:
+        if(state.search.$active) {
+          this.showLabel();
+        }
+        else {
+          this.hideLabel();
         }
         break;
     }
@@ -92,6 +108,7 @@ Place.propTypes = {
   _openInfoWindow: PropTypes.func.isRequired,
   _closeInfoWindow: PropTypes.func.isRequired,
 
+  id: PropTypes.string.isRequired,
   appState: PropTypes.string.isRequired,
   item: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,

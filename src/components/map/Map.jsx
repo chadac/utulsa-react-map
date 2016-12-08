@@ -7,8 +7,6 @@ import SimpleMarker from './SimpleMarker';
 import Marker from './Marker';
 import Route from './Route';
 import ParkingLot from './ParkingLot';
-//import CenterControl from './CenterControl';
-//import FilterMenu from './FilterMenu';
 
 import classnames from 'classnames/bind';
 import styles from '../../stylesheets/Map.scss'
@@ -29,6 +27,7 @@ class Map extends Component {
     this.map = this.createMap();
     this.map.addListener("center_changed", this._onMapCenter.bind(this));
     this.map.addListener("zoom_changed", this._onMapZoom.bind(this));
+    this.actions().gmaps.setMap(this.map);
     this.setState({rendered: true});
     this.stores().gmaps.addCenterListener(this._centerChanged.bind(this));
     this.stores().gmaps.addZoomListener(this._zoomChanged.bind(this));
@@ -39,12 +38,10 @@ class Map extends Component {
     let mapOptions = {
       center: this.props.center,
       zoom: this.props.zoom,
-      styles: [
-        {
-          featureType: 'poi',
-          stylers: [{visibility: "off"}],
-        },
-      ],
+      styles: [{
+        featureType: 'poi',
+        stylers: [{visibility: "off"}],
+      }],
     }
     return new gmaps.Map(this.refs.map, mapOptions);
   }

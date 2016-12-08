@@ -1,80 +1,9 @@
-@import 'sizes';
-@import 'colors';
-
-.search-results-enter {
-    height: 0% !important;
-}
-
-.search-results-enter-active {
-    height: $dropdown-height !important;
-    transition: height 300ms ease-in;
-}
-
-.search-results-leave {
-    height: $dropdown-height;
-}
-
-.search-results-leave-active {
-     height: 0% !important;
-    transition: height 300ms ease-out;
-}
-
 .search-results {
-    z-index: 1;
-    height: $dropdown-height;
-    overflow-y: scroll;
-    position: absolute;
     width: 100%;
-    background: rgba($search-bar-background-color, 0.9);
-}
-
-.search-item {
-    $hover-color: mix($search-bar-background-color, white, 75%);
-    padding: 10px 0 10px 10%;
-    display: block;
-    text-decoration: none;
-    & .name {
-        color: #F0F0F0;
-        &.active:before {
-            content: "\25BC";
-        }
-        &.inactive:before {
-            content: "\25B2";
-        }
-    }
-    &.header {
-        &:hover {
-            background-color: rgba($hover-color, 0.8);
-            cursor: pointer;
-        }
-        @include media("<=phone") {
-            font-size: $phone-font-large;
-        }
-        @include media(">phone") {
-            font-size: $font-large;
-        }
-    }
-    &.item {
-        padding-left: 11%;
-        @include media("<=phone") {
-            font-size: $phone-font-normal;
-        }
-        @include media(">phone") {
-            font-size: $font-normal;
-        }
-        &:hover {
-            cursor: pointer;
-            background: rgba($hover-color, 0.8);
-        }
-    }
-    & .terms {
-        padding-left: 10px;
-        @include media("<=phone") {
-            font-size: $phone-font-small;
-        }
-        @include media(">phone") {
-            font-size: $font-small;
-        }
-        color: #AAAAAA;
-    }
+    background-color: #fff;
+    margin-top: -4px;
+    box-sizing: border-box;
+    border-radius: 0 0 2px 0;
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
 }

@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 
-import assign from 'object-assign';
-
 /**
  * A Higher Order Component (HOC) that allows components to carry all Flux
  * actions/stores/dispatchers with them. This saves on code space.
@@ -33,12 +31,12 @@ const ItemStateHOC = ComposedComponent => {
     }
   }
 
-  ItemStateComponent.propTypes = assign({}, ComposedComponent.propTypes, {
+  ItemStateComponent.propTypes = {
     id: PropTypes.string.isRequired,
 
     _register: PropTypes.func.isRequired,
     _getItemState: PropTypes.func.isRequired,
-  });
+  };
 
   return ItemStateComponent;
 };

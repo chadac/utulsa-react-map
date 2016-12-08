@@ -121,7 +121,6 @@ function create(data) {
   _state[id] = {
     $infoWindow: false,
     $selected: false,
-    $inZoom: false,
 
     filter: {
       $active: false,
@@ -155,10 +154,11 @@ function create(data) {
     _addCategory(data.category, data.id);
   }
 
+  // Zoom levels
   const currentZoom = GMapsStore.getZoom();
-  _state[id].$inZoom =
-    (typeof data.gmaps.min_zoom === "undefined" || currentZoom >= data.gmaps.min_zoom)
-    && (typeof data.gmaps.max_zoom === "undefined" || currentZoom <= data.gmaps.max_zoom);
+  _state[id].$zoom =
+    (typeof data.gmaps.min_zoom !== "undefined" && currentZoom < data.gmaps.min_zoom) ? 1 :
+    (typeof data.gmaps.max_zoom !== "undefined" && currentZoom > data.gmaps.max_zoom) ? -1 : 0;
   _addZoom(data.id, data.gmaps.min_zoom, data.gmaps.max_zoom);
 
   if(isMarker(id)) {
@@ -216,23 +216,23 @@ function _mapUpdateZoomLevel(czoom, ozoom) {
   if(czoom > ozoom) {
     if(typeof _zoomLevels.max[ozoom] !== "undefined") {
       _zoomLevels.max[ozoom]
-                 .forEach((id) => _state[id].$inZoom = false);
+                 .forEach((id) => _state[id].$zoom = -1);
     }
     ids = ids.concat(_zoomLevels.max[ozoom]);
     if(typeof _zoomLevels.min[czoom] !== "undefined") {
       _zoomLevels.min[czoom]
-                 .forEach((id) => _state[id].$inZoom = true);
+                 .forEach((id) => _state[id].$zoom = 0);
     }
     ids = ids.concat(_zoomLevels.min[czoom]);
   } else {
     if(typeof _zoomLevels.max[czoom] !== "undefined") {
       _zoomLevels.max[czoom]
-                 .forEach((id) => _state[id].$inZoom = true);
+                 .forEach((id) => _state[id].$zoom = 0);
     }
     ids = ids.concat(_zoomLevels.max[czoom]);
     if(typeof _zoomLevels.min[ozoom] !== "undefined") {
       _zoomLevels.min[ozoom]
-                 .forEach((id) => _state[id].$inZoom = false);
+                 .forEach((id) => _state[id].$zoom = 1);
     }
     ids = ids.concat(_zoomLevels.min[ozoom]);
   }
@@ -270,6 +270,7 @@ function search(w) {
 
   if(w.length <= 0) return;
 
+  let newIds = [];
   _itemTrie.search(w).forEach((item) => {
     var key = null, term = null;
     if(item instanceof Array) {
@@ -279,15 +280,15 @@ function search(w) {
       key = item;
       term = null;
     }
-    ids.push(key);
+    newIds.push(key);
     _state[key].search.$active = true;
     if(term && _state[key].search.terms.indexOf(term) < 0) {
       _state[key].search.terms.push(term);
     }
   });
 
-  ids = Array.from(new Set(ids));
-  _searched = ids;
+  ids = Array.from(new Set(ids.concat(newIds)));
+  _searched = Array.from(new Set(newIds));
   return ids;
 }
 
@@ -372,6 +373,10 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     return Array.from(_activeCats);
   },
 
+  getNumSearchItems() {
+    return _searched.length;
+  },
+
   /****************************************************************
    * EMITTERS
    ****************************************************************/
@@ -382,9 +387,8 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
   emitStateChange(id) {
     id = id || null;
-    if(id === null)
-      this.emit(STATE_CHANGE_EVENT);
-    else
+    this.emit(STATE_CHANGE_EVENT);
+    if(id !== null)
       this.emit([STATE_CHANGE_EVENT, id]);
   },
 
@@ -459,6 +463,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
       case ItemConstants.ITEM_RESET_SEARCH:
         ids = resetSearch();
+        _searched = Object.keys(_items);
         break;
 
       case ItemConstants.ADD_CATEGORY:

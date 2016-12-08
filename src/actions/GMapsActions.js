@@ -4,34 +4,17 @@ const GMapsConstants = require('../constants/GMapsConstants');
 const GMapsActions = {
 
   zoom: (zoomLevel) => {
-    if( !AppDispatcher._isDispatching ) {
-      AppDispatcher.dispatch({
-        actionType: GMapsConstants.MAP_ZOOM,
-        zoom: zoomLevel,
-      });
-    }
-  },
-
-  center: (lat, lng) => {
-    if( !AppDispatcher._isDispatching ) {
-      AppDispatcher.dispatch({
-        actionType: GMapsConstants.MAP_CENTER,
-        lat: lat,
-        lng: lng
-      });
-    }
-  },
-
-  setZoom: (zoomLevel) => {
     AppDispatcher.dispatch({
       actionType: GMapsConstants.MAP_SET_ZOOM,
+      update: false,
       zoom: zoomLevel,
     });
   },
 
-  setCenter: (lat, lng) => {
+  center: (lat, lng) => {
     AppDispatcher.dispatch({
       actionType: GMapsConstants.MAP_SET_CENTER,
+      update: false,
       lat: lat,
       lng: lng
     });
@@ -43,8 +26,15 @@ const GMapsActions = {
       lat: lat,
       lng: lng,
     });
-    GMapsActions.setCenter(lat, lng);
-    GMapsActions.setZoom(19);
+    GMapsActions.center(lat, lng);
+    GMapsActions.zoom(19);
+  },
+
+  createMap: (div) => {
+    AppDispatcher.dispatch({
+      actionType: GMapsConstants.CREATE_MAP,
+      div: div,
+    });
   },
 };
 

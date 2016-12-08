@@ -24,18 +24,30 @@ class Marker extends Component {
         scaledSize: new gmaps.Size(32, 32),
       };
     }
-    return new gmaps.Marker({
+    const marker = new gmaps.Marker({
       position: this.props.latLng,
       icon: icon,
       draggable: false,
       map: this.props.map,
     });
+    this.setState({zIndex: marker.getZIndex()});
+    return marker;
+  }
+
+  showMarker() {
+    if(this.marker.getMap() !== this.props.map)
+      this.marker.setMap(this.props.map);
+  }
+
+  hideMarker() {
+    if(this.marker.getMap() !== null)
+      this.marker.setMap(null);
   }
 
   resizeMarker(size) {
     this.marker.setIcon({
       url: MapIcon[this.props.icon],
-      scaledSize: new gmaps.Size(size,size)
+      scaledSize: new gmaps.Size(size, size)
     });
   }
 
@@ -46,7 +58,7 @@ class Marker extends Component {
       return (
         <InfoWindow
             map={this.props.map}
-            $infoWindow={this.props.item.$infoWindow} 
+            $infoWindow={this.props.item.$infoWindow}
             position={this.marker}
             _closeInfoWindow={this.props._closeInfoWindow}>
           {this.props.children}
@@ -67,26 +79,40 @@ class Marker extends Component {
     const appState = this.props.appState;
     switch(appState) {
       case AppState.NORMAL:
-        if(state.$inZoom) {
+        if(state.$selected || state.$infoWindow) {
+          this.showMarker();
+          this.resizeMarker(38, 38);
+          this.marker.setZIndex(3);
+        }
+        else if(state.$zoom === 0) {
+          this.showMarker();
           this.resizeMarker(32, 32);
+          this.marker.setZIndex(2);
+        }
+        else if(state.$zoom > 0) {
+          this.showMarker();
+          this.resizeMarker(8, 8);
+          this.marker.setZIndex(1);
         }
         else {
-          this.resizeMarker(8, 8);
+          this.hideMarker();
         }
         break;
       case AppState.SEARCH:
         if(state.search.$active) {
+          this.showMarker();
           this.resizeMarker(32, 32);
         }
         else {
-          this.resizeMarker(8, 8);
+          // this.resizeMarker(8, 8);
+          this.hideMarker();
         }
         break;
       case AppState.FILTER:
         if(state.filter.$active) {
-          this.marker.setMap(this.props.map);
+          this.showMarker();
         } else {
-          this.marker.setMap(null);
+          this.hideMarker();
         }
         break;
     }
@@ -104,6 +130,8 @@ Marker.propTypes = {
   _openInfoWindow: PropTypes.func,
   _closeInfoWindow: PropTypes.func,
 
+  id: PropTypes.string.isRequired,
+  latLng: PropTypes.object.isRequired,
   appState: PropTypes.string.isRequired,
   item: PropTypes.object.isRequired,
   icon: PropTypes.string.isRequired,

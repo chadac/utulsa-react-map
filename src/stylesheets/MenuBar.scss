@@ -1,0 +1,49 @@
+.menu-bar {
+    display: block;
+    position: relative;
+    background: #fff;
+    width: 392px;
+    height: 48px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+    padding: 4px;
+}
+
+.menu-bar-with-submenu {
+    border-radius: 2px 2px 0 0;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+.menu-icon {
+    color: #313131;
+    font-size: 24px !important;
+}
+
+.filter {
+    height: 40px;
+    padding: 8px;
+}
+
+.search-container {
+    display: inline-block;
+    line-height: 40px;
+    height: 40px;
+}
+
+.search {
+    padding: 0px;
+    margin: auto;
+    border: 0px;
+    width: 50%;
+    font-size: 19px;
+    &:focus {
+        outline: none
+    }
+}
+
+.search-clear {
+    display: block;
+    height: 40px;
+}

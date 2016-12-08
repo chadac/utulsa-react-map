@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
+import ItemStateHOC from '../../hoc/ItemStateHOC';
 
-import ItemStore from '../../stores/ItemStore';
 import AppState from '../../constants/AppState';
 
 import gmaps from '../../GMapsAPI';
@@ -13,22 +13,16 @@ class Route extends Component {
   constructor(props) {
     super(props);
 
+    const route = this.props.data.route;
     this.state = {
-      position: null,
+      position: route.path[Math.ceil(route.path.length / 2)],
       click: new gmaps.LatLng(0, 0),
     };
   }
 
   componentWillMount() {
-    const pos = this.props.route.path[Math.ceil(this.props.route.path.length / 2)];
-    this.setState({position: new gmaps.LatLng(pos.lat, pos.lng)});
-  }
-
-  componentDidMount() {
-    ItemStore.addSelectListener(this.props.id, this._onSelect);
-
     this.route = this.createRoute();
-    this.route.addListener('click', this._onClick);
+    this.route.addListener('click', this._onClick.bind(this));
   }
 
   componentWillUnmount() {
@@ -36,32 +30,36 @@ class Route extends Component {
   }
 
   createPathCoordinates() {
-    return this.props.route.path.map((coords) => {
+    const route = this.props.data.route;
+    return route.path.map((coords) => {
       return new gmaps.LatLng(coords.lat, coords.lng);
     })
   }
 
   createInfoWindow() {
-    var content = "<h4>" + this.props.name + "</h4>"
-                + "<p>" + this.props.address + "</p>"
-                + "<p>" + this.props.website + "</p>";
+    const data = this.props.data;
+    var content = "<h4>" + data.name + "</h4>"
+                + "<p>" + data.address + "</p>"
+                + "<p>" + data.website + "</p>";
     return new gmaps.InfoWindow({
       content: content
     });
   }
 
   createRoute() {
+    const route = this.props.data.route;
     return new gmaps.Polyline({
       path: this.createPathCoordinates(),
       geodesic: true,
-      strokeColor: this.props.route.strokeColor,
-      strokeOpacity: this.props.route.strokeOpacity,
-      strokeWeight: this.props.route.strokeWeight,
+      strokeColor: route.strokeColor,
+      strokeOpacity: route.strokeOpacity,
+      strokeWeight: route.strokeWeight,
       map: this.props.map
     });
   }
 
   render() {
+    this.updateRoute();
     let position = null;
     switch(this.props.appState) {
       case AppState.NORMAL:
@@ -73,43 +71,47 @@ class Route extends Component {
         break;
     }
     return (
-      <InfoWindow $infoWindow={this.props.$infoWindow}
+      <InfoWindow $infoWindow={this.props.item.$infoWindow}
                   map={this.props.map}
                   position={position}
                   _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{this.props.name}</h4>
-        <p>{this.props.hours}</p>
+        <h4>{this.props.data.name}</h4>
+        <p>{this.props.data.hours}</p>
       </InfoWindow>
     );
+  }
+
+  updateRoute() {
+    const state = this.props.item;
+    // const data = this.props.data;
+    switch(this.props.appState) {
+      case AppState.NORMAL:
+        if(state.$zoom === 0) {
+          this.route.setMap(this.props.map);
+        }
+        else {
+          this.route.setMap(null);
+        }
+        break;
+    }
   }
 
   _onClick(e) {
     this.setState({click: e.latLng});
     this.props._openInfoWindow(this.props.id);
   }
-
-  _onSelect() {
-    setTimeout( () => {
-      this.props.map.setZoom(17);
-      this.props.map.setCenter(this.state.position);
-    }, 300);
-  }
 }
 
 Route.propTypes = {
   map: PropTypes.object.isRequired,
-  appState: PropTypes.string.isRequired,
 
   _openInfoWindow: PropTypes.func.isRequired,
   _closeInfoWindow: PropTypes.func.isRequired,
 
-  $infoWindow: PropTypes.bool.isRequired,
-  id: PropTypes.string,
-  name: PropTypes.string,
-  address: PropTypes.string,
-  website: PropTypes.string,
-  hours: PropTypes.string,
-  route: PropTypes.object,
+  id: PropTypes.string.isRequired,
+  appState: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
-export default Route;
+export default new ItemStateHOC(Route);
