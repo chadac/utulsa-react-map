@@ -38,8 +38,9 @@ class SearchWidget extends Component {
         <input type="text" className={cx("search")} placeholder="Search"
                onChange={this._onChange.bind(this)} />
         { this.state.text.length > 0 ?
-          <i className={cx("material-icons", "search-clear")}>clear</i> : null }
-        <i className={cx("material-icons", "search-glass")}>search</i>
+          <i className={cx("menu-icon", "material-icons", "search-clear")}>clear</i> :
+          <i className={cx("menu-icon", "material-icons", "search-glass")}>search</i>
+        }
       </div>
     );
   }
