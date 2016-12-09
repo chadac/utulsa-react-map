@@ -5,7 +5,7 @@ const GMapsActions = {
 
   zoom: (zoomLevel) => {
     AppDispatcher.dispatch({
-      actionType: GMapsConstants.MAP_SET_ZOOM,
+      actionType: GMapsConstants.MAP_ZOOM,
       update: false,
       zoom: zoomLevel,
     });
@@ -13,7 +13,7 @@ const GMapsActions = {
 
   center: (lat, lng) => {
     AppDispatcher.dispatch({
-      actionType: GMapsConstants.MAP_SET_CENTER,
+      actionType: GMapsConstants.MAP_CENTER,
       update: false,
       lat: lat,
       lng: lng

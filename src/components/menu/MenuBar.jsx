@@ -32,21 +32,37 @@ class SearchWidget extends Component {
       text: "",
     };
   }
+
   render() {
     return (
       <div className={cx("search-container")}>
-        <input type="text" className={cx("search")} placeholder="Search"
+        <input type="text" className={cx("search")} ref="search" placeholder="Search"
                onChange={this._onChange.bind(this)} />
         { this.state.text.length > 0 ?
-          <i className={cx("menu-icon", "material-icons", "search-clear")}>clear</i> :
-          <i className={cx("menu-icon", "material-icons", "search-glass")}>search</i>
+        <i className={cx("menu-icon", "material-icons", "search-clear")}
+           onClick={this._clear.bind(this)}>
+          clear
+        </i> :
+          <i className={cx("menu-icon", "material-icons", "search-glass")}
+             onClick={this._search.bind(this)}>
+            search
+          </i>
         }
       </div>
     );
   }
 
-  _onChange(event) {
-    const text = event.target.value;
+  _search() {
+    this.refs.search.focus();
+  }
+
+  _clear() {
+    this.refs.search.value = "";
+    this._onChange();
+  }
+
+  _onChange() {
+    const text = this.refs.search.value;
     this.setState({text: text});
     if(text.length > 1)
       this.props._search(text);
@@ -67,12 +83,11 @@ class MenuBar extends Component {
 
   render() {
     return (
-      <div className={cx('menu-bar', {
-          'menu-bar-with-submenu': this.props.appState !== AppState.NORMAL,
-        })}>
-        <div className={cx('menu-head')}>
+      <div className={cx('menu-bar')}>
+        <div className={cx('menu-head', {
+            'submenu': this.props.appState !== AppState.NORMAL
+          })}>
           <FilterWidget _setAppState={this.actions().app.setState} />
-          
           <SearchWidget _search={this.actions().item.search}
                         _resetSearch={this.actions().item.resetSearch}/>
         </div>

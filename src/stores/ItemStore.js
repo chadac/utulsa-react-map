@@ -163,15 +163,27 @@ function create(data) {
 
   if(isMarker(id)) {
     _markers.push(id);
+    _items[id].focus = {
+      center: {lat: data.marker.lat, lng: data.marker.lng},
+      zoom: Math.max(data.gmaps.min_zoom || 16, 18),
+    };
   }
   else if(isRoute(id)) {
     _routes.push(id);
-    _items[id].route.path = parseKMLCoords(_items[id].route.path,
-                                           _items[id].route.offset);
+    const path = parseKMLCoords(_items[id].route.path, _items[id].route.offset);
+    _items[id].route.path = path;
+    _items[id].focus = {
+      center: path[Math.ceil(path.length / 2)],
+      zoom: 16,
+    };
   }
   else if(isParkingLot(id)) {
     _parking_lots.push(id);
     _items[id].parking_lot.layer = parkingPolyData[id];
+    _items[id].focus = {
+      center: data.parking_lot.center,
+      zoom: 18,
+    }
   }
 }
 

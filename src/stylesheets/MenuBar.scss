@@ -3,20 +3,19 @@
     position: relative;
     background: #fff;
     width: 398px;
-    height: 48px;
     box-sizing: border-box;
     border-radius: 2px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
 }
 
-.menu-bar-with-submenu {
-    border-radius: 2px 2px 0 0;
-    box-shadow: 0 0 4px rgba(0,0,0,0.2);
-}
-
 .menu-head {
     padding: 4px;
+    height: 40px;
     border-bottom: 1px solid transparent;
+
+    &.submenu {
+        border-bottom: 1px solid #a5a5a5;
+    }
 }
 
 .menu-content {
@@ -40,16 +39,11 @@
 .search {
     display: inline;
     border: 0px;
-    width: 310px;
+    width: 290px;
     font-size: 16px;
     vertical-align: top;
-    padding: 13px 0 9px 0;
+    padding: 13px 0 9px 20px;
     &:focus {
         outline: none
     }
-}
-
-.search-clear {
-    display: block;
-    height: 40px;
 }

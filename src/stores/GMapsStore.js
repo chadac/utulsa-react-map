@@ -27,6 +27,7 @@ function _updateZoom() {
 }
 
 function _onMapCenter(lat, lng) {
+  if( AppDispatcher._isDispatching ) return;
   AppDispatcher.dispatch({
     actionType: GMapsConstants.MAP_CENTER,
     update: true,
@@ -36,6 +37,7 @@ function _onMapCenter(lat, lng) {
 }
 
 function _onMapZoom(newZoom) {
+  if( AppDispatcher._isDispatching ) return;
   AppDispatcher.dispatch({
     actionType: GMapsConstants.MAP_ZOOM,
     update: true,

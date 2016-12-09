@@ -1,8 +1,10 @@
 /**
  * From https://facebook.github.io/flux/docs/todo-list.html
  **/
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var ItemConstants = require('../constants/ItemConstants');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import ItemStore from '../stores/ItemStore';
+import ItemConstants from '../constants/ItemConstants';
+import GMapsActions from './GMapsActions';
 
 var ItemActions = {
 
@@ -23,7 +25,7 @@ var ItemActions = {
   select: function(id) {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_SELECT,
-      id: id
+      id: id,
     });
   },
 
@@ -34,10 +36,11 @@ var ItemActions = {
   },
 
   focus: function(id) {
-    AppDispatcher.dispatch({
-      actionType: ItemConstants.ITEM_FOCUS,
-      id: id,
-    });
+    const item = ItemStore.getItem(id);
+    ItemActions.select(id);
+    console.log(item.focus);
+    GMapsActions.center(item.focus.center.lat, item.focus.center.lng);
+    GMapsActions.zoom(item.focus.zoom);
   },
 
   unfocus: function() {

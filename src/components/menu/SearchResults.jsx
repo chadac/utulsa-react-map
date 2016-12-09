@@ -24,21 +24,30 @@ class SearchItemMain extends Component {
     const data = this.props.data;
     const terms = this.props.item.search.terms;
     return (
-      <div className={cx("search-item")}>
-        {data.name}
-        <span className={cx("terms")}>{terms.join(", ")}</span>
+      <div className={cx("search-item")} onClick={this._onClick.bind(this)}>
+        <span className={cx("name")}>{data.name}</span>
+        { terms.length > 0 ?
+          (<span className={cx("terms")}>&nbsp;({terms.join(", ")})</span>)
+          : null }
+        <hr />
+        <span className={cx("address")}>{ data.address }</span>
       </div>
     );
+  }
+
+  _onClick() {
+    this.props._focus(this.props.data.id);
   }
 }
 
 SearchItemMain.propTypes = {
   data: PropTypes.object.isRequired,
   item: PropTypes.object.isRequired,
+
+  _focus: PropTypes.func.isRequired,
 };
 
 const SearchItem = new ItemStateHOC(SearchItemMain);
-
 
 class SearchResults extends Component {
   constructor(props) {
@@ -55,7 +64,7 @@ class SearchResults extends Component {
   render() {
     return (
       <div key="main"
-           style={{height: this.props.height,
+           style={{maxHeight: this.props.height,
                    display: this.props.display ? "" : "none"}}
            className={cx("search-results")}>
         {this.state.searchItems}
@@ -69,6 +78,7 @@ class SearchResults extends Component {
         return <SearchItem key={item.id} data={item} id={item.id}
                            _register={this.stores().item.addStateChangeListener.bind(this.stores().item)}
                            _getItemState={this.stores().item.getItemState.bind(this.stores().item)}
+                           _focus={this.actions().item.focus}
                />;
       });
     return searchItems;
