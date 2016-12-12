@@ -20,6 +20,13 @@ const FluxComponent = ComposedComponent => {
           actions: this.props.actions,
         };
       };
+      ComposedComponent.prototype.itemState = (id) => {
+        return {
+          id: id,
+          _register: this.props.stores.item.addStateChangeListener.bind(this.props.stores.item),
+          _getItemState: this.props.stores.item.getItemState.bind(this.props.stores.item),
+        };
+      };
 
       ComposedComponent.prototype.stores = () => this.props.stores;
       ComposedComponent.prototype.actions = () => this.props.actions;

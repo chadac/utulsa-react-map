@@ -43,26 +43,46 @@ class ParkingLot extends Component {
     for(var i = 0; i < numLayers; i++) {
       var polyData = polyStyles(lot);
       var layer = lot.layer[i];
-      polyData.paths = layer
-        .map((coord) => new gmaps.LatLng(coord.lat, coord.lng));
+      polyData.paths = [
+        layer.map((coord) => new gmaps.LatLng(coord.lat, coord.lng)),
+      ];
       var poly = new gmaps.Polygon(polyData);
       poly.setMap(this.props.map);
       poly.addListener('click', this._onClick.bind(this));
       polys.push(poly);
+      /* polyData.geometry = new gmaps.Data.Polygon([
+       *   layer.map((coord) => new gmaps.LatLng(coord.lat, coord.lng)),
+       * ]);
+       * let index = this.props.map.data.length;
+       * this.props.map.data.add(null);
+       * polys.push([{geometry: polyData.geometry}, index]);*/
     }
     return polys;
   }
 
   showPolygons() {
-    this.polys.forEach((poly) => poly.setMap(this.props.map));
+    this.polys.forEach((poly) => {
+      if(poly.getMap() !== this.props.map)
+        poly.setMap(this.props.map)
+    });
+    /* this.polys.forEach((poly, index) => {
+     *   this.props.map.data[index] = poly;
+     * });*/
   }
 
   hidePolygons() {
-    this.polys.forEach((poly) => poly.setMap(null));
+    this.polys.forEach((poly) => {
+      if(poly.getMap() !== null)
+        poly.setMap(null)
+    });
+    /* this.polys.forEach((poly, index) => {
+     *   this.props.map.data[index] = null;
+     * });*/
   }
 
   componentWillUnmount() {
-    this.polys.forEach((poly) => poly.setMap(null));
+    this.hidePolygons();
+    //this.polys.forEach((poly) => poly.setMap(null));
   }
 
   render() {
@@ -103,6 +123,13 @@ class ParkingLot extends Component {
           this.hidePolygons();
         }
         break;
+      case AppState.SEARCH:
+        if(state.search.$active) {
+          this.showPolygons();
+        }
+        else {
+          this.hidePolygons();
+        }
     }
   }
 

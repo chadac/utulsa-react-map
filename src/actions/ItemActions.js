@@ -38,7 +38,6 @@ var ItemActions = {
   focus: function(id) {
     const item = ItemStore.getItem(id);
     ItemActions.select(id);
-    console.log(item.focus);
     GMapsActions.center(item.focus.center.lat, item.focus.center.lng);
     GMapsActions.zoom(item.focus.zoom);
   },
@@ -72,6 +71,15 @@ var ItemActions = {
         word: word
       });
     }
+  },
+
+  selectSearched() {
+    let searched = ItemStore.getSearched();
+    if(searched.length === 1) {
+      ItemActions.focus(searched[0]);
+      return true;
+    }
+    return false;
   },
 
   resetSearch: function() {

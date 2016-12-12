@@ -13,9 +13,8 @@ class Route extends Component {
   constructor(props) {
     super(props);
 
-    const route = this.props.data.route;
     this.state = {
-      position: route.path[Math.ceil(route.path.length / 2)],
+      position: this.props.data.focus.center,
       click: new gmaps.LatLng(0, 0),
     };
   }
@@ -87,7 +86,7 @@ class Route extends Component {
     switch(this.props.appState) {
       case AppState.NORMAL:
         if(state.$zoom === 0) {
-          this.route.setMap(this.props.map);
+          //this.route.setMap(this.props.map);
         }
         else {
           this.route.setMap(null);

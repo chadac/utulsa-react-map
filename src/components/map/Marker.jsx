@@ -78,13 +78,15 @@ class Marker extends Component {
     const state = this.props.item;
     const appState = this.props.appState;
     switch(appState) {
-      case AppState.NORMAL:
-        if(state.$selected || state.$infoWindow) {
+      case AppState.SELECT:
+        if(state.$selected) {
           this.showMarker();
           this.resizeMarker(38, 38);
           this.marker.setZIndex(3);
+          break;
         }
-        else if(state.$zoom === 0) {
+      case AppState.NORMAL:
+        if(state.$zoom === 0) {
           this.showMarker();
           this.resizeMarker(32, 32);
           this.marker.setZIndex(2);
@@ -120,13 +122,14 @@ class Marker extends Component {
 
   _onClick() {
     if(this.props._openInfoWindow)
-      this.props._openInfoWindow(this.props.id);
+      this.props._select(this.props.id);
   }
 }
 
 Marker.propTypes = {
   map: PropTypes.object.isRequired,
 
+  _select: PropTypes.func.isRequired,
   _openInfoWindow: PropTypes.func,
   _closeInfoWindow: PropTypes.func,
 

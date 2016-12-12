@@ -62,6 +62,7 @@ class Place extends Component {
       <Marker map={this.props.map} id={this.props.data.id} item={this.props.item}
               appState={this.props.appState}
               latLng ={this.latLng()} icon={this.props.data.marker.icon}
+              _select={this.props._select}
               _openInfoWindow={this.props._openInfoWindow}
               _closeInfoWindow={this.props._closeInfoWindow} >
         <h4>{this.props.data.name}</h4>
@@ -75,8 +76,13 @@ class Place extends Component {
   updatePlace() {
     const state = this.props.item;
     switch(this.props.appState) {
+      case AppState.SELECT:
+        if(state.$selected || state.$infoWindow) {
+          this.showLabel();
+          break;
+        }
       case AppState.NORMAL:
-        if(state.$zoom === 0  || state.$selected || state.$infoWindow) {
+        if(state.$zoom === 0) {
           this.showLabel();
         } else {
           this.hideLabel();
@@ -105,6 +111,7 @@ class Place extends Component {
 Place.propTypes = {
   map: PropTypes.object.isRequired,
 
+  _select: PropTypes.func.isRequired,
   _openInfoWindow: PropTypes.func.isRequired,
   _closeInfoWindow: PropTypes.func.isRequired,
 

@@ -4,6 +4,7 @@ import FluxComponent from '../../hoc/FluxComponent';
 
 import AppState from '../../constants/AppState';
 import SearchResults from './SearchResults';
+import MoreInformation from './MoreInformation';
 
 import classnames from 'classnames/bind';
 import styles from '../../stylesheets/MenuBar.scss';
@@ -37,7 +38,9 @@ class SearchWidget extends Component {
     return (
       <div className={cx("search-container")}>
         <input type="text" className={cx("search")} ref="search" placeholder="Search"
-               onChange={this._onChange.bind(this)} />
+               onChange={this._onChange.bind(this)}
+               onKeyPress={this._onKeyPress.bind(this)}
+        />
         { this.state.text.length > 0 ?
         <i className={cx("menu-icon", "material-icons", "search-clear")}
            onClick={this._clear.bind(this)}>
@@ -69,11 +72,19 @@ class SearchWidget extends Component {
     if(text.length <= 0)
       this.props._resetSearch();
   }
+
+  _onKeyPress(e) {
+    if(e.key === 'Enter' && this.props._selectSearched()) {
+      this._clear();
+      this.refs.search.blur();
+    }
+  }
 }
 
 SearchWidget.propTypes = {
   _search: PropTypes.func.isRequired,
   _resetSearch: PropTypes.func.isRequired,
+  _selectSearched: PropTypes.func.isRequired,
 };
 
 class MenuBar extends Component {
@@ -89,7 +100,8 @@ class MenuBar extends Component {
           })}>
           <FilterWidget _setAppState={this.actions().app.setState} />
           <SearchWidget _search={this.actions().item.search}
-                        _resetSearch={this.actions().item.resetSearch}/>
+                        _resetSearch={this.actions().item.resetSearch}
+                        _selectSearched={this.actions().item.selectSearched} />
         </div>
         <div className={cx('menu-content')}>
           {this.renderSubMenu()}
@@ -100,9 +112,15 @@ class MenuBar extends Component {
 
   renderSubMenu() {
     return (
-      <SearchResults height={SUBMENU_HEIGHT}
-                     display={this.props.appState === AppState.SEARCH}
-                     items={this.props.items} {...this.flux()} />
+      <div>
+        <SearchResults height={SUBMENU_HEIGHT}
+                       display={this.props.appState === AppState.SEARCH}
+                       items={this.props.items} {...this.flux()} />
+        <MoreInformation height={SUBMENU_HEIGHT}
+                         display={this.props.appState === AppState.SELECT}
+                         items={this.props.items} {...this.flux()}
+        />
+      </div>
     );
   }
 }

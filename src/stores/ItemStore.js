@@ -210,8 +210,8 @@ function select(id) {
     _state[_selectedItem].$selected = false;
   }
   _selectedItem = id;
-  _state[_selectedItem].$selected = true;
-  openInfoWindow(_selectedItem);
+  _state[id].$selected = true;
+  openInfoWindow(id);
   return oldSelect;
 }
 
@@ -389,6 +389,10 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     return _searched.length;
   },
 
+  getSearched() {
+    return _searched;
+  },
+
   /****************************************************************
    * EMITTERS
    ****************************************************************/
@@ -447,6 +451,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
         break;
 
       case ItemConstants.ITEM_SELECT:
+        console.log("eh?");
         var oldSelect = select(action.id);
         if(oldSelect !== null && oldSelect !== action.id) {
           ids.push(oldSelect);
@@ -455,7 +460,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
         break;
 
       case ItemConstants.ITEM_DESELECT:
-        var oldSelectedItem = deselect();
+        let oldSelectedItem = deselect();
         ids.push(oldSelectedItem);
         break;
 

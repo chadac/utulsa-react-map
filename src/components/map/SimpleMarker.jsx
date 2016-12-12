@@ -17,6 +17,7 @@ class SimpleMarker extends Component {
       <Marker map={this.props.map} id={this.props.id} item={this.props.item}
               appState={this.props.appState}
               latLng ={this.latLng()} icon={this.props.data.marker.icon}
+              _select={this.props._select}
               _openInfoWindow={this.props._openInfoWindow}
               _closeInfoWindow={this.props._closeInfoWindow}>
         <h4>{this.props.data.label}</h4>
@@ -28,6 +29,7 @@ class SimpleMarker extends Component {
 SimpleMarker.propTypes = {
   map: PropTypes.object.isRequired,
 
+  _select: PropTypes.func.isRequired,
   _openInfoWindow: PropTypes.func.isRequired,
   _closeInfoWindow: PropTypes.func.isRequired,
 
