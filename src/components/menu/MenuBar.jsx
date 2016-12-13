@@ -5,6 +5,7 @@ import FluxComponent from '../../hoc/FluxComponent';
 import AppState from '../../constants/AppState';
 import SearchResults from './SearchResults';
 import MoreInformation from './MoreInformation';
+import Filter from './Filter';
 
 import classnames from 'classnames/bind';
 import styles from '../../stylesheets/MenuBar.scss';
@@ -17,10 +18,21 @@ const SUBMENU_HEIGHT = (window.innerHeight
 class FilterWidget extends Component {
   render() {
     return (
-      <i className={cx("menu-icon", "material-icons", "filter")}>filter_list</i>
+      <i className={cx("menu-icon", "material-icons", "filter")}
+         onClick={this._onClick.bind(this)}>
+        filter_list
+      </i>
     );
   }
+
+  _onClick() {
+    this.props._setAppState(AppState.FILTER);
+  }
 }
+
+FilterWidget.propTypes = {
+  _setAppState: PropTypes.func.isRequired,
+};
 
 /**
  * Simple widget that updates when users perform searches.
@@ -40,6 +52,7 @@ class SearchWidget extends Component {
         <input type="text" className={cx("search")} ref="search" placeholder="Search"
                onChange={this._onChange.bind(this)}
                onKeyPress={this._onKeyPress.bind(this)}
+               onKeyDown={this._onKeyDown.bind(this)}
         />
         { this.state.text.length > 0 ?
         <i className={cx("menu-icon", "material-icons", "search-clear")}
@@ -79,6 +92,12 @@ class SearchWidget extends Component {
       this.refs.search.blur();
     }
   }
+
+  _onKeyDown(e) {
+    if(e.key === 'Escape') {
+      this._clear();
+    }
+  }
 }
 
 SearchWidget.propTypes = {
@@ -113,13 +132,21 @@ class MenuBar extends Component {
   renderSubMenu() {
     return (
       <div>
-        <SearchResults height={SUBMENU_HEIGHT}
-                       display={this.props.appState === AppState.SEARCH}
-                       items={this.props.items} {...this.flux()} />
-        <MoreInformation height={SUBMENU_HEIGHT}
-                         display={this.props.appState === AppState.SELECT}
-                         items={this.props.items} {...this.flux()}
-        />
+        <SearchResults
+            height={SUBMENU_HEIGHT}
+            display={this.props.appState === AppState.SEARCH}
+            items={this.props.items} {...this.flux()} />
+        <MoreInformation
+            height={SUBMENU_HEIGHT}
+            display={this.props.appState === AppState.SELECT}
+            items={this.props.items} {...this.flux()} />
+        <Filter
+            height={SUBMENU_HEIGHT}
+            display={this.props.appState === AppState.FILTER}
+            cats={this.props.cats} activeCats={this.props.activeCats}
+            _addCategory={this.actions().item.addCategory}
+            _remCategory={this.actions().item.remCategory}
+            {...this.flux()} />
       </div>
     );
   }
@@ -130,6 +157,8 @@ MenuBar.propTypes = {
   appState: PropTypes.string.isRequired,
 
   items: PropTypes.array.isRequired,
+  cats: PropTypes.array.isRequired,
+  activeCats: PropTypes.array.isRequired,
 };
 
 export default new FluxComponent(MenuBar);

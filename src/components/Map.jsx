@@ -23,11 +23,14 @@ class Map extends Component {
     super(props);
 
     this.stores().item.addChangeListener(this._onItemsChanged.bind(this));
+    this.stores().item.addCategoryChangeListener(this._onCategoriesChanged.bind(this));
     this.stores().app.addChangeListener(this._onAppChanged.bind(this));
     this.stores().gmaps.addMapListener(this._onMapCreate.bind(this));
 
     this.state = {
       items: this.stores().item.getAll(),
+      cats: this.stores().item.getCategories(),
+      activeCats: this.stores().item.getActiveCategories(),
       appState: this.stores().app.getState(),
       map: this.stores().gmaps.getMap(),
     };
@@ -64,6 +67,7 @@ class Map extends Component {
                     map={this.state.map} title="Menu Bar">
           <MenuBar map={this.state.map}
                    items={this.state.items} appState={this.state.appState}
+                   cats={this.state.cats} activeCats={this.state.activeCats}
                    {...this.flux()} />
         </MapControl>
       </div>
@@ -114,6 +118,13 @@ class Map extends Component {
   _onItemsChanged() {
     this.setState({
       items: this.stores().item.getItems(),
+    });
+  }
+
+  _onCategoriesChanged() {
+    this.setState({
+      cats: this.stores().item.getCategories(),
+      activeCats: this.stores().item.getActiveCategories(),
     });
   }
 

@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import ItemStateHOC from '../../hoc/ItemStateHOC';
 
+import TextLabel from './TextLabel';
+
 import gmaps from '../../GMapsAPI';
 import AppState from '../../constants/AppState';
 import InfoWindow from './InfoWindow';
@@ -34,7 +36,10 @@ class ParkingLot extends Component {
     this.polys = this._createPolygons();
     const center = this.props.data.parking_lot.center;
     this.center = new gmaps.LatLng(center.lat, center.lng);
+    this.label = new TextLabel(this.center, this.props.data.name, this.props.map);
+    this.label.setMap(null);
   }
+
 
   _createPolygons() {
     const lot = this.props.data.parking_lot;
@@ -115,6 +120,16 @@ class ParkingLot extends Component {
     const state = this.props.item;
 
     switch(this.props.appState) {
+      case AppState.SELECT:
+        if(state.$selected) {
+          this.showPolygons();
+          break;
+        }
+      case AppState.FILTER:
+        if(!state.filter.$active) {
+          this.hidePolygons();
+          break;
+        }
       case AppState.NORMAL:
         if(state.$zoom === 0) {
           this.showPolygons();

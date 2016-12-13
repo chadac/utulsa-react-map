@@ -85,6 +85,11 @@ class Marker extends Component {
           this.marker.setZIndex(3);
           break;
         }
+      case AppState.FILTER:
+        if(!state.filter.$active) {
+          this.hideMarker();
+          break;
+        }
       case AppState.NORMAL:
         if(state.$zoom === 0) {
           this.showMarker();
@@ -93,7 +98,7 @@ class Marker extends Component {
         }
         else if(state.$zoom > 0) {
           this.showMarker();
-          this.resizeMarker(8, 8);
+          this.resizeMarker(10, 10);
           this.marker.setZIndex(1);
         }
         else {
@@ -107,13 +112,6 @@ class Marker extends Component {
         }
         else {
           // this.resizeMarker(8, 8);
-          this.hideMarker();
-        }
-        break;
-      case AppState.FILTER:
-        if(state.filter.$active) {
-          this.showMarker();
-        } else {
           this.hideMarker();
         }
         break;

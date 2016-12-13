@@ -8,10 +8,6 @@ import gmaps from '../../GMapsAPI';
 import Marker from './Marker';
 import TextLabel from './TextLabel';
 
-import classnames from 'classnames/bind';
-import styles from '../../stylesheets/Marker.scss';
-const cx = classnames.bind(styles);
-
 class Place extends Component {
 
   componentWillMount() {
@@ -26,7 +22,7 @@ class Place extends Component {
 
   createLabel() {
     if(typeof this.props.data.name !== "undefined") {
-      let label = new TextLabel(this.latLng(), this.props.data.name, cx('marker-label'), this.props.map);
+      let label = new TextLabel(this.latLng(), this.props.data.name, this.props.map);
       return label;
     }
     else {
@@ -79,6 +75,11 @@ class Place extends Component {
       case AppState.SELECT:
         if(state.$selected || state.$infoWindow) {
           this.showLabel();
+          break;
+        }
+      case AppState.FILTER:
+        if(!state.filter.$active) {
+          this.hideLabel();
           break;
         }
       case AppState.NORMAL:

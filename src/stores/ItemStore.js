@@ -23,6 +23,7 @@ const markerData = require('../data/markers.json');
 const categoryData = require('../data/categories.json');
 
 const CHANGE_EVENT = 'c';
+const CATEGORY_CHANGE_EVENT = 'cat';
 const STATE_CHANGE_EVENT = 's';
 const SELECT_EVENT = 'e';
 
@@ -94,7 +95,7 @@ function _addSearchTerm(name, id) {
 }
 
 function _addCategory(category, id) {
-  _cats[category].push(_items[id]);
+  _cats[category].push(id);
   /* _activeCats.add(category); */
 }
 
@@ -179,9 +180,21 @@ function create(data) {
   }
   else if(isParkingLot(id)) {
     _parking_lots.push(id);
-    _items[id].parking_lot.layer = parkingPolyData[id];
+    const path = parkingPolyData[id];
+    _items[id].parking_lot.layer = path;
+    let center = data.parking_lot.center;
+    if(center.lat === 1 && center.lng === 1) {
+      center = {lat: 0, lng: 0};
+      path[0].forEach((coord) => {
+        center.lat += coord.lat;
+        center.lng += coord.lng;
+      });
+    }
+    center.lat /= path[0].length;
+    center.lng /= path[0].length;
+    _items[id].parking_lot.center = center;
     _items[id].focus = {
-      center: data.parking_lot.center,
+      center: _items[id].parking_lot.center,
       zoom: 18,
     }
   }
@@ -308,7 +321,7 @@ function addCategory(category) {
   _activeCats.add(category);
 
   let ids = _cats[category];
-  ids.forEach((id) => _state[id].filter.active = true);
+  ids.forEach((id) => _state[id].filter.$active = true);
   return ids;
 }
 
@@ -316,7 +329,7 @@ function remCategory(category) {
   _activeCats.delete(category);
 
   let ids = _cats[category];
-  ids.forEach((id) => _state[id].filter.active = false);
+  ids.forEach((id) => _state[id].filter.$active = false);
   return ids;
 }
 
@@ -401,6 +414,10 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     this.emit(CHANGE_EVENT);
   },
 
+  emitCategoryChange() {
+    this.emit(CATEGORY_CHANGE_EVENT);
+  },
+
   emitStateChange(id) {
     id = id || null;
     this.emit(STATE_CHANGE_EVENT);
@@ -418,6 +435,10 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
+  },
+
+  addCategoryChangeListener(callback) {
+    this.on(CATEGORY_CHANGE_EVENT, callback);
   },
 
   addStateChangeListener(callback, id) {
@@ -451,7 +472,6 @@ var ItemStore = assign({}, EventEmitter.prototype, {
         break;
 
       case ItemConstants.ITEM_SELECT:
-        console.log("eh?");
         var oldSelect = select(action.id);
         if(oldSelect !== null && oldSelect !== action.id) {
           ids.push(oldSelect);
@@ -485,14 +505,17 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
       case ItemConstants.ADD_CATEGORY:
         ids = addCategory(action.category);
+        ItemStore.emitCategoryChange();
         break;
 
       case ItemConstants.REM_CATEGORY:
         ids = remCategory(action.category);
+        ItemStore.emitCategoryChange();
         break;
 
       case ItemConstants.RESET_CATEGORIES:
         ids = resetCategories();
+        ItemStore.emitCategoryChange();
         break;
 
       case GMapsConstants.MAP_ZOOM:

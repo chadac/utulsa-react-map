@@ -1,4 +1,7 @@
 .more-info {
     padding: 10px;
     overflow-y: auto;
+    &:hover {
+        cursor: auto;
+    }
 }

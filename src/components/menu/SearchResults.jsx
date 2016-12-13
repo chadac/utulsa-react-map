@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import ItemStateHOC from '../../hoc/ItemStateHOC';
-
 import FluxComponent from '../../hoc/FluxComponent';
 
 import classnames from 'classnames/bind';

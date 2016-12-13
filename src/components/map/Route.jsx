@@ -61,6 +61,7 @@ class Route extends Component {
     this.updateRoute();
     let position = null;
     switch(this.props.appState) {
+      case AppState.FILTER:
       case AppState.NORMAL:
       case AppState.SEARCH:
         position = this.state.click;
@@ -84,6 +85,14 @@ class Route extends Component {
     const state = this.props.item;
     // const data = this.props.data;
     switch(this.props.appState) {
+      case AppState.FILTER:
+        if(state.filter.$active) {
+          // this.route.setMap(this.props.map);
+        }
+        else {
+          this.route.setMap(null);
+        }
+        break;
       case AppState.NORMAL:
         if(state.$zoom === 0) {
           //this.route.setMap(this.props.map);
