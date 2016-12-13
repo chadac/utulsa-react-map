@@ -17,8 +17,7 @@ class CategoryOption extends Component {
   }
 
   _onChange() {
-    const checked = this.refs.checkbox.value;
-    if(checked === "on") {
+    if(!this.props.$active) {
       this.props._addCategory(this.props.category);
     }
     else {
@@ -48,7 +47,9 @@ class Filter extends Component {
       });
     return (
       <div className={cx("filter")}>
-        {cats}
+        <ul>
+          {cats}
+        </ul>
       </div>
     );
   }

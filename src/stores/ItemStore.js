@@ -102,8 +102,9 @@ function _addCategory(category, id) {
 function loadCategories(data) {
   data.forEach((category) => {
     _cats[category.name] = [];
-    if(category.active === '1')
+    if(category.active === 1) {
       _activeCats.add(category.name);
+    }
   });
 }
 
@@ -124,7 +125,7 @@ function create(data) {
     $selected: false,
 
     filter: {
-      $active: false,
+      $active: _activeCats.has(data.category),
     },
 
     search: {
