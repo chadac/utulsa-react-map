@@ -126,6 +126,10 @@ class ParkingLot extends Component {
           break;
         }
       case AppState.FILTER:
+        if(state.filter.$active) {
+          this.showPolygons();
+          break;
+        }
       case AppState.NORMAL:
         if(!state.filter.$active) {
           this.hidePolygons();

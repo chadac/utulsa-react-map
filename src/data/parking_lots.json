@@ -4,7 +4,7 @@
     "name": "US West Residential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -21,7 +21,7 @@
     "name": "US South Residential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -38,7 +38,7 @@
     "name": "Norman Village Residential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -55,7 +55,7 @@
     "name": "West Residential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -72,7 +72,7 @@
     "name": "West Residential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -89,7 +89,7 @@
     "name": "Brown Village Residential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -106,7 +106,7 @@
     "name": "Mayo Village Residential parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -123,7 +123,7 @@
     "name": "LaFortune Residential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -140,7 +140,7 @@
     "name": "Visitor/Guest Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "VISITOR/GUEST",
     "gmaps": {
       "min_zoom": 17
     },
@@ -157,7 +157,7 @@
     "name": "Case Tennis Center Premium Non-Resident Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "PREMIUM",
     "gmaps": {
       "min_zoom": 17
     },
@@ -174,7 +174,7 @@
     "name": "Lorton Hall Premium Non-Resident Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "PREMIUM",
     "gmaps": {
       "min_zoom": 17
     },
@@ -191,7 +191,7 @@
     "name": "Westby Hall Visitor/Guest Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "VISITOR/GUEST",
     "gmaps": {
       "min_zoom": 17
     },
@@ -208,7 +208,7 @@
     "name": "Lorton Village Dual Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "DUAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -225,7 +225,7 @@
     "name": "Mabee West Non-Residential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "NON-RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -242,7 +242,7 @@
     "name": "Reynolds Center Shuttle & Visitor/Guest Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "SHUTTLE",
     "gmaps": {
       "min_zoom": 17
     },
@@ -259,7 +259,7 @@
     "name": "Harvard Shuttle & Visitor/Guest Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "SHUTTLE",
     "gmaps": {
       "min_zoom": 17
     },
@@ -276,7 +276,7 @@
     "name": "Mabee East Dual Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "DUAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -293,7 +293,7 @@
     "name": "Lorton Performance Center Dual Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "DUAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -310,7 +310,7 @@
     "name": "Lorton Performance Center Non-Residential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "NON-RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -327,7 +327,7 @@
     "name": "4th & Harvard Shuttle & Visitor/Guest Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "SHUTTLE",
     "gmaps": {
       "min_zoom": 17
     },
@@ -344,7 +344,7 @@
     "name": "Keplinger/Law School Shuttle & Visitor/Guest Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "SHUTTLE",
     "gmaps": {
       "min_zoom": 17
     },
@@ -361,7 +361,7 @@
     "name": "Keplinger/Law School Nonresidential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "NON-RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -378,7 +378,7 @@
     "name": "4th & College North Nonresidential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "NON-RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -395,7 +395,7 @@
     "name": "4th & College South Nonresidential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "NON-RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -412,7 +412,7 @@
     "name": "United Methodist Church Nonresidential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "NON-RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -429,7 +429,7 @@
     "name": "Phillips Hall Premium Nonresidential Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "NON-RESIDENTIAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -446,7 +446,7 @@
     "name": "McFarlin Library Dual Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "DUAL",
     "gmaps": {
       "min_zoom": 17
     },
@@ -463,7 +463,7 @@
     "name": "US West Visitor/Guest Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "VISITOR/GUEST",
     "gmaps": {
       "min_zoom": 17
     },
@@ -480,7 +480,7 @@
     "name": "Mabee Legal Clinic Visitor/Guest Parking",
     "type": "parking_lot",
     "hours": "9 AM – 5 PM",
-    "category": "UNIVERSITY PARKING",
+    "category": "VISITOR/GUEST",
     "gmaps": {
       "min_zoom": 17
     },

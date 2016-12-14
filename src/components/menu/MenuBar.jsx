@@ -162,8 +162,8 @@ MenuBar.propTypes = {
   appState: PropTypes.string.isRequired,
 
   items: PropTypes.array.isRequired,
-  cats: PropTypes.array.isRequired,
-  activeCats: PropTypes.array.isRequired,
+  cats: PropTypes.object.isRequired,
+  activeCats: PropTypes.object.isRequired,
 };
 
 export default new FluxComponent(MenuBar);

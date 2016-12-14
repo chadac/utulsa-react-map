@@ -51,6 +51,7 @@ var _routes = [];
 var _parking_lots = [];
 
 var _cats = {};
+var _cats_data = {};
 var _activeCats = new Set([]);
 
 // Current selected item
@@ -102,6 +103,10 @@ function _addCategory(category, id) {
 function loadCategories(data) {
   data.forEach((category) => {
     _cats[category.name] = [];
+    _cats_data[category.name] = {
+      name: category.name,
+      group: category.group,
+    };
     if(category.active === 1) {
       _activeCats.add(category.name);
     }
@@ -388,7 +393,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   },
 
   getCategories() {
-    return Object.keys(_cats);
+    return _cats_data;
   },
 
   getItemsByCategory() {
@@ -396,7 +401,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   },
 
   getActiveCategories() {
-    return Array.from(_activeCats);
+    return _activeCats;
   },
 
   getNumSearchItems() {

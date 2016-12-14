@@ -6,8 +6,6 @@ import AppState from '../../constants/AppState';
 import gmaps from '../../GMapsAPI';
 import InfoWindow from './InfoWindow';
 
-// import styles from '../../stylesheets/Route.scss';
-
 class Route extends Component {
 
   constructor(props) {
@@ -86,6 +84,10 @@ class Route extends Component {
     // const data = this.props.data;
     switch(this.props.appState) {
       case AppState.FILTER:
+        if(state.filter.$active) {
+          this.route.setMap(this.props.map);
+          break;
+        }
       case AppState.NORMAL:
         if(!state.filter.$active) {
           this.route.setMap(null);
