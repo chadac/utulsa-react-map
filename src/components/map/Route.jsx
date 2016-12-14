@@ -86,16 +86,20 @@ class Route extends Component {
     // const data = this.props.data;
     switch(this.props.appState) {
       case AppState.FILTER:
-        if(state.filter.$active) {
-          // this.route.setMap(this.props.map);
+      case AppState.NORMAL:
+        if(!state.filter.$active) {
+          this.route.setMap(null);
+        }
+        else if(state.$zoom === 0) {
+          this.route.setMap(this.props.map);
         }
         else {
           this.route.setMap(null);
         }
         break;
-      case AppState.NORMAL:
-        if(state.$zoom === 0) {
-          //this.route.setMap(this.props.map);
+      case AppState.SEARCH:
+        if(state.search.$active && state.filter.$active) {
+          this.route.setMap(this.props.map);
         }
         else {
           this.route.setMap(null);

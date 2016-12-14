@@ -1,0 +1,44 @@
+.filter {
+    & ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    overflow-y: auto;
+}
+
+.filter-entry {
+    padding: 10px;
+    display: block;
+    height: 30px;
+    border-bottom: 1px solid #e5e5e5;
+    &:hover {
+        background-color: #e5e5e5;
+    }
+    &:last-child {
+        border-bottom: none;
+    }
+
+    & .checkbox {
+        display: inline-block;
+        padding: 3px;
+        width: 24px;
+        height: 24px;
+        opacity: 0;
+        &.hover {
+            opacity: 0.2;
+        }
+        &.active {
+            opacity: 1.0;
+        }
+    }
+
+    & .name {
+        display: inline-block;
+        padding-left: 10px;
+        line-height: 30px;
+        font-size: 12px !important;
+        color: #333;
+        vertical-align: top;
+    }
+}

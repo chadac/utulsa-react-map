@@ -78,19 +78,18 @@ class Place extends Component {
           break;
         }
       case AppState.FILTER:
+      case AppState.NORMAL:
         if(!state.filter.$active) {
           this.hideLabel();
-          break;
         }
-      case AppState.NORMAL:
-        if(state.$zoom === 0) {
+        else if(state.$zoom === 0) {
           this.showLabel();
         } else {
           this.hideLabel();
         }
         break;
       case AppState.SEARCH:
-        if(state.search.$active) {
+        if(state.search.$active && state.filter.$active) {
           this.showLabel();
         }
         else {

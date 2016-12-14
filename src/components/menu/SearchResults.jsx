@@ -19,7 +19,9 @@ class SearchItemMain extends Component {
     const data = this.props.data;
     const terms = this.props.item.search.terms;
     return (
-      <div className={cx("search-item")} onClick={this._onClick.bind(this)}>
+      <div className={cx("search-item", {
+          "inactive": !this.props.item.filter.$active,
+        })} onClick={this._onClick.bind(this)}>
         <span className={cx("name")}>{data.name}</span>
         { terms.length > 0 ?
           (<span className={cx("terms")}>&nbsp;({terms.join(", ")})</span>)

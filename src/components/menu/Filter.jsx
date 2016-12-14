@@ -6,23 +6,45 @@ import styles from '../../stylesheets/Filter.scss';
 const cx = classnames.bind(styles);
 
 class CategoryOption extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      $hover: false,
+    };
+  }
+
   render() {
     return (
-      <li>
-        <input ref="checkbox" type="checkbox" checked={this.props.$active}
-               onChange={this._onChange.bind(this)} />
-        {this.props.category}
+      <li className={cx("filter-entry")} onClick={this._onClick.bind(this)}
+          onMouseEnter={this._onMouseEnter.bind(this)}
+          onMouseLeave={this._onMouseLeave.bind(this)}
+      >
+        <div className={cx("checkbox", {"active": this.props.$active, "hover": this.state.$hover})}>
+          <i className={cx("material-icons")}>done</i>
+        </div>
+        <div className={cx("name")}>
+          {this.props.category}
+        </div>
       </li>
     );
   }
 
-  _onChange() {
+  _onClick() {
     if(!this.props.$active) {
       this.props._addCategory(this.props.category);
     }
     else {
       this.props._remCategory(this.props.category);
     }
+  }
+
+  _onMouseEnter() {
+    this.setState({$hover: true});
+  }
+
+  _onMouseLeave() {
+    this.setState({$hover: false});
   }
 }
 

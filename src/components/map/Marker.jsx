@@ -86,12 +86,11 @@ class Marker extends Component {
           break;
         }
       case AppState.FILTER:
+      case AppState.NORMAL:
         if(!state.filter.$active) {
           this.hideMarker();
-          break;
         }
-      case AppState.NORMAL:
-        if(state.$zoom === 0) {
+        else if(state.$zoom === 0) {
           this.showMarker();
           this.resizeMarker(32, 32);
           this.marker.setZIndex(2);
@@ -106,7 +105,7 @@ class Marker extends Component {
         }
         break;
       case AppState.SEARCH:
-        if(state.search.$active) {
+        if(state.search.$active && state.filter.$active) {
           this.showMarker();
           this.resizeMarker(32, 32);
         }

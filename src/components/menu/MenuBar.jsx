@@ -26,11 +26,15 @@ class FilterWidget extends Component {
   }
 
   _onClick() {
-    this.props._setAppState(AppState.FILTER);
+    if(this.props.appState === AppState.FILTER)
+      this.props._setAppState(AppState.NORMAL);
+    else
+      this.props._setAppState(AppState.FILTER);
   }
 }
 
 FilterWidget.propTypes = {
+  appState: PropTypes.string.isRequired,
   _setAppState: PropTypes.func.isRequired,
 };
 
@@ -117,7 +121,8 @@ class MenuBar extends Component {
         <div className={cx('menu-head', {
             'submenu': this.props.appState !== AppState.NORMAL
           })}>
-          <FilterWidget _setAppState={this.actions().app.setState} />
+          <FilterWidget appState={this.props.appState}
+                        _setAppState={this.actions().app.setState} />
           <SearchWidget _search={this.actions().item.search}
                         _resetSearch={this.actions().item.resetSearch}
                         _selectSearched={this.actions().item.selectSearched} />
