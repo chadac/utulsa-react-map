@@ -40,7 +40,8 @@ class ItemInfo extends Component {
         <h1 className={cx("header")}>{data.name}</h1>
         <div className={cx("address")}>{data.address}</div>
         {alternateNames}
-        <p className={cx("description")}>{data.description}</p>
+        <p className={cx("description")}
+        dangerouslySetInnerHTML={{__html: data.description}}></p>
         <PhotoGallery photos={data.photos} />
         {departments}
         {rooms}

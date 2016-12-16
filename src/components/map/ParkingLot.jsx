@@ -121,10 +121,13 @@ class ParkingLot extends Component {
 
     switch(this.props.appState) {
       case AppState.SELECT:
-        if(state.$selected) {
+        if(state.$selected || state.$zoom === 0) {
           this.showPolygons();
-          break;
         }
+        else {
+          this.hidePolygons();
+        }
+        break;
       case AppState.FILTER:
         if(state.filter.$active) {
           this.showPolygons();
