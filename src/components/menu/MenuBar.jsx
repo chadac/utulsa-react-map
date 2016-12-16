@@ -110,33 +110,76 @@ SearchWidget.propTypes = {
   _selectSearched: PropTypes.func.isRequired,
 };
 
+
+class MinimizeBlock extends Component {
+  render() {
+    if(this.props.appState !== AppState.NORMAL) {
+      return (
+        <div className={cx("menu-minimize")} onClick={this._onClick.bind(this)}>
+          <i className="material-icons">
+            {this.props.minimized ? "arrow_drop_down" : "arrow_drop_up" }
+          </i>
+        </div>
+      );
+    }
+    else return null;
+  }
+
+  _onClick() {
+    if(this.props.minimized) {
+      this.props._maximize();
+    }
+    else {
+      this.props._minimize();
+    }
+  }
+}
+
+MinimizeBlock.propTypes = {
+  appState: PropTypes.string.isRequired,
+  minimized: PropTypes.bool.isRequired,
+
+  _minimize: PropTypes.func.isRequired,
+  _maximize: PropTypes.func.isRequired,
+};
+
+
 class MenuBar extends Component {
   constructor(props) {
     super(props);
+
+    this.stores().app.addChangeListener(this._onAppStateChanged.bind(this));
+
+    this.state = {
+      minimized: false
+    };
   }
 
   render() {
     return (
-      <div className={cx('menu-bar')}>
-        <div className={cx('menu-head', {
-            'submenu': this.props.appState !== AppState.NORMAL
-          })}>
-          <FilterWidget appState={this.props.appState}
-                        _setAppState={this.actions().app.setState} />
-          <SearchWidget _search={this.actions().item.search}
-                        _resetSearch={this.actions().item.resetSearch}
-                        _selectSearched={this.actions().item.selectSearched} />
-        </div>
-        <div className={cx('menu-content')}>
+      <div>
+        <div className={cx('menu-bar')}>
+          <div className={cx('menu-head', {
+              'submenu': this.props.appState !== AppState.NORMAL && !this.state.minimized
+            })}>
+            <FilterWidget appState={this.props.appState}
+                          _setAppState={this.actions().app.setState} />
+            <SearchWidget _search={this.actions().item.search}
+                          _resetSearch={this.actions().item.resetSearch}
+                          _selectSearched={this.actions().item.selectSearched} />
+          </div>
           {this.renderSubMenu()}
         </div>
+        <MinimizeBlock appState={this.props.appState} minimized={this.state.minimized}
+                       _minimize={this.minimize.bind(this)}
+                       _maximize={this.maximize.bind(this)}/>
       </div>
     );
   }
 
   renderSubMenu() {
     return (
-      <div>
+      <div className={cx('menu-content')} style={{display: this.state.minimized ? "none" : ""}}>
         <SearchResults
             height={SUBMENU_HEIGHT}
             display={this.props.appState === AppState.SEARCH}
@@ -154,6 +197,18 @@ class MenuBar extends Component {
             {...this.flux()} />
       </div>
     );
+  }
+
+  _onAppStateChanged() {
+    this.maximize();
+  }
+
+  minimize() {
+    this.setState({minimized: true});
+  }
+
+  maximize() {
+    this.setState({minimized: false});
   }
 }
 
