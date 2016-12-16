@@ -1,10 +1,14 @@
 import gmaps from '../../GMapsAPI';
 
+import classnames from 'classnames/bind';
+import styles from '../../stylesheets/TextLabel.scss';
+const cx = classnames.bind(styles);
+
 /* http://stackoverflow.com/a/3955258 */
-function TextLabel(pos, txt, cls, map) {
+function TextLabel(pos, txt, map) {
   this.pos = pos;
   this.txt_ = txt;
-  this.cls_ = cls;
+  this.cls_ = cx('text-label');
   this.map_ = map;
 
   this.div_ = null;
@@ -19,11 +23,9 @@ TextLabel.prototype.onAdd = function() {
   div.style.width = "100px";
 
   this.div_ = div;
-  // var overlayProjection = this.getProjection();
-  // var position = overlayProjection.fromLatLngToDivPixel(this.pos);
 
   var panes = this.getPanes();
-  panes.overlayLayer.appendChild(div);
+  panes.markerLayer.appendChild(div);
 };
 TextLabel.prototype.draw = function() {
   var overlayProjection = this.getProjection();

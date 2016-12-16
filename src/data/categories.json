@@ -1,40 +1,75 @@
 [
   {
     "name": "TU MAIN CAMPUS",
-    "active": 1
+    "active": 1,
+    "group": "CAMPUS"
   },
   {
     "name": "STUDENT HOUSING",
-    "active": 1
+    "active": 1,
+    "group": "CAMPUS"
   },
   {
     "name": "ATHLETIC FACILITIES",
-    "active": 1
+    "active": 1,
+    "group": "CAMPUS"
   },
   {
     "name": "CAMPUS MINISTRIES",
-    "active": 1
+    "active": 1,
+    "group": "CAMPUS"
   },
   {
-    "name": "UNIVERSITY PARKING",
-    "active": 1
+    "name": "VISITOR/GUEST",
+    "active": 1,
+    "group": "PARKING"
   },
   {
-    "name": "HURRICANE EXPRESS"
+    "name": "NON-RESIDENTIAL",
+    "active": 1,
+    "group": "PARKING"
+  },
+  {
+    "name": "RESIDENTIAL",
+    "active": 1,
+    "group": "PARKING"
+  },
+  {
+    "name": "SHUTTLE",
+    "active": 1,
+    "group": "PARKING"
+  },
+  {
+    "name": "PREMIUM",
+    "active": 1,
+    "group": "PARKING"
+  },
+  {
+    "name": "DUAL",
+    "active": 1,
+    "group": "PARKING"
+  },
+  {
+    "name": "HURRICANE EXPRESS",
+    "group": "BUS ROUTES"
   },
   {
     "name": "BIKE RACKS",
-    "active": 1
+    "active": 1,
+    "group": "MISC"
   },
   {
     "name": "EMERGENCY PHONES",
-    "active": 1
+    "active": 1,
+    "group": "MISC"
   },
   {
     "name": "PHOTO OPPORTUNITIES",
-    "active": 1
+    "active": 1,
+    "group": "MISC"
   },
   {
-    "name": "MEMORIAL TREES"
+    "name": "MEMORIAL TREES",
+    "group": "MISC"
   }
 ]

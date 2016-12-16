@@ -1,80 +1,39 @@
-@import 'sizes';
-@import 'colors';
-
-.search-results-enter {
-    height: 0% !important;
-}
-
-.search-results-enter-active {
-    height: $dropdown-height !important;
-    transition: height 300ms ease-in;
-}
-
-.search-results-leave {
-    height: $dropdown-height;
-}
-
-.search-results-leave-active {
-     height: 0% !important;
-    transition: height 300ms ease-out;
-}
-
 .search-results {
-    z-index: 1;
-    height: $dropdown-height;
-    overflow-y: scroll;
-    position: absolute;
     width: 100%;
-    background: rgba($search-bar-background-color, 0.9);
+    background-color: #fff;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .search-item {
-    $hover-color: mix($search-bar-background-color, white, 75%);
-    padding: 10px 0 10px 10%;
-    display: block;
-    text-decoration: none;
+    padding: 8px;
+    border-bottom: 1px solid #e5e5e5;
+    height: 60px;
+    &:hover {
+        background-color: #f1f1f1;
+    }
+    &:last-child {
+        border-bottom: none;
+    }
     & .name {
-        color: #F0F0F0;
-        &.active:before {
-            content: "\25BC";
-        }
-        &.inactive:before {
-            content: "\25B2";
-        }
-    }
-    &.header {
-        &:hover {
-            background-color: rgba($hover-color, 0.8);
-            cursor: pointer;
-        }
-        @include media("<=phone") {
-            font-size: $phone-font-large;
-        }
-        @include media(">phone") {
-            font-size: $font-large;
-        }
-    }
-    &.item {
-        padding-left: 11%;
-        @include media("<=phone") {
-            font-size: $phone-font-normal;
-        }
-        @include media(">phone") {
-            font-size: $font-normal;
-        }
-        &:hover {
-            cursor: pointer;
-            background: rgba($hover-color, 0.8);
-        }
+        font-size: 14px;
+        color: #555;
     }
     & .terms {
-        padding-left: 10px;
-        @include media("<=phone") {
-            font-size: $phone-font-small;
-        }
-        @include media(">phone") {
-            font-size: $font-small;
-        }
-        color: #AAAAAA;
+        font-size: 10px;
+        color: #999;
     }
+    & .address {
+        font-size: 10px;
+        color: #666;
+    }
+    & hr {
+        height: 2px;
+        visibility: hidden;
+        margin-bottom: -1px;
+    }
+}
+
+.inactive > * {
+    opacity: 0.5;
 }

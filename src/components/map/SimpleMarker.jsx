@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import ItemStateHOC from '../../hoc/ItemStateHOC';
 
 import gmaps from '../../GMapsAPI';
 import Marker from './Marker';
@@ -6,19 +7,20 @@ import Marker from './Marker';
 class SimpleMarker extends Component {
   latLng() {
     return new gmaps.LatLng(
-      this.props.marker.lat,
-      this.props.marker.lng
+      this.props.data.marker.lat,
+      this.props.data.marker.lng
     );
   }
 
   render() {
     return (
-      <Marker map={this.props.map} id={this.props.id}
-              latLng ={this.latLng()} icon={this.props.marker.icon}
-              $infoWindow={this.props.$infoWindow}
+      <Marker map={this.props.map} id={this.props.id} item={this.props.item}
+              appState={this.props.appState}
+              latLng ={this.latLng()} icon={this.props.data.marker.icon}
+              _select={this.props._select}
               _openInfoWindow={this.props._openInfoWindow}
               _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{this.props.label}</h4>
+        <h4>{this.props.data.label}</h4>
       </Marker>
     );
   }
@@ -27,13 +29,14 @@ class SimpleMarker extends Component {
 SimpleMarker.propTypes = {
   map: PropTypes.object.isRequired,
 
+  _select: PropTypes.func.isRequired,
   _openInfoWindow: PropTypes.func.isRequired,
   _closeInfoWindow: PropTypes.func.isRequired,
 
-  $infoWindow: PropTypes.bool.isRequired,
-  id: PropTypes.string,
-  label: PropTypes.string,
-  marker: PropTypes.object,
+  id: PropTypes.string.isRequired,
+  appState: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 }
 
-module.exports = SimpleMarker;
+export default new ItemStateHOC(SimpleMarker);

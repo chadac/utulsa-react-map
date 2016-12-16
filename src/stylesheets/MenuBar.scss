@@ -1,0 +1,49 @@
+.menu-bar {
+    display: block;
+    position: relative;
+    background: #fff;
+    width: 398px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+}
+
+.menu-head {
+    padding: 4px;
+    height: 40px;
+    border-bottom: 1px solid transparent;
+
+    &.submenu {
+        border-bottom: 1px solid #e5e5e5;
+    }
+}
+
+.menu-content {
+}
+
+.menu-icon {
+    color: #363636;
+    width: auto;
+    padding: 8px;
+}
+
+.filter {
+}
+
+.search-container {
+    display: inline-block;
+    height: 40px;
+    width: 350px;
+}
+
+.search {
+    display: inline;
+    border: 0px;
+    width: 290px;
+    font-size: 16px;
+    vertical-align: top;
+    padding: 13px 0 9px 20px;
+    &:focus {
+        outline: none
+    }
+}
