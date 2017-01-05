@@ -1,60 +1,62 @@
 /**
  * From https://facebook.github.io/flux/docs/todo-list.html
  **/
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var ItemConstants = require('../constants/ItemConstants');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import ItemStore from '../stores/ItemStore';
+import ItemConstants from '../constants/ItemConstants';
+import GMapsActions from './GMapsActions';
 
 var ItemActions = {
 
   create: function(data) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_CREATE,
       data: data
     });
   },
 
   destroy: function(id) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_DESTROY,
       id: id
     });
   },
 
   select: function(id) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_SELECT,
-      id: id
+      id: id,
     });
   },
 
   deselect: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_DESELECT
     });
   },
 
   focus: function(id) {
-    AppDispatcher.handleViewAction({
-      actionType: ItemConstants.ITEM_FOCUS,
-      id: id,
-    });
+    const item = ItemStore.getItem(id);
+    ItemActions.select(id);
+    GMapsActions.center(item.focus.center.lat, item.focus.center.lng);
+    GMapsActions.zoom(item.focus.zoom);
   },
 
   unfocus: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_UNFOCUS,
     });
   },
 
   openInfoWindow: function(id) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_OPEN_INFOWINDOW,
       id: id,
     });
   },
 
   closeInfoWindow: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_CLOSE_INFOWINDOW,
     });
   },
@@ -64,35 +66,44 @@ var ItemActions = {
       ItemActions.resetSearch();
     }
     else {
-      AppDispatcher.handleViewAction({
+      AppDispatcher.dispatch({
         actionType: ItemConstants.ITEM_SEARCH,
         word: word
       });
     }
   },
 
+  selectSearched() {
+    let searched = ItemStore.getSearched();
+    if(searched.length === 1) {
+      ItemActions.focus(searched[0]);
+      return true;
+    }
+    return false;
+  },
+
   resetSearch: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_RESET_SEARCH,
     });
   },
 
   addCategory: function(category) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.ADD_CATEGORY,
       category: category
     });
   },
 
   remCategory: function(category) {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.REM_CATEGORY,
       category: category
     });
   },
 
   resetCategories: function() {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: ItemConstants.RESET_CATEGORIES,
     });
   }

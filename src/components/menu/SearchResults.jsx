@@ -1,98 +1,104 @@
 import React, {Component, PropTypes} from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import AppState from '../../constants/AppState';
-import classnames from 'classnames';
+import ItemStateHOC from '../../hoc/ItemStateHOC';
+import FluxComponent from '../../hoc/FluxComponent';
+
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/SearchResults.scss';
+const cx = classnames.bind(styles);
 
-/**
- * Custom groupby function.
- **/
-function groupBy(items, key) {
-  // get categories
-  var c = {};
-  items.forEach((item) => {
-    if(c[item[key]] == undefined)
-      c[item[key]] = [item]
-    else
-      c[item[key]].push(item);
-  });
-  return c;
-}
 
-const SearchCategory = React.createClass({
+class SearchItemMain extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    if(!this.props.item.search.$active) return null;
+
+    const data = this.props.data;
+    const terms = this.props.item.search.terms;
     return (
-      <div>
-        <div className={classnames(styles.searchItem, styles.header)}
-             onClick={this._onCheck}>
-          <input type="checkbox" onChange={this._onCheck}
-                 checked={this.props.selected} />
-          <span className={classnames(styles.name)}>{this.props.name}</span>
-        </div>
-        {this.props.selected ? this.props.children : null}
+      <div className={cx("search-item", {
+          "inactive": !this.props.item.filter.$active,
+        })} onClick={this._onClick.bind(this)}>
+        <span className={cx("name")}>{data.name}</span>
+        { terms.length > 0 ?
+          (<span className={cx("terms")}>&nbsp;({terms.join(", ")})</span>)
+          : null }
+        <hr />
+        <span className={cx("address")}>{ data.address }</span>
       </div>
     );
-  },
-
-  _onCheck() {
-    if(!this.props.selected) {
-      this.props._addCategory(this.props.name);
-    } else {
-      this.props._remCategory(this.props.name);
-    }
-  },
-});
-
-const SearchItem = React.createClass({
-  render() {
-    return (
-      <div className={classnames(styles.searchItem, styles.item)}
-           onClick={this._onClick}>
-        <span className={classnames(styles.name)}>{this.props.name}</span>
-        {this.props.$searchTerms.length > 0 ? (
-           <span className={classnames(styles.terms)}>
-             ({this.props.$searchTerms.join(", ")})
-           </span>
-         ) : null}
-      </div>
-    );
-  },
+  }
 
   _onClick() {
-    this.props.select(this.props.id);
-  },
-});
+    this.props._focus(this.props.data.id);
+  }
+}
 
-const SearchResults = React.createClass({
-  getDefaultProps() {
-    return {
-      items: PropTypes.array.isRequired,
+SearchItemMain.propTypes = {
+  data: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+
+  _focus: PropTypes.func.isRequired,
+};
+
+const SearchItem = new ItemStateHOC(SearchItemMain);
+
+class SearchResults extends Component {
+  constructor(props) {
+    super(props);
+
+    this.stores().item.addStateChangeListener(this._stateChanged.bind(this));
+
+    this.state = {
+      numResults: this.stores().item.getNumSearchItems(),
+      searchItems: this.createSearchItems(),
     };
-  },
+  }
 
   render() {
-    const groups = groupBy(this.props.items, "category");
-    const searchCats = Object
-      .keys(groups)
-      .map((name) => {
-      const groupItems = groups[name].map((item) =>
-        <SearchItem select={this.props.select} key={item.id} {...item} />
-      );
-      return (
-        <SearchCategory key={name} name={name}
-                        selected={this.props.activeCategories.indexOf(name)>=0}
-                        _addCategory={this.props._addCategory}
-                        _remCategory={this.props._remCategory}>
-          {groupItems}
-        </SearchCategory>
-      );
-    });
     return (
-      <div key="main" className={classnames(styles.searchResults)}>
-          {searchCats}
+      <div key="main"
+           style={{maxHeight: this.props.height,
+                   display: this.props.display ? "" : "none"}}
+           className={cx("search-results")}>
+        {this.state.searchItems}
       </div>
     );
-  },
-});
+  }
 
-module.exports = SearchResults;
+  createSearchItems() {
+    const searchItems = this
+      .props.items.map((item) => {
+        return <SearchItem key={item.id} data={item} id={item.id}
+                           _register={this.stores().item.addStateChangeListener.bind(this.stores().item)}
+                           _getItemState={this.stores().item.getItemState.bind(this.stores().item)}
+                           _focus={this.actions().item.focus}
+               />;
+      });
+    return searchItems;
+  }
+
+  _updateSearchItems() {
+    this.setState({
+      searchItems: this.createSearchItems(),
+    });
+  }
+
+  _stateChanged() {
+    this.setState({
+      numResults: this.stores().item.getNumSearchItems(),
+    });
+  }
+}
+
+SearchResults.propTypes = {
+  items: PropTypes.array.isRequired,
+
+  height: PropTypes.number.isRequired,
+  display: PropTypes.bool.isRequired,
+};
+
+export default FluxComponent(SearchResults);

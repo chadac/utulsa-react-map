@@ -68,7 +68,7 @@ function convertCSV(path) {
   var converter = new Converter();
   converter.on("end_parsed", (data) => {
     data = filterDict(data);
-    fs.writeFile(jsonPath, JSON.stringify(data));
+    fs.writeFile(jsonPath, JSON.stringify(data, null, '  '));
   });
   fs.createReadStream(path).pipe(converter);
 }

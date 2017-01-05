@@ -1,75 +1,65 @@
 import React, {Component, PropTypes} from 'react';
-import classNames from 'classnames';
+import ItemStateHOC from '../../hoc/ItemStateHOC';
 
-import ItemStore from '../../stores/ItemStore';
 import AppState from '../../constants/AppState';
 
 import gmaps from '../../GMapsAPI';
 import InfoWindow from './InfoWindow';
 
-import styles from '../../stylesheets/Route.scss';
+class Route extends Component {
 
-const Route = React.createClass({
-  propTypes: {
-    route: PropTypes.object.isRequired,
-    appState: PropTypes.string.isRequired,
+  constructor(props) {
+    super(props);
 
-    _openInfoWindow: PropTypes.func.isRequired,
-    _closeInfoWindow: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
-      position: null,
-      click: new gmaps.LatLng(0,0),
+    this.state = {
+      position: this.props.data.focus.center,
+      click: new gmaps.LatLng(0, 0),
     };
-  },
+  }
 
   componentWillMount() {
-    const pos = this.props.route.path[Math.ceil(this.props.route.path.length / 2)];
-    this.setState({position: new gmaps.LatLng(pos.lat, pos.lng)});
-  },
-
-  componentDidMount() {
-    ItemStore.addSelectListener(this.props.id, this._onSelect);
-
     this.route = this.createRoute();
-    this.route.addListener('click', this._onClick);
-  },
+    this.route.addListener('click', this._onClick.bind(this));
+  }
 
   componentWillUnmount() {
     this.route.setMap(null);
-  },
+  }
 
   createPathCoordinates() {
-    return this.props.route.path.map((coords) => {
+    const route = this.props.data.route;
+    return route.path.map((coords) => {
       return new gmaps.LatLng(coords.lat, coords.lng);
     })
-  },
+  }
 
   createInfoWindow() {
-    var content = "<h4>" + this.props.name + "</h4>"
-                + "<p>" + this.props.address + "</p>"
-                + "<p>" + this.props.website + "</p>";
+    const data = this.props.data;
+    var content = "<h4>" + data.name + "</h4>"
+                + "<p>" + data.address + "</p>"
+                + "<p>" + data.website + "</p>";
     return new gmaps.InfoWindow({
       content: content
     });
-  },
+  }
 
   createRoute() {
+    const route = this.props.data.route;
     return new gmaps.Polyline({
       path: this.createPathCoordinates(),
       geodesic: true,
-      strokeColor: this.props.route.strokeColor,
-      strokeOpacity: this.props.route.strokeOpacity,
-      strokeWeight: this.props.route.strokeWeight,
+      strokeColor: route.strokeColor,
+      strokeOpacity: route.strokeOpacity,
+      strokeWeight: route.strokeWeight,
       map: this.props.map
     });
-  },
+  }
 
   render() {
-    let position;
+    this.updateRoute();
+    let position = null;
     switch(this.props.appState) {
+      case AppState.FILTER:
       case AppState.NORMAL:
       case AppState.SEARCH:
         position = this.state.click;
@@ -79,27 +69,63 @@ const Route = React.createClass({
         break;
     }
     return (
-      <InfoWindow $infoWindow={this.props.$infoWindow}
+      <InfoWindow $infoWindow={this.props.item.$infoWindow}
                   map={this.props.map}
                   position={position}
                   _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{this.props.name}</h4>
-        <p>{this.props.hours}</p>
+        <h4>{this.props.data.name}</h4>
+        <p>{this.props.data.hours}</p>
       </InfoWindow>
     );
-  },
+  }
+
+  updateRoute() {
+    const state = this.props.item;
+    // const data = this.props.data;
+    switch(this.props.appState) {
+      case AppState.FILTER:
+        if(state.filter.$active) {
+          this.route.setMap(this.props.map);
+          break;
+        }
+      case AppState.NORMAL:
+        if(!state.filter.$active) {
+          this.route.setMap(null);
+        }
+        else if(state.$zoom === 0) {
+          this.route.setMap(this.props.map);
+        }
+        else {
+          this.route.setMap(null);
+        }
+        break;
+      case AppState.SEARCH:
+        if(state.search.$active && state.filter.$active) {
+          this.route.setMap(this.props.map);
+        }
+        else {
+          this.route.setMap(null);
+        }
+        break;
+    }
+  }
 
   _onClick(e) {
     this.setState({click: e.latLng});
     this.props._openInfoWindow(this.props.id);
-  },
+  }
+}
 
-  _onSelect() {
-    setTimeout( () => {
-      this.props.map.setZoom(17);
-      this.props.map.setCenter(this.state.position);
-    }, 300);
-  },
-});
+Route.propTypes = {
+  map: PropTypes.object.isRequired,
 
-export default Route;
+  _openInfoWindow: PropTypes.func.isRequired,
+  _closeInfoWindow: PropTypes.func.isRequired,
+
+  id: PropTypes.string.isRequired,
+  appState: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+};
+
+export default new ItemStateHOC(Route);

@@ -1,115 +1,140 @@
 import React, {Component, PropTypes} from 'react';
-import classNames from 'classnames';
 
-import ItemStore from '../../stores/ItemStore';
 import gmaps from '../../GMapsAPI';
+import AppState from '../../constants/AppState';
 
-import TextLabel from './TextLabel';
 import InfoWindow from './InfoWindow';
-
 import MapIcon from '../../data/mapIcons.json';
-import styles from '../../stylesheets/Marker.scss';
 
-const Marker = React.createClass({
-  propTypes: {
-    _openInfoWindow: PropTypes.func.isRequired,
-    _closeInfoWindow: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
-      $infoWindowOpened: false
-    };
-  },
-
+class Marker extends Component {
   componentWillMount() {
-    ItemStore.addSelectListener(this.props.id, this._onSelect);
-
     this.marker = this.createMarker();
-    this.marker.addListener("click", this._onClick);
-    this.marker.addListener("mouseover", this._onMouseOver);
-    this.marker.addListener("mouseout", this._onMouseOut);
-
-    this.label = this.createLabel();
-  },
-
-  componentDidMount() {
-  },
+    this.marker.addListener("click", this._onClick.bind(this));
+  }
 
   componentWillUnmount() {
     this.marker.setMap(null);
-    if(this.label)
-      this.label.setMap(null);
-  },
-
-  latlng() {
-    return new gmaps.LatLng(
-      this.props.marker.lat,
-      this.props.marker.lng
-    );
-  },
+  }
 
   createMarker() {
-    return new gmaps.Marker({
-      position: this.latlng(),
-      icon: MapIcon[this.props.marker.icon],
+    let icon = null;
+    if(this.props.icon) {
+      icon = {
+        url: MapIcon[this.props.icon],
+        scaledSize: new gmaps.Size(32, 32),
+      };
+    }
+    const marker = new gmaps.Marker({
+      position: this.props.latLng,
+      icon: icon,
       draggable: false,
       map: this.props.map,
     });
-  },
+    this.setState({zIndex: marker.getZIndex()});
+    return marker;
+  }
 
-  createLabel() {
-    if(this.props.name !== undefined) {
-      return new TextLabel(this.latlng(), this.props.name, styles.markerLabel, this.props.map);
+  showMarker() {
+    if(this.marker.getMap() !== this.props.map)
+      this.marker.setMap(this.props.map);
+  }
+
+  hideMarker() {
+    if(this.marker.getMap() !== null)
+      this.marker.setMap(null);
+  }
+
+  resizeMarker(size) {
+    this.marker.setIcon({
+      url: MapIcon[this.props.icon],
+      scaledSize: new gmaps.Size(size, size)
+    });
+  }
+
+  render() {
+    this.updateMarker();
+
+    if(this.props.children) {
+      return (
+        <InfoWindow
+            map={this.props.map}
+            $infoWindow={this.props.item.$infoWindow}
+            position={this.marker}
+            _closeInfoWindow={this.props._closeInfoWindow}>
+          {this.props.children}
+        </InfoWindow>
+      );
     }
     else {
       return null;
     }
-  },
-
-  render() {
-    const loc = this.props.directions != undefined ?
-                this.props.directions :
-                [this.props.marker.lat, this.props.marker.lng].join(',');
-    const directionsUrl = "https://www.google.com/maps/dir//'"+loc+"'/@"+loc+",17z"
-    const name = this.props.name !== undefined ? this.props.name
-               : this.props.label !== undefined ? this.props.label
-                : null;
-    return (
-      <InfoWindow $infoWindow={this.props.$infoWindow} map={this.props.map}
-                  position={this.marker}
-                  _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{name}</h4>
-        <p>{this.props.address}</p>
-        <p><a href={this.props.website}>{this.props.website}</a></p>
-        <p><a target="_blank" href={directionsUrl}>Get directions</a></p>
-        <p><a href="#" onClick={this._onMoreInformation}>More information...</a></p>
-      </InfoWindow>
-    );
-  },
-
-  _onClick() {
-    this.props._openInfoWindow(this.props.id);
-  },
-
-  _onMouseOver() {
-  },
-
-  _onMouseOut() {
-  },
-
-  _onSelect() {
-    // This runs on a delay so that the map component can react to changes correctly.
-    setTimeout( () => {
-      this.props.map.setZoom(18);
-      this.props.map.setCenter(this.latlng());
-    }, 300);
-  },
-
-  _onMoreInformation() {
-    this.props._focus(this.props.id);
   }
 
-});
+  componentDidUpdate() {
+    this.marker.setPosition(this.props.latLng);
+  }
+
+  updateMarker() {
+    const state = this.props.item;
+    const appState = this.props.appState;
+    switch(appState) {
+      case AppState.SELECT:
+        if(state.$selected) {
+          this.showMarker();
+          this.resizeMarker(38, 38);
+          this.marker.setZIndex(3);
+          break;
+        }
+      case AppState.FILTER:
+      case AppState.NORMAL:
+        if(!state.filter.$active) {
+          this.hideMarker();
+        }
+        else if(state.$zoom === 0) {
+          this.showMarker();
+          this.resizeMarker(32, 32);
+          this.marker.setZIndex(2);
+        }
+        else if(state.$zoom > 0) {
+          this.showMarker();
+          this.resizeMarker(10, 10);
+          this.marker.setZIndex(1);
+        }
+        else {
+          this.hideMarker();
+        }
+        break;
+      case AppState.SEARCH:
+        if(state.search.$active && state.filter.$active) {
+          this.showMarker();
+          this.resizeMarker(32, 32);
+        }
+        else {
+          // this.resizeMarker(8, 8);
+          this.hideMarker();
+        }
+        break;
+    }
+  }
+
+  _onClick() {
+    if(this.props._openInfoWindow)
+      this.props._select(this.props.id);
+  }
+}
+
+Marker.propTypes = {
+  map: PropTypes.object.isRequired,
+
+  _select: PropTypes.func.isRequired,
+  _openInfoWindow: PropTypes.func,
+  _closeInfoWindow: PropTypes.func,
+
+  id: PropTypes.string.isRequired,
+  latLng: PropTypes.object.isRequired,
+  appState: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
+  icon: PropTypes.string.isRequired,
+};
 
 export default Marker;

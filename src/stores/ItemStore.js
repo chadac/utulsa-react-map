@@ -6,37 +6,42 @@
  **/
 const AppDispatcher = require('../dispatcher/AppDispatcher');
 const EventEmitter = require('events').EventEmitter;
-const ItemConstants = require('../constants/ItemConstants');
 const assign = require('object-assign');
+
+const ItemConstants = require('../constants/ItemConstants');
 
 const GMapsStore = require('./GMapsStore');
 const GMapsConstants = require('../constants/GMapsConstants');
-const AppStateConstants = require('../constants/AppStateConstants');
 
 const Trie = require('../util/Trie');
 
 const placeData = require('../data/places.json');
 const routeData = require('../data/routes.json');
 const parkingData = require('../data/parking_lots.json');
+const parkingPolyData = require('../data/parking_polygons.json');
 const markerData = require('../data/markers.json');
+const categoryData = require('../data/categories.json');
 
-const CHANGE_EVENT = 'change';
-const SELECT_EVENT = 'select';
+const CHANGE_EVENT = 'c';
+const CATEGORY_CHANGE_EVENT = 'cat';
+const STATE_CHANGE_EVENT = 's';
+const SELECT_EVENT = 'e';
 
 function parseKMLCoords(msg, offset) {
-  if(offset == null) offset = 0;
+  if(offset === null) offset = 0;
   var msgSplit = msg.split(' ');
   return msgSplit.map((coordStr) => {
-    var coords = coordStr.split(',')
-    return { lng: Number(coords[0])+offset, lat: Number(coords[1])+offset };
+    var coords = coordStr.split(',');
+    return { lng: Number(coords[0]) + offset, lat: Number(coords[1]) + offset };
   });
 }
 
 // Collection of items
 var _items = {};
+var _state = {};
 
 var _itemTrie = new Trie();
-var _searchKey = null;
+var _searched = [];
 
 // Marker IDs
 var _markers = [];
@@ -45,38 +50,37 @@ var _routes = [];
 // Parking Lot IDs
 var _parking_lots = [];
 
-var _categories = {};
-var _activeCategories = {};
+var _cats = {};
+var _cats_data = {};
+var _activeCats = new Set([]);
 
 // Current selected item
 var _selectedItem = null;
 // Current item with active InfoWindow
 var _infoWindow = null;
-// Current item in focus
-var _focusedItem = null;
 
 var _zoomLevels = {max: {}, min: {}}
 
 function isMarker(id) {
-  return _items[id].type == 'marker';
+  return _items[id].type === 'place' || _items[id].type === 'simple_marker';
 }
 
 function isRoute(id) {
-  return _items[id].type == 'route';
+  return _items[id].type === 'route';
 }
 
 function isParkingLot(id) {
-  return _items[id].type == 'parking_lot';
+  return _items[id].type === 'parking_lot';
 }
 
 function _addZoom(id, min_zoom, max_zoom) {
-  if(max_zoom !== undefined) {
-    if(_zoomLevels.max[max_zoom] == undefined)
+  if(typeof max_zoom !== "undefined") {
+    if(typeof _zoomLevels.max[max_zoom] === "undefined")
       _zoomLevels.max[max_zoom] = [];
     _zoomLevels.max[max_zoom].push(id);
   }
-  if(min_zoom !== undefined) {
-    if(_zoomLevels.min[min_zoom] == undefined)
+  if(typeof min_zoom !== "undefined") {
+    if(typeof _zoomLevels.min[min_zoom] === "undefined")
       _zoomLevels.min[min_zoom] = [];
     _zoomLevels.min[min_zoom].push(id);
   }
@@ -85,72 +89,120 @@ function _addZoom(id, min_zoom, max_zoom) {
 function _addSearchTerm(name, id) {
   _itemTrie.add(name, id);
   for(var i = 1; i < name.length; i++) {
-    if(name[i] == ' ') {
-      _itemTrie.add(name.slice(i+1), id);
+    if(name[i] === ' ') {
+      _itemTrie.add(name.slice(i + 1), id);
     }
   }
 }
 
 function _addCategory(category, id) {
-  if(_categories[category] == undefined) {
-    _categories[category] = [];
-    _activeCategories[category] = category;
-  }
-  _categories[category].push(_items[id]);
+  _cats[category].push(id);
+  /* _activeCats.add(category); */
 }
 
+function loadCategories(data) {
+  data.forEach((category) => {
+    _cats[category.name] = [];
+    _cats_data[category.name] = {
+      name: category.name,
+      group: category.group,
+    };
+    if(category.active === 1) {
+      _activeCats.add(category.name);
+    }
+  });
+}
+
+/**
+ * Saves an item to the store.
+ *
+ * @param {Object} data - The item information.
+ *
+ * @returns {undefined}
+ */
 function create(data) {
   var id = data.id;
   _items[id] = data;
-  _items[id].$selected = false;
-  _items[id].$infoWindow = false;
-  _items[id].$searchKey = null;
-  _items[id].$searchTerms = null;
+
+  // State information
+  _state[id] = {
+    $infoWindow: false,
+    $selected: false,
+
+    filter: {
+      $active: _activeCats.has(data.category),
+    },
+
+    search: {
+      $active: false,
+      terms: [],
+    }
+  };
 
   //Search terms
-  if(data.name !== undefined) {
+  if(typeof data.name !== "undefined") {
     _addSearchTerm(data.name, data.id);
   }
-  if(data.search_terms !== undefined) {
-    data.search_terms.forEach((term) => {
-      _addSearchTerm(term, [data.id, term]);
-    });
+  if(typeof data.tags !== "undefined") {
+    data.tags.forEach((term) => _addSearchTerm(term, data.id));
+  }
+  if(typeof data.alternate_names !== "undefined") {
+    data.alternate_names.forEach((term) => _addSearchTerm(term, [data.id, term]));
+  }
+  if(typeof data.departments !== "undefined") {
+    data.departments.forEach((term) => _addSearchTerm(term, [data.id, term]));
+  }
+  if(typeof data.rooms !== "undefined") {
+    data.rooms.forEach((term) => _addSearchTerm(term, [data.id, term]));
   }
 
-  if(data.category !== undefined) {
+  if(typeof data.category !== "undefined") {
     // Add category
     _addCategory(data.category, data.id);
   }
 
+  // Zoom levels
   const currentZoom = GMapsStore.getZoom();
-  _items[id].$inZoom =
-    (data.gmaps.min_zoom == undefined || currentZoom >= data.gmaps.min_zoom)
-    && (data.gmaps.max_zoom == undefined || currentZoom <= data.gmaps.max_zoom);
+  _state[id].$zoom =
+    (typeof data.gmaps.min_zoom !== "undefined" && currentZoom < data.gmaps.min_zoom) ? 1 :
+    (typeof data.gmaps.max_zoom !== "undefined" && currentZoom > data.gmaps.max_zoom) ? -1 : 0;
   _addZoom(data.id, data.gmaps.min_zoom, data.gmaps.max_zoom);
 
   if(isMarker(id)) {
     _markers.push(id);
+    _items[id].focus = {
+      center: {lat: data.marker.lat, lng: data.marker.lng},
+      zoom: Math.max(data.gmaps.min_zoom || 16, 18),
+    };
   }
   else if(isRoute(id)) {
     _routes.push(id);
-    _items[id].route.path = parseKMLCoords(_items[id].route.path,
-                                           _items[id].route.offset);
+    const path = parseKMLCoords(_items[id].route.path, _items[id].route.offset);
+    _items[id].route.path = path;
+    _items[id].focus = {
+      center: path[Math.ceil(path.length / 2)],
+      zoom: 16,
+    };
   }
   else if(isParkingLot(id)) {
     _parking_lots.push(id);
-    _items[id].parking_lot.layer = data
-      .parking_lot.layer
-      .filter((data) => data != undefined)
-      .map((data) => {
-        data = data.replace(/[\u201C\u201D]/g, '"');
-        if(data[0] == '[') {
-          var layer = JSON.parse(data);
-          return layer.map((poly) => parseKMLCoords(poly));
-        }
-        else {
-          return parseKMLCoords(data);
-        }
+    const path = parkingPolyData[id];
+    _items[id].parking_lot.layer = path;
+    let center = data.parking_lot.center;
+    if(center.lat === 1 && center.lng === 1) {
+      center = {lat: 0, lng: 0};
+      path[0].forEach((coord) => {
+        center.lat += coord.lat;
+        center.lng += coord.lng;
       });
+    }
+    center.lat /= path[0].length;
+    center.lng /= path[0].length;
+    _items[id].parking_lot.center = center;
+    _items[id].focus = {
+      center: _items[id].parking_lot.center,
+      zoom: 18,
+    }
   }
 }
 
@@ -158,75 +210,100 @@ function destroy(id) {
   delete _items[id];
 }
 
+function openInfoWindow(id) {
+  if(_infoWindow !== null) _state[_infoWindow].$infoWindow = false;
+  _state[id].$infoWindow = true;
+  _infoWindow = id;
+}
+
+function closeInfoWindow() {
+  let oldInfoWindow = _infoWindow;
+  if(_infoWindow !== null) _state[_infoWindow].$infoWindow = false;
+  _infoWindow = null;
+  return oldInfoWindow;
+}
+
 function select(id) {
   var oldSelect = _selectedItem;
-  if(_selectedItem != null) {
-    _items[_selectedItem].$selected = false;
+  if(_selectedItem !== null) {
+    _state[_selectedItem].$selected = false;
   }
   _selectedItem = id;
-  _items[_selectedItem].$selected = true;
-  openInfoWindow(_selectedItem);
+  _state[id].$selected = true;
+  openInfoWindow(id);
   return oldSelect;
 }
 
 function deselect() {
   var oldSelectedItem = _selectedItem;
-  _items[_selectedItem].$selected = false;
+  _state[_selectedItem].$selected = false;
   closeInfoWindow(_selectedItem);
   _selectedItem = null;
   return oldSelectedItem;
 }
 
-function openInfoWindow(id) {
-  if(_infoWindow != null) _items[_infoWindow].$infoWindow = false;
-  _items[id].$infoWindow = true;
-  _infoWindow = id;
-}
+function _mapUpdateZoomLevel(czoom, ozoom) {
+  let ids = [];
+  if(czoom > ozoom) {
+    if(typeof _zoomLevels.max[ozoom] !== "undefined") {
+      _zoomLevels.max[ozoom]
+                 .forEach((id) => _state[id].$zoom = -1);
+    }
+    ids = ids.concat(_zoomLevels.max[ozoom]);
+    if(typeof _zoomLevels.min[czoom] !== "undefined") {
+      _zoomLevels.min[czoom]
+                 .forEach((id) => _state[id].$zoom = 0);
+    }
+    ids = ids.concat(_zoomLevels.min[czoom]);
+  } else {
+    if(typeof _zoomLevels.max[czoom] !== "undefined") {
+      _zoomLevels.max[czoom]
+                 .forEach((id) => _state[id].$zoom = 0);
+    }
+    ids = ids.concat(_zoomLevels.max[czoom]);
+    if(typeof _zoomLevels.min[ozoom] !== "undefined") {
+      _zoomLevels.min[ozoom]
+                 .forEach((id) => _state[id].$zoom = 1);
+    }
+    ids = ids.concat(_zoomLevels.min[ozoom]);
+  }
 
-function closeInfoWindow(id) {
-  if(_infoWindow != null) _items[_infoWindow].$infoWindow = false;
-  _infoWindow = null;
+  return ids;
 }
 
 function mapUpdateZoom() {
   const czoom = GMapsStore.getZoom(),
         ozoom = GMapsStore.getOldZoom(),
         inc = czoom > ozoom ? 1 : -1;
-  for(var i = ozoom; i != czoom; i += inc) {
-    _mapUpdateZoomLevel(i + inc, i);
+
+  let ids = [];
+  for(var i = ozoom; i !== czoom; i += inc) {
+    ids = ids.concat(_mapUpdateZoomLevel(i + inc, i));
   }
+
+  // Expensive-ish, but this is fairly small so it doesn't matter
+  return Array.from(new Set(ids));
 }
 
-function _mapUpdateZoomLevel(czoom, ozoom) {
-  if(czoom > ozoom) {
-    if(_zoomLevels.max[ozoom] != undefined) {
-      _zoomLevels.max[ozoom]
-                 .forEach((id) => _items[id].$inZoom = false);
-    }
-    if(_zoomLevels.min[czoom] != undefined) {
-      _zoomLevels.min[czoom]
-                 .forEach((id) => _items[id].$inZoom = true);
-    }
-  } else {
-    if(_zoomLevels.max[czoom] != undefined) {
-      _zoomLevels.max[czoom]
-                 .forEach((id) => _items[id].$inZoom = true);
-    }
-    if(_zoomLevels.min[ozoom] != undefined) {
-      _zoomLevels.min[ozoom]
-                 .forEach((id) => _items[id].$inZoom = false);
-    }
-  }
+function resetSearch() {
+  let ids = _searched;
+
+  _searched.forEach((id) => {
+    _state[id].search.$active = false;
+    _state[id].search.terms = [];
+  });
+
+  return ids;
 }
 
 function search(w) {
-  if(w.length <= 0) {
-    _searchKey = null;
-    return;
-  }
-  _searchKey = Math.random();
+  let ids = resetSearch();
+
+  if(w.length <= 0) return;
+
+  let newIds = [];
   _itemTrie.search(w).forEach((item) => {
-    var key, term;
+    var key = null, term = null;
     if(item instanceof Array) {
       key = item[0];
       term = item[1];
@@ -234,46 +311,44 @@ function search(w) {
       key = item;
       term = null;
     }
-    if(_items[key].$searchKey != _searchKey) {
-      _items[key].$searchKey = _searchKey;
-      _items[key].$searchTerms = [];
-    }
-    if(term && _items[key].$searchTerms.indexOf(term) < 0) {
-      _items[key].$searchTerms.push(term);
+    newIds.push(key);
+    _state[key].search.$active = true;
+    if(term && _state[key].search.terms.indexOf(term) < 0) {
+      _state[key].search.terms.push(term);
     }
   });
-};
 
-function resetSearch() {
-  _searchKey = null;
+  ids = Array.from(new Set(ids.concat(newIds)));
+  _searched = Array.from(new Set(newIds));
+  return ids;
 }
 
 function addCategory(category) {
-  _activeCategories[category] = category;
+  _activeCats.add(category);
+
+  let ids = _cats[category];
+  ids.forEach((id) => _state[id].filter.$active = true);
+  return ids;
 }
 
 function remCategory(category) {
-  delete _activeCategories[category];
+  _activeCats.delete(category);
+
+  let ids = _cats[category];
+  ids.forEach((id) => _state[id].filter.$active = false);
+  return ids;
 }
 
 function resetCategories() {
-  _activeCategories = {'TU MAIN CAMPUS': 'TU MAIN CAMPUS'};
-}
-
-function focus(id) {
-  _selectedItem = id;
-  _focusedItem = id;
-}
-
-function unfocus() {
-  _focusedItem = null;
+  let ids = [];
+  _activeCats.forEach((cat) => ids = ids.concat(remCategory(cat)));
+  addCategory("TU MAIN CAMPUS");
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {
-  /**
-   * Imports JSON data.
-   */
+
   load() {
+    loadCategories(categoryData);
     placeData.forEach((item) => create(item));
     routeData.forEach((item) => create(item));
     parkingData.forEach((item) => create(item));
@@ -281,9 +356,10 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     this.emitChange();
   },
 
-  /**
-   * Returns all markers.
-   */
+  /****************************************************************
+   * GETTERS
+   ****************************************************************/
+
   getAll() {
     return Object.keys(_items).map((id) => _items[id]);
   },
@@ -292,8 +368,12 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     return _items[id];
   },
 
+  getItemState(id) {
+    return _state[id];
+  },
+
   hasItem(id) {
-    return _items[id] != undefined;
+    return typeof _items[id] !== "undefined";
   },
 
   getMarkers() {
@@ -312,57 +392,79 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     return _selectedItem;
   },
 
-  getFocused() {
-    return _items[_focusedItem];
-  },
-
-  getSearchKey() {
-    return _searchKey;
-  },
-
   getCategories() {
-    return Object.keys(_categories);
+    return _cats_data;
   },
 
   getItemsByCategory() {
-    return _categories;
+    return _cats;
   },
 
   getActiveCategories() {
-    return Object.keys(_activeCategories);
+    return _activeCats;
   },
 
-  /**
-   * Called when anything about this object is changed.
-   */
+  getNumSearchItems() {
+    return _searched.length;
+  },
+
+  getSearched() {
+    return _searched;
+  },
+
+  /****************************************************************
+   * EMITTERS
+   ****************************************************************/
+
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
 
-  /**
-   * Called when the item with `id` is selected.
-   */
+  emitCategoryChange() {
+    this.emit(CATEGORY_CHANGE_EVENT);
+  },
+
+  emitStateChange(id) {
+    id = id || null;
+    this.emit(STATE_CHANGE_EVENT);
+    if(id !== null)
+      this.emit([STATE_CHANGE_EVENT, id]);
+  },
+
   emitSelect(id) {
     this.emit([SELECT_EVENT, id]);
   },
 
-  /**
-   * Allows functions to listen on when changes are made.
-   */
+  /****************************************************************
+   * LISTENERS
+   ****************************************************************/
+
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
+  },
+
+  addCategoryChangeListener(callback) {
+    this.on(CATEGORY_CHANGE_EVENT, callback);
+  },
+
+  addStateChangeListener(callback, id) {
+    id = id || null;
+    if(id === null)
+      this.on(STATE_CHANGE_EVENT, callback);
+    else
+      this.on([STATE_CHANGE_EVENT, id], callback);
   },
 
   addSelectListener(id, callback) {
     this.on([SELECT_EVENT, id], callback);
   },
 
-  /**
-   * This is the tool that handles receiving actions.
-   */
-  dispatcherIndex: AppDispatcher.register((payload) => {
-    var action = payload.action;
-    var data;
+  /****************************************************************
+   * DISPATCHER
+   ****************************************************************/
+
+  dispatcherIndex: AppDispatcher.register((action) => {
+    let ids = [];
 
     switch(action.actionType) {
       case ItemConstants.ITEM_CREATE:
@@ -377,78 +479,68 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
       case ItemConstants.ITEM_SELECT:
         var oldSelect = select(action.id);
-        if(oldSelect != null && oldSelect != action.id) {
-          ItemStore.emitSelect(oldSelect);
+        if(oldSelect !== null && oldSelect !== action.id) {
+          ids.push(oldSelect);
         }
-        ItemStore.emitSelect(action.id);
-        ItemStore.emitChange();
+        ids.push(action.id);
         break;
 
       case ItemConstants.ITEM_DESELECT:
-        var oldSelectedItem = deselect();
-        ItemStore.emitSelect(oldSelectedItem);
-        ItemStore.emitChange();
-        break;
-
-      case ItemConstants.ITEM_FOCUS:
-        focus(action.id);
-        ItemStore.emitChange();
-        break;
-
-      case AppStateConstants.CLOSE_MODAL:
-      case ItemConstants.ITEM_UNFOCUS:
-        unfocus();
-        ItemStore.emitChange();
+        let oldSelectedItem = deselect();
+        ids.push(oldSelectedItem);
         break;
 
       case ItemConstants.ITEM_OPEN_INFOWINDOW:
         openInfoWindow(action.id);
-        ItemStore.emitChange();
+        ids.push(action.id);
         break;
 
       case ItemConstants.ITEM_CLOSE_INFOWINDOW:
-        closeInfoWindow();
-        ItemStore.emitChange();
+        let oldInfoWindow = closeInfoWindow();
+        ids.push(oldInfoWindow);
         break;
 
       case ItemConstants.ITEM_SEARCH:
-        search(action.word);
-        ItemStore.emitChange();
+        ids = search(action.word);
         break;
 
       case ItemConstants.ITEM_RESET_SEARCH:
-        resetSearch();
-        ItemStore.emitChange();
+        ids = resetSearch();
+        _searched = Object.keys(_items);
         break;
 
       case ItemConstants.ADD_CATEGORY:
-        addCategory(action.category);
-        ItemStore.emitChange();
+        ids = addCategory(action.category);
+        ItemStore.emitCategoryChange();
         break;
 
       case ItemConstants.REM_CATEGORY:
-        remCategory(action.category);
-        ItemStore.emitChange();
+        ids = remCategory(action.category);
+        ItemStore.emitCategoryChange();
         break;
 
       case ItemConstants.RESET_CATEGORIES:
-        resetCategories();
+        ids = resetCategories();
+        ItemStore.emitCategoryChange();
         break;
 
       case GMapsConstants.MAP_ZOOM:
         AppDispatcher.waitFor([
-          GMapsStore.dispatchToken,
+          GMapsStore.dispatcherIndex,
         ]);
-        mapUpdateZoom();
-        ItemStore.emitChange();
+        ids = mapUpdateZoom();
         break;
     }
+
+    ids.forEach((id) => {
+      ItemStore.emitStateChange(id);
+    });
 
     return true;
   })
 });
 
-// We may need to create hundreds to thousands of events
+// We may need to create hundreds to thousands of events, so make this limit unbounded.
 ItemStore.setMaxListeners(0);
 
 module.exports = ItemStore

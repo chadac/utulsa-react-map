@@ -4,35 +4,38 @@ const GMapsConstants = require('../constants/GMapsConstants');
 const GMapsActions = {
 
   zoom: (zoomLevel) => {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: GMapsConstants.MAP_ZOOM,
+      update: false,
       zoom: zoomLevel,
     });
   },
 
   center: (lat, lng) => {
-    AppDispatcher.handleViewAction({
+    AppDispatcher.dispatch({
       actionType: GMapsConstants.MAP_CENTER,
+      update: false,
       lat: lat,
       lng: lng
     });
   },
 
-  setZoom: (zoomLevel) => {
-    AppDispatcher.handleViewAction({
-      actionType: GMapsConstants.MAP_SET_ZOOM,
-      zoom: zoomLevel,
-    });
-  },
-
-  setCenter: (lat, lng) => {
-    AppDispatcher.handleViewAction({
-      actionType: GMapsConstants.MAP_SET_CENTER,
+  setUserPosition: (lat, lng) => {
+    AppDispatcher.dispatch({
+      actionType: GMapsConstants.SET_USER_POSITION,
       lat: lat,
-      lng: lng
+      lng: lng,
     });
+    GMapsActions.center(lat, lng);
+    GMapsActions.zoom(19);
   },
 
+  createMap: (div) => {
+    AppDispatcher.dispatch({
+      actionType: GMapsConstants.CREATE_MAP,
+      div: div,
+    });
+  },
 };
 
 module.exports = GMapsActions;

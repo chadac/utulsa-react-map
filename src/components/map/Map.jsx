@@ -1,140 +1,64 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom';
 
-import GMapsStore from '../../stores/GMapsStore';
+import FluxComponent from '../../hoc/FluxComponent';
 
-import AppState from '../../constants/AppState';
+import Place from './Place';
+import SimpleMarker from './SimpleMarker';
+import Marker from './Marker';
+import Route from './Route';
+import ParkingLot from './ParkingLot';
 
-import Marker from './Marker'
-import Route from './Route'
-import ParkingLot from './ParkingLot'
-
+import classnames from 'classnames/bind';
 import styles from '../../stylesheets/Map.scss'
+const cx = classnames.bind(styles);
+
 import gmaps from '../../GMapsAPI';
 
-const Control = React.createClass({
-  propTypes: {
-    id: PropTypes.string.isRequired,
-    position: PropTypes.number.isRequired,
-    _onClick: PropTypes.func,
-    controlUIStyle: PropTypes.object,
-    controlTextStyle: PropTypes.object,
+class Map extends Component {
+  constructor(props) {
+    super(props);
 
-    _openInfoWindow: PropTypes.func.isRequired,
-    _closeInfoWindow: PropTypes.func.isRequired,
-  },
-
-  getDefaultProps() {
-    // TODO: Move these div styles over to the SASS file
-    return {
-      controlUIStyle: {
-        backgroundColor: '#fff',
-        border: '2px solid #fff',
-        borderRadius: '3px',
-        boxShadow: '0 2px 6px rgba(0,0,0,.3)',
-        cursor: 'pointer',
-        marginBottom: '22px',
-        textAlign: 'center'
-      },
-      controlTextStyle: {
-        color: 'rgb(25,25,25)',
-        fontFamily: 'Roboto,Arial,sans-serif',
-        fontSize: '16px',
-        lineHeight: '38px',
-        paddingLeft: '5px',
-        paddingRight: '5px'
-      },
-    };
-  },
-
-  componentDidMount() {
-  },
-
-  render() {
-    return (
-      <div ref={this.props.id} style={this.props.controlUIStyle}
-           title ={this.props.title}>
-        <div style={this.props.controlTextStyle}>
-          {this.props.text}
-        </div>
-      </div>
-    );
-  },
-});
-
-var _control_id = 1;
-/**
- * Adds a map control. This is the simplest and most React-y way to implement
- * the controls, since React does not like when I move the React component into
- * the DOM.
- **/
-function addControl(map, component) {
-  let div = document.createElement('div');
-  div.ref = "mapControl_" + (++_control_id);
-  map.controls[component.props.position].push(div);
-  ReactDOM.render(component, div);
-}
-
-const Map = React.createClass({
-  propTypes: {
-    center: PropTypes.object.isRequired,
-    zoom: PropTypes.number.isRequired,
-    items: PropTypes.array.isRequired,
-    appState: PropTypes.string.isRequired,
-    _onZoom: PropTypes.func.isRequired,
-    _onCenter: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
+    this.state = {
       rendered: false,
     };
-  },
+  }
 
   componentDidMount() {
     this.map = this.createMap();
-    this.map.addListener("center_changed", this._onMapCenter);
-    this.map.addListener("zoom_changed", this._onMapZoom);
+    this.map.addListener("center_changed", this._onMapCenter.bind(this));
+    this.map.addListener("zoom_changed", this._onMapZoom.bind(this));
+    this.actions().gmaps.setMap(this.map);
     this.setState({rendered: true});
-    GMapsStore.addCenterListener(this._centerChanged);
-    GMapsStore.addZoomListener(this._zoomChanged);
-  },
+    this.stores().gmaps.addCenterListener(this._centerChanged.bind(this));
+    this.stores().gmaps.addZoomListener(this._zoomChanged.bind(this));
+    this.stores().gmaps.addUserPositionListener(this._userPositionSet.bind(this));
+  }
 
   createMap() {
     let mapOptions = {
-      zoom: this.props.zoom,
       center: this.props.center,
-      styles: [
-        {
-          featureType: 'poi',
-          stylers: [{visibility: "off"}],
-        },
-      ],
+      zoom: this.props.zoom,
+      styles: [{
+        featureType: 'poi',
+        stylers: [{visibility: "off"}],
+      }],
     }
     return new gmaps.Map(this.refs.map, mapOptions);
-  },
+  }
 
   render() {
     if(this.state.rendered) {
       const map = this.map;
-      const items = this
+      const mapItems = this
         .props.items
-        .filter((item) => {
-          switch(this.props.appState) {
-            case AppState.NORMAL:
-              return item.$inZoom;
-            case AppState.SELECT:
-              return item.$selected || item.$inZoom;
-            case AppState.SEARCH:
-              return true;
-          }
-          return true;
-        })
         .map((item) => {
-          var MapItem;
+          var MapItem = null;
           switch(item.type) {
-            case "marker":
-              MapItem = Marker;
+            case "place":
+              MapItem = Place;
+              break;
+            case "simple_marker":
+              MapItem = SimpleMarker;
               break;
             case "route":
               MapItem = Route;
@@ -144,50 +68,64 @@ const Map = React.createClass({
               break;
           }
           return (
-            <MapItem key={item.id} map={map} {...item}
-                     appState={this.props.appState}
-                     _openInfoWindow={this.props._openInfoWindow}
-                     _closeInfoWindow={this.props._closeInfoWindow}
-                     _focus={this.props._focus} />
+            <MapItem key={item.id} map={map} id={item.id}
+                     data={item} appState={this.props.appState}
+                     _register={this.stores().item.addStateChangeListener.bind(this.stores().item)}
+                     _getItemState={this.stores().item.getItemState.bind(this.stores().item)}
+                     _openInfoWindow={this.actions().item.openInfoWindow}
+                     _closeInfoWindow={this.actions().item.closeInfoWindow} />
           );
         });
+      if(this.state.user) {
+        mapItems.push((
+          <Marker map={map} key="user_position" id="user_position" latLng={this.state.user} />
+        ));
+      }
       return (
-        <div className={styles.mapContainer}>
-          <div ref="map" className={styles.Map}>
+        <div className={cx("map-container")}>
+          <div ref="map" className={cx("Map")}>
           </div>
-          {items}
+          {mapItems}
         </div>
       );
     } else {
       return (
-        <div className={styles.mapContainer}>
-          <div ref="map" className={styles.Map}></div>
+        <div className={cx("map-container")}>
+          <div ref="map" className={cx("Map")}></div>
         </div>
       );
     }
-  },
-
-  _onChange() {
-    this.setState(getItemState());
-  },
+  }
 
   _onMapCenter() {
     const center = this.map.getCenter();
-    if(center != null) this.props._onCenter(center.lat(), center.lng());
-  },
+    if(center !== null) this.actions().gmaps.center(center.lat(), center.lng());
+  }
 
   _onMapZoom() {
     const zoom = this.map.getZoom();
-    this.props._onZoom(zoom);
-  },
+    this.actions().gmaps.zoom(zoom);
+  }
 
   _centerChanged(lat, lng) {
     this.map.setCenter(new gmaps.LatLng(lat, lng));
-  },
+  }
 
   _zoomChanged(zoomLevel) {
     this.map.setZoom(zoomLevel);
   }
-});
 
-export default Map;
+  _userPositionSet(lat, lng) {
+    this.setState({user: new gmaps.LatLng(lat, lng)});
+  }
+}
+
+Map.propTypes = {
+  center: PropTypes.object.isRequired,
+  zoom: PropTypes.number.isRequired,
+  appState: PropTypes.string.isRequired,
+
+  items: PropTypes.array.isRequired,
+};
+
+export default FluxComponent(Map);
