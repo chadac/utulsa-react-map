@@ -9,18 +9,15 @@ cache:
   paths:
    - node_modules/
 
-# test:
-#   script:
-#    - npm install
-#    - npm test
-
-staging:
-  type: deploy
-  environment:
-    name: staging/$CI_BUILD_REF_NAME
-    url: https://$CI_ENVIRONMENT_SLUG.utulsa.co/
+test:
   script:
-    - npm install
-    - npm run build
-    - npm install -g pushstate-server
-    - pushstate-server build
+   - npm install
+   - npm test
+
+
+# staging:
+#   type: deploy
+#   environment:
+#     name: staging/$CI_BUILD_REF_NAME
+#     url: https://$CI_ENVIRONMENT_SLUG.utulsa.co/
+#   script:
