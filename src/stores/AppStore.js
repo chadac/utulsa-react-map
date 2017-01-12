@@ -70,7 +70,8 @@ var AppStore = assign({}, EventEmitter.prototype, {
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
-        setState(AppState.NORMAL);
+        if(_currentState === AppState.SEARCH)
+          setState(AppState.NORMAL);
         AppStore.emitChange();
         break;
     }

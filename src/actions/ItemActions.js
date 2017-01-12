@@ -37,9 +37,9 @@ var ItemActions = {
 
   focus: function(id) {
     const item = ItemStore.getItem(id);
-    ItemActions.select(id);
     GMapsActions.center(item.focus.center.lat, item.focus.center.lng);
     GMapsActions.zoom(item.focus.zoom);
+    ItemActions.select(id);
   },
 
   unfocus: function() {

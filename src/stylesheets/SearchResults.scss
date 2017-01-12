@@ -15,22 +15,28 @@
     &:last-child {
         border-bottom: none;
     }
-    & .name {
-        font-size: 14px;
-        color: #555;
-    }
-    & .terms {
-        font-size: 10px;
-        color: #999;
-    }
-    & .address {
-        font-size: 10px;
-        color: #666;
-    }
-    & hr {
-        height: 2px;
-        visibility: hidden;
-        margin-bottom: -1px;
+    & .content {
+        width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        & .name {
+            font-size: 14px;
+            color: #555;
+        }
+        & .terms {
+            font-size: 10px;
+            color: #999;
+        }
+        & .address {
+            font-size: 10px;
+            color: #666;
+        }
+        & hr {
+            height: 2px;
+            visibility: hidden;
+            margin-bottom: -1px;
+        }
     }
 }
 

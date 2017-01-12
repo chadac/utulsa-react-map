@@ -22,12 +22,14 @@ class SearchItemMain extends Component {
       <div className={cx("search-item", {
           "inactive": !this.props.item.filter.$active,
         })} onClick={this._onClick.bind(this)}>
-        <span className={cx("name")}>{data.name}</span>
-        { terms.length > 0 ?
-          (<span className={cx("terms")}>&nbsp;({terms.join(", ")})</span>)
-          : null }
-        <hr />
-        <span className={cx("address")}>{ data.address }</span>
+        <div className={cx("content")}>
+          <span className={cx("name")}>{data.name}</span>
+          { terms.length > 0 ?
+            (<span className={cx("terms")}>&nbsp;({terms.join(", ")})</span>)
+            : null }
+          <hr />
+          <span className={cx("address")}>{ data.address }</span>
+        </div>
       </div>
     );
   }
