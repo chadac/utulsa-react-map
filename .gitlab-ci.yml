@@ -7,9 +7,20 @@ image: node:latest
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
   paths:
-  - node_modules/
+   - node_modules/
 
-test_async:
+# test:
+#   script:
+#    - npm install
+#    - npm test
+
+staging:
+  type: deploy
+  environment:
+    name: staging/$CI_BUILD_REF_NAME
+    url: https://$CI_ENVIRONMENT_SLUG.utulsa.co/
   script:
-   - npm install
-   - npm test
+    - npm install
+    - npm run build
+    - npm install -g pushstate-server
+    - pushstate-server build
