@@ -141,26 +141,26 @@ class GMapsStoreProto extends EventEmitter {
     switch(action.actionType) {
       case GMapsConstants.CREATE_MAP:
         createMap(action.div);
-        GMapsStore.emitMapCreated();
+        this.emitMapCreated();
         break;
 
       case GMapsConstants.MAP_CENTER:
         if(!action.update)
           center(action.lat, action.lng);
         _updateCenter();
-        GMapsStore.emitCenter();
+        this.emitCenter();
         break;
 
       case GMapsConstants.MAP_ZOOM:
         if(!action.update)
           zoom(action.zoom);
         _updateZoom();
-        GMapsStore.emitZoom();
+        this.emitZoom();
         break;
 
       case GMapsConstants.SET_USER_POSITION:
         setUserPosition(action.lat, action.lng);
-        GMapsStore.emitUserPosition(action.lat, action.lng);
+        this.emitUserPosition(action.lat, action.lng);
         break;
     }
 
