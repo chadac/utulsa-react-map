@@ -21,7 +21,14 @@ class MockListener {
 class Map extends MockListener {
   constructor() {
     super();
+    this.center = new gmaps.LatLng(0,0);
+    this.zoom = 16;
   }
+
+  setCenter(newCenter) { this.center = newCenter; }
+  setZoom(newZoom) { this.zoom = newZoom; }
+  getCenter() { return this.center; }
+  getZoom() { return this.zoom; }
 }
 gmaps.Map = Map;
 
@@ -61,6 +68,11 @@ class Route extends MockListener {
 gmaps.Route = Route;
 
 class LatLng extends MockListener {
+  constructor(lat, lng) {
+    super();
+    this.lat = lat;
+    this.lng = lng;
+  }
 }
 gmaps.LatLng = LatLng;
 
@@ -72,4 +84,6 @@ class OverlayView extends MockListener {
 }
 gmaps.OverlayView = OverlayView;
 
-module.exports = gmaps;
+gmaps.ControlPosition = {LEFT_BOTTOM: 'LEFT_BOTTOM'}
+
+export default gmaps;

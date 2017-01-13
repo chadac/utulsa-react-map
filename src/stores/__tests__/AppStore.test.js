@@ -76,4 +76,56 @@ describe('AppStore', () => {
       expect(AppStore.getState()).toBe("test");
     });
   });
+
+  describe("#emitChange", () => {
+    var mockCallback;
+
+    const numCalls = () => mockCallback.mock.calls.length;
+    beforeEach(() => {
+      mockCallback = jest.fn();
+
+      AppStore.addChangeListener(mockCallback);
+    });
+
+    it("emits on setting App state", () => {
+      setState("test");
+      expect(numCalls()).toBe(1);
+    });
+
+    it("emits on item select", () => {
+      select()
+      expect(numCalls()).toBe(1);
+    });
+
+    it("emits on item deselect", () => {
+      deselect();
+      expect(numCalls()).toBe(1);
+    });
+
+    it("emits on closing infowindow when in select state", () => {
+      closeInfoWindow();
+      expect(numCalls()).toBe(0);
+
+      select();
+      closeInfoWindow();
+      expect(numCalls()).toBe(2);
+    });
+
+    it("emits on search", () => {
+      search("hello");
+      expect(numCalls()).toBe(1);
+
+      search("");
+      expect(numCalls()).toBe(2);
+    });
+
+    it("emits on reset search only when in search state", () => {
+      resetSearch();
+      expect(numCalls()).toBe(0);
+
+      search("hello");
+      resetSearch();
+      expect(numCalls()).toBe(2);
+    });
+  });
 });

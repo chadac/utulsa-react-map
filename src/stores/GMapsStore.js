@@ -1,7 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-const EventEmitter = require('events').EventEmitter;
-const GMapsConstants = require('../constants/GMapsConstants');
-const assign = require('object-assign');
+import {EventEmitter} from 'events';
+import GMapsConstants from '../constants/GMapsConstants';
 
 import gmaps from '../GMapsAPI';
 
@@ -78,62 +77,73 @@ function zoom(newZoom) {
   _map.setZoom(newZoom);
 }
 
-const GMapsStore = assign({}, EventEmitter.prototype, {
+class GMapsStoreProto extends EventEmitter {
+
+  constructor() {
+    super();
+
+    this.dispatcherIndex = AppDispatcher.register(this.dispatch.bind(this));
+  }
 
   getZoom() {
     return _zoom;
-  },
+  }
 
   getOldZoom() {
     return _oldZoom;
-  },
+  }
 
   getCenter() {
     return _center;
-  },
+  }
 
   getUserPosition() {
     return _userPosition;
-  },
+  }
 
   getMap() {
     return _map;
-  },
+  }
 
   emitZoom() {
     this.emit(ZOOM_EVENT, _zoom);
-  },
+  }
 
   emitCenter() {
     this.emit(CENTER_EVENT, center.lat, center.lng);
-  },
+  }
 
   emitUserPosition(lat, lng) {
     this.emit(USER_POSITION_EVENT, lat, lng);
-  },
+  }
 
   emitMapCreated() {
     this.emit(MAP_SET_EVENT, _map);
-  },
+  }
 
   addZoomListener(callback) {
     this.on(ZOOM_EVENT, callback);
-  },
+  }
 
   addCenterListener(callback) {
     this.on(CENTER_EVENT, callback);
-  },
+  }
 
   addUserPositionListener(callback) {
     this.on(USER_POSITION_EVENT, callback);
-  },
+  }
 
   addMapListener(callback) {
     this.on(MAP_SET_EVENT, callback);
-  },
+  }
 
-  dispatcherIndex: AppDispatcher.register((action) => {
+  dispatch(action) {
     switch(action.actionType) {
+      case GMapsConstants.CREATE_MAP:
+        createMap(action.div);
+        GMapsStore.emitMapCreated();
+        break;
+
       case GMapsConstants.MAP_CENTER:
         if(!action.update)
           center(action.lat, action.lng);
@@ -152,16 +162,12 @@ const GMapsStore = assign({}, EventEmitter.prototype, {
         setUserPosition(action.lat, action.lng);
         GMapsStore.emitUserPosition(action.lat, action.lng);
         break;
-
-      case GMapsConstants.CREATE_MAP:
-        createMap(action.div);
-        GMapsStore.emitMapCreated();
-        break;
     }
 
     return true;
-  }),
+  }
+}
 
-});
+var GMapsStore = new GMapsStoreProto();
 
-module.exports = GMapsStore;
+export default GMapsStore;

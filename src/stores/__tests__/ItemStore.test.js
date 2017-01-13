@@ -1,6 +1,7 @@
 import ItemConstants from '../../constants/ItemConstants';
 import GMapsConstants from '../../constants/GMapsConstants';
 jest.mock('../../GMapsAPI')
+jest.mock('../../dispatcher/AppDispatcher')
 
 describe('ItemStore', () => {
   var ItemStore;

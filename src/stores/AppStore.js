@@ -74,9 +74,10 @@ class AppStoreProto extends EventEmitter {
         AppDispatcher.waitFor([
           ItemStore.dispatcherIndex,
         ]);
-        if(_currentState === AppState.SEARCH)
+        if(_currentState === AppState.SEARCH) {
           setState(AppState.NORMAL);
-        this.emitChange();
+          this.emitChange();
+        }
         break;
     }
     return true;
