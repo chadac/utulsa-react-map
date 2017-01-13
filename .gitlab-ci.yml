@@ -9,9 +9,14 @@ cache:
   paths:
    - node_modules/
 
-test:
+build:
+  type: build
   script:
-   - npm install
+    - npm install
+
+test:
+  type: test
+  script:
    - npm test
 
 
