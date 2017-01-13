@@ -9,7 +9,7 @@ import React, {Component, PropTypes} from 'react';
  * @returns {React.Component} The new flux component.
  **/
 const FluxComponent = ComposedComponent => {
-  class NewComponent extends Component {
+  class FluxComponentHOC extends Component {
     constructor(props) {
       super(props);
 
@@ -37,13 +37,13 @@ const FluxComponent = ComposedComponent => {
     }
   }
 
-  NewComponent.propTypes = Object.assign({}, ComposedComponent.propTypes, {
+  FluxComponentHOC.propTypes = Object.assign({}, ComposedComponent.propTypes, {
     dispatcher: PropTypes.object.isRequired,
     stores: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   });
 
-  return NewComponent;
+  return FluxComponentHOC;
 };
 
 export default FluxComponent;

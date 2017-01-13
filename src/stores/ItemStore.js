@@ -4,16 +4,15 @@
  * Stores state information for all items on the map. The bulk of the
  * logic will happen through this script.
  **/
-const AppDispatcher = require('../dispatcher/AppDispatcher');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import {EventEmitter} from 'events';
 
-const ItemConstants = require('../constants/ItemConstants');
+import ItemConstants from '../constants/ItemConstants';
 
-const GMapsStore = require('./GMapsStore');
-const GMapsConstants = require('../constants/GMapsConstants');
+import GMapsStore from './GMapsStore';
+import GMapsConstants from '../constants/GMapsConstants';
 
-const Trie = require('../util/Trie');
+import Trie from '../util/Trie';
 
 const placeData = require('../data/places.json');
 const routeData = require('../data/routes.json');
@@ -21,6 +20,7 @@ const parkingData = require('../data/parking_lots.json');
 const parkingPolyData = require('../data/parking_polygons.json');
 const markerData = require('../data/markers.json');
 const categoryData = require('../data/categories.json');
+
 
 const CHANGE_EVENT = 'c';
 const CATEGORY_CHANGE_EVENT = 'cat';
@@ -345,7 +345,12 @@ function resetCategories() {
   addCategory("TU MAIN CAMPUS");
 }
 
-var ItemStore = assign({}, EventEmitter.prototype, {
+class ItemStoreProto extends EventEmitter {
+
+  constructor() {
+    super();
+    this.dispatcherIndex = AppDispatcher.register(this.dispatch.bind(this));
+  }
 
   load() {
     loadCategories(categoryData);
@@ -354,7 +359,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
     parkingData.forEach((item) => create(item));
     markerData.forEach((item) => create(item));
     this.emitChange();
-  },
+  }
 
   /****************************************************************
    * GETTERS
@@ -362,55 +367,55 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
   getAll() {
     return Object.keys(_items).map((id) => _items[id]);
-  },
+  }
 
   getItem(id) {
     return _items[id];
-  },
+  }
 
   getItemState(id) {
     return _state[id];
-  },
+  }
 
   hasItem(id) {
     return typeof _items[id] !== "undefined";
-  },
+  }
 
   getMarkers() {
     return _markers.map((id) => _items[id]);
-  },
+  }
 
   getRoutes() {
     return _routes.map((id) => _items[id]);
-  },
+  }
 
   getInfoWindow() {
     return _infoWindow;
-  },
+  }
 
   getSelected() {
     return _selectedItem;
-  },
+  }
 
   getCategories() {
     return _cats_data;
-  },
+  }
 
   getItemsByCategory() {
     return _cats;
-  },
+  }
 
   getActiveCategories() {
     return _activeCats;
-  },
+  }
 
   getNumSearchItems() {
     return _searched.length;
-  },
+  }
 
   getSearched() {
     return _searched;
-  },
+  }
 
   /****************************************************************
    * EMITTERS
@@ -418,22 +423,21 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
   emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
   emitCategoryChange() {
     this.emit(CATEGORY_CHANGE_EVENT);
-  },
+  }
 
   emitStateChange(id) {
     id = id || null;
-    this.emit(STATE_CHANGE_EVENT);
     if(id !== null)
       this.emit([STATE_CHANGE_EVENT, id]);
-  },
+  }
 
   emitSelect(id) {
     this.emit([SELECT_EVENT, id]);
-  },
+  }
 
   /****************************************************************
    * LISTENERS
@@ -441,11 +445,11 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
   addCategoryChangeListener(callback) {
     this.on(CATEGORY_CHANGE_EVENT, callback);
-  },
+  }
 
   addStateChangeListener(callback, id) {
     id = id || null;
@@ -453,28 +457,28 @@ var ItemStore = assign({}, EventEmitter.prototype, {
       this.on(STATE_CHANGE_EVENT, callback);
     else
       this.on([STATE_CHANGE_EVENT, id], callback);
-  },
+  }
 
   addSelectListener(id, callback) {
     this.on([SELECT_EVENT, id], callback);
-  },
+  }
 
   /****************************************************************
    * DISPATCHER
    ****************************************************************/
 
-  dispatcherIndex: AppDispatcher.register((action) => {
+  dispatch(action) {
     let ids = [];
 
     switch(action.actionType) {
       case ItemConstants.ITEM_CREATE:
         create(action.data, false);
-        ItemStore.emitChange();
+        this.emitChange();
         break;
 
       case ItemConstants.ITEM_DESTROY:
         destroy(action.id);
-        ItemStore.emitChange();
+        this.emitChange();
         break;
 
       case ItemConstants.ITEM_SELECT:
@@ -483,11 +487,13 @@ var ItemStore = assign({}, EventEmitter.prototype, {
           ids.push(oldSelect);
         }
         ids.push(action.id);
+        ids.forEach((id) => this.emitSelect(id));
         break;
 
       case ItemConstants.ITEM_DESELECT:
         let oldSelectedItem = deselect();
         ids.push(oldSelectedItem);
+        ids.forEach((id) => this.emitSelect(id));
         break;
 
       case ItemConstants.ITEM_OPEN_INFOWINDOW:
@@ -511,17 +517,17 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
       case ItemConstants.ADD_CATEGORY:
         ids = addCategory(action.category);
-        ItemStore.emitCategoryChange();
+        this.emitCategoryChange();
         break;
 
       case ItemConstants.REM_CATEGORY:
         ids = remCategory(action.category);
-        ItemStore.emitCategoryChange();
+        this.emitCategoryChange();
         break;
 
       case ItemConstants.RESET_CATEGORIES:
         ids = resetCategories();
-        ItemStore.emitCategoryChange();
+        this.emitCategoryChange();
         break;
 
       case GMapsConstants.MAP_ZOOM:
@@ -532,15 +538,15 @@ var ItemStore = assign({}, EventEmitter.prototype, {
         break;
     }
 
-    ids.forEach((id) => {
-      ItemStore.emitStateChange(id);
-    });
+    ids.forEach((id) => this.emitStateChange(id));
+    if(ids.length > 0) this.emit(STATE_CHANGE_EVENT);
 
     return true;
-  })
-});
+  }
+}
 
+var ItemStore = new ItemStoreProto();
 // We may need to create hundreds to thousands of events, so make this limit unbounded.
 ItemStore.setMaxListeners(0);
 
-module.exports = ItemStore
+export default ItemStore;

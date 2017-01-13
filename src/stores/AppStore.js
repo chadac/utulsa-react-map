@@ -1,12 +1,11 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import {EventEmitter} from 'events';
 
-const AppConstants = require('../constants/AppConstants');
-const AppState = require('../constants/AppState');
+import AppConstants from '../constants/AppConstants';
+import AppState from '../constants/AppState';
 
-const ItemConstants = require('../constants/ItemConstants');
-const ItemStore = require('./ItemStore');
+import ItemConstants from '../constants/ItemConstants';
+import ItemStore from './ItemStore';
 
 
 const CHANGE_EVENT = "change";
@@ -17,41 +16,46 @@ function setState(state) {
   _currentState = state;
 }
 
-var AppStore = assign({}, EventEmitter.prototype, {
+class AppStoreProto extends EventEmitter {
+  constructor() {
+    super();
+
+    this.dispatcherIndex = AppDispatcher.register(this.dispatch.bind(this));
+  }
+
   getState() {
     return _currentState;
-  },
+  }
 
   emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
-  dispatcherIndex: AppDispatcher.register((action) => {
+  dispatch(action) {
     switch(action.actionType) {
-
       case AppConstants.APP_SET_STATE:
         setState(action.state);
-        AppStore.emitChange();
+        this.emitChange();
         break;
 
       case ItemConstants.ITEM_SELECT:
         setState(AppState.SELECT);
-        AppStore.emitChange();
+        this.emitChange();
         break;
 
       case ItemConstants.ITEM_DESELECT:
         setState(AppState.NORMAL);
-        AppStore.emitChange();
+        this.emitChange();
         break;
 
       case ItemConstants.ITEM_CLOSE_INFOWINDOW:
         if(_currentState === AppState.SELECT) {
           setState(AppState.NORMAL);
-          AppStore.emitChange();
+          this.emitChange();
         }
         break;
 
@@ -63,7 +67,7 @@ var AppStore = assign({}, EventEmitter.prototype, {
           setState(AppState.NORMAL);
         else
           setState(AppState.SEARCH);
-        AppStore.emitChange();
+        this.emitChange();
         break;
 
       case ItemConstants.ITEM_RESET_SEARCH:
@@ -72,11 +76,13 @@ var AppStore = assign({}, EventEmitter.prototype, {
         ]);
         if(_currentState === AppState.SEARCH)
           setState(AppState.NORMAL);
-        AppStore.emitChange();
+        this.emitChange();
         break;
     }
     return true;
-  }),
-});
+  }
+}
+
+var AppStore = new AppStoreProto();
 
 export default AppStore;
