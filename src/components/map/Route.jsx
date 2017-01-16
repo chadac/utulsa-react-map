@@ -1,3 +1,6 @@
+/**
+ * @module Route
+ */
 import React, {Component, PropTypes} from 'react';
 import ItemStateHOC from '../../hoc/ItemStateHOC';
 
@@ -6,6 +9,11 @@ import AppState from '../../constants/AppState';
 import gmaps from '../../GMapsAPI';
 import InfoWindow from './InfoWindow';
 
+/**
+ * React component for routes. These can be any types of paths that appear
+ * on the map.
+ * @class
+ */
 class Route extends Component {
 
   constructor(props) {
@@ -17,15 +25,25 @@ class Route extends Component {
     };
   }
 
+  /**
+   * Before the component initially renders.
+   */
   componentWillMount() {
     this.route = this.createRoute();
     this.route.addListener('click', this._onClick.bind(this));
   }
 
+  /**
+   * Before the component unmounts.
+   */
   componentWillUnmount() {
     this.route.setMap(null);
   }
 
+  /**
+   * Creates an array of gmaps.LatLng objects of the path of the route.
+   * @returns {Array.<gmaps.LatLng>} path
+   */
   createPathCoordinates() {
     const route = this.props.data.route;
     return route.path.map((coords) => {
@@ -33,16 +51,10 @@ class Route extends Component {
     })
   }
 
-  createInfoWindow() {
-    const data = this.props.data;
-    var content = "<h4>" + data.name + "</h4>"
-                + "<p>" + data.address + "</p>"
-                + "<p>" + data.website + "</p>";
-    return new gmaps.InfoWindow({
-      content: content
-    });
-  }
-
+  /**
+   * Creates the route object.
+   * @returns {gmaps.PolyLine} route
+   */
   createRoute() {
     const route = this.props.data.route;
     return new gmaps.Polyline({
@@ -55,19 +67,13 @@ class Route extends Component {
     });
   }
 
+  /**
+   * Renders the component.
+   * @returns {ReactElement} route
+   */
   render() {
     this.updateRoute();
-    let position = null;
-    switch(this.props.appState) {
-      case AppState.FILTER:
-      case AppState.NORMAL:
-      case AppState.SEARCH:
-        position = this.state.click;
-        break;
-      case AppState.SELECT:
-        position = this.state.position;
-        break;
-    }
+    let position = this.getPosition();
     return (
       <InfoWindow $infoWindow={this.props.item.$infoWindow}
                   map={this.props.map}
@@ -79,9 +85,11 @@ class Route extends Component {
     );
   }
 
+  /**
+   * Updates the component based on app and item state.
+   */
   updateRoute() {
     const state = this.props.item;
-    // const data = this.props.data;
     switch(this.props.appState) {
       case AppState.FILTER:
         if(state.filter.$active) {
@@ -110,6 +118,30 @@ class Route extends Component {
     }
   }
 
+  /**
+   * Gets the position of where the InfoWindow should be shown (if we
+   * are to show it)
+   * @returns {gmaps.LatLng} position
+   */
+  getPosition() {
+    let position = null;
+    switch(this.props.appState) {
+      case AppState.FILTER:
+      case AppState.NORMAL:
+      case AppState.SEARCH:
+        position = this.state.click;
+        break;
+      case AppState.SELECT:
+        position = this.state.position;
+        break;
+    }
+    return position;
+  }
+
+  /**
+   * Called when route is clicked; opens info window.
+   * @param {Event} e The click event.
+   */
   _onClick(e) {
     this.setState({click: e.latLng});
     this.props._openInfoWindow(this.props.id);
@@ -117,14 +149,21 @@ class Route extends Component {
 }
 
 Route.propTypes = {
+  // The map object
   map: PropTypes.object.isRequired,
 
+  // Opens the info window.
   _openInfoWindow: PropTypes.func.isRequired,
+  // Closes the info window.
   _closeInfoWindow: PropTypes.func.isRequired,
 
+  // Item ID
   id: PropTypes.string.isRequired,
+  // App state
   appState: PropTypes.string.isRequired,
+  // Item state
   item: PropTypes.object.isRequired,
+  // Item data
   data: PropTypes.object.isRequired,
 };
 

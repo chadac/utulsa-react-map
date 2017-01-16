@@ -1,3 +1,6 @@
+/**
+ * @module SearchResults
+ */
 import React, {Component, PropTypes} from 'react';
 import ItemStateHOC from '../../hoc/ItemStateHOC';
 import FluxComponent from '../../hoc/FluxComponent';
@@ -7,12 +10,19 @@ import styles from '../../stylesheets/SearchResults.scss';
 const cx = classnames.bind(styles);
 
 
+/**
+ * Represents a singular search item.
+ * @class
+ */
 class SearchItemMain extends Component {
-
   constructor(props) {
     super(props);
   }
 
+  /**
+   * Render step.
+   * @returns {ReactElement} searchItem
+   */
   render() {
     if(!this.props.item.search.$active) return null;
 
@@ -34,6 +44,9 @@ class SearchItemMain extends Component {
     );
   }
 
+  /**
+   * Triggers when the search result is clicked. Focuses on the item.
+   */
   _onClick() {
     this.props._focus(this.props.data.id);
   }
@@ -48,14 +61,22 @@ SearchItemMain.propTypes = {
 
 const SearchItem = new ItemStateHOC(SearchItemMain);
 
+
+/**
+ * Listing of all search results.
+ * @class
+ */
 class SearchResults extends Component {
   constructor(props) {
     super(props);
 
+    this.stores().item.addChangeListener(this._updateSearchItems.bind(this));
     this.stores().item.addStateChangeListener(this._stateChanged.bind(this));
 
     this.state = {
+      // Tracks the number of results
       numResults: this.stores().item.getNumSearchItems(),
+      // All items mapped into React components
       searchItems: this.createSearchItems(),
     };
   }
@@ -71,6 +92,13 @@ class SearchResults extends Component {
     );
   }
 
+  /**
+   * This maps all items into React components, including those not actively
+   * searched. Sub-items then manage their display. This is done for performance
+   * reasons -- it's slightly faster to have each item handle its own render
+   * rather than to mass re-render at each step.
+   * @returns {Array.<SearchItem>} searchItems
+   */
   createSearchItems() {
     const searchItems = this
       .props.items.map((item) => {
@@ -83,12 +111,18 @@ class SearchResults extends Component {
     return searchItems;
   }
 
+  /**
+   * Updates all search items.
+   */
   _updateSearchItems() {
     this.setState({
       searchItems: this.createSearchItems(),
     });
   }
 
+  /**
+   * Updates the number of search items when an item's state is changed.
+   */
   _stateChanged() {
     this.setState({
       numResults: this.stores().item.getNumSearchItems(),
@@ -97,9 +131,12 @@ class SearchResults extends Component {
 }
 
 SearchResults.propTypes = {
+  // List of items
   items: PropTypes.array.isRequired,
 
+  // Height of submenu
   height: PropTypes.number.isRequired,
+  // Whether to display the submenu
   display: PropTypes.bool.isRequired,
 };
 

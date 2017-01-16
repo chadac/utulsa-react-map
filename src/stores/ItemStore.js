@@ -3,6 +3,8 @@
  *
  * Stores state information for all items on the map. The bulk of the
  * logic will happen through this script.
+ *
+ * @module ItemStore
  **/
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import {EventEmitter} from 'events';
@@ -14,6 +16,7 @@ import GMapsConstants from '../constants/GMapsConstants';
 
 import Trie from '../util/Trie';
 
+// All JSON data.
 const placeData = require('../data/places.json');
 const routeData = require('../data/routes.json');
 const parkingData = require('../data/parking_lots.json');
@@ -21,12 +24,98 @@ const parkingPolyData = require('../data/parking_polygons.json');
 const markerData = require('../data/markers.json');
 const categoryData = require('../data/categories.json');
 
-
+// Event constants, used with EventEmitter to emit change events.
 const CHANGE_EVENT = 'c';
 const CATEGORY_CHANGE_EVENT = 'cat';
 const STATE_CHANGE_EVENT = 's';
 const SELECT_EVENT = 'e';
 
+/****************************************************************
+ * INTERNAL STATE VARIABLES
+ ***************************************************************/
+
+/********************
+ * ITEM INFORMATION
+ ********************/
+/**
+ * Dictionary of item metadata. This contains content that will likely not be
+ * changed during the course of the app.
+ */
+var _items = {};
+/**
+ * Dictionary of item states. The item state are a set of variables that are
+ * being actively changed by the user while running the application.
+ *
+ * Breaking the item into metadata/state components allows selectively updating
+ * a smaller array when state changes happen in the app, and allows a clear
+ * specification of what will be changed during the course of the app vs. what
+ * will remain static.
+ */
+var _state = {};
+
+/********************
+ * SEARCH
+ ********************/
+/**
+ * Used for searching. See [[src/util/Trie.js]] for more information.
+ */
+var _itemTrie = new Trie();
+/**
+ * Array of all items that are currently searched.
+ *
+ * This is tracked for performance reasons.
+ */
+var _searched = [];
+
+/********************
+ * ITEM TYPES
+ ********************/
+// Marker IDs
+var _markers = [];
+// Route IDs
+var _routes = [];
+// Parking Lot IDs
+var _parking_lots = [];
+
+/********************
+ * CATEGORIES
+ ********************/
+// Dictionary of items associated with each category
+var _cats = {};
+// Corresponding dictionary of category data.
+var _cats_data = {};
+// Set of all currently active categories.
+var _activeCats = new Set([]);
+
+/********************
+ * ITEM SELECTION
+ ********************/
+// Current selected item
+var _selectedItem = null;
+// Current item with active InfoWindow
+var _infoWindow = null;
+
+/********************
+ * MAP INFORMATION
+ ********************/
+/**
+ * Used for quickly updating whether items are inside or outside a
+ * zoom level. The sub-items `max` and `min` will contain arrays of items
+ * for each zoom level at which an item falls inside or outside of a zoom level.
+ */
+var _zoomLevels = {max: {}, min: {}}
+
+
+/****************************************************************
+ * PRIVATE FUNCTIONS
+ ****************************************************************/
+
+/**
+ * Parses coordinates in a KML format into an array of objects.
+ * @param {string} msg The KML formatted coordinate list string.
+ * @param {number} offset The amount to move each coordinate.
+ * @returns {Array.<Object>} The list of coordinates.
+ */
 function parseKMLCoords(msg, offset) {
   if(offset === null) offset = 0;
   var msgSplit = msg.split(' ');
@@ -36,43 +125,36 @@ function parseKMLCoords(msg, offset) {
   });
 }
 
-// Collection of items
-var _items = {};
-var _state = {};
-
-var _itemTrie = new Trie();
-var _searched = [];
-
-// Marker IDs
-var _markers = [];
-// Route IDs
-var _routes = [];
-// Parking Lot IDs
-var _parking_lots = [];
-
-var _cats = {};
-var _cats_data = {};
-var _activeCats = new Set([]);
-
-// Current selected item
-var _selectedItem = null;
-// Current item with active InfoWindow
-var _infoWindow = null;
-
-var _zoomLevels = {max: {}, min: {}}
-
+/**
+ * @param {*} id The item ID
+ * @returns {boolean} isMarker If the item displays as a marker on the map.
+ */
 function isMarker(id) {
   return _items[id].type === 'place' || _items[id].type === 'simple_marker';
 }
 
+/**
+ * @param {*} id The item ID
+ * @returns {boolean} isRoute If the item displays as a polyline on the map.
+ */
 function isRoute(id) {
   return _items[id].type === 'route';
 }
 
+/**
+ * @param {*} id The item ID
+ * @returns {boolean} isParkingLot If the item displays as a polygon on the map.
+ */
 function isParkingLot(id) {
   return _items[id].type === 'parking_lot';
 }
 
+/**
+ * Updates `_zoomLevels` to track this item when zoom levels change.
+ * @param {*} id The item ID.
+ * @param {int|undefined} min_zoom The minimum zoom level.
+ * @param {int|undefined} max_zoom The maximum zoom level.
+ */
 function _addZoom(id, min_zoom, max_zoom) {
   if(typeof max_zoom !== "undefined") {
     if(typeof _zoomLevels.max[max_zoom] === "undefined")
@@ -86,20 +168,35 @@ function _addZoom(id, min_zoom, max_zoom) {
   }
 }
 
-function _addSearchTerm(name, id) {
-  _itemTrie.add(name, id);
-  for(var i = 1; i < name.length; i++) {
-    if(name[i] === ' ') {
-      _itemTrie.add(name.slice(i + 1), id);
+/**
+ * Adds the term (and any sub-words that appear) to the search trie, and associates
+ * that term with the given item ID.
+ * @param {string} term The search term.
+ * @param {*} id The item ID.
+ */
+function _addSearchTerm(term, id) {
+  _itemTrie.add(term, id);
+  for(var i = 1; i < term.length; i++) {
+    if(term[i] === ' ') {
+      _itemTrie.add(term.slice(i + 1), id);
     }
   }
 }
 
+/**
+ * Adds an item to the category.
+ * @param {string} category The category name.
+ * @param {*} id The item ID.
+ */
 function _addCategory(category, id) {
   _cats[category].push(id);
-  /* _activeCats.add(category); */
+  // _activeCats.add(category);
 }
 
+/**
+ * Loads all categories from the data.
+ * @param {object} data The list of category metadata.
+ */
 function loadCategories(data) {
   data.forEach((category) => {
     _cats[category.name] = [];
@@ -115,10 +212,7 @@ function loadCategories(data) {
 
 /**
  * Saves an item to the store.
- *
- * @param {Object} data - The item information.
- *
- * @returns {undefined}
+ * @param {Object} data The item information.
  */
 function create(data) {
   var id = data.id;
@@ -139,7 +233,7 @@ function create(data) {
     }
   };
 
-  //Search terms
+  // Search terms
   if(typeof data.name !== "undefined") {
     _addSearchTerm(data.name, data.id);
   }
@@ -156,18 +250,19 @@ function create(data) {
     data.rooms.forEach((term) => _addSearchTerm(term, [data.id, term]));
   }
 
+  // Associates item with the category
   if(typeof data.category !== "undefined") {
-    // Add category
     _addCategory(data.category, data.id);
   }
 
-  // Zoom levels
+  // Update zoom information.
   const currentZoom = GMapsStore.getZoom();
   _state[id].$zoom =
     (typeof data.gmaps.min_zoom !== "undefined" && currentZoom < data.gmaps.min_zoom) ? 1 :
     (typeof data.gmaps.max_zoom !== "undefined" && currentZoom > data.gmaps.max_zoom) ? -1 : 0;
   _addZoom(data.id, data.gmaps.min_zoom, data.gmaps.max_zoom);
 
+  // Add google maps-specific information.
   if(isMarker(id)) {
     _markers.push(id);
     _items[id].focus = {
@@ -206,16 +301,31 @@ function create(data) {
   }
 }
 
+/**
+ * Destroys the item.
+ * @param {*} id The item ID.
+ */
 function destroy(id) {
+  console.warn("The ItemStore.destroy() method is not completely implemented.");
   delete _items[id];
+  //TODO: Delete all traces of the item from all store information.
 }
 
+/**
+ * Opens the InfoWindow for an item.
+ * @param {*} id The item ID.
+ */
 function openInfoWindow(id) {
+  // If an infowindow is already open, close it
   if(_infoWindow !== null) _state[_infoWindow].$infoWindow = false;
   _state[id].$infoWindow = true;
   _infoWindow = id;
 }
 
+/**
+ * Closes the info window for an item.
+ * @returns {Array} ids The list of IDs to emit state changes for.
+ */
 function closeInfoWindow() {
   let oldInfoWindow = _infoWindow;
   if(_infoWindow !== null) _state[_infoWindow].$infoWindow = false;
@@ -223,6 +333,11 @@ function closeInfoWindow() {
   return oldInfoWindow;
 }
 
+/**
+ * Selects an item.
+ * @param {*} id The item ID.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
 function select(id) {
   var oldSelect = _selectedItem;
   if(_selectedItem !== null) {
@@ -234,6 +349,10 @@ function select(id) {
   return oldSelect;
 }
 
+/**
+ * Deselects the currently selected item.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
 function deselect() {
   var oldSelectedItem = _selectedItem;
   _state[_selectedItem].$selected = false;
@@ -242,6 +361,14 @@ function deselect() {
   return oldSelectedItem;
 }
 
+/**
+ * This is a performance-optimized method to mark items that fall within
+ * the current zoom level. It works by removing items that were only
+ * within the old zoom and adding items in the new zoom level.
+ * @param {int} czoom The current (new) zoom level.
+ * @param {int} ozoom The old zoom level.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
 function _mapUpdateZoomLevel(czoom, ozoom) {
   let ids = [];
   if(czoom > ozoom) {
@@ -271,20 +398,33 @@ function _mapUpdateZoomLevel(czoom, ozoom) {
   return ids;
 }
 
+/**
+ * Incrementally updates the zoom level.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
 function mapUpdateZoom() {
-  const czoom = GMapsStore.getZoom(),
-        ozoom = GMapsStore.getOldZoom(),
-        inc = czoom > ozoom ? 1 : -1;
+  const czoom = GMapsStore.getZoom(), // Current zoom
+        ozoom = GMapsStore.getOldZoom(), // Old zoom
+        inc = czoom > ozoom ? 1 : -1; // Zoom direction: -1 if zooming out, +1 if zooming in.
 
   let ids = [];
+  // Increment over each of the zoom level changes; generally this is only going
+  // to be one level change, but there are cases where the zoom can immediately
+  // change by more than one level.
   for(var i = ozoom; i !== czoom; i += inc) {
     ids = ids.concat(_mapUpdateZoomLevel(i + inc, i));
   }
 
   // Expensive-ish, but this is fairly small so it doesn't matter
+  // Makes the set of IDs unique. Items may be non-unique if the item zooms in
+  // and out on the same iteration.
   return Array.from(new Set(ids));
 }
 
+/**
+ * Resets the search query, and unsets any search-active items.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
 function resetSearch() {
   let ids = _searched;
 
@@ -296,6 +436,11 @@ function resetSearch() {
   return ids;
 }
 
+/**
+ * Marks items as active in search.
+ * @param {string} w The word to search for.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
 function search(w) {
   let ids = resetSearch();
 
@@ -323,6 +468,11 @@ function search(w) {
   return ids;
 }
 
+/**
+ * Marks a category as active.
+ * @param {string} category The category name.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
 function addCategory(category) {
   _activeCats.add(category);
 
@@ -331,6 +481,11 @@ function addCategory(category) {
   return ids;
 }
 
+/**
+ * Marks a category as inactive.
+ * @param {string} category The category name.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
 function remCategory(category) {
   _activeCats.delete(category);
 
@@ -339,19 +494,36 @@ function remCategory(category) {
   return ids;
 }
 
+/**
+ * Resets all active categories.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
 function resetCategories() {
   let ids = [];
   _activeCats.forEach((cat) => ids = ids.concat(remCategory(cat)));
   addCategory("TU MAIN CAMPUS");
+  return ids;
 }
 
-class ItemStoreProto extends EventEmitter {
 
+/****************************************************************
+ * ITEM STORE
+ ****************************************************************/
+/**
+ * The main Item Store class. Acts as an interface between actions and internal
+ * state. Contains methods for accessing internal state information, listening
+ * on event changes, and dispatching based on action objects.
+ */
+class ItemStoreProto extends EventEmitter {
   constructor() {
     super();
     this.dispatcherIndex = AppDispatcher.register(this.dispatch.bind(this));
   }
 
+  /**
+   * Loads all items from existing JSON data. This doesn't trigger a change for
+   * each item since that would add overhead.
+   */
   load() {
     loadCategories(categoryData);
     placeData.forEach((item) => create(item));
@@ -365,54 +537,96 @@ class ItemStoreProto extends EventEmitter {
    * GETTERS
    ****************************************************************/
 
+  /**
+   * @returns {Array.<Item>} items All item metadata.
+   */
   getAll() {
     return Object.keys(_items).map((id) => _items[id]);
   }
 
+  /**
+   * @param {*} id The item ID to retrieve metadata for.
+   * @returns {Item} item The item metadata.
+   */
   getItem(id) {
     return _items[id];
   }
 
+  /**
+   * @param {*} id The item ID to retrieve state information for.
+   * @returns {Object} state The item state.
+   */
   getItemState(id) {
     return _state[id];
   }
 
+  /**
+   * @param {*} id The item ID.
+   * @returns {boolean} hasItem If the store contains the given item ID.
+   */
   hasItem(id) {
     return typeof _items[id] !== "undefined";
   }
 
+  /**
+   * @returns {Array.<Marker>} Item metadata for all markers.
+   */
   getMarkers() {
     return _markers.map((id) => _items[id]);
   }
 
+  /**
+   * @returns {Array.<Route>} Item metadata for all routes.
+   */
   getRoutes() {
     return _routes.map((id) => _items[id]);
   }
 
+  /**
+   * @returns {*} id The id of the current item with an active info window.
+   */
   getInfoWindow() {
     return _infoWindow;
   }
 
+  /**
+   * @returns {*} id The id of the current selected item.
+   */
   getSelected() {
     return _selectedItem;
   }
 
+  /**
+   * @returns {Object} categories The metadata for all categories.
+   */
   getCategories() {
     return _cats_data;
   }
 
+  /**
+   * @returns {Object} categories Mapping of category names to arrays of items.
+   */
   getItemsByCategory() {
     return _cats;
   }
 
+  /**
+   * @returns {Set} activeCategories The set of active categories.
+   */
   getActiveCategories() {
     return _activeCats;
   }
 
+  /**
+   * @returns {int} numSearchItems the number of search items.
+   */
   getNumSearchItems() {
     return _searched.length;
   }
 
+  /**
+   * @returns {Array} searched The list of all item IDs that have been searched.
+   */
   getSearched() {
     return _searched;
   }
@@ -421,20 +635,36 @@ class ItemStoreProto extends EventEmitter {
    * EMITTERS
    ****************************************************************/
 
+  /**
+   * Emits when items are added or destroyed.
+   */
   emitChange() {
     this.emit(CHANGE_EVENT);
   }
 
+  /**
+   * Emits when categories are marked as active/inactive.
+   */
   emitCategoryChange() {
     this.emit(CATEGORY_CHANGE_EVENT);
   }
 
+  /**
+   * Emits a state change for the given item. If empty, emits a general state change.
+   * @param {*|undefined} id (optional) The item ID.
+   */
   emitStateChange(id) {
     id = id || null;
     if(id !== null)
       this.emit([STATE_CHANGE_EVENT, id]);
+    else
+      this.emit(STATE_CHANGE_EVENT);
   }
 
+  /**
+   * Emits a select event. Currently not used in the app, but is tested.
+   * @param {*} id - The item ID.
+   */
   emitSelect(id) {
     this.emit([SELECT_EVENT, id]);
   }
@@ -443,14 +673,27 @@ class ItemStoreProto extends EventEmitter {
    * LISTENERS
    ****************************************************************/
 
+  /**
+   * Adds a listener on item metadata changes.
+   * @param {requestCallback} callback - The function callback.
+   */
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   }
 
+  /**
+   * Adds a listener on category state changes.
+   * @param {requestCallback} callback - The function callback.
+   */
   addCategoryChangeListener(callback) {
     this.on(CATEGORY_CHANGE_EVENT, callback);
   }
 
+  /**
+   * Adds a listener on item state changes.
+   * @param {requestCallback} callback - The function callback.
+   * @param {*} id - The item ID.
+   */
   addStateChangeListener(callback, id) {
     id = id || null;
     if(id === null)
@@ -459,7 +702,12 @@ class ItemStoreProto extends EventEmitter {
       this.on([STATE_CHANGE_EVENT, id], callback);
   }
 
-  addSelectListener(id, callback) {
+  /**
+   * Adds a listener on select event changes.
+   * @param {requestCallback} callback - The function callback.
+   * @param {*} id - The item ID.
+   */
+  addSelectListener(callback, id) {
     this.on([SELECT_EVENT, id], callback);
   }
 
@@ -467,6 +715,11 @@ class ItemStoreProto extends EventEmitter {
    * DISPATCHER
    ****************************************************************/
 
+  /**
+   * Dispatches changes to the app based on action information.
+   * @param {Object} action - The action object.
+   * @returns {boolean} success
+   */
   dispatch(action) {
     let ids = [];
 
@@ -539,7 +792,7 @@ class ItemStoreProto extends EventEmitter {
     }
 
     ids.forEach((id) => this.emitStateChange(id));
-    if(ids.length > 0) this.emit(STATE_CHANGE_EVENT);
+    if(ids.length > 0) this.emitStateChange();
 
     return true;
   }
@@ -548,5 +801,6 @@ class ItemStoreProto extends EventEmitter {
 var ItemStore = new ItemStoreProto();
 // We may need to create hundreds to thousands of events, so make this limit unbounded.
 ItemStore.setMaxListeners(0);
+
 
 export default ItemStore;

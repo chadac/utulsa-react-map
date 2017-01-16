@@ -1,6 +1,11 @@
-const keyMirror = require('keymirror');
+/**
+ * Contains constants used for the Google Maps store.
+ *
+ * @module GMapsConstants
+ */
+import keyMirror from 'keymirror';
 
-module.exports = keyMirror({
+const GMapsConstants = keyMirror({
   MAP_ZOOM: null,
   MAP_CENTER: null,
   MAP_SET_ZOOM: null,
@@ -8,3 +13,5 @@ module.exports = keyMirror({
   USER_SET_POSITION: null,
   CREATE_MAP: null,
 });
+
+export default GMapsConstants;

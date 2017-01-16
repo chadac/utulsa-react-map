@@ -1,6 +1,11 @@
-var keyMirror = require('keymirror');
+/**
+ * Constants used for dispatching actions to the Item Store.
+ *
+ * @module ItemConstants
+ */
+import keyMirror from 'keymirror';
 
-module.exports = keyMirror({
+const ItemConstants = keyMirror({
   ITEM_CREATE: null,
   ITEM_DESTROY: null,
   ITEM_SELECT: null,
@@ -15,3 +20,5 @@ module.exports = keyMirror({
   REM_CATEGORY: null,
   RESET_CATEGORIES: null,
 });
+
+export default ItemConstants;

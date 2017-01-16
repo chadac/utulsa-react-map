@@ -1,13 +1,21 @@
 /**
  * From https://facebook.github.io/flux/docs/todo-list.html
+ * @module ItemActions
  **/
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ItemStore from '../stores/ItemStore';
 import ItemConstants from '../constants/ItemConstants';
 import GMapsActions from './GMapsActions';
 
-var ItemActions = {
-
+/**
+ * Array of all actions that can be performed. Actions interface with the store,
+ * allowing changes to the state of the web app.
+ */
+const ItemActions = {
+  /**
+   * Creates an item.
+   * @param {Object} data Information data about the object.
+   */
   create: function(data) {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_CREATE,
@@ -15,6 +23,10 @@ var ItemActions = {
     });
   },
 
+  /**
+   * Destroys an item.
+   * @param {*} id The item ID.
+   */
   destroy: function(id) {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_DESTROY,
@@ -22,6 +34,10 @@ var ItemActions = {
     });
   },
 
+  /**
+   * Selects the item.
+   * @param {*} id The item ID.
+   */
   select: function(id) {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_SELECT,
@@ -29,12 +45,21 @@ var ItemActions = {
     });
   },
 
+  /**
+   * Deselects the item.
+   * @param {*} id The item ID.
+   */
   deselect: function() {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_DESELECT
     });
   },
 
+  /**
+   * Focuses on the item. This means selecting the item and centering the map
+   * on it.
+   * @param {*} id The item ID.
+   */
   focus: function(id) {
     const item = ItemStore.getItem(id);
     GMapsActions.center(item.focus.center.lat, item.focus.center.lng);
@@ -42,12 +67,10 @@ var ItemActions = {
     ItemActions.select(id);
   },
 
-  unfocus: function() {
-    AppDispatcher.dispatch({
-      actionType: ItemConstants.ITEM_UNFOCUS,
-    });
-  },
-
+  /**
+   * Opens the info window for the item.
+   * @param {*} id The item ID.
+   */
   openInfoWindow: function(id) {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_OPEN_INFOWINDOW,
@@ -55,13 +78,21 @@ var ItemActions = {
     });
   },
 
+  /**
+   * Closes whatever info window is open.
+   */
   closeInfoWindow: function() {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_CLOSE_INFOWINDOW,
     });
   },
 
+  /**
+   * Search items to match a word -- marks them as active if so.
+   * @param {string} word The word to match against.
+   */
   search: function(word) {
+    // If the word is empty, reset search: Otherwise, dispatch a search action.
     if(word.length <= 0) {
       ItemActions.resetSearch();
     }
@@ -73,6 +104,10 @@ var ItemActions = {
     }
   },
 
+  /**
+   * If there is one search result, select that result.
+   * @returns {boolean} result True if an item was selected
+   */
   selectSearched() {
     let searched = ItemStore.getSearched();
     if(searched.length === 1) {
@@ -82,12 +117,19 @@ var ItemActions = {
     return false;
   },
 
+  /**
+   * Resets the search, marking all items as not active in search.
+   */
   resetSearch: function() {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_RESET_SEARCH,
     });
   },
 
+  /**
+   * Marks category as active.
+   * @param {string} category The category to mark as active.
+   */
   addCategory: function(category) {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ADD_CATEGORY,
@@ -95,6 +137,10 @@ var ItemActions = {
     });
   },
 
+  /**
+   * Marks category as inactive.
+   * @param {string} category The category to mark as inactive.
+   */
   remCategory: function(category) {
     AppDispatcher.dispatch({
       actionType: ItemConstants.REM_CATEGORY,
@@ -109,4 +155,5 @@ var ItemActions = {
   }
 };
 
-module.exports = ItemActions;
+
+export default ItemActions;

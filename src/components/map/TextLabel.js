@@ -1,3 +1,8 @@
+/**
+ * A simple Google Maps component that allows placing textual
+ * labels directly on the map.
+ * @module TextLabel
+ */
 import gmaps from '../../GMapsAPI';
 
 import classnames from 'classnames/bind';
@@ -41,4 +46,4 @@ TextLabel.prototype.onRemove = function() {
   this.div_ = null;
 };
 
-module.exports = TextLabel;
+export default TextLabel;

@@ -1,5 +1,9 @@
+/**
+ * Class for drawing places on the Google Map.
+ * @module Place
+ */
 import React, {Component, PropTypes} from 'react';
-import ItemStateHOC from '../../hoc/ItemStateHOC';
+import ItemStateComponent from '../../hoc/ItemStateHOC';
 
 import AppState from '../../constants/AppState';
 import ItemStore from '../../stores/ItemStore';
@@ -8,18 +12,32 @@ import gmaps from '../../GMapsAPI';
 import Marker from './Marker';
 import TextLabel from './TextLabel';
 
+/**
+ * Class for the place component.
+ * @class
+ */
 class Place extends Component {
-
+  /**
+   * Before the component mounts.
+   */
   componentWillMount() {
-    ItemStore.addSelectListener(this.props.data.id, this._onSelect.bind(this));
+    ItemStore.addSelectListener(this._onSelect.bind(this), this.props.data.id);
     this.label = this.createLabel();
   }
 
+  /**
+   * Before the component unmounts.
+   */
   componentWillUnmount() {
+    // Remove the label from the map if it is being displayed.
     if(this.label)
       this.label.setMap(null);
   }
 
+  /**
+   * Creates a label object if the React component has a name.
+   * @returns {TextLabel|null} label
+   */
   createLabel() {
     if(typeof this.props.data.name !== "undefined") {
       let label = new TextLabel(this.latLng(), this.props.data.name, this.props.map);
@@ -30,16 +48,26 @@ class Place extends Component {
     }
   }
 
+  /**
+   * Displays the label on the map.
+   */
   showLabel() {
     if(this.label.getMap() !== this.props.map)
       this.label.setMap(this.props.map);
   }
 
+  /**
+   * Hides the label.
+   */
   hideLabel() {
     if(this.label.getMap() !== null)
       this.label.setMap(null);
   }
 
+  /**
+   * Generates the coordinates of the marker object in the google maps format.
+   * @returns {gmaps.LatLng} coords
+   */
   latLng() {
     return new gmaps.LatLng(
       this.props.data.marker.lat,
@@ -47,6 +75,10 @@ class Place extends Component {
     );
   }
 
+  /**
+   * Renders the place.
+   * @returns {ReactElement} place
+   */
   render() {
     this.updatePlace();
 
@@ -69,8 +101,14 @@ class Place extends Component {
     );
   }
 
+  /**
+   * Updates the place based on app state and item state.
+   */
   updatePlace() {
+    // The item state
     const state = this.props.item;
+    // NOTE: I manipulate the break statement to reduce the amount
+    //       of code; pay attention to where break statements appear.
     switch(this.props.appState) {
       case AppState.SELECT:
         if(state.$selected || state.$infoWindow) {
@@ -84,7 +122,8 @@ class Place extends Component {
         }
         else if(state.$zoom === 0) {
           this.showLabel();
-        } else {
+        }
+        else {
           this.hideLabel();
         }
         break;
@@ -109,16 +148,24 @@ class Place extends Component {
 }
 
 Place.propTypes = {
+  // The map object
   map: PropTypes.object.isRequired,
 
+  // Method for selecting the item
   _select: PropTypes.func.isRequired,
+  // Opens the info window in the Item Store
   _openInfoWindow: PropTypes.func.isRequired,
+  // Closes the info window in the Item Store
   _closeInfoWindow: PropTypes.func.isRequired,
 
+  // Item ID
   id: PropTypes.string.isRequired,
+  // Current app state
   appState: PropTypes.string.isRequired,
+  // Item state
   item: PropTypes.object.isRequired,
+  // Item ata
   data: PropTypes.object.isRequired,
 };
 
-export default new ItemStateHOC(Place);
+export default new ItemStateComponent(Place);

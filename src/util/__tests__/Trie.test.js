@@ -2,7 +2,7 @@ describe('Trie', () => {
   let Trie;
 
   beforeEach(() => {
-    Trie = require('../Trie');
+    Trie = require('../Trie').default;
   });
 
   describe('#add', () => {

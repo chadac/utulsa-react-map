@@ -234,7 +234,7 @@ describe('ItemStore', () => {
 
     beforeEach(() => {
       mockCallback = jest.fn();
-      ItemStore.addSelectListener('item1', mockCallback);
+      ItemStore.addSelectListener(mockCallback, 'item1');
     });
 
     it("triggers on ITEM_SELECT", () => {

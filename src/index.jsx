@@ -14,8 +14,10 @@ import AppActions from './actions/AppActions';
 import './stylesheets/globals.scss';
 import './stylesheets/index.scss';
 
+// Call method to load all items we have from JSON.
 ItemStore.load();
 
+// Pass in Flux stores, actions, and the app dispatcher
 ReactDOM.render(
   <Map
       dispatcher={AppDispatcher}

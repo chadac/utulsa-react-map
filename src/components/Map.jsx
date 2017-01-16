@@ -1,3 +1,9 @@
+/**
+ * The main map controller.
+ *
+ * @module Map
+ */
+
 import React, {Component} from 'react'
 
 import FluxComponent from '../hoc/FluxComponent';
@@ -18,13 +24,23 @@ import styles from '../stylesheets/Map.scss'
 const cx = classnames.bind(styles);
 
 
+/**
+ * The map controller module. Mounts the google map object into
+ * the DOM and controls all sub-components.
+ * @class
+ */
 class Map extends Component {
   constructor(props) {
     super(props);
 
+    /* Flux event listeners */
+    // Called when an item is added or removed.
     this.stores().item.addChangeListener(this._onItemsChanged.bind(this));
+    // Called when a category is added or removed
     this.stores().item.addCategoryChangeListener(this._onCategoriesChanged.bind(this));
+    // Called when the app state is changed
     this.stores().app.addChangeListener(this._onAppChanged.bind(this));
+    // Called when the Google Map has been created. (promting a re-render)
     this.stores().gmaps.addMapListener(this._onMapCreate.bind(this));
 
     this.state = {
@@ -37,10 +53,13 @@ class Map extends Component {
   }
 
   componentDidMount() {
+    // This creates the Google Map using an empty div created
+    // on the initial render step.
     this.actions().gmaps.createMap(this.refs.map);
   }
 
   render() {
+    // Checks for if the map has been created or not.
     if(this.state.map === null) {
       return this.prerender();
     } else {
@@ -48,6 +67,11 @@ class Map extends Component {
     }
   }
 
+  /**
+   * Render step for when the Google Maps object has not been created yet.
+   * Creates an empty div that will be populated upon Google Maps init.
+   * @return {ReactElement} map
+   */
   prerender() {
     return (
       <div className={cx("map-container")}>
@@ -56,6 +80,11 @@ class Map extends Component {
     );
   }
 
+  /**
+   * Render step for when the Google Maps object has been created. Creates all
+   * markers and the menu for the map.
+   * @return {ReactElement} map
+   */
   postrender() {
     const mapItems = this.createMapItems();
     return (
@@ -74,12 +103,18 @@ class Map extends Component {
     );
   }
 
+  /**
+   * Returns a list of React components created from items in the Item Store.
+   * These will become markers on the Google Map.
+   * @return {Array.<ReactComponent>} mapItems
+   */
   createMapItems() {
     const map = this.state.map;
     const mapItems = this
       .state.items
       .map((item) => {
         var MapItem = null;
+        // Conditionally map to marker class based on item type.
         switch(item.type) {
           case "place":
             MapItem = Place;
@@ -106,6 +141,7 @@ class Map extends Component {
         );
       });
 
+    // If there is a user position set, create a marker for this as well.
     if(this.state.user) {
       mapItems.push((
         <Marker map={map} key="user_position" id="user_position" latLng={this.state.user} />
@@ -115,12 +151,22 @@ class Map extends Component {
     return mapItems;
   }
 
+  /**
+   * Called when items are added or destroyed. Updates the state to reflect
+   * this change.
+   * @return {void}
+   */
   _onItemsChanged() {
     this.setState({
       items: this.stores().item.getItems(),
     });
   }
 
+  /**
+   * Called when categories are added or destroyed. Updaates the state for
+   * categories and active categories. (for filtering)
+   * @return {void}
+   */
   _onCategoriesChanged() {
     this.setState({
       cats: this.stores().item.getCategories(),
@@ -128,12 +174,22 @@ class Map extends Component {
     });
   }
 
+  /**
+   * Called when the app state is changed. Updates the state.
+   * @return {void}
+   */
   _onAppChanged() {
     this.setState({
       appState: this.stores().app.getState(),
     });
   }
 
+  /**
+   * Called when the map is created. Updates the state to have the Google Map
+   * object, which is used in various places.
+   * @param {Google.Map} map The map object
+   * @return {void}
+   */
   _onMapCreate(map) {
     this.setState({map: map});
   }

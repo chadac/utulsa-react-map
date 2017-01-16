@@ -1,3 +1,6 @@
+/**
+ * @module MenuBar
+ */
 import React, {Component, PropTypes} from 'react';
 
 import FluxComponent from '../../hoc/FluxComponent';
@@ -11,12 +14,23 @@ import classnames from 'classnames/bind';
 import styles from '../../stylesheets/MenuBar.scss';
 const cx = classnames.bind(styles);
 
+// The height of the submenus. Should be about 80% of the screen.
 const SUBMENU_HEIGHT = (window.innerHeight
                      || document.documentElement.clientHeight
                      || document.body.clientHeight) * 0.8;
 
+/**
+ * Widget that has a button for filtering.
+ * @class
+ */
 class FilterWidget extends Component {
+  /**
+   * Render method.
+   * @returns {ReactComponent} filterWidget
+   */
   render() {
+    // TODO: Track when the button is hovered/active
+    // let active = this.props.appState === AppState.FILTER;
     return (
       <i className={cx("menu-icon", "material-icons", "filter")}
          onClick={this._onClick.bind(this)}>
@@ -25,6 +39,9 @@ class FilterWidget extends Component {
     );
   }
 
+  /**
+   * Toggles app state between filter and normal.
+   */
   _onClick() {
     if(this.props.appState === AppState.FILTER)
       this.props._setAppState(AppState.NORMAL);
@@ -34,12 +51,16 @@ class FilterWidget extends Component {
 }
 
 FilterWidget.propTypes = {
+  // App state
   appState: PropTypes.string.isRequired,
+  // Sets the app state in the App Store
   _setAppState: PropTypes.func.isRequired,
 };
 
+
 /**
  * Simple widget that updates when users perform searches.
+ * @class
  */
 class SearchWidget extends Component {
   constructor(props) {
@@ -50,6 +71,10 @@ class SearchWidget extends Component {
     };
   }
 
+  /**
+   * Render step.
+   * @returns {ReactElement} searchWidget
+   */
   render() {
     return (
       <div className={cx("search-container")}>
@@ -72,15 +97,27 @@ class SearchWidget extends Component {
     );
   }
 
+  /**
+   * Triggered when the user clicks on the search icon. Focuses the cursor on
+   * the search box so that the user can start typing.
+   */
   _search() {
     this.refs.search.focus();
   }
 
+  /**
+   * Clears the search box. Happens when the user clicks the "X" next to the
+   * search box.
+   */
   _clear() {
     this.refs.search.value = "";
     this._onChange();
   }
 
+  /**
+   * Triggered on any change of the search box. Propagates changes into the Item
+   * Store.
+   */
   _onChange() {
     const text = this.refs.search.value;
     this.setState({text: text});
@@ -90,6 +127,11 @@ class SearchWidget extends Component {
       this.props._resetSearch();
   }
 
+  /**
+   * Triggered on key press inside the search box. Currently, it's behavior is
+   * to select the searched item in the box if there is only one item.
+   * @param {Event} e The keypress event.
+   */
   _onKeyPress(e) {
     if(e.key === 'Enter' && this.props._selectSearched()) {
       this._clear();
@@ -97,6 +139,13 @@ class SearchWidget extends Component {
     }
   }
 
+  /**
+   * Triggered on key down inside the search box. This is more general than the
+   * keypress event, or less general, I forget.
+   *
+   * Resets the search box when the user presses `Escape'.
+   * @param {Event} e The key-down event.
+   */
   _onKeyDown(e) {
     if(e.key === 'Escape') {
       this._clear();
@@ -105,13 +154,25 @@ class SearchWidget extends Component {
 }
 
 SearchWidget.propTypes = {
+  // Propagates search to the Item Store.
   _search: PropTypes.func.isRequired,
+  // Resets search inside the Item Store.
   _resetSearch: PropTypes.func.isRequired,
+  // Selects the sole searched item in the Item Store.
   _selectSearched: PropTypes.func.isRequired,
 };
 
 
+/**
+ * Small block that appears below the menu block, minimizing anything that is
+ * actively shown below. (Resets when the drop-down changes)
+ * @class
+ */
 class MinimizeBlock extends Component {
+  /**
+   * Render step.
+   * @returns {ReactElement} minimizeBlock
+   */
   render() {
     if(this.props.appState !== AppState.NORMAL) {
       return (
@@ -125,6 +186,9 @@ class MinimizeBlock extends Component {
     else return null;
   }
 
+  /**
+   * Minimizes or maximizes the drop-down.
+   */
   _onClick() {
     if(this.props.minimized) {
       this.props._maximize();
@@ -136,14 +200,22 @@ class MinimizeBlock extends Component {
 }
 
 MinimizeBlock.propTypes = {
+  // App state
   appState: PropTypes.string.isRequired,
+  // If this block is minimized.
   minimized: PropTypes.bool.isRequired,
 
+  // Function to minimize (see MenuBar.minimize())
   _minimize: PropTypes.func.isRequired,
+  // Function to maximize (see MenuBar.maximize())
   _maximize: PropTypes.func.isRequired,
 };
 
 
+/**
+ * The menu bar that appears on the map. General container for all menu controls.
+ * @class
+ */
 class MenuBar extends Component {
   constructor(props) {
     super(props);
@@ -151,10 +223,16 @@ class MenuBar extends Component {
     this.stores().app.addChangeListener(this._onAppStateChanged.bind(this));
 
     this.state = {
+      // If the drop-down is minimized. Tracks state here rather than in
+      // MinimizeBlock since we use the value to show/hide the drop-down.
       minimized: false
     };
   }
 
+  /**
+   * Render step.
+   * @returns {ReactElement} menuBar
+   */
   render() {
     return (
       <div>
@@ -177,6 +255,11 @@ class MenuBar extends Component {
     );
   }
 
+  /**
+   * Renders the drop-down that needs to be shown. For performance reasons, all
+   * sub-menus are generated and then conditionally displayed.
+   * @returns {ReactElement} subMenu
+   */
   renderSubMenu() {
     return (
       <div className={cx('menu-content')} style={{display: this.state.minimized ? "none" : ""}}>
@@ -199,25 +282,39 @@ class MenuBar extends Component {
     );
   }
 
+  /**
+   * Triggers on app state change. Maximizes the drop-down.
+   */
   _onAppStateChanged() {
     this.maximize();
   }
 
+  /**
+   * Minimizes the drop-down.
+   */
   minimize() {
     this.setState({minimized: true});
   }
 
+  /**
+   * Maximizes the drop-down.
+   */
   maximize() {
     this.setState({minimized: false});
   }
 }
 
 MenuBar.propTypes = {
+  // Map object
   map: PropTypes.object.isRequired,
+  // App state
   appState: PropTypes.string.isRequired,
 
+  // Array of items
   items: PropTypes.array.isRequired,
+  // Array of categories
   cats: PropTypes.object.isRequired,
+  // Array of active categories
   activeCats: PropTypes.object.isRequired,
 };
 
