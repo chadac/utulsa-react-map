@@ -26,4 +26,4 @@ All active code has been documented using JSDoc.
 
 ### Documenting Architecture Decisions
 
-[Architecture Design Reports](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions) (ADRs) are a series of documents that explain the reasoning behind decisions made on the architectural design. If you are looking for an explanation for why a certain decision was made, [see if it's recorded as an ADR here](doc/adr/listing.md).
+[Architecture Design Reports](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions) (ADRs) are a series of documents that explain the reasoning behind decisions made on the architectural design. If you are looking for an explanation for why a certain decision was made, [see if it's recorded as an ADR here](doc/arch/README.md).
