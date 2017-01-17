@@ -10,10 +10,15 @@ cache:
   key: "$CI_BUILD_REF_NAME"
   paths:
    - node_modules/
+   - build/
+
+variables:
+  S3_BUCKET_NAME: utulsa-assets
 
 stages:
   - setup
   - test
+  - build
   - deploy
 
 setup:
@@ -26,16 +31,42 @@ test:
   script:
     - npm test
 
-deploy-prod:
-  type: deploy
-  only:
-    - master
+build:
+  type: build
   script:
     - npm run build
 
-# staging:
-#   type: deploy
-#   environment:
-#     name: staging/$CI_BUILD_REF_NAME
-#     url: https://$CI_ENVIRONMENT_SLUG.utulsa.co/
-#   script:
+deploy to prod:
+  type: deploy
+  image: python:latest
+  only:
+    - master
+  environment:
+    name: production
+    url: https://utulsa-assets.s3.amazonaws.com/web/map/prod/index.html
+  script:
+    - pip install awscli
+    - aws s3 cp ./build/ s3://S3_BUCKET_NAME/web/map/prod --recursive
+
+deploy to staging:
+  type: deploy
+  image: python:latest
+  except:
+    - master
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    url: https://utulsa-assets.s3.amazonaws.com/web/map/dev/$CI_ENVIRONMENT_SLUG/index.html
+    action: clean up staging
+  script:
+    - pip install awscli
+    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME/web/map/dev/$CI_ENVIRONMENT_SLUG --recursive
+
+clean up staging:
+  type: deploy
+  image: python:latest
+  when: manual
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+  script:
+    - pip install awscli
+    - aws s3 rm s3://$S3_BUCKET_NAME/web/map/dev/$CI_ENVIRONMENT_SLUG --recursive
