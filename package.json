@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "private": true,
   "author": "Jason Bennefield and Chad Crawford",
-  "homepage": "https://utulsa.edu",
+  "homepage": "https://utulsa-assets.s3.amazonaws.com/web/map/prod",
   "devDependencies": {
     "autoprefixer": "^6.5.1",
     "babel-core": "6.13.2",
