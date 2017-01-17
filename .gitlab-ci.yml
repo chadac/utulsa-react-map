@@ -5,22 +5,28 @@ image: node:latest
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-cache:
-  paths:
-   - node_modules/
-   - build/
 
-build:
-  type: build
-  script:
-    - npm install
-    - npm run build
+stages:
+  - setup
+  - test
+  - deploy
+
+# setup:
+#   type: setup
+#   script:
+#     - npm install
 
 test:
   type: test
   script:
+   - npm install
    - npm test
 
+deploy-prod:
+  type: deploy
+  only: master
+  script:
+    - npm run build
 
 # staging:
 #   type: deploy
