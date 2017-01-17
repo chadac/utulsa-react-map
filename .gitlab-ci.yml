@@ -46,7 +46,8 @@ deploy to prod:
     url: https://utulsa-assets.s3.amazonaws.com/web/map/prod/index.html
   script:
     - pip install awscli
-    - aws s3 cp ./build/ s3://S3_BUCKET_NAME/web/map/prod --recursive
+    - echo $S3_BUCKET_NAME
+    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME/web/map/prod --recursive
 
 # deploy to staging:
 #   type: deploy
