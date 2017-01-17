@@ -19,12 +19,13 @@ stages:
 test:
   type: test
   script:
-   - npm install
-   - npm test
+    - npm install
+    - npm test
 
 deploy-prod:
   type: deploy
-  only: master
+  only:
+    - master
   script:
     - npm run build
 
