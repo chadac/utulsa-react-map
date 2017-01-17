@@ -140,8 +140,7 @@ module.exports = {
         loaders: [
           'style',
           'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]&camelCase',
-          'sass?camelCase',
-          'postcss-loader'
+          'sass?camelCase'
         ],
         postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ]
       },

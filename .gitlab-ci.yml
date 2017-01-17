@@ -8,11 +8,13 @@ image: node:latest
 cache:
   paths:
    - node_modules/
+   - build/
 
 build:
   type: build
   script:
     - npm install
+    - npm run build
 
 test:
   type: test
