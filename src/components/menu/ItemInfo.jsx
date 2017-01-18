@@ -49,6 +49,12 @@ class ItemInfo extends Component {
     // We do this from here rather than the parent element for performance.
     if(!this.props.item.$selected) return null;
 
+    // Directions
+    const loc = typeof this.props.data.directions !== "undefined" ?
+                this.props.data.directions :
+                [this.props.data.marker.lat, this.props.data.marker.lng].join(',');
+    const directionsUrl = "https://www.google.com/maps/dir//'" + loc + "'/@" + loc + ",17z";
+
     // Listings
     const alternateNames = this.listingBlock("alternate_names", "Also Called:", cx("alternate-names"));
     const departments = this.listingBlock("departments", "Departments & Offices", cx("departments"));
@@ -57,7 +63,8 @@ class ItemInfo extends Component {
     return (
       <div>
         <h1 className={cx("header")}>{data.name}</h1>
-        <div className={cx("address")}>{data.address}</div>
+        <div className={cx("exit", "material-icons")} onClick={this.close.bind(this)}>clear</div>
+        <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
         {alternateNames}
         {/* Setting inner HTML allows for styling the description */}
         <p className={cx("description")}
@@ -68,6 +75,10 @@ class ItemInfo extends Component {
       </div>
     );
   }
+
+  close() {
+    this.props._deselect();
+  }
 }
 
 ItemInfo.propTypes = {
@@ -75,6 +86,8 @@ ItemInfo.propTypes = {
   item: PropTypes.object.isRequired,
   // Item data
   data: PropTypes.object.isRequired,
+
+  _deselect: PropTypes.func.isRequired,
 };
 
 

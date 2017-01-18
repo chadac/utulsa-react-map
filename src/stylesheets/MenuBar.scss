@@ -23,9 +23,12 @@
 }
 
 .menu-icon {
-    color: #363636;
+    color: #767676;
     width: auto;
     padding: 8px;
+    &:hover {
+        color: #464646;
+    }
 }
 
 .filter {

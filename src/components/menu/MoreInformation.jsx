@@ -49,7 +49,8 @@ class MoreInformation extends Component {
     const itemInfo = this
       .props.items.map((item) => {
         return <ItemInfo key={item.id} data={item}
-                         {...this.itemState(item.id)} />
+                         _deselect={this.actions().item.deselect}
+                         {...this.itemState(item.id)}/>
       });
     return itemInfo;
   }

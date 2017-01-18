@@ -1,7 +1,39 @@
 .more-info {
+    position: relative;
     padding: 10px;
     overflow-y: auto;
     &:hover {
         cursor: auto;
     }
+}
+
+.exit {
+    position: absolute;
+    color: #999;
+    top: 2px;
+    right: 2px;
+    padding: 8px;
+    font-size: 24px !important;
+
+    &:hover {
+        cursor: pointer;
+        color: #666;
+    }
+}
+
+.header {
+    padding-right: 25px;
+}
+
+.address {
+    & a {
+        &:visited {
+            color: blue;
+        }
+    }
+}
+
+.description {
+    line-height: 15px;
+    font-size: 11px;
 }
