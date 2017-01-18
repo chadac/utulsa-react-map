@@ -135,9 +135,7 @@ class Map extends Component {
               data={item} appState={this.state.appState}
               _register={this.stores().item.addStateChangeListener.bind(this.stores().item)}
               _getItemState={this.stores().item.getItemState.bind(this.stores().item)}
-              _select={this.actions().item.select}
-              _openInfoWindow={this.actions().item.openInfoWindow}
-              _closeInfoWindow={this.actions().item.closeInfoWindow} />
+              _select={this.actions().item.select} />
         );
       });
 

@@ -92,8 +92,6 @@ var _activeCats = new Set([]);
  ********************/
 // Current selected item
 var _selectedItem = null;
-// Current item with active InfoWindow
-var _infoWindow = null;
 
 /********************
  * MAP INFORMATION
@@ -220,7 +218,6 @@ function create(data) {
 
   // State information
   _state[id] = {
-    $infoWindow: false,
     $selected: false,
 
     filter: {
@@ -312,28 +309,6 @@ function destroy(id) {
 }
 
 /**
- * Opens the InfoWindow for an item.
- * @param {*} id The item ID.
- */
-function openInfoWindow(id) {
-  // If an infowindow is already open, close it
-  if(_infoWindow !== null) _state[_infoWindow].$infoWindow = false;
-  _state[id].$infoWindow = true;
-  _infoWindow = id;
-}
-
-/**
- * Closes the info window for an item.
- * @returns {Array} ids The list of IDs to emit state changes for.
- */
-function closeInfoWindow() {
-  let oldInfoWindow = _infoWindow;
-  if(_infoWindow !== null) _state[_infoWindow].$infoWindow = false;
-  _infoWindow = null;
-  return oldInfoWindow;
-}
-
-/**
  * Selects an item.
  * @param {*} id The item ID.
  * @returns {Array} ids The list of item IDs to emit state changes for.
@@ -345,7 +320,6 @@ function select(id) {
   }
   _selectedItem = id;
   _state[id].$selected = true;
-  openInfoWindow(id);
   return oldSelect;
 }
 
@@ -356,7 +330,6 @@ function select(id) {
 function deselect() {
   var oldSelectedItem = _selectedItem;
   _state[_selectedItem].$selected = false;
-  closeInfoWindow(_selectedItem);
   _selectedItem = null;
   return oldSelectedItem;
 }
@@ -583,13 +556,6 @@ class ItemStoreProto extends EventEmitter {
   }
 
   /**
-   * @returns {*} id The id of the current item with an active info window.
-   */
-  getInfoWindow() {
-    return _infoWindow;
-  }
-
-  /**
    * @returns {*} id The id of the current selected item.
    */
   getSelected() {
@@ -747,16 +713,6 @@ class ItemStoreProto extends EventEmitter {
         let oldSelectedItem = deselect();
         ids.push(oldSelectedItem);
         ids.forEach((id) => this.emitSelect(id));
-        break;
-
-      case ItemConstants.ITEM_OPEN_INFOWINDOW:
-        openInfoWindow(action.id);
-        ids.push(action.id);
-        break;
-
-      case ItemConstants.ITEM_CLOSE_INFOWINDOW:
-        let oldInfoWindow = closeInfoWindow();
-        ids.push(oldInfoWindow);
         break;
 
       case ItemConstants.ITEM_SEARCH:

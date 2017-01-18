@@ -2,12 +2,11 @@
  * General class for rendering a marker on the map.
  * @module Marker
  */
-import React, {Component, PropTypes} from 'react';
+import {Component, PropTypes} from 'react';
 
 import gmaps from '../../GMapsAPI';
 import AppState from '../../constants/AppState';
 
-import InfoWindow from './InfoWindow';
 import MapIcon from '../../data/mapIcons.json';
 
 class Marker extends Component {
@@ -73,21 +72,7 @@ class Marker extends Component {
   render() {
     this.updateMarker();
 
-    // Creates a corresponding InfoWindow if the marker has additional content.
-    if(this.props.children && this.props._openInfoWindow) {
-      return (
-        <InfoWindow
-            map={this.props.map}
-            $infoWindow={this.props.item.$infoWindow}
-            position={this.marker}
-            _closeInfoWindow={this.props._closeInfoWindow}>
-          {this.props.children}
-        </InfoWindow>
-      );
-    }
-    else {
-      return null;
-    }
+    return null;
   }
 
   componentDidUpdate() {
@@ -154,8 +139,7 @@ class Marker extends Component {
    * @returns {void}
    */
   _onClick() {
-    if(this.props._openInfoWindow)
-      this.props._select(this.props.id);
+    this.props._select(this.props.id);
   }
 }
 
@@ -165,10 +149,6 @@ Marker.propTypes = {
 
   // selects the item in the ItemStore
   _select: PropTypes.func.isRequired,
-  // opens the infowindow for the item in the ItemStore
-  _openInfoWindow: PropTypes.func,
-  // closes the infowindow for the item in the ItemStore
-  _closeInfoWindow: PropTypes.func,
 
   // The ID of the marker
   id: PropTypes.string.isRequired,

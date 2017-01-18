@@ -68,26 +68,6 @@ const ItemActions = {
   },
 
   /**
-   * Opens the info window for the item.
-   * @param {*} id The item ID.
-   */
-  openInfoWindow: function(id) {
-    AppDispatcher.dispatch({
-      actionType: ItemConstants.ITEM_OPEN_INFOWINDOW,
-      id: id,
-    });
-  },
-
-  /**
-   * Closes whatever info window is open.
-   */
-  closeInfoWindow: function() {
-    AppDispatcher.dispatch({
-      actionType: ItemConstants.ITEM_CLOSE_INFOWINDOW,
-    });
-  },
-
-  /**
    * Search items to match a word -- marks them as active if so.
    * @param {string} word The word to match against.
    */

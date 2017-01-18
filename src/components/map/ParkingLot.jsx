@@ -1,14 +1,13 @@
 /**
  * @module ParkingLot
  */
-import React, {Component, PropTypes} from 'react';
+import {Component, PropTypes} from 'react';
 import ItemStateHOC from '../../hoc/ItemStateHOC';
 
 import TextLabel from './TextLabel';
 
 import gmaps from '../../GMapsAPI';
 import AppState from '../../constants/AppState';
-import InfoWindow from './InfoWindow';
 
 /**
  * Fills in default styles for a series of styles supplied to a polyline.
@@ -58,7 +57,7 @@ class ParkingLot extends Component {
   }
 
   /**
-   * Generates all polygons used for 
+   * Generates all polygons used for parking lots.
    * @returns {Array.<gmaps.Polygon>} Array of polygons.
    */
   _createPolygons() {
@@ -103,6 +102,24 @@ class ParkingLot extends Component {
   }
 
   /**
+   * Highlights the polygons (used for selection)
+   */
+  highlight() {
+    this.polys.forEach((poly) => {
+      poly.setOptions({strokeColor: "#AA0"});
+    });
+  }
+
+  /**
+   * Unhighlights the polygons
+   */
+  unhighlight() {
+    this.polys.forEach((poly) => {
+      poly.setOptions({strokeColor: "#AAAAAA"});
+    });
+  }
+
+  /**
    * Before the component unmounts.
    */
   componentWillUnmount() {
@@ -115,18 +132,8 @@ class ParkingLot extends Component {
    */
   render() {
     this.updatePoly();
-    let position = this.getPosition();
 
-    return (
-      <InfoWindow
-          $infoWindow={this.props.item.$infoWindow}
-          map={this.props.map}
-          position={position}
-          _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{this.props.data.name}</h4>
-        <p>{this.props.data.hours}</p>
-      </InfoWindow>
-    );
+    return null;
   }
 
   /**
@@ -139,7 +146,11 @@ class ParkingLot extends Component {
       case AppState.SELECT:
         if(state.$selected) {
           this.showPolygons();
+          this.highlight();
           break;
+        }
+        else {
+          this.unhighlight();
         }
       case AppState.FILTER:
       case AppState.NORMAL:
@@ -163,28 +174,8 @@ class ParkingLot extends Component {
     }
   }
 
-  /**
-   * Returns the position to use for the center.
-   * @returns {gmaps.LatLng} center
-   */
-  getPosition() {
-    let position = null;
-    switch(this.props.appState) {
-      case AppState.NORMAL:
-      case AppState.FILTER:
-      case AppState.SEARCH:
-        position = this.state.clickPos;
-        break;
-      case AppState.SELECT:
-        position = this.center;
-        break;
-    }
-    return position;
-  }
-
-  _onClick(e) {
-    this.setState({clickPos: e.latLng});
-    this.props._openInfoWindow(this.props.id);
+  _onClick() {
+    this.props._select(this.props.id);
   }
 
 }
@@ -193,10 +184,8 @@ ParkingLot.propTypes = {
   // The map object.
   map: PropTypes.object.isRequired,
 
-  // Opens the info window.
-  _openInfoWindow: PropTypes.func.isRequired,
-  // Closes the info window.
-  _closeInfoWindow: PropTypes.func.isRequired,
+  // Select function
+  _select: PropTypes.func.isRequired,
 
   // The item ID
   id: PropTypes.string.isRequired,
