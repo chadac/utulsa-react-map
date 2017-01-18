@@ -45,26 +45,19 @@ deploy to prod:
     url: https://utulsa-assets.s3.amazonaws.com/web/map/prod/index.html
   script:
     - pip install awscli
-    - echo $S3_BUCKET_NAME
     - aws s3 cp ./build/ s3://$S3_BUCKET_NAME/web/map/prod --recursive
 
-# deploy to staging:
-#   type: deploy
-#   image: python:latest
-#   when: manual
-#   except:
-#     - master
-#   environment:
-#     name: review/$CI_BUILD_REF_NAME
-#   script:
-#     - cp build/* public/
-
-# clean up staging:
-#   type: deploy
-#   image: python:latest
-#   when: manual
-#   environment:
-#     name: review/$CI_BUILD_REF_NAME
-#   script:
-#     - pip install awscli
-#     - aws s3 rm s3://$S3_BUCKET_NAME/web/map/dev/$CI_ENVIRONMENT_SLUG --recursive
+deploy to staging:
+  type: deploy
+  image: python:latest
+  when: manual
+  except:
+    - master
+  variables:
+    S3_BUCKET_NAME: utulsa-assets
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    url: https://$S3_BUCKET_NAME.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
+  script:
+    - pip install awscli
+    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
