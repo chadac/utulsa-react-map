@@ -12,7 +12,8 @@ cache:
    - node_modules/
 
 variables:
-  S3_BUCKET_NAME: utulsa-assets
+  S3_BUCKET_NAME_PROD: utulsa-assets
+  S3_BUCKET_NAME_DEV: utulsa-assets
 
 stages:
   - setup
@@ -30,34 +31,62 @@ test:
   script:
     - npm test
 
-build:
+build for production:
   type: build
+  only:
+    - master
   script:
-    - npm run build
+    - npm run build -- --homepage="s3://$S3_BUCKET_NAME_PROD/web/map/prod"
 
-deploy to prod:
+deploy to production:
   type: deploy
   image: python:latest
   only:
     - master
   environment:
     name: production
-    url: https://utulsa-assets.s3.amazonaws.com/web/map/prod/index.html
+    url: https://$S3_BUCKET_NAME_PROD.s3.amazonaws.com/web/map/prod/index.html
   script:
     - pip install awscli
-    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME/web/map/prod --recursive
+    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_PROD/web/map/prod --recursive
+
+build for staging:
+  type: build
+  only:
+    - develop
+  script:
+    - npm run build -- --homepage="s3://$S3_BUCKET_NAME_DEV/web/map/staging"
 
 deploy to staging:
+  type: deploy
+  image: python:latest
+  only:
+    - develop
+  environment:
+    name: staging
+    url: https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/staging/index.html
+  script:
+    - pip install awscli
+    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_DEV/web/map/staging/ --recursive
+
+build for review:
+  type: build
+  except:
+    - master
+    - develop
+  script:
+    - npm run build -- --homepage="s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG"
+
+deploy to review:
   type: deploy
   image: python:latest
   when: manual
   except:
     - master
-  variables:
-    S3_BUCKET_NAME: utulsa-assets
+    - develop
   environment:
     name: review/$CI_BUILD_REF_NAME
-    url: https://$S3_BUCKET_NAME.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
+    url: https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
   script:
     - pip install awscli
-    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
+    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
