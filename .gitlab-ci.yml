@@ -10,7 +10,6 @@ cache:
   key: "$CI_BUILD_REF_NAME"
   paths:
    - node_modules/
-   - build/
 
 variables:
   S3_BUCKET_NAME: utulsa-assets
