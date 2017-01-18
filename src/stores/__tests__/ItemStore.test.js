@@ -21,8 +21,6 @@ describe('ItemStore', () => {
   const destroy = (id) => dispatch(ItemConstants.ITEM_DESTROY, {id: id});
   const select = (id) => dispatch(ItemConstants.ITEM_SELECT, {id: id});
   const deselect = () => dispatch(ItemConstants.ITEM_DESELECT);
-  const openInfoWindow = (id) => dispatch(ItemConstants.ITEM_OPEN_INFOWINDOW, {id: id});
-  const closeInfoWindow = () => dispatch(ItemConstants.ITEM_CLOSE_INFOWINDOW);
   const search = (word) => dispatch(ItemConstants.ITEM_SEARCH, {word: word});
   const resetSearch = () => dispatch(ItemConstants.ITEM_RESET_SEARCH);
   const addCategory = (category) => dispatch(ItemConstants.ADD_CATEGORY, {category: category});
@@ -61,8 +59,6 @@ describe('ItemStore', () => {
 
       // Test that it reverts previous selections
       select('item2');
-      // And affects infowindow state as well
-      openInfoWindow('item3');
       // Then select this item
       select('item1');
 
@@ -71,13 +67,9 @@ describe('ItemStore', () => {
       var item3 = ItemStore.getItemState('item3');
 
       expect(item1.$selected).toBe(true);
-      expect(item1.$infoWindow).toBe(true);
       expect(item2.$selected).toBe(false);
-      expect(item2.$infoWindow).toBe(false);
       expect(item3.$selected).toBe(false);
-      expect(item3.$infoWindow).toBe(false);
       expect(ItemStore.getSelected()).toBe('item1');
-      expect(ItemStore.getInfoWindow()).toBe('item1');
     });
 
     it("deselects items", () => {
@@ -88,30 +80,6 @@ describe('ItemStore', () => {
       var item1 = ItemStore.getItemState('item1');
 
       expect(item1.$selected).toBe(false);
-      expect(item1.$infoWindow).toBe(false);
-    });
-
-    it("opens the info window", () => {
-      create('item1');
-      create('item2');
-      openInfoWindow('item2');
-      openInfoWindow('item1');
-
-      var item1 = ItemStore.getItemState('item1');
-      var item2 = ItemStore.getItemState('item2');
-
-      expect(item1.$infoWindow).toBe(true);
-      expect(item2.$infoWindow).toBe(false);
-    });
-
-    it("closes the info window", () => {
-      create('item1');
-      create('item1');
-      closeInfoWindow();
-
-      var item1 = ItemStore.getItemState('item1');
-
-      expect(item1.$infoWindow).toBe(false);
     });
   });
 
@@ -170,19 +138,6 @@ describe('ItemStore', () => {
       select('item1');
       deselect('item1');
       expect(numCalls('item1')).toBe(2);
-    });
-
-    it("triggers on open info window", () => {
-      create('item1');
-      create('item2');
-
-      openInfoWindow('item1');
-      expect(numCalls('item1')).toBe(1);
-      expect(numCalls('item2')).toBe(0);
-
-      openInfoWindow('item2');
-      expect(numCalls('item1')).toBe(1);
-      expect(numCalls('item2')).toBe(1);
     });
 
     it("triggers on search", () => {
