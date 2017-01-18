@@ -22,12 +22,7 @@ class PhotoGallery extends Component {
 PhotoGallery.propTypes = {};
 
 
-/**
- * Displays information about the item. This will eventually grow to be very
- * complex, so I've got it stored here.
- * @class
- */
-class ItemInfo extends Component {
+class PlaceInfo extends Component {
   listingBlock(key, name, className) {
     let block = null;
     if(typeof this.props.data[key] !== "undefined") {
@@ -45,10 +40,6 @@ class ItemInfo extends Component {
   }
 
   render() {
-    // Don't show it if it isn't selected
-    // We do this from here rather than the parent element for performance.
-    if(!this.props.item.$selected) return null;
-
     // Directions
     const loc = typeof this.props.data.directions !== "undefined" ?
                 this.props.data.directions :
@@ -63,7 +54,6 @@ class ItemInfo extends Component {
     return (
       <div>
         <h1 className={cx("header")}>{data.name}</h1>
-        <div className={cx("exit", "material-icons")} onClick={this.close.bind(this)}>clear</div>
         <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
         {alternateNames}
         {/* Setting inner HTML allows for styling the description */}
@@ -75,6 +65,102 @@ class ItemInfo extends Component {
       </div>
     );
   }
+}
+PlaceInfo.propTypes = {
+  data: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+};
+
+
+class SimpleMarkerInfo extends Component {
+  render() {
+    let data = this.props.data;
+    return (
+      <h2 className={cx("header")}>{data.label}</h2>
+    );
+  }
+}
+SimpleMarkerInfo.propTypes = {
+  data: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+};
+
+
+class ParkingLotInfo extends Component {
+  render() {
+    let data = this.props.data;
+    return (
+      <div>
+        <h2 className={cx("header")}>{data.name}</h2>
+        <p className={cx("description")}>Hours: {data.hours}</p>
+      </div>
+    );
+  }
+}
+ParkingLotInfo.propTypes = {
+  data: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+};
+
+
+class RouteInfo extends Component {
+  render() {
+    let data = this.props.data;
+    return (
+      <div>
+        <h2>{data.name}</h2>
+        <p className={cx("description")}>Hours: {data.hours}</p>
+      </div>
+    );
+  }
+}
+RouteInfo.propTypes = {
+  data: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+};
+
+
+/**
+ * Displays information about the item. This will eventually grow to be very
+ * complex, so I've got it stored here.
+ * @class
+ */
+class ItemInfo extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    let state = this.props.item,
+        data = this.props.data;
+    // Don't show it if it isn't selected
+    // We do this from here rather than the parent element for performance.
+    if(!state.$selected) return null;
+
+    let Info = null;
+    switch(data.type) {
+      case 'place':
+        Info = PlaceInfo;
+        break;
+      case 'simple_marker':
+        Info = SimpleMarkerInfo;
+        break;
+      case 'parking_lot':
+        Info = ParkingLotInfo;
+        break;
+      case 'route':
+        Info = RouteInfo;
+        break;
+    }
+
+    return (
+      <div>
+        <div className={cx("exit", "material-icons")} onClick={this.close.bind(this)}>clear</div>
+        <Info item={state} data={data} />
+      </div>
+    );
+  }
+
 
   close() {
     this.props._deselect();

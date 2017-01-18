@@ -33,11 +33,7 @@ class SimpleMarker extends Component {
       <Marker map={this.props.map} id={this.props.id} item={this.props.item}
               appState={this.props.appState}
               latLng ={this.latLng()} icon={this.props.data.marker.icon}
-              _select={this.props._select}
-              _openInfoWindow={this.props._openInfoWindow}
-              _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{this.props.data.label}</h4>
-      </Marker>
+              _select={this.props._select} />
     );
   }
 }
@@ -48,10 +44,6 @@ SimpleMarker.propTypes = {
 
   // Selects the item in the Item Store.
   _select: PropTypes.func.isRequired,
-  // Opens the info window for the item.
-  _openInfoWindow: PropTypes.func.isRequired,
-  // Closes the info window for the item.
-  _closeInfoWindow: PropTypes.func.isRequired,
 
   // The item ID
   id: PropTypes.string.isRequired,

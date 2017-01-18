@@ -1,13 +1,12 @@
 /**
  * @module Route
  */
-import React, {Component, PropTypes} from 'react';
+import {Component, PropTypes} from 'react';
 import ItemStateHOC from '../../hoc/ItemStateHOC';
 
 import AppState from '../../constants/AppState';
 
 import gmaps from '../../GMapsAPI';
-import InfoWindow from './InfoWindow';
 
 /**
  * React component for routes. These can be any types of paths that appear
@@ -18,11 +17,6 @@ class Route extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      position: this.props.data.focus.center,
-      click: new gmaps.LatLng(0, 0),
-    };
   }
 
   /**
@@ -68,21 +62,28 @@ class Route extends Component {
   }
 
   /**
+   * "Highlights" the route (used for selection)
+   */
+  highlight() {
+    let route = this.props.data.route;
+    this.route.setOptions({strokeWeight: route.strokeWeight + 2});
+  }
+
+  /**
+   * "Highlights" the route (used for selection)
+   */
+  unhighlight() {
+    let route = this.props.data.route;
+    this.route.setOptions({strokeWeight: route.strokeWeight});
+  }
+
+  /**
    * Renders the component.
    * @returns {ReactElement} route
    */
   render() {
     this.updateRoute();
-    let position = this.getPosition();
-    return (
-      <InfoWindow $infoWindow={this.props.item.$infoWindow}
-                  map={this.props.map}
-                  position={position}
-                  _closeInfoWindow={this.props._closeInfoWindow}>
-        <h4>{this.props.data.name}</h4>
-        <p>{this.props.data.hours}</p>
-      </InfoWindow>
-    );
+    return null;
   }
 
   /**
@@ -91,6 +92,15 @@ class Route extends Component {
   updateRoute() {
     const state = this.props.item;
     switch(this.props.appState) {
+      case AppState.SELECT:
+        if(state.$selected) {
+          this.route.setMap(this.props.map);
+          this.highlight();
+          break;
+        }
+        else {
+          this.unhighlight();
+        }
       case AppState.FILTER:
         if(state.filter.$active) {
           this.route.setMap(this.props.map);
@@ -119,32 +129,11 @@ class Route extends Component {
   }
 
   /**
-   * Gets the position of where the InfoWindow should be shown (if we
-   * are to show it)
-   * @returns {gmaps.LatLng} position
-   */
-  getPosition() {
-    let position = null;
-    switch(this.props.appState) {
-      case AppState.FILTER:
-      case AppState.NORMAL:
-      case AppState.SEARCH:
-        position = this.state.click;
-        break;
-      case AppState.SELECT:
-        position = this.state.position;
-        break;
-    }
-    return position;
-  }
-
-  /**
    * Called when route is clicked; opens info window.
    * @param {Event} e The click event.
    */
-  _onClick(e) {
-    this.setState({click: e.latLng});
-    this.props._openInfoWindow(this.props.id);
+  _onClick() {
+    this.props._select(this.props.id);
   }
 }
 
@@ -152,10 +141,8 @@ Route.propTypes = {
   // The map object
   map: PropTypes.object.isRequired,
 
-  // Opens the info window.
-  _openInfoWindow: PropTypes.func.isRequired,
-  // Closes the info window.
-  _closeInfoWindow: PropTypes.func.isRequired,
+  // Select function
+  _select: PropTypes.func.isRequired,
 
   // Item ID
   id: PropTypes.string.isRequired,

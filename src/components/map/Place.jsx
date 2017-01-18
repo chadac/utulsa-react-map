@@ -6,7 +6,6 @@ import React, {Component, PropTypes} from 'react';
 import ItemStateComponent from '../../hoc/ItemStateHOC';
 
 import AppState from '../../constants/AppState';
-import ItemStore from '../../stores/ItemStore';
 import gmaps from '../../GMapsAPI';
 
 import Marker from './Marker';
@@ -21,7 +20,6 @@ class Place extends Component {
    * Before the component mounts.
    */
   componentWillMount() {
-    ItemStore.addSelectListener(this._onSelect.bind(this), this.props.data.id);
     this.label = this.createLabel();
   }
 
@@ -82,21 +80,11 @@ class Place extends Component {
   render() {
     this.updatePlace();
 
-    const loc = typeof this.props.data.directions !== "undefined" ?
-                this.props.data.directions :
-                [this.props.data.marker.lat, this.props.data.marker.lng].join(',');
-    const directionsUrl = "https://www.google.com/maps/dir//'" + loc + "'/@" + loc + ",17z";
     return (
       <Marker map={this.props.map} id={this.props.data.id} item={this.props.item}
               appState={this.props.appState}
               latLng ={this.latLng()} icon={this.props.data.marker.icon}
-              _select={this.props._select}
-              _openInfoWindow={this.props._openInfoWindow}
-              _closeInfoWindow={this.props._closeInfoWindow} >
-        <h4>{this.props.data.name}</h4>
-        <p>{this.props.data.address}</p>
-        <p><a href={this.props.data.website}>{this.props.data.website}</a></p>
-        <p><a target="_blank" href={directionsUrl}>Get directions</a></p>
+              _select={this.props._select} >
       </Marker>
     );
   }
@@ -137,14 +125,6 @@ class Place extends Component {
         break;
     }
   }
-
-  _onSelect() {
-    // This runs on a delay so that the map component can react to changes correctly.
-    setTimeout( () => {
-      this.props.map.setZoom(18);
-      this.props.map.setCenter(this.latLng());
-    }, 300);
-  }
 }
 
 Place.propTypes = {
@@ -153,10 +133,6 @@ Place.propTypes = {
 
   // Method for selecting the item
   _select: PropTypes.func.isRequired,
-  // Opens the info window in the Item Store
-  _openInfoWindow: PropTypes.func.isRequired,
-  // Closes the info window in the Item Store
-  _closeInfoWindow: PropTypes.func.isRequired,
 
   // Item ID
   id: PropTypes.string.isRequired,
