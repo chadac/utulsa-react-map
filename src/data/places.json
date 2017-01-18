@@ -241,9 +241,9 @@
   },
   {
     "id": "dietler_commons_formerly_the_u",
-    "name": "Dietler Commons (formerly \"the U\")",
+    "name": "Dietler Commons",
     "type": "place",
-    "description": "The Dietler Commons is the large grassy area in front of McFarlin Library, and was the traditional entrance to the university. The open lawn with winding sidewalks and an iconic raised garden with seasonal flowers that spell out \"TU� is the site for many outdoor gatherings and the annual Homecoming bonfire and festivities.",
+    "description": "The Dietler Commons is the large grassy area in front of McFarlin Library, and was the traditional entrance to the university. The open lawn with winding sidewalks and an iconic raised garden with seasonal flowers that spell out \"TU\" is the site for many outdoor gatherings and the annual Homecoming bonfire and festivities.",
     "address": "South Delaware Avenue, Tulsa, Oklahoma 74104-9700",
     "photos": [
       "http://images-cf.localist.com/assets/main/business_huge-c0846f6f497bda77b914557561c412e0.png"
@@ -924,7 +924,7 @@
       "icon": "classroom"
     },
     "gmaps": {
-      "max_zoom": 15
+      "max_zoom": "15"
     }
   },
   {
@@ -1342,7 +1342,7 @@
     },
     "gmaps": {
       "min_zoom": 17,
-      "max_zoom": 18
+      "max_zoom": "18"
     }
   },
   {
@@ -1446,7 +1446,7 @@
     },
     "gmaps": {
       "min_zoom": 17,
-      "max_zoom": 18
+      "max_zoom": "18"
     }
   },
   {
