@@ -15,6 +15,7 @@ const MAP_SET_EVENT = 'map';
 /****************************************************************
  * INTERNAL STATE VARIABLES
  ****************************************************************/
+
 // The gmaps.Map object
 var _map = null;
 // The current center of the map

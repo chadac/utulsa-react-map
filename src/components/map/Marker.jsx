@@ -97,7 +97,7 @@ class Marker extends Component {
       case AppState.SELECT:
         if(state.$selected) {
           this.showMarker();
-          this.resizeMarker(38, 38);
+          this.resizeMarker(48, 48);
           this.marker.setZIndex(3);
           break;
         }
