@@ -82,12 +82,13 @@ function _onMapZoom(newZoom) {
  * @param {DOMObject} div - The div object to populate the map inside.
  */
 function createMap(div) {
+  console.log(gmaps.ControlPosition)
   let mapOptions = {
     center: _center,
     zoom: _zoom,
     mapTypeControl: true,
     mapTypeControlOptions: {
-      position: gmaps.ControlPosition.LEFT_BOTTOM,
+      position: gmaps.ControlPosition.RIGHT_BOTTOM,
     },
     styles: [{
       featureType: 'poi',
