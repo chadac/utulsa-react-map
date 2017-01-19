@@ -104,18 +104,21 @@ deploy to review:
   environment:
     name: review/$CI_BUILD_REF_NAME
     url: https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
+    on_stop: stop review
   script:
     - pip install awscli
     - aws s3 rm s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
     - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
 
-clean up review:
+stop review:
   type: deploy
   image: python:latest
   when: manual
-  except:
-    - master
-    - develop
+  variables:
+    GIT_STRATEGY: none
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    action: stop
   script:
     - pip install awscli
     - aws s3 rm s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
