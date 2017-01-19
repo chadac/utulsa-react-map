@@ -114,6 +114,9 @@ stop review:
   type: deploy
   image: python:latest
   when: manual
+  except:
+    - master
+    - develop
   variables:
     GIT_STRATEGY: none
   environment:
