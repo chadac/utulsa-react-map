@@ -111,7 +111,6 @@ deploy to review:
     - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
 
 stop review:
-  type: deploy
   image: python:latest
   when: manual
   except:
