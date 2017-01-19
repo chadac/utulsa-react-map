@@ -47,9 +47,9 @@ class PlaceInfo extends Component {
     const directionsUrl = "https://www.google.com/maps/dir//'" + loc + "'/@" + loc + ",17z";
 
     // Listings
-    const alternateNames = this.listingBlock("alternate_names", "Also Called:", cx("alternate-names"));
-    const departments = this.listingBlock("departments", "Departments & Offices", cx("departments"));
-    const rooms = this.listingBlock("rooms", "Rooms", cx("rooms"));
+    const alternateNames = this.listingBlock("alternate_names", "Also Called:", cx("alternate-names", "listing"));
+    const departments = this.listingBlock("departments", "Departments & Offices", cx("departments", "listing"));
+    const rooms = this.listingBlock("rooms", "Rooms", cx("rooms", "listing"));
     const data = this.props.data;
     return (
       <div>
