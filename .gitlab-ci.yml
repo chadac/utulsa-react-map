@@ -35,6 +35,9 @@ build for production:
   type: build
   only:
     - master
+  artifacts:
+    paths:
+      - build/
   script:
     - npm run build -- --homepage="s3://$S3_BUCKET_NAME_PROD/web/map/prod"
 
@@ -43,6 +46,8 @@ deploy to production:
   image: python:latest
   only:
     - master
+  dependencies:
+    - build for production
   environment:
     name: production
     url: https://$S3_BUCKET_NAME_PROD.s3.amazonaws.com/web/map/prod/index.html
@@ -55,6 +60,9 @@ build for staging:
   type: build
   only:
     - develop
+  artifacts:
+    paths:
+      - build/
   script:
     - npm run build -- --homepage="s3://$S3_BUCKET_NAME_DEV/web/map/staging"
 
@@ -63,6 +71,8 @@ deploy to staging:
   image: python:latest
   only:
     - develop
+  dependencies:
+    - build for staging
   environment:
     name: staging
     url: https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/staging/index.html
@@ -76,6 +86,9 @@ build for review:
   except:
     - master
     - develop
+  artifacts:
+    paths:
+      - build/
   script:
     - npm run build -- --homepage="s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG"
 
@@ -86,6 +99,8 @@ deploy to review:
   except:
     - master
     - develop
+  dependencies:
+    - build for review
   environment:
     name: review/$CI_BUILD_REF_NAME
     url: https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
