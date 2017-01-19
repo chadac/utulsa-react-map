@@ -32,7 +32,7 @@ class FilterWidget extends Component {
     // TODO: Track when the button is hovered/active
     // let active = this.props.appState === AppState.FILTER;
     return (
-      <i className={cx("menu-icon", "material-icons", "filter")}
+      <i className={cx("menu-icon", "material-icons", "filter", {"active": this.props.appState === AppState.FILTER})}
          onClick={this._onClick.bind(this)}>
         filter_list
       </i>

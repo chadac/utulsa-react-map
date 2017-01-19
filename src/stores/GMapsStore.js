@@ -22,7 +22,7 @@ var _center = {lat: 36.15159935580428, lng: -95.94644401639404};
 // The old zoom (used for tracking current zoom objects in the Item Store)
 var _oldZoom = null;
 // The current zoom
-var _zoom = 16;
+var _zoom = 17;
 // The user's position
 var _userPosition = null;
 

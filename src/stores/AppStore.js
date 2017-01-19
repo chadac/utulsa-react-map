@@ -24,7 +24,7 @@ const CHANGE_EVENT = "change";
  ****************************************************************/
 
 // The current app state.
-var _currentState = AppState.NORMAL;
+var _currentState = AppState.FILTER;
 
 
 /****************************************************************

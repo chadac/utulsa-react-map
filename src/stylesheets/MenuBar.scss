@@ -23,6 +23,7 @@
 }
 
 .menu-icon {
+    user-select: none;
     color: #767676;
     width: auto;
     padding: 8px;
@@ -32,6 +33,10 @@
 }
 
 .filter {
+    border-radius: 1px;
+    &.active {
+        background-color: #EEEEEE;
+    }
 }
 
 .search-container {
