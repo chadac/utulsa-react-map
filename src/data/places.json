@@ -1786,7 +1786,7 @@
       "icon": "christian"
     },
     "gmaps": {
-      "min_zoom": 19
+      "min_zoom": 18
     }
   },
   {
@@ -1887,7 +1887,7 @@
       "icon": "christian"
     },
     "gmaps": {
-      "min_zoom": 19
+      "min_zoom": 18
     }
   },
   {
@@ -2410,8 +2410,8 @@
     "description": "<div class=\"entry-content\">\n\t\t<p>The <a href=\"http://www.bkstr.com/tulsastore/home\" target=\"_blank\">University Bookstore</a> sells textbooks, general-interest books, Golden Hurricane merchandise and clothing as well as convenience items.</p>\n<p>All required and recommended textbooks used for coursework at TU are carried in the store. Books not found in the store also can be special ordered.&nbsp;The bookstore buys back textbooks year-round as well as during the end-of-semester buy-back programs.</p>\n<p>Other items you can find at the bookstore include study aids, school supplies, health and beauty supplies and gifts.</p>\n<h3>Location &amp;&nbsp;Phone Number</h3>\n<p>3314 E. 11th St.,&nbsp;Tulsa, OK 74104<br>\n918-836-1770<br>\n<a href=\"mailto:mgr@fheg.follett.com\">tulsa@bkstr.com</a><br>\n<a href=\"http://www.bkstr.com/tulsastore/home\" target=\"_blank\">Campus Bookstore</a></p>\n<h3>Summer Hours</h3>\n<p>Monday&nbsp;–&nbsp;Friday<br>\n9:00 a.m. to 5:00 p.m.</p>\n<p>Saturday<br>\n11:00 a.m. to 3:00 p.m.</p>\n<p>Sunday<br>\nClosed</p></div>",
     "category": "TU MAIN CAMPUS",
     "marker": {
-      "lat": 36.1475036,
-      "lng": -95.9416648,
+      "lat": 36.147477,
+      "lng": -95.939476,
       "icon": "classroom"
     },
     "gmaps": {
