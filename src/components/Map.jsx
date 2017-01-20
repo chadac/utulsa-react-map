@@ -43,6 +43,8 @@ class Map extends Component {
     // Called when the Google Map has been created. (promting a re-render)
     this.stores().gmaps.addMapListener(this._onMapCreate.bind(this));
 
+    window.addEventListener('resize', this.updateDimensions.bind(this));
+
     this.state = {
       items: this.stores().item.getAll(),
       cats: this.stores().item.getCategories(),
@@ -67,8 +69,9 @@ class Map extends Component {
    * @param {boolean} updateState - If true, updates the container state (default: true).
    */
   updateDimensions() {
+    console.log("eh?");
     let container = this.refs.container;
-    let dims = {width: container.clientHeight, height: container.clientWidth};
+    let dims = {width: container.clientWidth, height: container.clientHeight};
     this.setState({dims: dims});
   }
 
