@@ -62,14 +62,13 @@ class Map extends Component {
     // This creates the Google Map using an empty div created
     // on the initial render step.
     this.actions().gmaps.createMap(this.refs.map);
-    this.updateDimensions();
+    setTimeout(this.updateDimensions.bind(this), 500);
   }
 
   /**
    * @param {boolean} updateState - If true, updates the container state (default: true).
    */
   updateDimensions() {
-    console.log("eh?");
     let container = this.refs.container;
     let dims = {width: container.clientWidth, height: container.clientHeight};
     this.setState({dims: dims});
