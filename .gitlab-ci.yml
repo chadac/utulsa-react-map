@@ -109,6 +109,7 @@ deploy to review:
     - pip install awscli
     - aws s3 rm s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
     - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
+    - echo https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
 
 stop review:
   image: python:latest
