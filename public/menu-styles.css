@@ -1,0 +1,159 @@
+#content {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+#menu {
+    flex: 1 1 auto;
+}
+
+#app {
+    flex: 1 1 auto;
+}
+
+
+.primary {
+    height: 4px;
+    background: #004B8D;
+    positive: relative;
+}
+
+.secondary {
+    display: block;
+    background: #C5B783;
+    font-family: UniversNW01-520CdMedium,sans-serif;
+    letter-spacing: 1.5px;
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 22px;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.secondary * {
+    margin: 0;
+    padding: 0;
+}
+
+.secondary a {
+    transition: color 0.25s;
+    text-decoration: none;
+}
+
+.secondary .main-link {
+    color: #2B2B2B;
+    line-height: 1;
+    text-transform: uppercase;
+    display: block;
+    float: left;
+    font-size: 11px;
+    margin: 8px 0
+}
+
+.secondary .main-link:hover {
+    color: #004B8D
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    zoom: 1;
+}
+
+.container:before .row:before {
+    display: table;
+    content: " ";
+}
+
+.container:after .nav:after .row:after {
+    clear: both;
+    display: table;
+    content: " ";
+}
+
+@media (min-width: 992px)
+.secondary-navigation {
+    display: inline-block;
+}
+
+.secondary-navigation {
+    display: none;
+    float: right;
+    text-transform: uppercase;
+    font-size: 13px
+}
+
+.secondary-navigation ul li {
+    display: inline-block
+}
+
+.secondary-navigation ul li a {
+    display: block;
+    margin: 14px 0 12px;
+    line-height: 1;
+    padding: 0 10px;
+    color: #2B2B2B;
+}
+
+.secondary-navigation ul li a:hover {
+    color: #004B8D
+}
+
+.secondary-navigation ul li.section a {
+    border-left: 1px solid #2B2B2B;
+    border-right: 1px solid #2B2B2B
+}
+
+.secondary-navigation ul li .search-toggle {
+    margin: 0;
+    font-size: 14px;
+    padding-right: 0;
+    position: relative;
+    top: 4px
+}
+
+.secondary-navigation ul li .search-toggle .icon {
+    fill: #2B2B2B;
+    height: 16px;
+    position: relative;
+    top: 2px
+}
+
+.navbar-nav {
+    display: block;
+    list-style: none;
+    margin: 0;
+}
+
+.nav:after .nav:before {
+    display: table;
+    content: " ";
+}
+
+.nav:after .row:after {
+    clear: both;
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .secondary-navigation {
+        display: inline-block;
+    }
+    .secondary .main-link {
+        font-size: 13px;
+        margin: 14px 0 12px;
+    }
+    .container {
+        max-width: 970px;
+    }
+}

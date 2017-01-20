@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link rel='dns-prefetch' href='//fast.fonts.net' />
+    <link rel='stylesheet' id='tulsa-fonts-css'  href='//fast.fonts.net/cssapi/7b215a58-dada-4401-9ad4-84f2e38cead9.css' type='text/css' media='all' />
+    <link rel="stylesheet" href="%PUBLIC_URL%/menu-styles.css">
     <!--
       Notice the use of %PUBLIC_URL% in the tag above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -17,7 +20,44 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy3vrSFQ_8LMw0sD6RJX0UujD7MTvLnwM"></script>
   </head>
   <body>
-    <div id="app" style="height:100%;">
+    <div id="content" style="height: 100%;">
+      <div id="menu">
+        <div class="secondary">
+          <div class="container">
+            <a class="main-link" href="https://utulsa.edu">utulsa.edu</a>
+            <nav class="secondary-navigation">
+              <ul id="menu-secondary" class="nav navbar-nav">
+                <li id="menu-item-14" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14">
+                  <a title="section" href="https://admission.utulsa.edu/apply/">Apply</a>
+                </li>
+                <li id="menu-item-13" class="section menu-item menu-item-type-custom menu-item-object-custom menu-item-13">
+                  <a title="_blank" href="https://utulsa.edu/offices/institutional-advancement/">Support TU</a>
+                </li>
+                <li id="menu-item-15" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15">
+                  <a target="_blank" href="https://portal.utulsa.edu/">Portal</a>
+                </li>
+                <li id="menu-item-6904" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6904">
+                  <a target="_blank" href="https://faculty.utulsa.edu">Faculty</a>
+                </li>
+                <li id="menu-item-1501" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1501">
+                  <a href="https://utulsa.edu/maps/">Maps</a>
+                </li>
+                <li id="menu-item-1583" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1583">
+                  <a href="https://utulsa.edu/social-media-directory/">Social Media</a>
+                </li>
+                <li id="menu-item-3723" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3723">
+                  <a href="https://utulsa.edu/contact/">Contact</a>
+                </li>
+                <!-- <li><a class="search-toggle"><svg class="icon icon-search"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-icon-search"></use></svg></a></li> -->
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div class="primary">
+        </div>
+      </div>
+      <div id="app" style="height:100%;">
+      </div>
     </div>
   </body>
 </html>

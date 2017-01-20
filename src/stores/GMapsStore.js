@@ -88,8 +88,9 @@ function createMap(div) {
     zoom: _zoom,
     mapTypeControl: true,
     mapTypeControlOptions: {
-      position: gmaps.ControlPosition.RIGHT_BOTTOM,
+      position: gmaps.ControlPosition.RIGHT_TOP,
     },
+    fullscreenControl: false,
     styles: [{
       featureType: 'poi',
       stylers: [{visibility: "off"}],
