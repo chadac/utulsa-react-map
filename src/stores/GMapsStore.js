@@ -86,10 +86,10 @@ function createMap(div) {
   let mapOptions = {
     center: _center,
     zoom: _zoom,
-    mapTypeControl: true,
-    mapTypeControlOptions: {
-      position: gmaps.ControlPosition.RIGHT_TOP,
-    },
+    mapTypeControl: false,
+    // mapTypeControlOptions: {
+    //   position: gmaps.ControlPosition.RIGHT_TOP,
+    // },
     fullscreenControl: false,
     styles: [{
       featureType: 'poi',
