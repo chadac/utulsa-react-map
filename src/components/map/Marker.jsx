@@ -119,7 +119,7 @@ class Marker extends Component {
         }
         else if(state.$zoom > 0) {
           this.showMarker();
-          this.resizeMarker(16, 16);
+          this.resizeMarker(4, 4);
           this.marker.setZIndex(1);
         }
         else {
