@@ -1065,6 +1065,21 @@
     ]
   },
   {
+    "id": "physical_plant",
+    "name": "Physical Plant",
+    "type": "place",
+    "description": "The Physical Plant maintains, operates, and protects the University campus and facilities to provide an atmosphere that is conducive to learning, safe and healthy for the University community, and attractive for University and community visitors. We also support appropriate University and student-sponsored events.",
+    "category": "TU MAIN CAMPUS",
+    "marker": {
+      "lat": 36.1506,
+      "lng": -95.945462,
+      "icon": "housing"
+    },
+    "gmaps": {
+      "min_zoom": 18
+    }
+  },
+  {
     "id": "7th_street_house",
     "name": "7th Street House",
     "type": "place",
