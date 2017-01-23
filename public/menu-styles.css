@@ -162,7 +162,7 @@
 /*     } */
 /* } */
 
-@media (min-width: 589px) {
+@media (min-width: 500px) {
     .secondary-navigation {
         display: inline-block;
     }
@@ -175,7 +175,7 @@
         margin: 14px 0 14px 40px;
     }
     .container {
-        max-width: 670px;
+        max-width: 480px;
     }
 }
 
