@@ -67,6 +67,7 @@
     float: right;
     font-size: 13px;
     margin: 14px 0;
+    user-select: none;
 }
 
 .secondary .satellite-control:hover {
