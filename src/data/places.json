@@ -410,7 +410,7 @@
     "id": "jackson_commons",
     "name": "Jackson Commons",
     "type": "place",
-    "description": "This green space in front of the Roxana R�zsa and Robert Lorton Performance Center often hosts outdoor film screenings and special events.",
+    "description": "This green space in front of the Roxana Rózsa and Robert Lorton Performance Center often hosts outdoor film screenings and special events.",
     "address": "550 South Gary Place, Tulsa, Oklahoma 74104-9700",
     "photos": [
       "http://images-cf.localist.com/assets/main/business_huge-c0846f6f497bda77b914557561c412e0.png"
@@ -485,7 +485,7 @@
     "id": "little_blue_house_833",
     "name": "Little Blue House",
     "type": "place",
-    "description": "The Little Blue House is home to the United Campus Ministries. UCM is comprised of University of Tulsa students of all faiths and backgrounds � including those who are not sure if they have a faith. UCM is a �ministry of inclusion,� meaning that we believe everyone is a child of God and that all are welcome � regardless of faith tradition, race, gender, sexual orientation, national origin, age, ability or background.",
+    "description": "The Little Blue House is home to the United Campus Ministries. UCM is comprised of University of Tulsa students of all faiths and backgrounds including those who are not sure if they have a faith. UCM is a ministry of inclusion, meaning that we believe everyone is a child of God and that all are welcome regardless of faith tradition, race, gender, sexual orientation, national origin, age, ability or background.",
     "address": "2839 East 5th Street, Tulsa, Oklahoma 74104-9700",
     "photos": [
       "http://images-cf.localist.com/photos/316041/huge/28371adc5afbcf1b92f45b55052d2380ed815351.jpg"
@@ -529,7 +529,7 @@
     "id": "lorton_performance_center",
     "name": "Lorton Performance Center",
     "type": "place",
-    "description": "The Roxana Rozsa and Robert Eugene Lorton Performance Center was completed in 2011. The facility includes the Herbert and Roseline Gussman Concert Hall with seating for 635 on two floors, as well as a full performance stage with ballet floor, scenery fly and trap room, a hydraulic orchestra pit, theatrical lighting and acoustical control booths. Guests enter through Ann and Jack Graves Grand Hall, an elegant and spacious lobby that serves as an art gallery and pre-function space for receptions and similar gatherings.\\n\\nLorton Performance Center web site",
+    "description": "<p>The Roxana Rózsa and Robert Eugene Lorton Performance Center was completed in 2011. The facility includes the Herbert and Roseline Gussman Concert Hall with seating for 635 on two floors, as well as a full performance stage with ballet floor, scenery fly and trap room, a hydraulic orchestra pit, theatrical lighting and acoustical control booths. Guests enter through Ann and Jack Graves Grand Hall, an elegant and spacious lobby that serves as an art gallery and pre-function space for receptions and similar gatherings.</p>\n<p><a href=\"https://lpc.utulsa.edu/\">Lorton Performance Center web site</a></p>",
     "address": "550 South Gary Place, Tulsa, Oklahoma 74104-9700",
     "photos": [
       "http://images-cf.localist.com/photos/302794/huge/86dcc146b12bc5614361d50648da231e18a2baac.jpg"
@@ -889,7 +889,7 @@
       "Allen Chapman Student Union"
     ],
     "departments": [
-      "ATM ",
+      "ATM",
       "C-Store",
       "Dining Services Administration",
       "Faculty Club Lounge",
@@ -1523,7 +1523,7 @@
     "id": "bird_shell_nest",
     "name": "Bird Shell Nest",
     "type": "place",
-    "description": "The J. Bird Sr. Shell Nest is a 5,000 square foot facility for the rowing team, the first boat storage facility specifically dedicated to the needs of the varsity rowers at TU.\\n \\nThe location is a short 15 minute drive from campus and it allows TU access to one of the best waterways for rowing in the United States on the Verdigris River.  The Verdigris River is part of the Mississippi River watershed and sports a natural setting of 18 miles distance for the TU Women's Rowing Team to practice.  The J. Bird Sr. Shell Nest was completed in January 2007.",
+    "description": "The J. Bird Sr. Shell Nest is a 5,000 square foot facility for the rowing team, the first boat storage facility specifically dedicated to the needs of the varsity rowers at TU.\n\nThe location is a short 15 minute drive from campus and it allows TU access to one of the best waterways for rowing in the United States on the Verdigris River.  The Verdigris River is part of the Mississippi River watershed and sports a natural setting of 18 miles distance for the TU Women's Rowing Team to practice.  The J. Bird Sr. Shell Nest was completed in January 2007.",
     "address": "Rogers Point Park, 4001 North Hwy 66, Catoosa, OK 74115",
     "photos": [
       "http://images-cf.localist.com/photos/361257/huge/e657ca6d779a2d32be74a112394737ae30dba607.jpg"
@@ -1781,8 +1781,8 @@
     ],
     "category": "CAMPUS MINISTRIES",
     "marker": {
-      "lat": 36.150469829,
-      "lng": -95.9464163178,
+      "lat": 36.150429829,
+      "lng": -95.9463853178,
       "icon": "christian"
     },
     "gmaps": {
@@ -1838,7 +1838,7 @@
     ],
     "category": "CAMPUS MINISTRIES",
     "marker": {
-      "lat": 36.1542166397,
+      "lat": 36.1541866397,
       "lng": -95.9452650552,
       "icon": "christian"
     },
@@ -1883,7 +1883,7 @@
     "category": "CAMPUS MINISTRIES",
     "marker": {
       "lat": 36.1539275029,
-      "lng": -95.946340411,
+      "lng": -95.946290411,
       "icon": "christian"
     },
     "gmaps": {
@@ -1901,7 +1901,7 @@
     "category": "CAMPUS MINISTRIES",
     "marker": {
       "lat": 36.1540767206,
-      "lng": -95.9465015043,
+      "lng": -95.9466115043,
       "icon": "christian"
     },
     "gmaps": {
@@ -2407,7 +2407,8 @@
     "id": "campus_bookstore",
     "name": "Campus Bookstore",
     "type": "place",
-    "description": "<div class=\"entry-content\">\n\t\t<p>The <a href=\"http://www.bkstr.com/tulsastore/home\" target=\"_blank\">University Bookstore</a> sells textbooks, general-interest books, Golden Hurricane merchandise and clothing as well as convenience items.</p>\n<p>All required and recommended textbooks used for coursework at TU are carried in the store. Books not found in the store also can be special ordered.&nbsp;The bookstore buys back textbooks year-round as well as during the end-of-semester buy-back programs.</p>\n<p>Other items you can find at the bookstore include study aids, school supplies, health and beauty supplies and gifts.</p>\n<h3>Location &amp;&nbsp;Phone Number</h3>\n<p>3314 E. 11th St.,&nbsp;Tulsa, OK 74104<br>\n918-836-1770<br>\n<a href=\"mailto:mgr@fheg.follett.com\">tulsa@bkstr.com</a><br>\n<a href=\"http://www.bkstr.com/tulsastore/home\" target=\"_blank\">Campus Bookstore</a></p>\n<h3>Summer Hours</h3>\n<p>Monday&nbsp;–&nbsp;Friday<br>\n9:00 a.m. to 5:00 p.m.</p>\n<p>Saturday<br>\n11:00 a.m. to 3:00 p.m.</p>\n<p>Sunday<br>\nClosed</p></div>",
+    "description": "<p>The <a href=\"http://www.bkstr.com/tulsastore/home\" target=\"_blank\">University Bookstore</a> sells textbooks, general-interest books, Golden Hurricane merchandise and clothing as well as convenience items.</p>\n<p>All required and recommended textbooks used for coursework at TU are carried in the store. Books not found in the store also can be special ordered.&nbsp;The bookstore buys back textbooks year-round as well as during the end-of-semester buy-back programs.</p>\n<p>Other items you can find at the bookstore include study aids, school supplies, health and beauty supplies and gifts.</p>\n<p>\n<h3>Contact</h3>\n918-836-1770<br />\n<a href=\"mailto:mgr@fheg.follett.com\">tulsa@bkstr.com</a><br />\n<a href=\"http://www.bkstr.com/tulsastore/home\" target=\"_blank\">Campus Bookstore</a>\n</p>\n<h3>Summer Hours</h3>\n<p><b>Monday&nbsp;–&nbsp;Friday</b><br>\n9:00 a.m. to 5:00 p.m.</p>\n<p><b>Saturday</b><br>\n11:00 a.m. to 3:00 p.m.</p>\n<p><b>Sunday</b><br>\nClosed</p>",
+    "address": "3314 E. 11th Street, Tulsa, Oklahoma 74104",
     "category": "TU MAIN CAMPUS",
     "marker": {
       "lat": 36.147477,
