@@ -854,7 +854,7 @@
     "category": "TU MAIN CAMPUS",
     "marker": {
       "lat": 36.1530833483,
-      "lng": -95.9420742712,
+      "lng": -95.9420042712,
       "icon": "classroom"
     },
     "gmaps": {
@@ -937,13 +937,16 @@
     ],
     "category": "TU MAIN CAMPUS",
     "marker": {
-      "lat": 36.1524665468,
+      "lat": 36.1524965468,
       "lng": -95.9438257669,
       "icon": "star"
     },
     "gmaps": {
       "min_zoom": 18
-    }
+    },
+    "departments": [
+      "True Blue Neighbors"
+    ]
   },
   {
     "id": "tyrrell_hall",

@@ -16,11 +16,11 @@ import AppState from '../../constants/AppState';
  */
 function polyStyles(data) {
   const defaults = {
-    strokeColor: "#AAAAAA",
-    strokeOpacity: 0.4,
-    strokeWeight: 5,
-    fillColor: "#FF0000",
-    fillOpacity: 0.8,
+    strokeColor: "#AAA",
+    strokeOpacity: 1.0,
+    strokeWeight: 2,
+    fillColor: "#F00",
+    fillOpacity: 0.7,
   };
   let styles = {};
   Object.keys(defaults)
@@ -106,7 +106,7 @@ class ParkingLot extends Component {
    */
   highlight() {
     this.polys.forEach((poly) => {
-      poly.setOptions({strokeColor: "#AA0"});
+      poly.setOptions({strokeColor: "#CC0", strokeWeight: 3});
     });
   }
 
@@ -115,7 +115,7 @@ class ParkingLot extends Component {
    */
   unhighlight() {
     this.polys.forEach((poly) => {
-      poly.setOptions({strokeColor: "#AAAAAA"});
+      poly.setOptions({strokeColor: "#AAA", strokeWeight: 2});
     });
   }
 
