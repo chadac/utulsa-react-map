@@ -1068,7 +1068,7 @@
     "id": "physical_plant",
     "name": "Physical Plant",
     "type": "place",
-    "description": "The Physical Plant maintains, operates, and protects the University campus and facilities to provide an atmosphere that is conducive to learning, safe and healthy for the University community, and attractive for University and community visitors. We also support appropriate University and student-sponsored events.",
+    "description": "<p>The Physical Plant maintains, operates, and protects the University campus and facilities to provide an atmosphere that is conducive to learning, safe and healthy for the University community, and attractive for University and community visitors. It also supports appropriate University and student-sponsored events.</p>\n<p><h3>Hours</h3> Monday-Friday, 7:30 am - 4:30 pm</p>\n<p><h3>Contact</h3> \nMain Phone: 918-631-2245<br />\nEmail: <a href=\"mailto:phpl_work@utulsa.edu\">phpl_work@utulsa.edu</a></p>",
     "category": "TU MAIN CAMPUS",
     "marker": {
       "lat": 36.1506,
