@@ -10,15 +10,25 @@ import AppState from '../../constants/AppState';
 import MapIcon from '../../data/mapIcons.json';
 
 class Marker extends Component {
+  /**
+   * Before component renders.
+   */
   componentWillMount() {
     this.marker = this.createMarker();
     this.marker.addListener("click", this._onClick.bind(this));
   }
 
+  /**
+   * Before component un-renders.
+   */
   componentWillUnmount() {
     this.marker.setMap(null);
   }
 
+  /**
+   * Creates the Google Maps marker object.
+   * @returns {gmaps.Marker} marker
+   */
   createMarker() {
     let icon = null;
     if(this.props.icon) {
@@ -39,7 +49,6 @@ class Marker extends Component {
 
   /**
    * Shows the marker on the map.
-   * @returns {void}
    */
   showMarker() {
     // Slight speedup: calling setMap alone slows down things,
@@ -50,7 +59,6 @@ class Marker extends Component {
 
   /**
    * Hides the marker from the map.
-   * @returns {void}
    */
   hideMarker() {
     if(this.marker.getMap() !== null)
@@ -60,7 +68,6 @@ class Marker extends Component {
   /**
    * Resizes the marker icon. Currently creates only square sizes.
    * @param {int} size The new size of the icon.
-   * @returns {void}
    */
   resizeMarker(size) {
     this.marker.setIcon({
@@ -81,7 +88,6 @@ class Marker extends Component {
 
   /**
    * Updates the marker object on re-rendering.
-   * @returns {void}
    */
   updateMarker() {
     // The current item state.
@@ -136,7 +142,6 @@ class Marker extends Component {
   /**
    * Called when the marker is clicked. If the class has been passed a
    * method for opening an infowindow, then select this item.
-   * @returns {void}
    */
   _onClick() {
     this.props._select(this.props.id);
