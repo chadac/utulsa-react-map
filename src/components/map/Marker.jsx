@@ -70,10 +70,12 @@ class Marker extends Component {
    * @param {int} size The new size of the icon.
    */
   resizeMarker(size) {
-    this.marker.setIcon({
-      url: MapIcon[this.props.icon],
-      scaledSize: new gmaps.Size(size, size)
-    });
+    if(this.marker.getIcon().scaledSize.width !== size) {
+      this.marker.setIcon({
+        url: MapIcon[this.props.icon],
+        scaledSize: new gmaps.Size(size, size)
+      });
+    }
   }
 
   render() {

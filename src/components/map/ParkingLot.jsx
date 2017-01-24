@@ -106,7 +106,9 @@ class ParkingLot extends Component {
    */
   highlight() {
     this.polys.forEach((poly) => {
-      poly.setOptions({strokeColor: "#CC0", strokeWeight: 3});
+      if(poly.strokeColor !== "#CC0" && poly.strokeWeight !== 3) {
+        poly.setOptions({strokeColor: "#CC0", strokeWeight: 3});
+      }
     });
   }
 
@@ -115,7 +117,8 @@ class ParkingLot extends Component {
    */
   unhighlight() {
     this.polys.forEach((poly) => {
-      poly.setOptions({strokeColor: "#AAA", strokeWeight: 2});
+      if(poly.strokeColor !== "#AAA" && poly.strokeWeight !== 2)
+        poly.setOptions({strokeColor: "#AAA", strokeWeight: 2});
     });
   }
 
