@@ -26,6 +26,13 @@ class SearchItemMain extends Component {
   render() {
     if(!this.props.item.search.$active) return null;
 
+    let thumbnail = null;
+    if(this.props.data.photos) {
+      let photo = this.props.data.photos[0];
+      thumbnail = (
+        <img src={photo} />
+      );
+    }
     const data = this.props.data;
     const terms = this.props.item.search.terms;
     return (
@@ -40,6 +47,7 @@ class SearchItemMain extends Component {
           <hr />
           <span className={cx("address")}>{ data.address }</span>
         </div>
+        {thumbnail}
       </div>
     );
   }

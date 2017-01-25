@@ -14,12 +14,35 @@ const cx = classnames.bind(styles);
  * @class
  */
 class PhotoGallery extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      active: this.props.photos[0]
+    };
+  }
+
   render() {
-    return null;
+    let images = this.props.photos.map((photo) => (
+      <li key={photo} className={cx({active: this.state.active === photo})}>
+        <img src={photo} />
+      </li>
+    ));
+    return (
+      <div className={cx("photo-gallery")}>
+        <div className={cx("nav", "left-nav")}><i className={cx("material-icons")}>keyboard_arrow_left</i></div>
+        <div className={cx("nav", "right-nav")}><i className={cx("material-icons")}>keyboard_arrow_right</i></div>
+        <ul>
+          {images}
+        </ul>
+      </div>
+    );
   }
 }
 
-PhotoGallery.propTypes = {};
+PhotoGallery.propTypes = {
+  photos: PropTypes.array.isRequired,
+};
 
 
 class PlaceInfo extends Component {
@@ -55,11 +78,11 @@ class PlaceInfo extends Component {
       <div>
         <h1 className={cx("header")}>{data.name}</h1>
         <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
+        <PhotoGallery photos={data.photos} />
         {alternateNames}
         {/* Setting inner HTML allows for styling the description */}
         <p className={cx("description")}
            dangerouslySetInnerHTML={{__html: data.description}}></p>
-        <PhotoGallery photos={data.photos} />
         {departments}
         {rooms}
       </div>
