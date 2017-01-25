@@ -13,7 +13,9 @@ cache:
 
 variables:
   S3_BUCKET_NAME_PROD: utulsa-assets
+  URL_PROD: d1oqrhcv6o35k6.cloudfront.net
   S3_BUCKET_NAME_DEV: utulsa-assets
+  URL_DEV: d1oqrhcv6o35k6.cloudfront.net
 
 stages:
   - setup
@@ -39,7 +41,7 @@ build for production:
     paths:
       - build/
   script:
-    - npm run build -- --homepage="s3://$S3_BUCKET_NAME_PROD/web/map/prod"
+    - npm run build -- --homepage="https://$URL_PROD/web/map/prod"
 
 deploy to production:
   type: deploy
@@ -50,7 +52,7 @@ deploy to production:
     - build for production
   environment:
     name: production
-    url: https://$S3_BUCKET_NAME_PROD.s3.amazonaws.com/web/map/prod/index.html
+    url: https://$URL_PROD/web/map/prod/index.html
   script:
     - pip install awscli
     - aws s3 rm s3://$S3_BUCKET_NAME_PROD/web/map/prod/ --recursive
@@ -64,7 +66,7 @@ build for staging:
     paths:
       - build/
   script:
-    - npm run build -- --homepage="s3://$S3_BUCKET_NAME_DEV/web/map/staging"
+    - npm run build -- --homepage="https://$URL_DEV/web/map/staging"
 
 deploy to staging:
   type: deploy
@@ -75,7 +77,7 @@ deploy to staging:
     - build for staging
   environment:
     name: staging
-    url: https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/staging/index.html
+    url: https://$URL_DEV/web/map/staging/index.html
   script:
     - pip install awscli
     - aws s3 rm s3://$S3_BUCKET_NAME_DEV/web/map/staging/ --recursive
@@ -90,7 +92,7 @@ build for review:
     paths:
       - build/
   script:
-    - npm run build -- --homepage="s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG"
+    - npm run build -- --homepage="https://$URL_DEV/web/map/review/$CI_BUILD_REF_SLUG"
 
 deploy to review:
   type: deploy
@@ -103,7 +105,7 @@ deploy to review:
     - build for review
   environment:
     name: review/$CI_BUILD_REF_NAME
-    url: https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
+    url: https://$URL_DEV/web/map/review/$CI_BUILD_REF_SLUG/index.html
     on_stop: stop review
   script:
     - pip install awscli
