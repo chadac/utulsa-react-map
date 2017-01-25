@@ -16,11 +16,11 @@ import AppState from '../../constants/AppState';
  */
 function polyStyles(data) {
   const defaults = {
-    strokeColor: "#AAAAAA",
-    strokeOpacity: 0.4,
-    strokeWeight: 5,
-    fillColor: "#FF0000",
-    fillOpacity: 0.8,
+    strokeColor: "#AAA",
+    strokeOpacity: 1.0,
+    strokeWeight: 2,
+    fillColor: "#F00",
+    fillOpacity: 0.7,
   };
   let styles = {};
   Object.keys(defaults)
@@ -106,7 +106,9 @@ class ParkingLot extends Component {
    */
   highlight() {
     this.polys.forEach((poly) => {
-      poly.setOptions({strokeColor: "#AA0"});
+      if(poly.strokeColor !== "#CC0" && poly.strokeWeight !== 3) {
+        poly.setOptions({strokeColor: "#CC0", strokeWeight: 3});
+      }
     });
   }
 
@@ -115,7 +117,8 @@ class ParkingLot extends Component {
    */
   unhighlight() {
     this.polys.forEach((poly) => {
-      poly.setOptions({strokeColor: "#AAAAAA"});
+      if(poly.strokeColor !== "#AAA" && poly.strokeWeight !== 2)
+        poly.setOptions({strokeColor: "#AAA", strokeWeight: 2});
     });
   }
 
@@ -149,11 +152,9 @@ class ParkingLot extends Component {
           this.highlight();
           break;
         }
-        else {
-          this.unhighlight();
-        }
       case AppState.FILTER:
       case AppState.NORMAL:
+        this.unhighlight();
         if(!state.filter.$active) {
           this.hidePolygons();
         }

@@ -15,6 +15,7 @@ const MAP_SET_EVENT = 'map';
 /****************************************************************
  * INTERNAL STATE VARIABLES
  ****************************************************************/
+
 // The gmaps.Map object
 var _map = null;
 // The current center of the map
@@ -85,10 +86,11 @@ function createMap(div) {
   let mapOptions = {
     center: _center,
     zoom: _zoom,
-    mapTypeControl: true,
-    mapTypeControlOptions: {
-      position: gmaps.ControlPosition.RIGHT_BOTTOM,
-    },
+    mapTypeControl: false,
+    // mapTypeControlOptions: {
+    //   position: gmaps.ControlPosition.RIGHT_TOP,
+    // },
+    fullscreenControl: false,
     styles: [{
       featureType: 'poi',
       stylers: [{visibility: "off"}],

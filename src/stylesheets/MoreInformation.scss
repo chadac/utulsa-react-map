@@ -1,3 +1,5 @@
+@import 'sizes';
+
 .more-info {
     position: relative;
     padding: 10px;
@@ -26,6 +28,7 @@
 }
 
 .address {
+    font-size: $font-small !important;
     & a {
         &:visited {
             color: blue;
@@ -34,6 +37,17 @@
 }
 
 .description {
-    line-height: 15px;
-    font-size: 11px;
+    line-height: $line-height;
+    font-size: $font-small;
+}
+
+.listing {
+    font-size: $font-small !important;
+    line-height: $line-height;
+    & h4 {
+        margin: 6px 0;
+    }
+    & ul {
+        margin: 3px 0;
+    }
 }

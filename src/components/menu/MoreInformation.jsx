@@ -18,7 +18,6 @@ const cx = classnames.bind(styles);
 class MoreInformation extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       // The list of react elements with more information.
       items: this.createItemInfos(),

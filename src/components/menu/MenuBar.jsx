@@ -14,11 +14,6 @@ import classnames from 'classnames/bind';
 import styles from '../../stylesheets/MenuBar.scss';
 const cx = classnames.bind(styles);
 
-// The height of the submenus. Should be about 80% of the screen.
-const SUBMENU_HEIGHT = (window.innerHeight
-                     || document.documentElement.clientHeight
-                     || document.body.clientHeight) * 0.8;
-
 /**
  * Widget that has a button for filtering.
  * @class
@@ -261,18 +256,19 @@ class MenuBar extends Component {
    * @returns {ReactElement} subMenu
    */
   renderSubMenu() {
+    let submenu_height = this.props.dims.height * 0.8;
     return (
       <div className={cx('menu-content')} style={{display: this.state.minimized ? "none" : ""}}>
         <SearchResults
-            height={SUBMENU_HEIGHT}
+            height={submenu_height}
             display={this.props.appState === AppState.SEARCH}
             items={this.props.items} {...this.flux()} />
         <MoreInformation
-            height={SUBMENU_HEIGHT}
+            height={submenu_height}
             display={this.props.appState === AppState.SELECT}
             items={this.props.items} {...this.flux()} />
         <Filter
-            height={SUBMENU_HEIGHT}
+            height={submenu_height}
             display={this.props.appState === AppState.FILTER}
             cats={this.props.cats} activeCats={this.props.activeCats}
             _addCategory={this.actions().item.addCategory}
@@ -307,6 +303,8 @@ class MenuBar extends Component {
 MenuBar.propTypes = {
   // Map object
   map: PropTypes.object.isRequired,
+  // Dimensions
+  dims: PropTypes.object.isRequired,
   // App state
   appState: PropTypes.string.isRequired,
 
