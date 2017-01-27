@@ -18,25 +18,39 @@ class PhotoGallery extends Component {
     super(props)
 
     this.state = {
-      active: this.props.photos[0]
+      index: 0
     };
   }
 
   render() {
-    let images = this.props.photos.map((photo) => (
-      <li key={photo} className={cx({active: this.state.active === photo})}>
+    let images = this.props.photos.map((photo, index) => (
+      <li key={photo} className={cx({active: this.state.index === index})}>
         <img src={photo} />
       </li>
     ));
     return (
       <div className={cx("photo-gallery")}>
-        <div className={cx("nav", "left-nav")}><i className={cx("material-icons")}>keyboard_arrow_left</i></div>
-        <div className={cx("nav", "right-nav")}><i className={cx("material-icons")}>keyboard_arrow_right</i></div>
+        <div className={cx("nav", "left-nav")} onClick={this._prev.bind(this)}>
+          <i className={cx("material-icons")}>keyboard_arrow_left</i>
+        </div>
+        <div className={cx("nav", "right-nav")} onClick={this._next.bind(this)}>
+          <i className={cx("material-icons")}>keyboard_arrow_right</i>
+        </div>
         <ul>
           {images}
         </ul>
       </div>
     );
+  }
+
+  _next() {
+    let numImages = this.props.photos.length;
+    this.setState({index: (this.state.index + 1) % numImages});
+  }
+
+  _prev() {
+    let numImages = this.props.photos.length;
+    this.setState({index: (this.state.index + numImages - 1) % numImages});
   }
 }
 
