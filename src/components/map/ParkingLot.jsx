@@ -178,7 +178,6 @@ class ParkingLot extends Component {
   _onClick() {
     this.props._select(this.props.id);
   }
-
 }
 
 ParkingLot.propTypes = {
