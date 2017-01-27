@@ -1,3 +1,5 @@
+@import 'sizes';
+
 .more-info {
     position: relative;
     padding: 10px;
@@ -26,6 +28,7 @@
 }
 
 .address {
+    font-size: $font-small !important;
     & a {
         &:visited {
             color: blue;
@@ -33,7 +36,69 @@
     }
 }
 
+.photo-gallery {
+    width: 298px;
+    height: 150px;
+    padding: 5px 0;
+    margin: 0;
+    & img {
+        max-width: 200px;
+        max-height: 150px;
+    }
+    & ul {
+        display: block;
+        z-index: 0;
+        position: relative;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        & li {
+            position: absolute;
+            left: 49px;
+            top: 0;
+            opacity: 0;
+            transition: opacity .25s;
+            &.active {
+                opacity: 1;
+            }
+        }
+    }
+    & .nav {
+        display: block;
+        position: relative;
+        z-index: 1;
+        line-height: 150px;
+        text-align: center;
+        width: 46px;
+        vertical-align: middle;
+        background-color: #EEE;
+        user-select: none;
+        &.left-nav {
+            float: left;
+        }
+        &.right-nav {
+            float: right;
+        }
+        &:hover {
+            cursor: pointer;
+            background-color: #DDD;
+        }
+    }
+}
+
 .description {
-    line-height: 15px;
-    font-size: 11px;
+    line-height: $line-height;
+    font-size: $font-small;
+}
+
+.listing {
+    font-size: $font-small !important;
+    line-height: $line-height;
+    & h4 {
+        margin: 6px 0;
+    }
+    & ul {
+        margin: 3px 0;
+    }
 }

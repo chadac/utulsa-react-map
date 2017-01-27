@@ -14,12 +14,49 @@ const cx = classnames.bind(styles);
  * @class
  */
 class PhotoGallery extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      index: 0
+    };
+  }
+
   render() {
-    return null;
+    let images = this.props.photos.map((photo, index) => (
+      <li key={photo} className={cx({active: this.state.index === index})}>
+        <img src={photo} />
+      </li>
+    ));
+    return (
+      <div className={cx("photo-gallery")}>
+        <div className={cx("nav", "left-nav")} onClick={this._prev.bind(this)}>
+          <i className={cx("material-icons")}>keyboard_arrow_left</i>
+        </div>
+        <div className={cx("nav", "right-nav")} onClick={this._next.bind(this)}>
+          <i className={cx("material-icons")}>keyboard_arrow_right</i>
+        </div>
+        <ul>
+          {images}
+        </ul>
+      </div>
+    );
+  }
+
+  _next() {
+    let numImages = this.props.photos.length;
+    this.setState({index: (this.state.index + 1) % numImages});
+  }
+
+  _prev() {
+    let numImages = this.props.photos.length;
+    this.setState({index: (this.state.index + numImages - 1) % numImages});
   }
 }
 
-PhotoGallery.propTypes = {};
+PhotoGallery.propTypes = {
+  photos: PropTypes.array.isRequired,
+};
 
 
 class PlaceInfo extends Component {
@@ -47,19 +84,19 @@ class PlaceInfo extends Component {
     const directionsUrl = "https://www.google.com/maps/dir//'" + loc + "'/@" + loc + ",17z";
 
     // Listings
-    const alternateNames = this.listingBlock("alternate_names", "Also Called:", cx("alternate-names"));
-    const departments = this.listingBlock("departments", "Departments & Offices", cx("departments"));
-    const rooms = this.listingBlock("rooms", "Rooms", cx("rooms"));
+    const alternateNames = this.listingBlock("alternate_names", "Also Called:", cx("alternate-names", "listing"));
+    const departments = this.listingBlock("departments", "Departments & Offices", cx("departments", "listing"));
+    const rooms = this.listingBlock("rooms", "Rooms", cx("rooms", "listing"));
     const data = this.props.data;
     return (
       <div>
         <h1 className={cx("header")}>{data.name}</h1>
         <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
+        <PhotoGallery photos={data.photos} />
         {alternateNames}
         {/* Setting inner HTML allows for styling the description */}
         <p className={cx("description")}
            dangerouslySetInnerHTML={{__html: data.description}}></p>
-        <PhotoGallery photos={data.photos} />
         {departments}
         {rooms}
       </div>

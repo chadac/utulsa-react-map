@@ -4,8 +4,7 @@ import classnames from 'classnames/bind';
 import styles from '../../stylesheets/MapControl.scss';
 const cx = classnames.bind(styles);
 
-class MapControl extends Component{
-
+class MapControl extends Component {
   constructor(props) {
     super(props);
   }
@@ -51,7 +50,6 @@ class MapControl extends Component{
       </div>
     );
   }
-
 }
 
 MapControl.propTypes = {

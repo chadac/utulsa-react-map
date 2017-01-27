@@ -25,8 +25,8 @@ describe('AppStore', () => {
   });
 
   describe("#dispatch", () => {
-    it("initialized with AppState.NORMAL", () => {
-      expect(AppStore.getState()).toBe(AppState.NORMAL);
+    it("initialized with AppState.FILTER", () => {
+      expect(AppStore.getState()).toBe(AppState.FILTER);
     });
 
     it("changes state with setState", () => {

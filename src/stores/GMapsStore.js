@@ -15,6 +15,7 @@ const MAP_SET_EVENT = 'map';
 /****************************************************************
  * INTERNAL STATE VARIABLES
  ****************************************************************/
+
 // The gmaps.Map object
 var _map = null;
 // The current center of the map
@@ -22,7 +23,7 @@ var _center = {lat: 36.15159935580428, lng: -95.94644401639404};
 // The old zoom (used for tracking current zoom objects in the Item Store)
 var _oldZoom = null;
 // The current zoom
-var _zoom = 16;
+var _zoom = 17;
 // The user's position
 var _userPosition = null;
 
@@ -85,10 +86,11 @@ function createMap(div) {
   let mapOptions = {
     center: _center,
     zoom: _zoom,
-    mapTypeControl: true,
-    mapTypeControlOptions: {
-      position: gmaps.ControlPosition.LEFT_BOTTOM,
-    },
+    mapTypeControl: false,
+    // mapTypeControlOptions: {
+    //   position: gmaps.ControlPosition.RIGHT_TOP,
+    // },
+    fullscreenControl: false,
     styles: [{
       featureType: 'poi',
       stylers: [{visibility: "off"}],

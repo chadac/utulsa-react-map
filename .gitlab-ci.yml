@@ -13,7 +13,9 @@ cache:
 
 variables:
   S3_BUCKET_NAME_PROD: utulsa-assets
+  URL_PROD: d1oqrhcv6o35k6.cloudfront.net
   S3_BUCKET_NAME_DEV: utulsa-assets
+  URL_DEV: d1oqrhcv6o35k6.cloudfront.net
 
 stages:
   - setup
@@ -35,38 +37,50 @@ build for production:
   type: build
   only:
     - master
+  artifacts:
+    paths:
+      - build/
   script:
-    - npm run build -- --homepage="s3://$S3_BUCKET_NAME_PROD/web/map/prod"
+    - npm run build -- --homepage="https://$URL_PROD/web/map/prod"
 
 deploy to production:
   type: deploy
   image: python:latest
   only:
     - master
+  dependencies:
+    - build for production
   environment:
     name: production
-    url: https://$S3_BUCKET_NAME_PROD.s3.amazonaws.com/web/map/prod/index.html
+    url: https://$URL_PROD/web/map/prod/index.html
   script:
     - pip install awscli
-    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_PROD/web/map/prod --recursive
+    - aws s3 rm s3://$S3_BUCKET_NAME_PROD/web/map/prod/ --recursive
+    - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_PROD/web/map/prod/ --recursive
 
 build for staging:
   type: build
   only:
     - develop
+  artifacts:
+    paths:
+      - build/
   script:
-    - npm run build -- --homepage="s3://$S3_BUCKET_NAME_DEV/web/map/staging"
+    - npm run build -- --homepage="https://$URL_DEV/web/map/staging"
 
 deploy to staging:
   type: deploy
   image: python:latest
   only:
     - develop
+  dependencies:
+    - build for staging
   environment:
     name: staging
-    url: https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/staging/index.html
+    url: https://$URL_DEV/web/map/staging/index.html
   script:
     - pip install awscli
+    - aws s3 rm s3://$S3_BUCKET_NAME_DEV/web/map/staging/ --recursive
     - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_DEV/web/map/staging/ --recursive
 
 build for review:
@@ -74,8 +88,11 @@ build for review:
   except:
     - master
     - develop
+  artifacts:
+    paths:
+      - build/
   script:
-    - npm run build -- --homepage="s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG"
+    - npm run build -- --homepage="https://$URL_DEV/web/map/review/$CI_BUILD_REF_SLUG"
 
 deploy to review:
   type: deploy
@@ -84,9 +101,29 @@ deploy to review:
   except:
     - master
     - develop
+  dependencies:
+    - build for review
   environment:
     name: review/$CI_BUILD_REF_NAME
-    url: https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
+    url: https://$URL_DEV/web/map/review/$CI_BUILD_REF_SLUG/index.html
+    on_stop: stop review
   script:
     - pip install awscli
+    - aws s3 rm s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
     - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive
+    - echo https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
+
+stop review:
+  image: python:latest
+  when: manual
+  except:
+    - master
+    - develop
+  variables:
+    GIT_STRATEGY: none
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    action: stop
+  script:
+    - pip install awscli
+    - aws s3 rm s3://$S3_BUCKET_NAME_DEV/web/map/review/$CI_BUILD_REF_SLUG/ --recursive

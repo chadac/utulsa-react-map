@@ -43,21 +43,41 @@ class Map extends Component {
     // Called when the Google Map has been created. (promting a re-render)
     this.stores().gmaps.addMapListener(this._onMapCreate.bind(this));
 
+    window.addEventListener('resize', this.updateDimensions.bind(this));
+
     this.state = {
       items: this.stores().item.getAll(),
       cats: this.stores().item.getCategories(),
       activeCats: this.stores().item.getActiveCategories(),
       appState: this.stores().app.getState(),
       map: this.stores().gmaps.getMap(),
+      dims: {width: 0, height: 0}
     };
   }
 
+  /**
+   * After component first render.
+   */
   componentDidMount() {
     // This creates the Google Map using an empty div created
     // on the initial render step.
     this.actions().gmaps.createMap(this.refs.map);
+    setTimeout(this.updateDimensions.bind(this), 500);
   }
 
+  /**
+   * @param {boolean} updateState - If true, updates the container state (default: true).
+   */
+  updateDimensions() {
+    let container = this.refs.container;
+    let dims = {width: container.clientWidth, height: container.clientHeight};
+    this.setState({dims: dims});
+  }
+
+  /**
+   * Render step.
+   * @return {ReactElement} map
+   */
   render() {
     // Checks for if the map has been created or not.
     if(this.state.map === null) {
@@ -74,7 +94,7 @@ class Map extends Component {
    */
   prerender() {
     return (
-      <div className={cx("map-container")}>
+      <div className={cx("map-container")} ref="container">
         <div ref="map" className={cx("Map")}></div>
       </div>
     );
@@ -88,13 +108,13 @@ class Map extends Component {
   postrender() {
     const mapItems = this.createMapItems();
     return (
-      <div className={cx("map-container")}>
+      <div className={cx("map-container")} ref="container">
         <div ref="map" className={cx("Map")}>
         </div>
         {mapItems}
         <MapControl id="menu" position={gmaps.ControlPosition.LEFT_TOP}
-                    map={this.state.map} title="Menu Bar">
-          <MenuBar map={this.state.map}
+                    map={this.state.map} title="Menu Bar" dims={this.state.dims}>
+          <MenuBar map={this.state.map} dims={this.state.dims}
                    items={this.state.items} appState={this.state.appState}
                    cats={this.state.cats} activeCats={this.state.activeCats}
                    {...this.flux()} />

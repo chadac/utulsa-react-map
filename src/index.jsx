@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import Map from './components/Map';
+import SatelliteControl from './components/SatelliteControl';
 
 import AppDispatcher from './dispatcher/AppDispatcher';
 import ItemStore from './stores/ItemStore';
@@ -16,6 +18,14 @@ import './stylesheets/index.scss';
 
 // Call method to load all items we have from JSON.
 ItemStore.load();
+
+// Render this first because it's faster and depends on map creation
+ReactDOM.render(
+  <SatelliteControl
+      store={GMapsStore}
+  />,
+  document.querySelector('#satellite-control')
+);
 
 // Pass in Flux stores, actions, and the app dispatcher
 ReactDOM.render(
