@@ -114,6 +114,7 @@ deploy to review:
     - echo https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
 
 stop review:
+  type: deploy
   image: python:latest
   when: manual
   except:
