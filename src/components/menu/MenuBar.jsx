@@ -72,8 +72,9 @@ class SearchWidget extends Component {
    */
   render() {
     return (
-      <div className={cx("search-container")}>
-        <input type="text" className={cx("search")} ref="search" placeholder="Search"
+      <div className={cx("search-container")} style={{width: this.props.width - 48}}>
+        <input type="text" className={cx("search")} style={{width: this.props.width - 108}}
+               ref="search" placeholder="Search"
                onChange={this._onChange.bind(this)}
                onKeyPress={this._onKeyPress.bind(this)}
                onKeyDown={this._onKeyDown.bind(this)}
@@ -149,6 +150,8 @@ class SearchWidget extends Component {
 }
 
 SearchWidget.propTypes = {
+  width: PropTypes.number.isRequired,
+
   // Propagates search to the Item Store.
   _search: PropTypes.func.isRequired,
   // Resets search inside the Item Store.
@@ -171,7 +174,8 @@ class MinimizeBlock extends Component {
   render() {
     if(this.props.appState !== AppState.NORMAL) {
       return (
-        <div className={cx("menu-minimize")} onClick={this._onClick.bind(this)}>
+        <div className={cx("menu-minimize")} style={{width: this.props.width}}
+             onClick={this._onClick.bind(this)}>
           <i className="material-icons">
             {this.props.minimized ? "arrow_drop_down" : "arrow_drop_up" }
           </i>
@@ -199,6 +203,8 @@ MinimizeBlock.propTypes = {
   appState: PropTypes.string.isRequired,
   // If this block is minimized.
   minimized: PropTypes.bool.isRequired,
+  // The top container's width
+  width: PropTypes.number.isRequired,
 
   // Function to minimize (see MenuBar.minimize())
   _minimize: PropTypes.func.isRequired,
@@ -222,6 +228,8 @@ class MenuBar extends Component {
       // MinimizeBlock since we use the value to show/hide the drop-down.
       minimized: false
     };
+
+    this.width = 318;
   }
 
   /**
@@ -229,15 +237,16 @@ class MenuBar extends Component {
    * @returns {ReactElement} menuBar
    */
   render() {
+    this.updateDims();
     return (
       <div>
-        <div className={cx('menu-bar')}>
+        <div className={cx('menu-bar')} style={{width: this.width}}>
           <div className={cx('menu-head', {
               'submenu': this.props.appState !== AppState.NORMAL && !this.state.minimized
             })}>
             <FilterWidget appState={this.props.appState}
                           _setAppState={this.actions().app.setState} />
-            <SearchWidget _search={this.actions().item.search}
+            <SearchWidget _search={this.actions().item.search} width={this.width}
                           _resetSearch={this.actions().item.resetSearch}
                           _selectSearched={this.actions().item.selectSearched} />
           </div>
@@ -248,6 +257,16 @@ class MenuBar extends Component {
                        _maximize={this.maximize.bind(this)}/>
       </div>
     );
+  }
+
+  /**
+   * Recomputes the component's dimensions.
+   */
+  updateDims() {
+    let width = this.props.dims.width;
+    if(width > 338) width = 338;
+    if(width < 250) width = 250;
+    this.width = width - 20;
   }
 
   /**
