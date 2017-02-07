@@ -13,7 +13,7 @@ cache:
 
 variables:
   S3_BUCKET_NAME_PROD: utulsa-assets
-  URL_PROD: d1oqrhcv6o35k6.cloudfront.net
+  URL_PROD: maps.utulsa.edu
   S3_BUCKET_NAME_DEV: utulsa-assets
   URL_DEV: d1oqrhcv6o35k6.cloudfront.net
 
@@ -41,7 +41,7 @@ build for production:
     paths:
       - build/
   script:
-    - npm run build -- --homepage="https://$URL_PROD/web/map/prod"
+    - npm run build -- --homepage="https://$URL_PROD"
 
 deploy to production:
   type: deploy
@@ -52,11 +52,12 @@ deploy to production:
     - build for production
   environment:
     name: production
-    url: https://$URL_PROD/web/map/prod/index.html
+    url: https://$URL_DEV/web/map/prod/index.html
   script:
     - pip install awscli
     - aws s3 rm s3://$S3_BUCKET_NAME_PROD/web/map/prod/ --recursive
     - aws s3 cp ./build/ s3://$S3_BUCKET_NAME_PROD/web/map/prod/ --recursive
+    - curl $PROD_MAPS_UPDATE_URL
 
 build for staging:
   type: build
@@ -114,6 +115,7 @@ deploy to review:
     - echo https://$S3_BUCKET_NAME_DEV.s3.amazonaws.com/web/map/review/$CI_BUILD_REF_SLUG/index.html
 
 stop review:
+  type: deploy
   image: python:latest
   when: manual
   except:
