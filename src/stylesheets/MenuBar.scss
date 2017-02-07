@@ -26,7 +26,7 @@
 .menu-icon {
     user-select: none;
     color: #767676;
-    width: auto;
+    max-width: 24px;
     padding: 8px;
     &:hover {
         color: #464646;

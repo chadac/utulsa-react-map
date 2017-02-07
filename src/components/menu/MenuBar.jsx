@@ -229,7 +229,7 @@ class MenuBar extends Component {
       minimized: false
     };
 
-    this.width = 318;
+    this.width = 320;
   }
 
   /**
@@ -240,7 +240,7 @@ class MenuBar extends Component {
     this.updateDims();
     return (
       <div>
-        <div className={cx('menu-bar')} style={{width: this.width}}>
+        <div className={cx('menu-bar')} style={{width: this.width, minWidth: this.width}}>
           <div className={cx('menu-head', {
               'submenu': this.props.appState !== AppState.NORMAL && !this.state.minimized
             })}>
@@ -253,6 +253,7 @@ class MenuBar extends Component {
           {this.renderSubMenu()}
         </div>
         <MinimizeBlock appState={this.props.appState} minimized={this.state.minimized}
+                       width={this.width}
                        _minimize={this.minimize.bind(this)}
                        _maximize={this.maximize.bind(this)}/>
       </div>
