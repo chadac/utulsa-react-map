@@ -71,6 +71,9 @@ class SearchWidget extends Component {
    * @returns {ReactElement} searchWidget
    */
   render() {
+    if(this.props.appState !== AppState.SEARCH && this.state.text.length > 2) {
+      this.refs.search.value = "";
+    }
     return (
       <div className={cx("search-container")} style={{width: this.props.width - 48}}>
         <input type="text" className={cx("search")} style={{width: this.props.width - 108}}
@@ -79,7 +82,7 @@ class SearchWidget extends Component {
                onKeyPress={this._onKeyPress.bind(this)}
                onKeyDown={this._onKeyDown.bind(this)}
         />
-        { this.state.text.length > 0 ?
+        { this.refs.search && this.refs.search.value.length > 0 ?
         <i className={cx("menu-icon", "material-icons", "search-clear")}
            onClick={this._clear.bind(this)}>
           clear
@@ -150,6 +153,7 @@ class SearchWidget extends Component {
 }
 
 SearchWidget.propTypes = {
+  appState: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
 
   // Propagates search to the Item Store.
@@ -247,6 +251,7 @@ class MenuBar extends Component {
             <FilterWidget appState={this.props.appState}
                           _setAppState={this.actions().app.setState} />
             <SearchWidget _search={this.actions().item.search} width={this.width}
+                          appState={this.props.appState}
                           _resetSearch={this.actions().item.resetSearch}
                           _selectSearched={this.actions().item.selectSearched} />
           </div>
