@@ -3,7 +3,7 @@
     z-index: 1;
     position: relative;
     background: #fff;
-    width: 318px;
+    /* width: 318px; */
     box-sizing: border-box;
     border-radius: 2px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
@@ -44,13 +44,13 @@
 .search-container {
     display: inline-block;
     height: 40px;
-    width: 270px;
+    /* width: 270px; */
 }
 
 .search {
     display: inline;
     border: 0px;
-    width: 210px;
+    /* width: 210px; */
     font-size: 16px;
     vertical-align: top;
     padding: 13px 0 9px 20px;
@@ -61,7 +61,7 @@
 
 .menu-minimize {
     position: relative;
-    width: 318px;
+    /* width: 318px; */
     height: 24px;
     z-index: 2;
     margin: 0 auto;
