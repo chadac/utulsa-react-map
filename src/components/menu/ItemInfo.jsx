@@ -28,14 +28,17 @@ class PhotoGallery extends Component {
         <img src={photo} />
       </li>
     ));
+    let nav = [
+      <div className={cx("nav", "left-nav")} onClick={this._prev.bind(this)}>
+        <i className={cx("material-icons")}>keyboard_arrow_left</i>
+      </div>,
+      <div className={cx("nav", "right-nav")} onClick={this._next.bind(this)}>
+        <i className={cx("material-icons")}>keyboard_arrow_right</i>
+      </div>
+    ];
     return (
       <div className={cx("photo-gallery")}>
-        <div className={cx("nav", "left-nav")} onClick={this._prev.bind(this)}>
-          <i className={cx("material-icons")}>keyboard_arrow_left</i>
-        </div>
-        <div className={cx("nav", "right-nav")} onClick={this._next.bind(this)}>
-          <i className={cx("material-icons")}>keyboard_arrow_right</i>
-        </div>
+        {this.props.photos.length > 1 ? nav : null}
         <ul>
           {images}
         </ul>
@@ -92,7 +95,7 @@ class PlaceInfo extends Component {
       <div>
         <h1 className={cx("header")}>{data.name}</h1>
         <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
-        {data.photos.length > 0 ? <PhotoGallery photos={data.photos} /> : null}
+        {data.photos && data.photos.length > 0 ? <PhotoGallery photos={data.photos} /> : null}
         {alternateNames}
         {/* Setting inner HTML allows for styling the description */}
         <p className={cx("description")}
