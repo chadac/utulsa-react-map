@@ -71,7 +71,7 @@ class SearchWidget extends Component {
    * @returns {ReactElement} searchWidget
    */
   render() {
-    if(this.props.appState !== AppState.SEARCH && this.state.text.length > 2) {
+    if(this.props.appState !== AppState.SEARCH && this.state.text.length > 1) {
       this.refs.search.value = "";
     }
     return (
