@@ -52,7 +52,7 @@ deploy to production:
     - build for production
   environment:
     name: production
-    url: https://$URL_DEV/web/map/prod/index.html
+    url: https://$URL_PROD
   script:
     - pip install awscli
     - aws s3 rm s3://$S3_BUCKET_NAME_PROD/web/map/prod/ --recursive
