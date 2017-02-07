@@ -56,7 +56,7 @@ MapControl.propTypes = {
   id: PropTypes.string.isRequired,
   position: PropTypes.number.isRequired,
   map: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 
   _onClick: PropTypes.func,
 };

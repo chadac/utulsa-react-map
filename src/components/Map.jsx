@@ -113,7 +113,7 @@ class Map extends Component {
         </div>
         {mapItems}
         <MapControl id="menu" position={gmaps.ControlPosition.LEFT_TOP}
-                    map={this.state.map} title="Menu Bar" dims={this.state.dims}>
+                    map={this.state.map} dims={this.state.dims}>
           <MenuBar map={this.state.map} dims={this.state.dims}
                    items={this.state.items} appState={this.state.appState}
                    cats={this.state.cats} activeCats={this.state.activeCats}
