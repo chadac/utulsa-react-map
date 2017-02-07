@@ -92,7 +92,7 @@ class PlaceInfo extends Component {
       <div>
         <h1 className={cx("header")}>{data.name}</h1>
         <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
-        <PhotoGallery photos={data.photos} />
+        {data.photos.length > 0 ? <PhotoGallery photos={data.photos} /> : null}
         {alternateNames}
         {/* Setting inner HTML allows for styling the description */}
         <p className={cx("description")}
