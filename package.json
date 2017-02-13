@@ -93,7 +93,7 @@
     "watch-csv": "node scripts/watch_csv/index.js",
     "smooth-region": "node scripts/smooth-region.js",
     "encode-images": "node scripts/encode-images.js",
-    "load-photos": "node scripts/load-photos.js"
+    "load-from-aws": "node scripts/load-from-aws.js"
   },
   "jest": {
     "moduleFileExtensions": [

@@ -24,6 +24,7 @@ const parkingPolyData = require('../data/parking_polygons.json');
 const markerData = require('../data/markers.json');
 const categoryData = require('../data/categories.json');
 const photosData = require('../data/photos.json');
+const descriptionsData = require('../data/descriptions.json');
 
 // Event constants, used with EventEmitter to emit change events.
 const CHANGE_EVENT = 'c';
@@ -231,8 +232,10 @@ function create(data) {
     }
   };
 
-  // Photos
+  // AWS data
   _items[id].photos = photosData[id];
+  if(id in descriptionsData)
+    _items[id].description = descriptionsData[id];
 
   // Search terms
   if(typeof data.name !== "undefined") {

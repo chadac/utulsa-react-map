@@ -10,7 +10,6 @@ const cx = classnames.bind(styles);
 
 /**
  * A photo gallery for images of the item.
- * TODO: Implement the gallery class.
  * @class
  */
 class PhotoGallery extends Component {
@@ -25,6 +24,7 @@ class PhotoGallery extends Component {
   render() {
     let images = this.props.photos.map((photo, index) => (
       <li key={photo} className={cx({active: this.state.index === index})}>
+        <span className={cx("helper")}></span>
         <img src={photo} />
       </li>
     ));
@@ -94,8 +94,8 @@ class PlaceInfo extends Component {
     return (
       <div>
         <h1 className={cx("header")}>{data.name}</h1>
-        <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
         {data.photos && data.photos.length > 0 ? <PhotoGallery photos={data.photos} /> : null}
+        <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
         {alternateNames}
         {/* Setting inner HTML allows for styling the description */}
         <p className={cx("description")}
