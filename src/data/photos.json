@@ -1,0 +1,151 @@
+{
+  "7th_street_house": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/7th_street_house/7th_street_house_9ef4dd198e.jpg"
+  ],
+  "alexander_health_center": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/alexander_health_center/alexander-health-center_82a7677d3c.jpg"
+  ],
+  "alexandre_hogue_gallery": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/alexandre_hogue_gallery/alexander-hogue-gallery-02_cf1689cf8d.jpg",
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/alexandre_hogue_gallery/alexander_hogue_gallery_5782627301.jpg"
+  ],
+  "baptist_collegiate_ministries": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/baptist_collegiate_ministries/baptist_collegiate_ministries_f23d56e197.jpg"
+  ],
+  "bayless_plaza": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/bayless_plaza/bayless-plaza_2d0e5fce78.jpg"
+  ],
+  "bird_shell_nest": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/bird_shell_nest/bird_shell_nest_b09ba7b4b9.jpg"
+  ],
+  "boesche_legal_clinic": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/boesche_legal_clinic/boesche_legal_clinic_eb538ee9b0.jpg"
+  ],
+  "brown_village_apartments": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/brown_village_apartments/brown_village_apartments_84779fe715.jpg"
+  ],
+  "case_athletic_complex": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/case_athletic_complex/case-athletic-complex_5130eb467a.jpg"
+  ],
+  "case_tennis_center": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/case_tennis_center/case_tennis_center_2_8268ca7e86.jpg",
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/case_tennis_center/case_tennis_center_32911ad9e0.jpg"
+  ],
+  "chapman_commons": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/chapman_commons/chapman-commons_293b6dd84f.jpg"
+  ],
+  "college_of_health_sciences_851": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/college_of_health_sciences_851/oxley-health-sciences-facilities_2697e3b143.jpg"
+  ],
+  "collins_family_softball_complex": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/collins_family_softball_complex/collins_softball_complex_b560b0cf38.jpg"
+  ],
+  "collins_fitness_center": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/collins_fitness_center/collins-fitness-center_658002cd66.jpg"
+  ],
+  "collins_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/collins_hall/collins-hall_06c2639c23.jpg"
+  ],
+  "dietler_commons_formerly_the_u": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/dietler_commons_formerly_the_u/dietler-commons_d5a9f1f86f.jpg"
+  ],
+  "gilcrease_museum": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/gilcrease_museum/gilcrease_museum_02_cde1b03cd5.jpg",
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/gilcrease_museum/gilcrease_museum_1a043c90c7.jpg"
+  ],
+  "ha_chapman_stadium": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/ha_chapman_stadium/chapman-stadium_93d4d57b2c.jpg"
+  ],
+  "hardesty_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/hardesty_hall/hardesty-hall_c408bbf134.jpg"
+  ],
+  "harwell_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/harwell_hall/harwell_hall_592d4fe363.jpg"
+  ],
+  "helmerich_center_for_american_research": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/helmerich_center_for_american_research/helmerich-center-for-american-research_7f5e0bfd0c.jpg"
+  ],
+  "helmerich_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/helmerich_hall/helmerich_hall_722b08ec17.jpg"
+  ],
+  "hurricane_athletic_building": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/hurricane_athletic_building/huricane_athletic_bldg_0fa64db996.jpg"
+  ],
+  "jackson_commons": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/jackson_commons/jackson_commons_5f76129601.jpg"
+  ],
+  "john_mabee_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/john_mabee_hall/john-mabee-hall_12f3b34cb9.jpg"
+  ],
+  "keplinger_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/keplinger_hall/keplinger-hall_63b6a93baa.jpg"
+  ],
+  "lafortune_house": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/lafortune_house/lafortune_house_2742b7ca28.jpg"
+  ],
+  "lorton_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/lorton_hall/lorton-hall_239c13a45d.jpg"
+  ],
+  "lorton_performance_center": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/lorton_performance_center/lorton-performance-center_35f12a8d22.jpg"
+  ],
+  "lottie_jane_mabee_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/lottie_jane_mabee_hall/lottie-jane-hall_603baf4c41.jpg"
+  ],
+  "mabee_gym": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/mabee_gym/mabee_gym_2d5c1c0669.jpg"
+  ],
+  "mabee_legal_information_center": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/mabee_legal_information_center/mabee_legal_information_center_2c8a54fda8.jpg"
+  ],
+  "mcfarlin_library": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/mcfarlin_library/mcafrlin-library_db25748df5.jpg"
+  ],
+  "muslim_student_association_prayer_house": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/muslim_student_association_prayer_house/muslim_student_association_prayer_house_cacf7ef22f.jpg"
+  ],
+  "north_campus_615": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/north_campus_615/north_campus_ee8d63dd2a.jpg"
+  ],
+  "phillips_hall_166": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/phillips_hall_166/phillips-hall_ff7379a8a3.jpg"
+  ],
+  "reynolds_centerathletic_training_facility": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/reynolds_centerathletic_training_facility/rynolds-center_d575ab8ece.jpg"
+  ],
+  "sharp_chapel": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/sharp_chapel/sharp-chapel-02_788be5c3da.jpg",
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/sharp_chapel/sharp-chapel_6942764d88.jpg"
+  ],
+  "sharp_plaza": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/sharp_plaza/sharp_plaza_5cd7635e48.jpg"
+  ],
+  "stephenson_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/stephenson_hall/stephenson-hall_b6381f90cf.jpg"
+  ],
+  "student_union": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/student_union/student_union-02_6fe529da55.jpg",
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/student_union/student_union_bafad02232.jpg"
+  ],
+  "true_blue_house_590": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/true_blue_house_590/true_blue_house_b4b2d1b43f.jpg"
+  ],
+  "tyrrell_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/tyrrell_hall/tyrrell-hall_dabfc9bb36.jpg"
+  ],
+  "university_school": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/university_school/university-school_206e286874.jpg"
+  ],
+  "wesley_foundation": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/wesley_foundation/wesley-foundation_4b760acc46.jpg"
+  ],
+  "west_park_village": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/west_park_village/west-park-village_cbc1a4f023.jpg"
+  ],
+  "zarrow_center_for_art_education": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/zarrow_center_for_art_education/zarrow-center_d862ad2c77.jpg"
+  ],
+  "zink_hall": [
+    "https://utulsa-aws.s3.amazonaws.com/assets/maps/places/zink_hall/zink_hall_f61d9b940e.jpg"
+  ]
+}

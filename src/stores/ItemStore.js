@@ -23,6 +23,7 @@ const parkingData = require('../data/parking_lots.json');
 const parkingPolyData = require('../data/parking_polygons.json');
 const markerData = require('../data/markers.json');
 const categoryData = require('../data/categories.json');
+const photosData = require('../data/photos.json');
 
 // Event constants, used with EventEmitter to emit change events.
 const CHANGE_EVENT = 'c';
@@ -229,6 +230,9 @@ function create(data) {
       terms: [],
     }
   };
+
+  // Photos
+  _items[id].photos = photosData[id];
 
   // Search terms
   if(typeof data.name !== "undefined") {

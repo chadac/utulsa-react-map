@@ -30,7 +30,9 @@ class SearchItemMain extends Component {
     if(this.props.data.photos) {
       let photo = this.props.data.photos[0];
       thumbnail = (
-        <img src={photo} />
+        <div className={cx("thumbnail")}>
+          <img src={photo} />
+        </div>
       );
     }
     const data = this.props.data;
@@ -39,6 +41,7 @@ class SearchItemMain extends Component {
       <div className={cx("search-item", {
           "inactive": !this.props.item.filter.$active,
         })} onClick={this._onClick.bind(this)}>
+        {thumbnail}
         <div className={cx("content")}>
           <span className={cx("name")}>{data.name}</span>
           { terms.length > 0 ?
@@ -47,7 +50,6 @@ class SearchItemMain extends Component {
           <hr />
           <span className={cx("address")}>{ data.address }</span>
         </div>
-        {thumbnail}
       </div>
     );
   }

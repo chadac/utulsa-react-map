@@ -48,3 +48,6 @@ build/Release
 
 data/*.json
 data/*.csv
+
+# Secret files
+/secret/

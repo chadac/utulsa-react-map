@@ -6,6 +6,7 @@
   "homepage": "https://utulsa-assets.s3.amazonaws.com/web/map/prod",
   "devDependencies": {
     "autoprefixer": "^6.5.1",
+    "aws-sdk": "^2.12.0",
     "babel-core": "6.13.2",
     "babel-eslint": "7.0.0",
     "babel-jest": "^15.0.0",
@@ -91,7 +92,8 @@
     "create-prod-json-from-csv": "./scripts/csv_to_prod_json/index.sh",
     "watch-csv": "node scripts/watch_csv/index.js",
     "smooth-region": "node scripts/smooth-region.js",
-    "encode-images": "node scripts/encode-images.js"
+    "encode-images": "node scripts/encode-images.js",
+    "load-photos": "node scripts/load-photos.js"
   },
   "jest": {
     "moduleFileExtensions": [
