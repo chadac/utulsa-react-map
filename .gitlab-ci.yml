@@ -44,6 +44,7 @@ build for production:
     paths:
       - build/
   script:
+    - rm -rf build/
     - npm run build -- --homepage="https://$URL_PROD"
 
 deploy to production:
@@ -70,6 +71,7 @@ build for staging:
     paths:
       - build/
   script:
+    - rm -rf build/
     - npm run build -- --homepage="https://$URL_DEV/web/map/staging"
 
 deploy to staging:
@@ -96,6 +98,7 @@ build for review:
     paths:
       - build/
   script:
+    - rm -rf build/
     - npm run build -- --homepage="https://$URL_DEV/web/map/review/$CI_BUILD_REF_SLUG"
 
 deploy to review:
