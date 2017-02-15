@@ -26,7 +26,7 @@ stages:
 setup:
   type: setup
   artifacts:
-    path:
+    paths:
       - node_modules/
   script:
     - npm install
