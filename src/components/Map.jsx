@@ -10,6 +10,7 @@ import FluxComponent from '../hoc/FluxComponent';
 
 import gmaps from '../GMapsAPI';
 
+import QueryParams from './QueryParams';
 import Place from './map/Place';
 import SimpleMarker from './map/SimpleMarker';
 import Marker from './map/Marker';
@@ -111,6 +112,7 @@ class Map extends Component {
       <div className={cx("map-container")} ref="container">
         <div ref="map" className={cx("Map")}>
         </div>
+        <QueryParams {...this.flux()} />
         {mapItems}
         <MapControl id="menu" position={gmaps.ControlPosition.LEFT_TOP}
                     map={this.state.map} dims={this.state.dims}>
