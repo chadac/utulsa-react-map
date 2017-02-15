@@ -43,6 +43,9 @@ class QueryParams extends Component {
   _update() {
     let query = this.state.params;
 
+    if('select' in query)
+      this.actions().item.focus(query.select);
+
     if('zoom' in query)
       this.actions().gmaps.zoom(parseInt(query.zoom));
 
@@ -50,9 +53,6 @@ class QueryParams extends Component {
       let coords = query.center.split(',');
       this.actions().gmaps.center(parseFloat(coords[0]), parseFloat(coords[1]));
     }
-
-    if('select' in query)
-      this.actions().item.focus(query.select);
 
     if('filter' in query) {
       let categories = query.filter.split(',');
