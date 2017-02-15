@@ -52,7 +52,7 @@ class QueryParams extends Component {
     }
 
     if('select' in query)
-      this.actions().item.select(query.select);
+      this.actions().item.focus(query.select);
 
     if('filter' in query) {
       let categories = query.filter.split(',');
