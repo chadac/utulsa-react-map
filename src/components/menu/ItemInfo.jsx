@@ -37,11 +37,14 @@ class PhotoGallery extends Component {
       </div>
     ];
     return (
-      <div className={cx("photo-gallery")}>
+      <div className={cx("photo-gallery", {"has-multiple": this.props.photos.length > 1})}>
         {this.props.photos.length > 1 ? nav : null}
         <ul>
           {images}
         </ul>
+        {this.props.photos.length > 1 ?
+         <div className={cx("photo-index")}>{this.state.index + 1}/{this.props.photos.length}</div>
+         : null}
       </div>
     );
   }
@@ -94,7 +97,7 @@ class PlaceInfo extends Component {
     return (
       <div>
         <h1 className={cx("header")}>{data.name}</h1>
-        {data.photos && data.photos.length > 0 ? <PhotoGallery photos={data.photos} /> : null}
+        {data.photos && data.photos.length > 0 ? <PhotoGallery photos={data.photos} /> : <br />}
         <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
         {alternateNames}
         {/* Setting inner HTML allows for styling the description */}

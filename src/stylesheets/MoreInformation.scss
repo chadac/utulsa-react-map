@@ -41,13 +41,16 @@
     height: 150px;
     padding: 5px 0;
     margin: 0;
+    &.has-multiple {
+      height: 170px;
+    }
     & img {
     }
     & ul {
       display: block;
       z-index: 0;
       position: relative;
-      height: 100%;
+      height: 150px;
       padding: 0;
       margin: 0;
       list-style: none;
@@ -98,6 +101,11 @@
         }
         /* background-color: #DDD; */
       }
+    }
+    & .photo-index {
+      text-align: right;
+      padding: 0 42px;
+      font-size: 12px;
     }
   }
 
