@@ -94,7 +94,6 @@ build for review:
     paths:
       - build/
   script:
-    - ls -R src
     - rm -rf build/
     - npm run build -- --homepage="https://$URL_DEV/web/map/review/$CI_BUILD_REF_SLUG"
 
