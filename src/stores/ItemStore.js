@@ -640,6 +640,7 @@ class ItemStoreProto extends EventEmitter {
    */
   emitSelect(id) {
     this.emit([SELECT_EVENT, id]);
+    this.emit(SELECT_EVENT);
   }
 
   /****************************************************************
@@ -661,6 +662,9 @@ class ItemStoreProto extends EventEmitter {
   addCategoryChangeListener(callback) {
     this.on(CATEGORY_CHANGE_EVENT, callback);
   }
+  remCategoryChangeListener(callback) {
+    this.removeListener(CATEGORY_CHANGE_EVENT, callback);
+  }
 
   /**
    * Adds a listener on item state changes.
@@ -681,7 +685,16 @@ class ItemStoreProto extends EventEmitter {
    * @param {*} id - The item ID.
    */
   addSelectListener(callback, id) {
-    this.on([SELECT_EVENT, id], callback);
+    if(id)
+      this.on([SELECT_EVENT, id], callback);
+    else
+      this.on(SELECT_EVENT, callback);
+  }
+  remSelectListener(callback, id) {
+    if(id)
+      this.removeListener([SELECT_EVENT, id], callback);
+    else
+      this.removeListener(SELECT_EVENT, callback);
   }
 
   /****************************************************************

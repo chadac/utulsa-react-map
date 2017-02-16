@@ -37,7 +37,7 @@ var _userPosition = null;
  */
 function _updateCenter() {
   let ncenter = _map.getCenter();
-  _center = {lat: ncenter.lat, lng: ncenter.lng};
+  _center = {lat: ncenter.lat(), lng: ncenter.lng()};
 }
 
 /**
@@ -54,13 +54,14 @@ function _updateZoom() {
  * @param {number} lat - The latitude.
  * @param {number} lng - The longitude.
  */
-function _onMapCenter(lat, lng) {
+function _onMapCenter() {
   if( AppDispatcher._isDispatching ) return;
+  let coords = _map.getCenter();
   AppDispatcher.dispatch({
     actionType: GMapsConstants.MAP_CENTER,
     update: true,
-    lat: lat,
-    lng: lng,
+    lat: coords.lat(),
+    lng: coords.lng(),
   });
 }
 
@@ -252,6 +253,9 @@ class GMapsStoreProto extends EventEmitter {
   addZoomListener(callback) {
     this.on(ZOOM_EVENT, callback);
   }
+  remZoomListener(callback) {
+    this.removeListener(ZOOM_EVENT, callback);
+  }
 
   /**
    * Listens on changes in the map center.
@@ -259,6 +263,9 @@ class GMapsStoreProto extends EventEmitter {
    */
   addCenterListener(callback) {
     this.on(CENTER_EVENT, callback);
+  }
+  remCenterListener(callback) {
+    this.removeListener(CENTER_EVENT, callback);
   }
 
   /**
