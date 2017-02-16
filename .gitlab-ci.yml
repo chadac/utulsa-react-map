@@ -14,7 +14,7 @@ variables:
   S3_BUCKET_NAME_PROD: utulsa-assets
   URL_PROD: maps.utulsa.edu
   S3_BUCKET_NAME_DEV: utulsa-assets
-  URL_DEV: d1oqrhcv6o35k6.cloudfront.net
+  URL_DEV: utulsa-assets.s3.amazonaws.com
 
 stages:
   - setup
@@ -24,9 +24,6 @@ stages:
 
 setup:
   type: setup
-  artifacts:
-    paths:
-      - node_modules/
   script:
     - npm install
 
