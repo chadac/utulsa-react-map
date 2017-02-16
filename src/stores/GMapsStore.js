@@ -92,9 +92,29 @@ function createMap(div) {
     // },
     fullscreenControl: false,
     styles: [{
-      featureType: 'poi',
-      stylers: [{visibility: "off"}],
-    }],
+        featureType: 'all',
+        elementType: 'labels',
+        stylers: [{visibility: 'off'}],
+      }, {
+        featureType: 'poi',
+        stylers: [{visibility: "off"}],
+      }, {
+        featureType: 'administrative',
+        stylers: [{visibility: "on"}],
+      }, {
+        featureType: 'landscape',
+        stylers: [{visibility: "on"}],
+      }, {
+        featureType: 'road',
+        stylers: [{visibility: "on"}],
+      }, {
+        featureType: 'transit',
+        stylers: [{visibility: "on"}],
+      }, {
+        featureType: 'water',
+        stylers: [{visibility: "on"}],
+      }
+    ],
   }
 
   _map = new gmaps.Map(div, mapOptions);
