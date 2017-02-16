@@ -5,6 +5,8 @@ import React, {Component, PropTypes} from 'react';
 
 import FluxComponent from '../../hoc/FluxComponent';
 
+import AppState from '../../constants/AppState';
+
 import classnames from 'classnames/bind';
 import styles from '../../stylesheets/ShareLink.scss';
 const cx = classnames.bind(styles);
@@ -70,7 +72,7 @@ class ShareLink extends Component {
     return {
       zoom: this.stores().gmaps.getZoom(),
       center: [center.lat, center.lng].join(','),
-      select: this.stores().item.getSelected(),
+      select: this.stores().app.getState() === AppState.SELECT ? this.stores().item.getSelected() : null,
       filter: Array.from(this.stores().item.getActiveCategories()).join(',')
     }
   }
