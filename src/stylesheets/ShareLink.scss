@@ -1,0 +1,11 @@
+.share-link {
+  display: inline-block;
+  height: 40px;
+  vertical-align: top;
+  & input {
+    margin-left: 4px;
+    height: 32px;
+    padding: 2px;
+    font-size: 12px;
+  }
+}

@@ -9,6 +9,7 @@ import AppState from '../../constants/AppState';
 import SearchResults from './SearchResults';
 import MoreInformation from './MoreInformation';
 import Filter from './Filter';
+import ShareLink from './ShareLink';
 
 import classnames from 'classnames/bind';
 import styles from '../../stylesheets/MenuBar.scss';
@@ -53,6 +54,27 @@ FilterWidget.propTypes = {
 };
 
 
+class ShareWidget extends Component {
+  render() {
+    return (
+      <i className={cx("menu-icon", "material-icons", {"active": this.props.active})}
+         onClick={this._onClick.bind(this)}>
+        share
+      </i>
+    );
+  }
+
+  _onClick() {
+    this.props._share(!this.props.active);
+  }
+}
+
+ShareWidget.propTypes = {
+  active: PropTypes.bool.isRequired,
+  _share: PropTypes.func.isRequired,
+};
+
+
 /**
  * Simple widget that updates when users perform searches.
  * @class
@@ -75,8 +97,8 @@ class SearchWidget extends Component {
       this.refs.search.value = "";
     }
     return (
-      <div className={cx("search-container")} style={{width: this.props.width - 48}}>
-        <input type="text" className={cx("search")} style={{width: this.props.width - 108}}
+      <div className={cx("search-container")} style={{width: this.props.width}}>
+        <input type="text" className={cx("search")} style={{width: this.props.width - 60}}
                ref="search" placeholder="Search"
                onChange={this._onChange.bind(this)}
                onKeyPress={this._onKeyPress.bind(this)}
@@ -230,7 +252,8 @@ class MenuBar extends Component {
     this.state = {
       // If the drop-down is minimized. Tracks state here rather than in
       // MinimizeBlock since we use the value to show/hide the drop-down.
-      minimized: false
+      minimized: false,
+      share: false,
     };
 
     this.width = 320;
@@ -250,10 +273,14 @@ class MenuBar extends Component {
             })}>
             <FilterWidget appState={this.props.appState}
                           _setAppState={this.actions().app.setState} />
-            <SearchWidget _search={this.actions().item.search} width={this.width}
-                          appState={this.props.appState}
-                          _resetSearch={this.actions().item.resetSearch}
-                          _selectSearched={this.actions().item.selectSearched} />
+            <ShareWidget active={this.state.share} _share={this.share.bind(this)} />
+            {this.state.share ?
+             <ShareLink {...this.flux()} width={this.width - 88} />
+             : <SearchWidget _search={this.actions().item.search} width={this.width - 88}
+                             appState={this.props.appState}
+                             _resetSearch={this.actions().item.resetSearch}
+                             _selectSearched={this.actions().item.selectSearched} />
+            }
           </div>
           {this.renderSubMenu()}
         </div>
@@ -308,6 +335,10 @@ class MenuBar extends Component {
    */
   _onAppStateChanged() {
     this.maximize();
+  }
+
+  share(newState) {
+    this.setState({share: newState});
   }
 
   /**

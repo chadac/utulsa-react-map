@@ -128,6 +128,12 @@ const ItemActions = {
     });
   },
 
+  clearCategories: function() {
+    AppDispatcher.dispatch({
+      actionType: ItemConstants.CLEAR_CATEGORIES,
+    });
+  },
+
   resetCategories: function() {
     AppDispatcher.dispatch({
       actionType: ItemConstants.RESET_CATEGORIES,

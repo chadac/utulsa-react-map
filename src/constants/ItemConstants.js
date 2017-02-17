@@ -18,6 +18,7 @@ const ItemConstants = keyMirror({
   ITEM_RESET_SEARCH: null,
   ADD_CATEGORY: null,
   REM_CATEGORY: null,
+  CLEAR_CATEGORIES: null,
   RESET_CATEGORIES: null,
 });
 

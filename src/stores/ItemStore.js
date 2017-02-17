@@ -476,15 +476,23 @@ function remCategory(category) {
 
 /**
  * Resets all active categories.
- * @returns {Array} ids The list of item IDs to emit state changes for.
+ * @returns {Array} ids - The list of item IDs to emit state changes for.
  */
-function resetCategories() {
+function clearCategories() {
   let ids = [];
   _activeCats.forEach((cat) => ids = ids.concat(remCategory(cat)));
-  addCategory("TU MAIN CAMPUS");
   return ids;
 }
 
+/**
+ * Resets all active categories and reverts to default state.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
+function resetCategories() {
+  let ids = clearCategories();
+  addCategory("TU MAIN CAMPUS");
+  return ids;
+}
 
 /****************************************************************
  * ITEM STORE
@@ -640,6 +648,7 @@ class ItemStoreProto extends EventEmitter {
    */
   emitSelect(id) {
     this.emit([SELECT_EVENT, id]);
+    this.emit(SELECT_EVENT);
   }
 
   /****************************************************************
@@ -661,6 +670,9 @@ class ItemStoreProto extends EventEmitter {
   addCategoryChangeListener(callback) {
     this.on(CATEGORY_CHANGE_EVENT, callback);
   }
+  remCategoryChangeListener(callback) {
+    this.removeListener(CATEGORY_CHANGE_EVENT, callback);
+  }
 
   /**
    * Adds a listener on item state changes.
@@ -681,7 +693,16 @@ class ItemStoreProto extends EventEmitter {
    * @param {*} id - The item ID.
    */
   addSelectListener(callback, id) {
-    this.on([SELECT_EVENT, id], callback);
+    if(id)
+      this.on([SELECT_EVENT, id], callback);
+    else
+      this.on(SELECT_EVENT, callback);
+  }
+  remSelectListener(callback, id) {
+    if(id)
+      this.removeListener([SELECT_EVENT, id], callback);
+    else
+      this.removeListener(SELECT_EVENT, callback);
   }
 
   /****************************************************************
@@ -738,6 +759,11 @@ class ItemStoreProto extends EventEmitter {
 
       case ItemConstants.REM_CATEGORY:
         ids = remCategory(action.category);
+        this.emitCategoryChange();
+        break;
+
+      case ItemConstants.CLEAR_CATEGORIES:
+        ids = clearCategories();
         this.emitCategoryChange();
         break;
 

@@ -70,8 +70,8 @@ gmaps.Route = Route;
 class LatLng extends MockListener {
   constructor(lat, lng) {
     super();
-    this.lat = lat;
-    this.lng = lng;
+    this.lat = () => lat;
+    this.lng = () => lng;
   }
 }
 gmaps.LatLng = LatLng;

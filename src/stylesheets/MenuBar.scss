@@ -13,6 +13,7 @@
 .menu-head {
     padding: 4px;
     height: 40px;
+    line-height: 40px;
     border-bottom: 1px solid transparent;
 
     &.submenu {
@@ -32,13 +33,13 @@
         color: #464646;
         cursor: pointer;
     }
+    &.active {
+        background-color: #EEEEEE;
+    }
 }
 
 .filter {
     border-radius: 1px;
-    &.active {
-        background-color: #EEEEEE;
-    }
 }
 
 .search-container {
