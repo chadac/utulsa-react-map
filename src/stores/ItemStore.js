@@ -476,15 +476,23 @@ function remCategory(category) {
 
 /**
  * Resets all active categories.
- * @returns {Array} ids The list of item IDs to emit state changes for.
+ * @returns {Array} ids - The list of item IDs to emit state changes for.
  */
-function resetCategories() {
+function clearCategories() {
   let ids = [];
   _activeCats.forEach((cat) => ids = ids.concat(remCategory(cat)));
-  addCategory("TU MAIN CAMPUS");
   return ids;
 }
 
+/**
+ * Resets all active categories and reverts to default state.
+ * @returns {Array} ids The list of item IDs to emit state changes for.
+ */
+function resetCategories() {
+  let ids = clearCategories();
+  addCategory("TU MAIN CAMPUS");
+  return ids;
+}
 
 /****************************************************************
  * ITEM STORE
@@ -751,6 +759,11 @@ class ItemStoreProto extends EventEmitter {
 
       case ItemConstants.REM_CATEGORY:
         ids = remCategory(action.category);
+        this.emitCategoryChange();
+        break;
+
+      case ItemConstants.CLEAR_CATEGORIES:
+        ids = clearCategories();
         this.emitCategoryChange();
         break;
 

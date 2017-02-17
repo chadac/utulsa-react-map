@@ -55,10 +55,11 @@ class QueryParams extends Component {
     }
 
     if('filter' in query) {
-      let categories = query.filter.split(',');
-      this.actions().item.resetCategories();
+      let categories = query.filter.split('!');
+      let allCategories = Object.keys(this.stores().item.getCategories());
+      this.actions().item.clearCategories();
       categories.forEach((category) =>
-        this.actions().item.addCategory(category)
+        this.actions().item.addCategory(allCategories[category])
       );
     }
   }

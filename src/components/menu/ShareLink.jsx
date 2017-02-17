@@ -69,11 +69,14 @@ class ShareLink extends Component {
 
   _getState() {
     let center = this.stores().gmaps.getCenter();
+    let categories = Object.keys(this.stores().item.getCategories());
     return {
       zoom: this.stores().gmaps.getZoom(),
       center: [center.lat, center.lng].join(','),
       select: this.stores().app.getState() === AppState.SELECT ? this.stores().item.getSelected() : null,
-      filter: Array.from(this.stores().item.getActiveCategories()).join(',')
+      filter: Array.from(this.stores().item.getActiveCategories())
+                   .map((category) => categories.indexOf(category))
+                   .join('!')
     }
   }
 
