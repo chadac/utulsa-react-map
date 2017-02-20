@@ -28,6 +28,7 @@ class ShareLink extends Component {
 
     this.callbacks = {};
     this.callbacks.update = this._update.bind(this);
+    this.stores().app.addChangeListener(this.callbacks.update);
     this.stores().item.addCategoryChangeListener(this.callbacks.update);
     this.stores().item.addSelectListener(this.callbacks.update);
     this.stores().gmaps.addZoomListener(this.callbacks.update);
