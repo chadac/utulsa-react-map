@@ -44,7 +44,7 @@ let response = s3.listObjects({}, (err, data) => {
   data.Contents.forEach((item) => {
     let match = item.Key.match(/assets\/maps\/places\/([A-Za-z0-9_]+)\/(.+\.([A-Za-z0-9]+))$/);
     if(match == null) return;
-    let url = 'https://utulsa-aws.s3.amazonaws.com/' + match[0],
+    let url = 'https://d3hmp6ymp94s0x.cloudfront.net/' + match[0],
         id = match[1],
         fileName = match[2],
         fileType = match[3];
