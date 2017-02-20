@@ -11,10 +11,10 @@ cache:
    - node_modules/
 
 variables:
-  S3_BUCKET_NAME_PROD: utulsa-assets
+  S3_BUCKET_NAME_PROD: utulsa-aws
   URL_PROD: maps.utulsa.edu
-  S3_BUCKET_NAME_DEV: utulsa-assets
-  URL_DEV: utulsa-assets.s3.amazonaws.com
+  S3_BUCKET_NAME_DEV: utulsa-aws
+  URL_DEV: utulsa-aws.s3.amazonaws.com
 
 stages:
   - setup
