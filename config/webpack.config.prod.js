@@ -248,5 +248,11 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
-  }
+  },
+  // Libraries to not include in build
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM",
+    "flux": "Flux",
+  },
 };
