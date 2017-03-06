@@ -33,7 +33,7 @@ class MoreInformation extends Component {
       <div key="main"
            style={{maxHeight: this.props.height,
                    display: this.props.display ? "" : "none"}}
-           className={cx("more-info")}>
+           id={cx("more-info")}>
         {this.state.items}
       </div>
     );

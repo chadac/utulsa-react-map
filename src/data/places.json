@@ -957,6 +957,38 @@
     }
   },
   {
+    "id": "tu_veteran_house",
+    "name": "TU Veteran House",
+    "type": "place",
+    "description": "TU Veteran House is located in the Norman Village Apartments. The lounge hosts meetings and serves as a place for student veterans to relax amid their busy schedules.\n\nThe Home Depot Foundation along with Student Veterans of America (SVA) awarded The University of Tulsa $8,948 to renovate the veterans’ lounge on campus as part of the Vet Center Initiative. TU is one of 50 colleges to receive this valuable grant.\n\n\n\nThe renovations included repairs to the wall and floor, new furniture and updates to the game room, computer lounge, dining area and lobby.",
+    "address": "406 S Evanston Ave #418, Tulsa, OK 74104",
+    "category": "TU MAIN CAMPUS",
+    "marker": {
+      "lat": 36.155695,
+      "lng": -95.947744,
+      "icon": "housing"
+    },
+    "gmaps": {
+      "min_zoom": 18
+    }
+  },
+  {
+    "id": "hurricane_bike_shop",
+    "name": "Hurricane Bike Shop",
+    "type": "place",
+    "description": "<div>Located next door to TU’s Office of Campus Security in LaFortune Hall, the Hurricane Bike Shop is open Monday through Friday, 1 – 6 p.m.  Yellow bike riders can air up tires and request minor repairs. The bike shop staff will also train riders to maintain their personal bikes. You may contact the Hurricane Bike Shop at <a href=\"tel:918-631-3812\">918-631-3812</a> or <a href=\"mailto:bikeshop@utulsa.edu\">bikeshop@utulsa.edu</a>.</div>",
+    "address": "3202 East 7th Street, Tulsa, Oklahoma 74104-9700",
+    "category": "TU MAIN CAMPUS",
+    "marker": {
+      "lat": 36.150387,
+      "lng": -95.942214,
+      "icon": "housing"
+    },
+    "gmaps": {
+      "min_zoom": 19
+    }
+  },
+  {
     "id": "7th_street_house",
     "name": "7th Street House",
     "type": "place",
@@ -1610,7 +1642,7 @@
     "marker": {
       "lat": 36.1557788343,
       "lng": -95.9483992245,
-      "icon": "muslim"
+      "icon": "jewish"
     },
     "gmaps": {
       "min_zoom": 18

@@ -56,12 +56,12 @@ bike27,simple_marker,36.1503581,-95.9488197,bike,19,,Bike Rack,BIKE RACKS
 bike28,simple_marker,36.1515831,-95.9487386,bike,19,,Bike Rack,BIKE RACKS
 bike29,simple_marker,36.1511532,-95.9486394,bike,19,,Bike Rack,BIKE RACKS
 bike30,simple_marker,36.1500291,-95.9494682,bike,19,,Bike Rack,BIKE RACKS
-bike31,simple_marker,36.1508056,-95.9483926,bike,19,,Bike Rack,BIKE RACKS
-bike32,simple_marker,36.1532312,-95.9424475,bike,19,,Bike Rack,BIKE RACKS
-bike33,simple_marker,36.1503594,-95.9425347,bike,19,,Bike Rack,BIKE RACKS
 photo_op_1,simple_marker,36.1524483,-95.9469751,photo-op,19,,Photo Opportunity,PHOTO OPPORTUNITIES
 photo_op_2,simple_marker,36.1517087,-95.9467953,photo-op,19,,Photo Opportunity,PHOTO OPPORTUNITIES
 photo_op_3,simple_marker,36.1508662,-95.9465727,photo-op,19,,Photo Opportunity,PHOTO OPPORTUNITIES
 photo_op_4,simple_marker,36.1490957,-95.9467833,photo-op,19,,Photo Opportunity,PHOTO OPPORTUNITIES
 photo_op_5,simple_marker,36.149688,-95.9447663,photo-op,19,,Photo Opportunity,PHOTO OPPORTUNITIES
 photo_op_6,simple_marker,36.1517564,-95.941034,photo-op,19,,Photo Opportunity,PHOTO OPPORTUNITIES
+bike_repair_1,simple_marker,36.1503594,-95.9425347,bicycle,19,,Bike Repair Station,BIKE RACKS
+bike_repair_2,simple_marker,36.1532312,-95.9424475,bicycle,19,,Bike Repair Station,BIKE RACKS
+bike_repair_3,simple_marker,36.1508056,-95.9483926,bicycle,19,,Bike Repair Station,BIKE RACKS

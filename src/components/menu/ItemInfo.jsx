@@ -95,7 +95,7 @@ class PlaceInfo extends Component {
     const rooms = this.listingBlock("rooms", "Rooms", cx("rooms", "listing"));
     const data = this.props.data;
     return (
-      <div>
+      <div className={cx("item-info")}>
         <h1 className={cx("header")}>{data.name}</h1>
         {data.photos && data.photos.length > 0 ? <PhotoGallery photos={data.photos} /> : <br />}
         <div className={cx("address")}>{data.address} (<a target="_blank" href={directionsUrl}>Directions</a>)</div>
@@ -116,10 +116,28 @@ PlaceInfo.propTypes = {
 
 
 class SimpleMarkerInfo extends Component {
+  description() {
+    let type = this.props.data.label;
+    switch(type) {
+      case "Emergency Phone/Strobe":
+        return "The Blue Light Telephone System increases safety and prevents crime by enabling people to reach Campus Security quickly from multiple locations around campus. The phones are located and marked by signs and by distinctive blue lights, so they are visible 24 hours a day. Campus Security can identify the caller’s location immediately and dispatch an officer to that location.";
+      case "Bike Rack":
+        return "Bike racks are located in multiple places around campus near dorms, apartments and classroom buildings to provide riders with ways to secure their bike while on campus.";
+      case "Bike Repair Station":
+        return "Three freestanding bike maintenance stations on the TU campus feature bike-specific tools and pumps with Presta and Shrader valves. Cyclists can air up their tires or make minor adjustments and repairs. Two of the three stations were paid for by TU’s Student Association.";
+      case "Photo Opportunity":
+        return "Visitors, alum and perspective student love to take pictures at various place around. Picturesque locations have been marked with the camera icon.";
+    }
+    return null;
+  }
   render() {
     let data = this.props.data;
     return (
-      <h2 className={cx("header")}>{data.label}</h2>
+      <div className={cx("item-info", data.id)}>
+        <h2 className={cx("header")}>{data.label}</h2>
+        {data.photos && data.photos.length > 0 ? <PhotoGallery photos={data.photos} /> : <br />}
+        <p className={cx("description")}><div>{this.description()}</div></p>
+      </div>
     );
   }
 }
@@ -133,9 +151,10 @@ class ParkingLotInfo extends Component {
   render() {
     let data = this.props.data;
     return (
-      <div>
+      <div className={cx("item-info")}>
         <h2 className={cx("header")}>{data.name}</h2>
-        <p className={cx("description")}>Hours: {data.hours}</p>
+        <p className={cx("hours")}>Hours: {data.hours}</p>
+        <p className={cx("description")}><div>The University of Tulsa provides designated visitor parking for guests visiting campus. Lots reserved for visitors are indicated in gold. Other parking lots are reserved for residential students, commuter students, faculty and staff.</div></p>
       </div>
     );
   }
@@ -150,7 +169,7 @@ class RouteInfo extends Component {
   render() {
     let data = this.props.data;
     return (
-      <div>
+      <div className={cx("item-info")}>
         <h2>{data.name}</h2>
         <p className={cx("description")}>Hours: {data.hours}</p>
       </div>

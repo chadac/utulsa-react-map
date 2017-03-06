@@ -798,48 +798,6 @@
     "category": "BIKE RACKS"
   },
   {
-    "id": "bike31",
-    "type": "simple_marker",
-    "marker": {
-      "lat": 36.1508056,
-      "lng": -95.9483926,
-      "icon": "bike"
-    },
-    "gmaps": {
-      "min_zoom": 19
-    },
-    "label": "Bike Rack",
-    "category": "BIKE RACKS"
-  },
-  {
-    "id": "bike32",
-    "type": "simple_marker",
-    "marker": {
-      "lat": 36.1532312,
-      "lng": -95.9424475,
-      "icon": "bike"
-    },
-    "gmaps": {
-      "min_zoom": 19
-    },
-    "label": "Bike Rack",
-    "category": "BIKE RACKS"
-  },
-  {
-    "id": "bike33",
-    "type": "simple_marker",
-    "marker": {
-      "lat": 36.1503594,
-      "lng": -95.9425347,
-      "icon": "bike"
-    },
-    "gmaps": {
-      "min_zoom": 19
-    },
-    "label": "Bike Rack",
-    "category": "BIKE RACKS"
-  },
-  {
     "id": "photo_op_1",
     "type": "simple_marker",
     "marker": {
@@ -922,5 +880,47 @@
     },
     "label": "Photo Opportunity",
     "category": "PHOTO OPPORTUNITIES"
+  },
+  {
+    "id": "bike_repair_1",
+    "type": "simple_marker",
+    "marker": {
+      "lat": 36.1503594,
+      "lng": -95.9425347,
+      "icon": "bicycle"
+    },
+    "gmaps": {
+      "min_zoom": 19
+    },
+    "label": "Bike Repair Station",
+    "category": "BIKE RACKS"
+  },
+  {
+    "id": "bike_repair_2",
+    "type": "simple_marker",
+    "marker": {
+      "lat": 36.1532312,
+      "lng": -95.9424475,
+      "icon": "bicycle"
+    },
+    "gmaps": {
+      "min_zoom": 19
+    },
+    "label": "Bike Repair Station",
+    "category": "BIKE RACKS"
+  },
+  {
+    "id": "bike_repair_3",
+    "type": "simple_marker",
+    "marker": {
+      "lat": 36.1508056,
+      "lng": -95.9483926,
+      "icon": "bicycle"
+    },
+    "gmaps": {
+      "min_zoom": 19
+    },
+    "label": "Bike Repair Station",
+    "category": "BIKE RACKS"
   }
 ]
